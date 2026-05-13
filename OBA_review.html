@@ -2330,9 +2330,33 @@
       </div>
       <div class="panel-intro">
         <p>
-          15 questões no estilo da OBA. Após responder todas, clique em
-          <strong>"Finalizar simulado"</strong> para ver sua pontuação e o
-          gabarito comentado.
+          15 questões <strong>no estilo da OBA — Nível 3 (6º ao 9º ano EF)</strong>,
+          inspiradas em temas recorrentes das provas oficiais. Os enunciados
+          foram <em>reescritos</em> para não infringir os direitos autorais
+          da Olimpíada; o estilo, formato e dificuldade seguem o padrão das
+          provas reais.
+        </p>
+        <details style="margin-top: 10px; padding: 8px 0;">
+          <summary style="cursor: pointer; font-weight: 600; color: var(--primary-strong);">📚 Fontes consultadas para inspirar este simulado</summary>
+          <ul style="margin: 10px 0 0">
+            <li>OBA XXVII (2024) — Nível 3</li>
+            <li>OBA XXVI (2023) — Nível 3</li>
+            <li>OBA XXV (2022) — Nível 3</li>
+            <li>OBA XXIV (2021) — Nível 3</li>
+            <li>OBA XXII–XXIII (2019–2020) — Nível 3</li>
+            <li>Edições anteriores (2014–2018)</li>
+          </ul>
+          <div class="info-box" style="margin-top: 10px">
+            <strong>📌 Recomendação importante:</strong> para se familiarizar
+            de verdade com o formato e o nível das questões reais, baixe e
+            resolva as <strong>provas oficiais</strong> diretamente no site
+            da OBA: <a href="https://www.oba.org.br/" target="_blank" rel="noopener">oba.org.br</a>
+            (todas gratuitas, com gabarito comentado).
+          </div>
+        </details>
+        <p style="margin-top: 10px">
+          Após responder todas, clique em <strong>"Finalizar Simulado"</strong>
+          para ver sua pontuação e o gabarito comentado com a fonte de cada questão.
         </p>
       </div>
 
@@ -3192,144 +3216,189 @@
        ===================================================== */
     const simQuestions = [
       {
-        topic: 'Sistema Solar', difficulty: 'easy',
-        question: 'Qual planeta é conhecido como "Planeta Vermelho"?',
-        options: ['Mercúrio', 'Marte', 'Júpiter', 'Vênus'], answer: 1,
-        explanation: 'Marte parece vermelho por causa do óxido de ferro (ferrugem) em sua superfície.',
-        review: 'Reveja "Características rápidas de cada planeta" em Sistema Solar.'
-      },
-      {
-        topic: 'Astros', difficulty: 'easy',
-        question: 'Qual desses NÃO é uma estrela?',
-        options: ['Sol', 'Sírius', 'Vênus', 'Antares'], answer: 2,
-        explanation: 'Vênus é um planeta. Apesar de brilhar bastante no céu, não tem luz própria; reflete a luz do Sol.',
-        review: 'Reveja "Diferença entre os astros" em Astronomia.'
-      },
-      {
-        topic: 'Movimentos da Terra', difficulty: 'medium',
-        question: 'A Terra gira em torno do próprio eixo em aproximadamente:',
-        options: ['1 ano', '24 horas', '1 mês', '12 horas'], answer: 1,
-        explanation: 'A rotação dura cerca de 24 horas e causa o dia e a noite.',
-        review: 'Reveja "Rotação" em Terra-Sol-Lua.'
-      },
-      {
-        topic: 'Estações do ano', difficulty: 'hard',
-        question: 'Em dezembro, no Brasil, é verão. Por quê?',
+        topic: 'Movimentos da Terra', difficulty: 'easy',
+        question: 'A sucessão dos dias e das noites em qualquer ponto da superfície terrestre é consequência principalmente de qual movimento da Terra?',
         options: [
-          'Porque a Terra está mais perto do Sol.',
-          'Porque o eixo da Terra está inclinado e o hemisfério Sul recebe raios mais diretos.',
-          'Porque a Terra gira mais devagar.',
-          'Porque o Sol esquenta mais nessa época.'
+          'Da translação ao redor do Sol, que dura cerca de 365 dias.',
+          'Da rotação em torno do próprio eixo, que dura cerca de 24 horas.',
+          'Da precessão, que ocorre em milhares de anos.',
+          'Do movimento da Lua ao redor da Terra.'
         ], answer: 1,
-        explanation: 'A causa das estações é a inclinação do eixo da Terra. Em dezembro, o hemisfério Sul está inclinado para o Sol, recebendo raios mais diretos.',
-        review: 'Reveja "Translação — Estações do Ano" em Terra-Sol-Lua.'
+        explanation: 'A rotação da Terra em torno do próprio eixo dura cerca de 24 horas. Esse é o movimento responsável pela alternância entre dia e noite.',
+        review: 'Reveja "Rotação — Dia e Noite" em Terra-Sol-Lua.',
+        source: 'Tema recorrente nas OBA Nível 3 (várias edições).'
+      },
+      {
+        topic: 'Sistema Solar', difficulty: 'easy',
+        question: 'Considerando os planetas do nosso Sistema Solar em ordem crescente de distância média ao Sol, qual é o QUINTO planeta?',
+        options: ['Saturno', 'Marte', 'Júpiter', 'Urano'], answer: 2,
+        explanation: 'Ordem: Mercúrio (1º), Vênus (2º), Terra (3º), Marte (4º), JÚPITER (5º), Saturno (6º), Urano (7º), Netuno (8º).',
+        review: 'Reveja "Os 8 planetas em ordem" em Sistema Solar.',
+        source: 'Tema clássico — aparece praticamente em todas as edições da OBA.'
       },
       {
         topic: 'Fases da Lua', difficulty: 'medium',
-        question: 'A Lua brilha porque:',
+        question: 'Em uma noite de Lua Cheia, é correto afirmar que:',
         options: [
-          'Tem luz própria.',
-          'Reflete a luz do Sol.',
-          'É feita de fogo.',
-          'É iluminada pelas estrelas.'
+          'A Lua está emitindo luz própria produzida em sua superfície.',
+          'A face da Lua voltada para a Terra está totalmente iluminada pela luz do Sol que ela reflete.',
+          'A Lua se encontra exatamente entre o Sol e a Terra.',
+          'Apenas metade da Lua recebe luz solar nessa fase.'
         ], answer: 1,
-        explanation: 'A Lua não tem luz própria. Ela apenas reflete a luz que vem do Sol. As fases mostram quanto dessa parte iluminada vemos da Terra.',
-        review: 'Reveja "Fases da Lua" em Terra-Sol-Lua.'
+        explanation: 'A Lua não tem luz própria — sempre reflete a luz do Sol. Na Lua Cheia, a Terra está entre o Sol e a Lua, e nós vemos toda a face iluminada voltada para nós.',
+        review: 'Reveja "Fases da Lua" em Terra-Sol-Lua.',
+        source: 'Tema recorrente — OBA XXVI (2023), XXV (2022) e edições anteriores.'
+      },
+      {
+        topic: 'Estações do ano', difficulty: 'hard',
+        question: 'No mês de junho, é correto afirmar que:',
+        options: [
+          'Faz verão tanto no Brasil quanto na Itália, pois é a mesma época do ano.',
+          'Faz verão no Hemisfério Norte e inverno no Hemisfério Sul, devido à inclinação do eixo de rotação da Terra.',
+          'Faz inverno em todo o planeta, porque a Terra está mais longe do Sol.',
+          'As estações dependem da fase da Lua, e não da posição da Terra.'
+        ], answer: 1,
+        explanation: 'A causa das estações é a INCLINAÇÃO DO EIXO da Terra (~23,5°), não a distância ao Sol. Em junho, o Hemisfério Norte está inclinado em direção ao Sol (verão lá) e o Sul está inclinado para o lado oposto (inverno aqui).',
+        review: 'Reveja "Translação — Estações do Ano" e a animação dos raios solares.',
+        source: 'Tema recorrente — OBA XXV (2022) e várias edições.'
       },
       {
         topic: 'Eclipses', difficulty: 'medium',
-        question: 'Em um eclipse lunar:',
+        question: 'Para que um eclipse TOTAL do Sol seja observado em uma região da Terra, a configuração necessária entre os três astros é:',
         options: [
-          'A Lua tampa o Sol.',
-          'A sombra da Terra cobre a Lua.',
-          'A Lua some no espaço.',
-          'O Sol tampa a Lua.'
+          'Sol — Terra — Lua, com a Terra projetando sombra sobre a Lua.',
+          'Sol — Lua — Terra, com os três alinhados e a Lua bloqueando a luz do Sol numa região da Terra.',
+          'Terra — Sol — Lua, com o Sol entre os dois.',
+          'Qualquer configuração serve, desde que seja Lua Cheia.'
         ], answer: 1,
-        explanation: 'No eclipse lunar, a Terra fica entre o Sol e a Lua. A sombra projetada pela Terra cobre a Lua. Acontece em fase de Lua Cheia.',
-        review: 'Reveja "Eclipses" em Terra-Sol-Lua.'
-      },
-      {
-        topic: 'Astronáutica', difficulty: 'medium',
-        question: 'Qual é o princípio físico que explica o lançamento de foguetes?',
-        options: [
-          'Empuxo do ar.',
-          'Força magnética.',
-          '3ª lei de Newton (ação e reação).',
-          'Energia solar.'
-        ], answer: 2,
-        explanation: 'Pela 3ª lei de Newton, ao expelir gases para baixo (ação), o foguete recebe um empurrão para cima (reação).',
-        review: 'Reveja "Como um foguete sobe?" em Astronáutica.'
-      },
-      {
-        topic: 'Satélites', difficulty: 'easy',
-        question: 'Qual destes serviços do dia a dia depende de satélites artificiais?',
-        options: ['GPS', 'Previsão do tempo', 'Comunicação por TV', 'Todos os anteriores'], answer: 3,
-        explanation: 'Satélites artificiais fornecem GPS, sinais de comunicação (TV, internet, telefonia) e imagens para previsão meteorológica.',
-        review: 'Reveja "Satélites artificiais" em Astronáutica.'
-      },
-      {
-        topic: 'Galáxias', difficulty: 'easy',
-        question: 'Qual é o nome da nossa galáxia?',
-        options: ['Andrômeda', 'Via Láctea', 'Magalhães', 'Triângulo'], answer: 1,
-        explanation: 'A Via Láctea é a galáxia onde está o nosso Sistema Solar. Tem mais de 100 bilhões de estrelas.',
-        review: 'Veja o Glossário (Via Láctea).'
+        explanation: 'No eclipse solar, a Lua fica entre o Sol e a Terra, projetando sua sombra em uma pequena região da Terra. Acontece em fase de Lua Nova (não Cheia).',
+        review: 'Reveja "Eclipses" em Terra-Sol-Lua.',
+        source: 'Tema recorrente — OBA Nível 3 (várias edições).'
       },
       {
         topic: 'Constelações', difficulty: 'easy',
-        question: 'O Cruzeiro do Sul ajuda a localizar qual direção?',
-        options: ['Norte', 'Sul', 'Leste', 'Oeste'], answer: 1,
-        explanation: 'O Cruzeiro do Sul indica aproximadamente o Sul geográfico. Prolongue o braço maior 4,5 vezes para baixo.',
-        review: 'Reveja "Constelações e observação do céu" em Astronomia.'
+        question: 'Qual destas constelações é facilmente visível no céu do Brasil, aparece na nossa bandeira e ajuda na orientação no Hemisfério Sul?',
+        options: ['Órion (Três Marias)', 'Escorpião', 'Cruzeiro do Sul', 'Ursa Maior'], answer: 2,
+        explanation: 'O Cruzeiro do Sul é visível no Hemisfério Sul, aparece na bandeira do Brasil e ajuda a localizar o Sul geográfico (prolongando o braço maior 4,5 vezes).',
+        review: 'Reveja "Constelações e observação do céu" em Astronomia.',
+        source: 'Tema brasileiro recorrente — OBA Nível 3 (várias edições).'
       },
       {
-        topic: 'Sistema Solar', difficulty: 'medium',
-        question: 'Quais planetas são chamados "gigantes gasosos"?',
+        topic: 'Diferença entre astros', difficulty: 'medium',
+        question: 'O fenômeno popularmente chamado de "estrela cadente", visto como um risco luminoso rápido no céu, é tecnicamente:',
         options: [
-          'Mercúrio, Vênus, Terra, Marte',
-          'Júpiter, Saturno, Urano, Netuno',
-          'Vênus, Júpiter, Saturno, Netuno',
-          'Mercúrio, Terra, Júpiter, Saturno'
+          'Uma estrela em fim de vida que está caindo.',
+          'Um asteroide em órbita ao redor da Terra.',
+          'Um meteoro: a luz emitida quando um pequeno fragmento rochoso (meteoroide) entra na atmosfera e queima por atrito.',
+          'Sempre um satélite artificial reentrando na atmosfera.'
+        ], answer: 2,
+        explanation: 'Meteoroide = a pedra no espaço. Meteoro = o risco luminoso no céu (a "estrela cadente"). Meteorito = pedaço que sobra e chega ao solo.',
+        review: 'Reveja "Diferença entre os astros" em Astronomia.',
+        source: 'Tema recorrente — OBA Nível 3 (várias edições).'
+      },
+      {
+        topic: 'Sol e estrelas', difficulty: 'medium',
+        question: 'Sobre o Sol e a estrela mais próxima de nós depois dele, Alfa Centauri (a cerca de 4 anos-luz), é correto afirmar que:',
+        options: [
+          'O Sol é um planeta gigante e Alfa Centauri é uma estrela.',
+          'Ambos são estrelas; o Sol parece muito maior e mais brilhante apenas porque está incomparavelmente mais próximo.',
+          'O Sol não tem luz própria; ele apenas reflete a luz de Alfa Centauri.',
+          'Alfa Centauri é, na verdade, uma galáxia distante.'
         ], answer: 1,
-        explanation: 'Os 4 últimos planetas (Júpiter, Saturno, Urano e Netuno) são gasosos. Os 4 primeiros são rochosos.',
-        review: 'Reveja "Rochosos x Gasosos" em Sistema Solar.'
+        explanation: 'O Sol é uma estrela como tantas outras. Parece especial apenas porque está pertinho de nós (≈ 8 min-luz). Alfa Centauri está a 4 ANOS-luz — muito mais longe.',
+        review: 'Reveja "Diferença entre os astros" e "Tamanhos e distâncias" em Astronomia.',
+        source: 'Tema recorrente — comparações entre Sol e outras estrelas aparecem em várias OBAs.'
+      },
+      {
+        topic: 'Distâncias astronômicas', difficulty: 'medium',
+        question: 'Em uma reportagem, lê-se que uma certa estrela está a 50 anos-luz da Terra. Um aluno disse: "então essa estrela tem 50 anos de idade". Essa afirmação está:',
+        options: [
+          'Correta, pois "ano-luz" indica a idade do astro.',
+          'Errada: ano-luz é uma medida de DISTÂNCIA, não de tempo. Significa que a luz dessa estrela leva 50 anos para chegar até nós.',
+          'Correta apenas para estrelas pequenas.',
+          'Errada: 1 ano-luz é menor que 1 km.'
+        ], answer: 1,
+        explanation: '1 ano-luz ≈ 9,5 trilhões de km — é a distância que a luz percorre em 1 ano. Não tem nada a ver com idade.',
+        review: 'Reveja "Tamanhos e distâncias" em Astronomia.',
+        source: 'Tema recorrente — OBA Nível 3 (várias edições).'
+      },
+      {
+        topic: 'Velocidade da luz', difficulty: 'hard',
+        question: 'A luz viaja no vácuo a aproximadamente 300.000 km/s. Sabendo que a Terra está a, em média, 150 milhões de km do Sol, quanto tempo a luz solar demora para chegar até nós?',
+        options: [
+          'Cerca de 8 segundos.',
+          'Cerca de 8 minutos.',
+          'Cerca de 8 horas.',
+          'Cerca de 8 dias.'
+        ], answer: 1,
+        explanation: 'Tempo = distância ÷ velocidade = 150.000.000 ÷ 300.000 = 500 segundos ≈ 8 minutos e 20 segundos. Por isso "vemos" o Sol como ele era 8 minutos atrás.',
+        review: 'Reveja "Tamanhos e distâncias" em Astronomia.',
+        source: 'Inspirada na OBA XXVI (2023), que abordou velocidade da luz e distâncias no Sistema Solar.'
       },
       {
         topic: 'Astronáutica', difficulty: 'medium',
-        question: 'A Estação Espacial Internacional (ISS):',
+        question: 'Os foguetes funcionam porque expelem gases a alta velocidade pelo bocal de saída. Esse princípio físico corresponde a:',
         options: [
-          'Está fixa no espaço, parada.',
-          'Orbita a Terra a aproximadamente 400 km de altura.',
-          'Fica em Marte.',
-          'Foi destruída em 2010.'
-        ], answer: 1,
-        explanation: 'A ISS orbita a Terra a cerca de 400 km, dando uma volta completa a cada 90 minutos.',
-        review: 'Reveja "Sondas e estações espaciais" em Astronáutica.'
-      },
-      {
-        topic: 'Gravidade', difficulty: 'hard',
-        question: 'Por que astronautas dentro da ISS parecem flutuar?',
-        options: [
-          'Porque no espaço não existe gravidade.',
-          'Porque a ISS bloqueia a gravidade da Terra.',
-          'Porque a ISS e os astronautas estão em queda livre constante ao redor da Terra.',
-          'Porque eles usam botas magnéticas especiais.'
+          'Empuxo do ar atmosférico empurrando o foguete.',
+          '1ª lei de Newton (inércia).',
+          '3ª lei de Newton: para cada ação existe uma reação de mesma intensidade e sentido contrário.',
+          'A força magnética da Terra repelindo o foguete.'
         ], answer: 2,
-        explanation: 'A gravidade existe sim no espaço. Astronautas flutuam porque estão em queda livre junto com a estação, dando voltas ao redor da Terra.',
-        review: 'Reveja "Gravidade no espaço" em Astronáutica.'
+        explanation: 'Pela 3ª lei de Newton: ao expelir gases para baixo (ação), o foguete recebe um empurrão para cima (reação). Por isso funciona até no vácuo do espaço.',
+        review: 'Reveja "Como um foguete sobe?" em Astronáutica.',
+        source: 'Tema recorrente em Astronáutica — OBA Nível 3 (várias edições).'
       },
       {
-        topic: 'Distâncias', difficulty: 'medium',
-        question: 'Ano-luz é uma medida de:',
-        options: ['Tempo', 'Distância', 'Velocidade', 'Massa'], answer: 1,
-        explanation: 'Apesar do nome, ano-luz é uma medida de DISTÂNCIA: o quanto a luz percorre em 1 ano (≈ 9,5 trilhões de km).',
-        review: 'Reveja "Tamanhos e distâncias" em Astronomia.'
+        topic: 'Satélites artificiais', difficulty: 'easy',
+        question: 'Qual destes serviços usados no nosso dia a dia depende diretamente de satélites artificiais em órbita ao redor da Terra?',
+        options: [
+          'Apenas o GPS.',
+          'Apenas a TV por assinatura.',
+          'Apenas a previsão do tempo.',
+          'Todos os anteriores (GPS, TV por satélite, previsão do tempo, comunicação).'
+        ], answer: 3,
+        explanation: 'Satélites artificiais nos dão GPS, sinais de telecomunicações (TV, internet, telefonia) e imagens meteorológicas usadas na previsão do tempo.',
+        review: 'Reveja "Satélites artificiais" em Astronáutica.',
+        source: 'Tema recorrente em Astronáutica — várias OBAs.'
       },
       {
-        topic: 'Astros', difficulty: 'medium',
-        question: 'O fenômeno popularmente chamado de "estrela cadente" é, na verdade, um:',
-        options: ['Asteroide caindo', 'Cometa', 'Meteoro', 'Satélite caindo'], answer: 2,
-        explanation: 'A "estrela cadente" é um meteoro: o risco luminoso causado por uma pedrinha (meteoroide) que entra na atmosfera e queima.',
-        review: 'Reveja "Diferença entre os astros" em Astronomia.'
+        topic: 'Gravidade no espaço', difficulty: 'hard',
+        question: 'Astronautas a bordo da Estação Espacial Internacional (ISS), a cerca de 400 km de altitude, parecem flutuar dentro da estação. A explicação CORRETA para esse fenômeno é:',
+        options: [
+          'A 400 km de altura, a gravidade da Terra deixa de existir.',
+          'A própria estrutura metálica da ISS bloqueia a ação da gravidade.',
+          'A ISS e os astronautas estão constantemente em queda livre ao redor da Terra; como caem juntos, parece que estão flutuando.',
+          'Eles usam coletes especiais antigravidade durante a missão.'
+        ], answer: 2,
+        explanation: 'A gravidade EXISTE no espaço — é justamente ela que mantém a ISS em órbita. O efeito de "flutuação" é a queda livre: a estação e os astronautas caem juntos ao redor da Terra.',
+        review: 'Reveja "Gravidade no espaço" em Astronáutica.',
+        source: 'Tema recorrente — abordado em várias OBAs (gravitação e ISS).'
+      },
+      {
+        topic: 'Marés', difficulty: 'medium',
+        question: 'As marés (subida e descida regular do nível dos oceanos) são causadas principalmente por:',
+        options: [
+          'Apenas pelo vento sobre o oceano.',
+          'Pela atração gravitacional da Lua sobre a Terra (com contribuição menor do Sol).',
+          'Pela rotação interna do núcleo terrestre.',
+          'Pelo magnetismo de Marte.'
+        ], answer: 1,
+        explanation: 'A atração gravitacional da Lua "puxa" a água dos oceanos, formando as marés. O Sol também contribui, mas menos (apesar de muito mais massivo, está bem mais longe).',
+        review: 'Reveja "Astronomia básica" — consulte material complementar sobre marés.',
+        source: 'Tema recorrente — OBA XXV (2022) e edições anteriores.'
+      },
+      {
+        topic: 'Orientação pelo céu', difficulty: 'easy',
+        question: 'Um observador no Brasil, ao longo de um dia comum, vê o Sol surgir no horizonte em uma direção, atravessar o céu e se pôr na direção oposta. Essas direções, de forma aproximada, são:',
+        options: [
+          'Nasce no Norte e se põe no Sul.',
+          'Nasce no Leste e se põe no Oeste.',
+          'Nasce no Sul e se põe no Norte.',
+          'Nasce e se põe sempre no Sul.'
+        ], answer: 1,
+        explanation: 'Por causa da rotação da Terra (de oeste para leste), o Sol parece nascer aproximadamente no LESTE e se pôr aproximadamente no OESTE. A posição exata varia um pouco ao longo do ano.',
+        review: 'Reveja "Rotação" em Terra-Sol-Lua e "Constelações" em Astronomia.',
+        source: 'Tema recorrente de orientação pelo céu — OBA Nível 3 (várias edições).'
       }
     ];
 
@@ -3377,16 +3446,19 @@
       simQuestions.forEach((q, idx) => {
         const fb = document.getElementById('simfb-' + idx);
         const userVal = simAnswers[idx];
+        const sourceLine = q.source
+          ? '<div style="margin-top:8px;font-size:.82rem;color:var(--muted)">📚 <em>' + q.source + '</em></div>'
+          : '';
         if (userVal === q.answer) {
           score++;
           fb.className = 'feedback show correct';
-          fb.innerHTML = '<strong>✅ Correto!</strong><div class="explanation">' + q.explanation + '</div>';
+          fb.innerHTML = '<strong>✅ Correto!</strong><div class="explanation">' + q.explanation + '</div>' + sourceLine;
         } else if (userVal === null) {
           fb.className = 'feedback show incorrect';
-          fb.innerHTML = '<strong>⚠️ Não respondida.</strong> Resposta correta: <em>' + q.options[q.answer] + '</em>.<div class="explanation">' + q.explanation + '<br><br>💡 ' + q.review + '</div>';
+          fb.innerHTML = '<strong>⚠️ Não respondida.</strong> Resposta correta: <em>' + q.options[q.answer] + '</em>.<div class="explanation">' + q.explanation + '<br><br>💡 ' + q.review + '</div>' + sourceLine;
         } else {
           fb.className = 'feedback show incorrect';
-          fb.innerHTML = '<strong>❌ Quase!</strong> Você marcou: <em>' + q.options[userVal] + '</em>. Resposta correta: <em>' + q.options[q.answer] + '</em>.<div class="explanation">' + q.explanation + '<br><br>💡 ' + q.review + '</div>';
+          fb.innerHTML = '<strong>❌ Quase!</strong> Você marcou: <em>' + q.options[userVal] + '</em>. Resposta correta: <em>' + q.options[q.answer] + '</em>.<div class="explanation">' + q.explanation + '<br><br>💡 ' + q.review + '</div>' + sourceLine;
         }
       });
       const total = simQuestions.length;
