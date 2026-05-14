@@ -990,9 +990,9 @@ Antes de finalizar, confira:
 
 # 31. Prompt curto para usar com este agente
 
-Use as instruções do agente `agente-revisao-oba-html.md`.
+Use as instruções do agente `agente-oba-cosmos-lab`.
 
-Quero criar uma página de revisão para a OBA.
+Quero criar uma página de revisão ou de elaboração de conteúdo para a OBA.
 
 Dados do aluno:
 

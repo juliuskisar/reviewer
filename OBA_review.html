@@ -1049,6 +1049,178 @@
       margin-bottom: 14px;
     }
 
+    /* ---------- 8b. Provas Oficiais ---------- */
+    .provas-intro {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1px solid #fbbf24;
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 22px;
+    }
+    .provas-intro h3 {
+      color: #92400e;
+      margin-bottom: 8px;
+    }
+    .provas-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .provas-stat {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .provas-stat .stat-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary-strong);
+    }
+    .provas-stat .stat-label {
+      font-size: .82rem;
+      color: var(--text-soft);
+    }
+    .prova-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .15s ease, border-color .15s ease;
+    }
+    .prova-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-soft);
+    }
+    .prova-card.done {
+      background: linear-gradient(90deg, var(--success-soft) 0%, white 60%);
+      border-color: var(--success);
+    }
+    .prova-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .prova-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+    .prova-year-badge {
+      background: var(--primary);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .prova-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .prova-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 500;
+      transition: background .15s ease;
+    }
+    .prova-link:hover { background: var(--primary-strong); }
+    .prova-link.secondary {
+      background: var(--surface-soft);
+      color: var(--text-soft);
+      border: 1px solid var(--border);
+    }
+    .prova-link.secondary:hover { background: var(--primary-soft); color: var(--primary-strong); }
+    .prova-themes {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .prova-theme {
+      background: var(--info-soft);
+      color: var(--info);
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: .78rem;
+      font-weight: 500;
+    }
+    .prova-tracking {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+    .prova-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: .9rem;
+      color: var(--text-soft);
+      user-select: none;
+    }
+    .prova-checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--success);
+      cursor: pointer;
+    }
+    .prova-score {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .9rem;
+      color: var(--text-soft);
+    }
+    .prova-score input {
+      width: 60px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: .9rem;
+    }
+    .prova-notes {
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: .9rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 50px;
+      background: var(--surface-soft);
+    }
+    .reset-tracking {
+      margin: 14px 0;
+      text-align: right;
+    }
+
     /* ---------- 9. Glossário ---------- */
     .glossary-grid {
       display: grid;
@@ -1187,6 +1359,7 @@
       <button class="tab" data-target="animacoes"><span class="tab-icon">🎬</span>Animações</button>
       <button class="tab" data-target="exercicios"><span class="tab-icon">✏️</span>Exercícios</button>
       <button class="tab" data-target="simulado"><span class="tab-icon">📝</span>Simulado</button>
+      <button class="tab" data-target="provas"><span class="tab-icon">📥</span>Provas Oficiais</button>
       <button class="tab" data-target="glossario"><span class="tab-icon">📖</span>Glossário</button>
     </div>
   </nav>
@@ -2358,6 +2531,12 @@
           Após responder todas, clique em <strong>"Finalizar Simulado"</strong>
           para ver sua pontuação e o gabarito comentado com a fonte de cada questão.
         </p>
+        <div class="accent-box" style="margin-top: 10px">
+          <strong>🎯 Quer treinar com as questões reais?</strong>
+          Vá na aba <a href="#provas" onclick="switchToTab('provas'); return false;"><strong>📥 Provas Oficiais</strong></a>
+          para baixar os PDFs gratuitos das provas anteriores diretamente do site da OBA.
+          É o material mais fiel para se preparar.
+        </div>
       </div>
 
       <div class="simulado-status">
@@ -2375,6 +2554,57 @@
       </div>
 
       <div class="simulado-result" id="simResult"></div>
+    </section>
+
+    <!-- ===================== PROVAS OFICIAIS ===================== -->
+    <section id="provas" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">📥</span> Treine com Provas Oficiais</h2>
+      </div>
+
+      <div class="provas-intro">
+        <h3>🎯 A melhor forma de treinar é com as provas oficiais</h3>
+        <p style="color:#78350f">
+          As provas anteriores da OBA estão disponíveis <strong>gratuitamente em PDF</strong>
+          no site oficial. Esta é a forma <em>mais realista</em> de se preparar — com o
+          formato, vocabulário, dificuldade e estilo exatos da prova de verdade.
+        </p>
+        <p style="color:#78350f;margin-bottom:0">
+          Use o painel abaixo para baixar cada prova oficial, fazê-las e anotar sua
+          pontuação. Os dados ficam salvos neste navegador.
+        </p>
+      </div>
+
+      <div class="provas-summary" id="provasSummary">
+        <!-- Preenchido via JS -->
+      </div>
+
+      <div class="info-box">
+        <strong>💡 Sugestão de uso:</strong>
+        <ol style="margin: 6px 0 0 1.2em">
+          <li>Estude os tópicos desta página (Astronomia, Sistema Solar, Terra-Sol-Lua, Astronáutica).</li>
+          <li>Faça o <strong>Simulado</strong> desta página para se aquecer.</li>
+          <li>Baixe uma prova oficial abaixo e tente fazê-la <strong>cronometrada</strong> (3 h, sem calculadora).</li>
+          <li>Compare suas respostas com o gabarito oficial.</li>
+          <li>Revise os temas em que errou e tente outra edição.</li>
+        </ol>
+      </div>
+
+      <div id="provasList">
+        <!-- Cards das provas — preenchidos via JS -->
+      </div>
+
+      <div class="reset-tracking">
+        <button class="btn btn-secondary" id="resetProvasTracking">↺ Limpar marcações salvas</button>
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ Sobre direitos autorais:</strong> as questões das provas oficiais
+        da OBA são protegidas (propriedade da SAB/MAST). Por isso esta página
+        <em>não reproduz</em> as questões — apenas direciona para os PDFs oficiais
+        e oferece o painel de acompanhamento. Os temas-chave listados em cada
+        prova são informações públicas sobre os conteúdos cobrados.
+      </div>
     </section>
 
     <!-- ===================== GLOSSÁRIO ===================== -->
@@ -3486,6 +3716,190 @@
     });
 
     renderSim();
+
+    /* =====================================================
+       11. Painel "Provas Oficiais" — apenas listagem com
+       links para o site oficial e tracking pessoal do aluno
+       (localStorage). Nenhum enunciado oficial é reproduzido.
+       Os temas-chave são informações públicas sobre os
+       conteúdos das provas (não os enunciados das questões).
+       ===================================================== -->
+    const provasOficiais = [
+      {
+        id: 'oba-2024',
+        ed: 'XXVII',
+        ano: 2024,
+        themes: ['Sistema Solar', 'Movimentos da Terra', 'Fases da Lua', 'Astronáutica', 'Eclipses']
+      },
+      {
+        id: 'oba-2023',
+        ed: 'XXVI',
+        ano: 2023,
+        themes: ['Velocidade da luz', 'Leis de Kepler (intro)', 'Constelações', 'Características dos planetas', 'Exploração de Marte / SpaceX']
+      },
+      {
+        id: 'oba-2022',
+        ed: 'XXV',
+        ano: 2022,
+        themes: ['Rotação e pontos cardeais', 'Coordenadas geográficas', 'Estações do ano e solstícios/equinócios', 'Marés', 'Sistema Solar']
+      },
+      {
+        id: 'oba-2021',
+        ed: 'XXIV',
+        ano: 2021,
+        themes: ['Fases da Lua', 'Sistema Solar', 'Movimentos da Terra', 'Astronáutica']
+      },
+      {
+        id: 'oba-2020',
+        ed: 'XXIII',
+        ano: 2020,
+        themes: ['Eclipses', 'Translação e estações', 'Constelações', 'Satélites e foguetes']
+      },
+      {
+        id: 'oba-2019',
+        ed: 'XXII',
+        ano: 2019,
+        themes: ['Sistema Solar', 'Fases da Lua', 'Diferença entre astros', 'Astronáutica']
+      },
+      {
+        id: 'oba-2018',
+        ed: 'XXI',
+        ano: 2018,
+        themes: ['Movimentos da Terra', 'Constelações', 'Eclipses', 'Satélites artificiais']
+      },
+      {
+        id: 'oba-2017',
+        ed: 'XX',
+        ano: 2017,
+        themes: ['Sistema Solar', 'Astronáutica', 'Distâncias astronômicas']
+      },
+      {
+        id: 'oba-2016',
+        ed: 'XIX',
+        ano: 2016,
+        themes: ['Fases da Lua', 'Eclipses', 'Rotação e translação', 'Foguetes']
+      },
+      {
+        id: 'oba-2015',
+        ed: 'XVIII',
+        ano: 2015,
+        themes: ['Sistema Solar', 'Constelações', 'Movimentos da Terra', 'Astronáutica']
+      },
+      {
+        id: 'oba-2014',
+        ed: 'XVII',
+        ano: 2014,
+        themes: ['Sistema Solar', 'Lua e fases', 'Astronáutica básica']
+      }
+    ];
+
+    const STORAGE_KEY = 'obaProvasTracking_v1';
+    const officialSiteUrl = 'https://www.oba.org.br/';
+    const provasPageUrl = 'https://novo.oba.org.br/provas';
+
+    function loadProvasTracking() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+    function saveProvasTracking(data) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) { /* sem storage */ }
+    }
+    let provasTracking = loadProvasTracking();
+
+    function updateProvasSummary() {
+      const total = provasOficiais.length;
+      const feitas = Object.values(provasTracking).filter(t => t && t.done).length;
+      const scores = Object.values(provasTracking)
+        .filter(t => t && t.done && t.score != null && t.score !== '')
+        .map(t => parseFloat(t.score))
+        .filter(s => !isNaN(s));
+      const media = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '—';
+      const melhor = scores.length ? Math.max(...scores).toFixed(1) : '—';
+      const summary = document.getElementById('provasSummary');
+      summary.innerHTML =
+        '<div class="provas-stat"><div class="stat-val">' + feitas + '/' + total + '</div><div class="stat-label">Provas feitas</div></div>' +
+        '<div class="provas-stat"><div class="stat-val">' + (scores.length ? scores.length : 0) + '</div><div class="stat-label">Com pontuação anotada</div></div>' +
+        '<div class="provas-stat"><div class="stat-val">' + media + '</div><div class="stat-label">Média de pontos</div></div>' +
+        '<div class="provas-stat"><div class="stat-val">' + melhor + '</div><div class="stat-label">Melhor pontuação</div></div>';
+    }
+
+    function renderProvasList() {
+      const container = document.getElementById('provasList');
+      container.innerHTML = '';
+      provasOficiais.forEach(prova => {
+        const t = provasTracking[prova.id] || { done: false, score: '', notes: '' };
+        const card = document.createElement('div');
+        card.className = 'prova-card' + (t.done ? ' done' : '');
+        card.dataset.id = prova.id;
+
+        const themesHtml = prova.themes.map(th => '<span class="prova-theme">' + th + '</span>').join('');
+
+        card.innerHTML =
+          '<div class="prova-card-header">' +
+            '<h4 class="prova-title">' +
+              '<span class="prova-year-badge">' + prova.ed + ' / ' + prova.ano + '</span>' +
+              'OBA ' + prova.ano + ' — Nível 3' +
+            '</h4>' +
+            '<div class="prova-actions">' +
+              '<a class="prova-link" href="' + provasPageUrl + '" target="_blank" rel="noopener">📄 Baixar prova oficial</a>' +
+              '<a class="prova-link secondary" href="' + provasPageUrl + '" target="_blank" rel="noopener">📋 Gabarito</a>' +
+            '</div>' +
+          '</div>' +
+          '<div class="prova-themes">' + themesHtml + '</div>' +
+          '<div class="prova-tracking">' +
+            '<label class="prova-checkbox">' +
+              '<input type="checkbox" data-field="done" ' + (t.done ? 'checked' : '') + '>' +
+              '<span>✅ Já fiz esta prova</span>' +
+            '</label>' +
+            '<div class="prova-score">' +
+              '<span>Pontuação:</span>' +
+              '<input type="number" min="0" max="10" step="0.1" data-field="score" placeholder="—" value="' + (t.score || '') + '">' +
+              '<span>/ 10</span>' +
+            '</div>' +
+          '</div>' +
+          '<textarea class="prova-notes" data-field="notes" placeholder="Anotações: quais temas errei, o que revisar...">' + (t.notes || '') + '</textarea>';
+
+        container.appendChild(card);
+      });
+
+      // Eventos de tracking
+      container.querySelectorAll('.prova-card').forEach(card => {
+        const id = card.dataset.id;
+        card.querySelectorAll('[data-field]').forEach(field => {
+          const fieldName = field.dataset.field;
+          const evt = field.tagName === 'INPUT' && field.type === 'checkbox' ? 'change' : 'input';
+          field.addEventListener(evt, () => {
+            if (!provasTracking[id]) provasTracking[id] = { done: false, score: '', notes: '' };
+            if (fieldName === 'done') {
+              provasTracking[id].done = field.checked;
+              card.classList.toggle('done', field.checked);
+            } else if (fieldName === 'score') {
+              provasTracking[id].score = field.value;
+            } else if (fieldName === 'notes') {
+              provasTracking[id].notes = field.value;
+            }
+            saveProvasTracking(provasTracking);
+            updateProvasSummary();
+          });
+        });
+      });
+    }
+
+    document.getElementById('resetProvasTracking').addEventListener('click', () => {
+      if (confirm('Tem certeza que deseja apagar todas as marcações salvas?')) {
+        provasTracking = {};
+        saveProvasTracking(provasTracking);
+        renderProvasList();
+        updateProvasSummary();
+      }
+    });
+
+    renderProvasList();
+    updateProvasSummary();
   </script>
 </body>
 </html>
