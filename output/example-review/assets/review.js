@@ -178,6 +178,15 @@
     updateProgressBar();
   }
 
+  function initRouteLinks() {
+    $$('[data-goto-panel]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var panelId = btn.getAttribute('data-goto-panel');
+        if (panelId) activatePanel(panelId);
+      });
+    });
+  }
+
   function initReset() {
     var btn = $('#btn-reset-progress');
     if (btn) btn.addEventListener('click', resetProgress);
@@ -185,6 +194,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initPageTabs();
+    initRouteLinks();
     initTabs();
     initQuiz();
     initReset();
