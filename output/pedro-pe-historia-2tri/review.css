@@ -505,7 +505,16 @@ html, body {
   border: 1px dashed var(--border);
 }
 
-.parent-section { border-style: dashed; }
+.review-section--desafios {
+  border-color: #c4b5fd;
+  background: linear-gradient(180deg, #faf5ff 0%, var(--surface) 120px);
+}
+
+.desafios-intro {
+  margin-bottom: 1.25rem;
+  border-left: 4px solid #8b5cf6;
+}
+
 .parent-support summary {
   font-weight: 600;
   cursor: pointer;

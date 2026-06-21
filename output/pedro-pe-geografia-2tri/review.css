@@ -440,6 +440,12 @@ html, body {
 }
 .quiz-item__question { font-size: 1.05rem; margin: 0 0 12px; }
 .quiz-item__number { color: var(--primary); margin-right: 4px; }
+.quiz-item__visual { margin: 0 0 16px; }
+.quiz-item__visual .bar-chart,
+.quiz-item__visual .fraction-visual {
+  margin: 0;
+  padding: 14px;
+}
 
 .quiz-options { border: none; margin: 0 0 12px; padding: 0; }
 .quiz-option {
@@ -499,7 +505,16 @@ html, body {
   border: 1px dashed var(--border);
 }
 
-.parent-section { border-style: dashed; }
+.review-section--desafios {
+  border-color: #c4b5fd;
+  background: linear-gradient(180deg, #faf5ff 0%, var(--surface) 120px);
+}
+
+.desafios-intro {
+  margin-bottom: 1.25rem;
+  border-left: 4px solid #8b5cf6;
+}
+
 .parent-support summary {
   font-weight: 600;
   cursor: pointer;
@@ -541,6 +556,137 @@ html, body {
 .content-image figcaption {
   margin-top: 8px;
   font-size: 0.875rem;
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+/* Gráfico de barras horizontal (HTML/CSS — offline) */
+.bar-chart {
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.bar-chart__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.bar-chart__row {
+  display: grid;
+  grid-template-columns: minmax(80px, 120px) 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.bar-chart__label {
+  font-size: 0.875rem;
+  text-align: right;
+  color: var(--text);
+  line-height: 1.2;
+}
+.bar-chart__track {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  height: 28px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-chart__fill {
+  height: 100%;
+  min-width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.bar-chart__value {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+}
+.bar-chart__caption {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+/* Frações visuais — barras de chocolate */
+.fraction-visual {
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.fraction-visual__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+.fraction-visual__intro {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin-bottom: 14px;
+}
+.fraction-visual__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.fraction-visual__bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.fraction-visual__bar-label {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+  min-width: 3rem;
+}
+.fraction-visual__bar {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+.fraction-segment {
+  flex: 1;
+  max-width: 72px;
+  min-width: 48px;
+}
+.fraction-segment__chocolate {
+  display: block;
+  height: 36px;
+  border-radius: 6px;
+  border: 2px solid #4a2c17;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.15) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(0,0,0,0.08) 25%, transparent 25%),
+    #7b4a2a;
+  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
+}
+.fraction-segment--empty .fraction-segment__chocolate {
+  background: #f3ebe4;
+  border-style: dashed;
+  border-color: #c4a484;
+  box-shadow: none;
+}
+.fraction-visual__summary {
+  margin-top: 14px;
+  font-size: 0.95rem;
+}
+.fraction-visual__caption {
+  margin-top: 8px;
+  font-size: 0.85rem;
   color: var(--text-soft);
   font-style: italic;
 }
