@@ -691,7 +691,310 @@ html, body {
   font-style: italic;
 }
 
+/* Mapa político interativo do Brasil (SVG offline) */
+.brazil-map {
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.brazil-map__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.brazil-map__intro {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin-bottom: 12px;
+}
+.brazil-map__modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.brazil-map__mode-btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.brazil-map__mode-btn:hover {
+  border-color: var(--primary);
+}
+.brazil-map__mode-btn.is-active {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+}
+.brazil-map__mode-desc {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  margin: 0 0 12px;
+}
+.brazil-map__periods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.brazil-map__period-btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.brazil-map__period-btn:hover {
+  border-color: var(--primary);
+}
+.brazil-map__period-btn.is-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.brazil-map__layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(160px, 220px);
+  gap: 16px;
+  align-items: start;
+}
+.brazil-map__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.brazil-map__state {
+  fill: #c8d9e8;
+  stroke: #6b8fad;
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  paint-order: stroke fill;
+  cursor: pointer;
+  transition: fill 0.15s, stroke 0.15s;
+}
+.brazil-map__state:hover,
+.brazil-map__state:focus {
+  fill: #7eb8e8;
+  stroke: #2563eb;
+  stroke-width: 1;
+  outline: none;
+}
+.brazil-map__state-group.is-hidden,
+.brazil-map__merged-group.is-hidden {
+  display: none;
+}
+.brazil-map__state-group.is-selected .brazil-map__state,
+.brazil-map__merged-group.is-selected .brazil-map__state {
+  fill: #3b82f6;
+  stroke: #1d4ed8;
+  stroke-width: 1.2;
+}
+.brazil-map__state-group.is-highlighted .brazil-map__state {
+  fill: #fbbf24;
+  stroke: #d97706;
+}
+.brazil-map__state-group.is-highlighted.is-selected .brazil-map__state {
+  fill: #f59e0b;
+  stroke: #b45309;
+}
+.brazil-map__state--merged {
+  fill: #b8d4e8;
+  stroke: #5a7a9a;
+}
+.brazil-map__labels.is-hidden {
+  display: none;
+}
+.brazil-map__label {
+  font-size: 7px;
+  font-weight: 600;
+  fill: #1e3a5f;
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: #fff;
+  stroke-width: 2px;
+}
+.brazil-map__label.is-hidden {
+  display: none;
+}
+/* Modo: regiões */
+.brazil-map--mode-regions .region-norte .brazil-map__state { fill: #7dd3fc; stroke: #0284c7; }
+.brazil-map--mode-regions .region-nordeste .brazil-map__state { fill: #fcd34d; stroke: #d97706; }
+.brazil-map--mode-regions .region-centro-oeste .brazil-map__state { fill: #86efac; stroke: #16a34a; }
+.brazil-map--mode-regions .region-sudeste .brazil-map__state { fill: #c4b5fd; stroke: #7c3aed; }
+.brazil-map--mode-regions .region-sul .brazil-map__state { fill: #fdba74; stroke: #ea580c; }
+.brazil-map--mode-regions .brazil-map__state-group.is-selected .brazil-map__state {
+  filter: brightness(0.92);
+}
+.brazil-map__panel {
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+}
+.brazil-map__hint {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  margin: 0;
+}
+.brazil-map__capital-quiz.is-hidden {
+  display: none;
+}
+.brazil-map__capital-label {
+  display: block;
+  margin-bottom: 8px;
+}
+.brazil-map__capital-label-text {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+.brazil-map__capital-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-sizing: border-box;
+}
+.brazil-map__capital-input:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+.brazil-map__capital-prompt {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+.brazil-map--mode-capital_quiz .brazil-map__detail {
+  display: none;
+}
+.brazil-map__detail.is-hidden {
+  display: none;
+}
+.brazil-map__detail-name {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: var(--text);
+}
+.brazil-map__detail-meta {
+  margin: 0 0 8px;
+}
+.brazil-map__detail-meta dt {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+.brazil-map__detail-meta dd {
+  margin: 0;
+  font-weight: 500;
+}
+.brazil-map__detail-note {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-style: italic;
+}
+.brazil-map__caption {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-style: italic;
+}
+.quiz-item__visual .brazil-map {
+  margin: 0;
+}
+
+.capital-game__actions {
+  margin-top: 16px;
+}
+.capital-game__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.capital-game__stat {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+.capital-game__stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  margin-bottom: 4px;
+}
+.capital-game__score,
+.capital-game__timer {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.capital-game__victory {
+  margin-top: 16px;
+  padding: 16px;
+  background: #ecfdf5;
+  border: 1px solid #6ee7b7;
+  border-radius: var(--radius-md);
+  color: #065f46;
+}
+.capital-game__victory.is-hidden {
+  display: none;
+}
+.brazil-map__game-state-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--text);
+}
+.brazil-map__capital-feedback {
+  margin: 8px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.brazil-map__capital-submit {
+  margin-top: 8px;
+  width: 100%;
+}
+.brazil-map__state-group.is-completed .brazil-map__state {
+  fill: #22c55e;
+  stroke: #15803d;
+  stroke-width: 1;
+}
+.brazil-map__state-group.is-completed .brazil-map__state:hover {
+  fill: #16a34a;
+}
+.brazil-map--mode-capital_game .brazil-map__state-group.is-completed {
+  pointer-events: none;
+}
+.brazil-map--mode-capital_game .brazil-map__state-group.is-completed .brazil-map__state {
+  cursor: default;
+}
+
 @media (max-width: 640px) {
+  .brazil-map__layout {
+    grid-template-columns: 1fr;
+  }
   .review-section { padding: 16px; }
   .main-nav a { padding: 10px 12px; font-size: 0.9rem; }
 }
