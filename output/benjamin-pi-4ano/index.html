@@ -1,0 +1,2384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisão Multidisciplinar — Benjamin (4º ano)</title>
+
+  <!-- =========================================================
+       ESTILO
+       Organizado em blocos:
+       1. Variáveis e reset
+       2. Layout geral (header, nav, main)
+       3. Cards e seções retráteis (accordion)
+       4. Exercícios (múltipla escolha e resposta curta)
+       5. Feedback visual (acerto, erro, modelo)
+       6. Barra de progresso
+       7. Responsividade
+       ========================================================= -->
+  <style>
+    /* ---------- 1. Variáveis e reset ---------- */
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1f2937;
+      --text-soft: #4b5563;
+      --muted: #94a3b8;
+
+      --primary: #4f46e5;
+      --primary-soft: #eef2ff;
+      --primary-strong: #3730a3;
+
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --error: #ea580c;
+      --error-soft: #ffedd5;
+      --info: #0ea5e9;
+      --info-soft: #e0f2fe;
+
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 .4em; line-height: 1.25; color: var(--text); }
+    p { margin: 0 0 .8em; color: var(--text-soft); }
+    ul { margin: 0 0 .8em 1.2em; color: var(--text-soft); }
+    li { margin-bottom: .25em; }
+
+    button { font: inherit; cursor: pointer; }
+
+    /* ---------- 2. Layout geral ---------- */
+    .page-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 28px 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .page-header__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      color: white;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      margin-bottom: 6px;
+    }
+    .page-header .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+    .page-header .notice {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: white;
+      font-size: .9rem;
+    }
+
+    .nav-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-tabs__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 8px;
+      row-gap: 8px;
+    }
+    .nav-tabs button {
+      flex: 0 0 auto;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 500;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+      white-space: nowrap;
+    }
+    .nav-tabs button:hover {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      border-color: var(--primary-soft);
+    }
+    .nav-tabs button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+    }
+    .nav-tabs button .tab-icon {
+      margin-right: 6px;
+      opacity: .9;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* ---------- 3. Cards e seções retráteis ---------- */
+    .subject-panel { display: none; }
+    .subject-panel.active { display: block; animation: fadeIn .25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .subject-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .subject-header h2 {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subject-header .subject-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 700;
+    }
+
+    .accordion {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .accordion__header {
+      width: 100%;
+      background: var(--surface);
+      border: none;
+      text-align: left;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: background .15s ease;
+    }
+    .accordion__header:hover { background: var(--surface-soft); }
+    .accordion__header .chevron {
+      transition: transform .2s ease;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .accordion.open .accordion__header .chevron { transform: rotate(90deg); color: var(--primary); }
+
+    .accordion__body {
+      display: none;
+      padding: 4px 18px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .accordion.open .accordion__body { display: block; }
+
+    /* Switch Resumo / Conteúdo geral */
+    .content-switch {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 14px 0 8px;
+    }
+    .content-switch__btn {
+      border: none;
+      background: transparent;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease;
+    }
+    .content-switch__btn:hover { color: var(--primary-strong); }
+    .content-switch__btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
+    }
+    .content-view { display: none; }
+    .content-view.active { display: block; }
+
+    .section-intro {
+      background: var(--info-soft);
+      border-left: 4px solid var(--info);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin: 12px 0 16px;
+      color: #075985;
+    }
+
+    /* Tabelas dentro das seções (quadros de conjugação etc.) */
+    .accordion__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: .95rem;
+      background: var(--surface);
+    }
+    .accordion__body th,
+    .accordion__body td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .accordion__body th {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 600;
+    }
+    .accordion__body h3 {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      color: var(--primary-strong);
+    }
+    .accordion__body h3:first-child { margin-top: 6px; }
+
+    /* Caixas "Lembre-se" e "Atenção" */
+    .callout {
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin: 12px 0;
+      border-left: 4px solid;
+      font-size: .95rem;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout--remember {
+      background: var(--info-soft);
+      border-color: var(--info);
+      color: #075985;
+    }
+    .callout--attention {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+
+    /* Palavras destacadas (ex.: was, were, there was) */
+    .hl {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .95em;
+    }
+    .hl--ok  { background: var(--success-soft); color: #166534; }
+    .hl--no  { background: var(--error-soft);   color: #9a3412; }
+
+    /* ---------- 4. Exercícios ---------- */
+    .exercise {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 16px 14px;
+      margin-bottom: 14px;
+    }
+    .exercise__label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .exercise__question {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      white-space: pre-line;
+    }
+
+    /* Múltipla escolha */
+    .options { display: grid; gap: 8px; margin-bottom: 12px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .option:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .option input { margin-top: 4px; accent-color: var(--primary); }
+    .option.selected { border-color: var(--primary); background: var(--primary-soft); }
+    .option.correct { border-color: var(--success); background: var(--success-soft); }
+    .option.incorrect { border-color: var(--error); background: var(--error-soft); }
+
+    /* Resposta curta */
+    .short-answer textarea {
+      width: 100%;
+      min-height: 90px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font: inherit;
+      resize: vertical;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .short-answer textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    /* Botões dos exercícios */
+    .exercise__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-weight: 600;
+      font-size: .92rem;
+      transition: transform .1s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn--primary { background: var(--primary); color: white; }
+    .btn--primary:hover { background: var(--primary-strong); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--primary-strong);
+      border: 1px solid var(--primary-soft);
+    }
+    .btn--ghost:hover { background: var(--primary-soft); }
+
+    /* ---------- 5. Feedback ---------- */
+    .feedback {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback--success {
+      background: var(--success-soft);
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .feedback--error {
+      background: var(--error-soft);
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+    }
+    .feedback--info {
+      background: var(--info-soft);
+      color: #075985;
+      border: 1px solid #bae6fd;
+    }
+
+    .model-answer {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      background: #fef9c3;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      color: #78350f;
+    }
+    .model-answer.show { display: block; }
+    .model-answer h4 {
+      margin: 0 0 6px;
+      color: #78350f;
+      font-size: .95rem;
+    }
+
+    /* ---------- 6. Barra de progresso ---------- */
+    .progress {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+      min-width: 240px;
+    }
+    .progress__label {
+      font-size: .85rem;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress__bar {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-soft);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress__fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), #7c3aed);
+      transition: width .3s ease;
+    }
+
+    /* ---------- 7. Simulado da PI ---------- */
+    .nav-tabs button.tab--simulado {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .nav-tabs button.tab--simulado:hover { color: white; opacity: .92; }
+    .nav-tabs button.tab--simulado.active {
+      background: linear-gradient(135deg, #ea580c, #b45309);
+      box-shadow: 0 2px 6px rgba(234, 88, 12, .35);
+    }
+
+    .sim-text {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sim-text h3 {
+      color: var(--primary-strong);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .sim-text p { margin-bottom: .8em; }
+
+    .sim-block { margin-bottom: 22px; }
+    .sim-block__title {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+
+    .sim-question {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .sim-question__head {
+      font-size: .78rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+    .sim-question__text {
+      font-weight: 600;
+      color: var(--text);
+      margin: 4px 0 10px;
+    }
+
+    .sim-options { display: grid; gap: 6px; }
+    .sim-option {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .sim-option:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .sim-option input { margin-top: 4px; accent-color: var(--primary); }
+    .sim-option.selected   { border-color: var(--primary); background: var(--primary-soft); }
+    .sim-option.correct    { border-color: var(--success); background: var(--success-soft); }
+    .sim-option.incorrect  { border-color: var(--error);   background: var(--error-soft); }
+
+    .sim-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 20px;
+    }
+
+    .sim-result {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .sim-result.show { display: block; animation: fadeIn .25s ease; }
+    .sim-result h3 { color: var(--primary-strong); margin-bottom: 6px; }
+    .sim-result h4 { margin: 14px 0 8px; }
+    .sim-result__total {
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+    .sim-result__total strong { color: var(--primary-strong); }
+    .sim-result__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+    }
+    .sim-score {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      font-size: .92rem;
+    }
+    .sim-score strong { font-size: 1.05rem; }
+    .sim-score--ok  { border-color: #bbf7d0; background: var(--success-soft); }
+    .sim-score--ok  strong { color: var(--success); }
+    .sim-score--med { border-color: #fde68a; background: #fef9c3; }
+    .sim-score--med strong { color: #ca8a04; }
+    .sim-score--low { border-color: #fed7aa; background: var(--error-soft); }
+    .sim-score--low strong { color: var(--error); }
+
+    /* ---------- 8. Responsividade ---------- */
+    @media (max-width: 600px) {
+      .page-header { padding: 20px 16px; }
+      main { padding: 16px 14px 60px; }
+      .accordion__header { padding: 14px; font-size: .98rem; }
+      .exercise { padding: 14px; }
+      .subject-header h2 { font-size: 1.25rem; }
+      .sim-text { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. CABEÇALHO
+       ========================================================= -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <h1>Revisão Multidisciplinar — Benjamin (4º ano)</h1>
+      <p class="subtitle">
+        Um percurso de estudo para revisar os principais conteúdos da prova,
+        organizado por disciplina, com explicações, resumos e exercícios interativos.
+      </p>
+      <span class="notice">
+        Você pode seguir o percurso completo ou abrir apenas as partes que quiser revisar.
+      </span>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       2. NAVEGAÇÃO POR DISCIPLINAS
+       Os botões são gerados dinamicamente pelo JavaScript.
+       ========================================================= -->
+  <nav class="nav-tabs" aria-label="Disciplinas">
+    <div class="nav-tabs__inner" id="nav-tabs"></div>
+  </nav>
+
+  <!-- =========================================================
+       3. CONTEÚDO PRINCIPAL
+       Cada disciplina é renderizada como um <section> dentro de #content.
+       ========================================================= -->
+  <main id="content"></main>
+
+  <!-- =========================================================
+       SCRIPT
+       Organizado em blocos:
+       1. Dados das disciplinas (subjects)
+       2. Renderização de abas e painéis
+       3. Renderização de seções (accordion)
+       4. Renderização de exercícios (múltipla escolha + resposta curta)
+       5. Lógica de verificação de respostas
+       6. Cálculo de progresso
+       7. Inicialização
+       ========================================================= -->
+  <script>
+    /* =========================================================
+       1. DADOS DAS DISCIPLINAS
+       Para inserir conteúdo real depois, basta editar este objeto.
+       Cada disciplina tem:
+         - title: nome exibido
+         - icon: símbolo curto exibido na aba
+         - sections: { percurso, explicacao, resumo, dicas }
+         - exercises: [ { type, question, ... } ]
+
+       Tipos de exercício suportados:
+         - "multiple-choice":
+             { type, question, options: [...], correctAnswer: indice,
+               explanation, modelAnswer }
+         - "short-answer":
+             { type, question, keywords: [...], explanation, modelAnswer }
+       ========================================================= */
+    const subjects = {
+    portugues: {
+        title: "Língua Portuguesa",
+        icon: "PT",
+        sections: {
+            percurso: `
+            <p>Conteúdo do <strong>Módulo 7 — O direito de reclamar</strong>: carta de reclamação, e-mail formal,
+            tempos verbais do indicativo, locuções verbais e concordância verbal.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Carta de reclamação</h3>
+            <p>É um texto em que alguém <strong>reclama</strong> de um produto ou serviço com defeito ou
+            que não cumpriu o prometido. Pode ser publicada em sites como o ReclameAQUI ou enviada por e-mail.</p>
+            <ul>
+              <li>Apresente <strong>quem</strong> reclama, <strong>o quê</strong> aconteceu, <strong>quando</strong> e <strong>onde</strong>.</li>
+              <li>Descreva o problema com clareza (ex.: boneca com cabelo repicado).</li>
+              <li>Peça uma solução: troca, conserto ou devolução do dinheiro.</li>
+            </ul>
+
+            <h3>2. E-mail formal</h3>
+            <p>Assunto objetivo · saudação · corpo organizado · despedida · assinatura com nome completo.</p>
+
+            <h3>3. Tempos verbais do indicativo</h3>
+            <p>O modo indicativo mostra fatos <strong>certos</strong> no passado, presente ou futuro:</p>
+            <ul>
+              <li><span class="hl">Pretérito</span> — já aconteceu: <em>A mãe comprou uma boneca.</em></li>
+              <li><span class="hl">Presente</span> — acontece agora ou é habitual: <em>Eles jogam bola.</em></li>
+              <li><span class="hl">Futuro</span> — vai acontecer: <em>Eu vou reclamar amanhã.</em></li>
+            </ul>
+
+            <h3>4. Locuções verbais</h3>
+            <p>Dois verbos juntos indicam tempo e ação: <em>está jogando</em> (presente), <em>estava jogando</em> (passado),
+            <em>vai jogar</em> ou <em>estará jogando</em> (futuro).</p>
+
+            <h3>5. Concordância verbal</h3>
+            <p>O verbo concorda com o <strong>sujeito</strong> em número e pessoa:</p>
+            <ul>
+              <li><em>A mãe comprou</em> → <em>As mães compraram</em></li>
+              <li><em>Eu comprei</em> · <em>Nós compramos</em></li>
+            </ul>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Na carta de reclamação, o problema geralmente está no <strong>passado</strong>, mas a pergunta
+              «E aí, o que vão fazer?» aponta para uma ação <strong>futura</strong> da empresa.
+            </div>`,
+            resumo: `
+            <h3>Gêneros — Módulo 7</h3>
+            <table>
+              <thead><tr><th>Gênero</th><th>Função</th><th>Partes principais</th></tr></thead>
+              <tbody>
+                <tr><td>Carta de reclamação</td><td>Reclamar de produto/serviço</td><td>Fato · problema · pedido de solução</td></tr>
+                <tr><td>E-mail formal</td><td>Comunicação organizada</td><td>Assunto · corpo · despedida · assinatura</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Tempos do indicativo</h3>
+            <table>
+              <thead><tr><th>Tempo</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Pretérito</td><td>O cabelo <span class="hl">caiu</span> e ela <span class="hl">veio</span> descobrir o defeito.</td></tr>
+                <tr><td>Presente</td><td>O cabelo <span class="hl">cai</span> e ela <span class="hl">vê</span> o defeito.</td></tr>
+                <tr><td>Futuro</td><td>O cabelo <span class="hl">cairá</span> e ela <span class="hl">virá</span> a descobrir.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Concordância verbal</h3>
+            <p>Verbo muda conforme o sujeito: singular/plural e 1ª, 2ª ou 3ª pessoa.</p>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              «Consolidada» = firme, respeitada · «Inadmissível» = inaceitável.
+            </div>`,
+            dicas: `
+            <ul>
+              <li>Leia o enunciado inteiro antes de marcar tempo verbal ou concordância.</li>
+              <li>Identifique o <strong>sujeito</strong> antes de escolher a forma do verbo.</li>
+              <li>Em carta de reclamação, separe o que já aconteceu (passado) do que se espera (futuro).</li>
+              <li>Em e-mail, o assunto deve resumir o problema em poucas palavras.</li>
+              <li>Locuções verbais têm verbo auxiliar + verbo principal: observe os dois.</li>
+              <li>Releia a frase substituindo o sujeito por «ele/ela/eles» para testar a concordância.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Na carta publicada no ReclameAQUI, qual é o principal problema relatado?",
+                options: [
+                    "A loja fechou antes do horário",
+                    "A boneca tinha o cabelo repicado sob o chapéu",
+                    "A menina não gostou da cor da boneca",
+                    "O site não aceitou a reclamação"
+                ],
+                correctAnswer: 1,
+                explanation: "A mãe comprou a boneca e, ao tirar o chapéu, viu o cabelo totalmente repicado.",
+                modelAnswer: "Resposta correta: a boneca tinha o cabelo repicado sob o chapéu."
+            },
+            {
+                type: "multiple-choice",
+                question: "O que significa «inadmissível» no contexto da carta?",
+                options: [
+                    "Muito caro",
+                    "Inaceitável",
+                    "Consolidado",
+                    "Repicado"
+                ],
+                correctAnswer: 1,
+                explanation: "Inadmissível = inaceitável — o defeito não deveria existir em um produto novo.",
+                modelAnswer: "Resposta correta: inaceitável."
+            },
+            {
+                type: "multiple-choice",
+                question: "«No meio do caminho, o chapeuzinho caiu.» — Qual tempo verbal está sublinhado?",
+                options: [
+                    "Presente",
+                    "Pretérito perfeito",
+                    "Futuro",
+                    "Infinitivo"
+                ],
+                correctAnswer: 1,
+                explanation: "«Caiu» indica ação concluída no passado — pretérito perfeito do indicativo.",
+                modelAnswer: "Resposta correta: pretérito perfeito."
+            },
+            {
+                type: "multiple-choice",
+                question: "Reescreva mentalmente no presente: «A mãe comprou uma boneca.» Fica:",
+                options: [
+                    "A mãe comprará uma boneca.",
+                    "A mãe compra uma boneca.",
+                    "A mãe compraram uma boneca.",
+                    "A mãe comprava uma boneca."
+                ],
+                correctAnswer: 1,
+                explanation: "No presente, o verbo concorda com «A mãe» (3ª pessoa do singular): compra.",
+                modelAnswer: "Resposta correta: A mãe compra uma boneca."
+            },
+            {
+                type: "multiple-choice",
+                question: "«E aí, o que vão fazer?» — O tempo verbal indica:",
+                options: [
+                    "Passado",
+                    "Presente",
+                    "Futuro",
+                    "Imperativo"
+                ],
+                correctAnswer: 2,
+                explanation: "A pergunta espera uma ação que a empresa ainda realizará — futuro do indicativo.",
+                modelAnswer: "Resposta correta: futuro."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual frase está com concordância verbal correta?",
+                options: [
+                    "As mães compra bonecas.",
+                    "A mãe compraram boneca.",
+                    "As mães compraram bonecas.",
+                    "Eu compramos boneca."
+                ],
+                correctAnswer: 2,
+                explanation: "Sujeito plural «As mães» exige verbo no plural: compraram.",
+                modelAnswer: "Resposta correta: As mães compraram bonecas."
+            },
+            {
+                type: "short-answer",
+                question: "Cite duas informações que não podem faltar numa carta de reclamação.",
+                keywords: [
+                    "problema",
+                    "produto",
+                    "quando",
+                    "onde",
+                    "solução",
+                    "defeito"
+                ],
+                explanation: "A carta deve deixar claro o que foi comprado, o defeito e o que se espera como solução.",
+                modelAnswer: "Resposta esperada: descrição do problema/defeito e pedido de solução (troca, conserto ou reembolso). Também vale mencionar data, local da compra ou identificação do produto."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual opção é uma locução verbal no presente?",
+                options: [
+                    "jogou bola",
+                    "está jogando bola",
+                    "jogará bola",
+                    "jogava bola"
+                ],
+                correctAnswer: 1,
+                explanation: "«Está jogando» = auxiliar no presente + gerúndio — locução verbal.",
+                modelAnswer: "Resposta correta: está jogando bola."
+            }
+        ]
+    },
+    historia: {
+        title: "História",
+        icon: "HI",
+        sections: {
+            percurso: `
+            <p>Conteúdo do <strong>Módulo 6 — A conquista de territórios</strong>: Grandes Navegações,
+            instrumentos de navegação, rotas marítimas e conquistas portuguesas (Ceuta, Índia, Brasil).</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Grandes Navegações</h3>
+            <p>No século XV, europeus — especialmente portugueses — passaram a navegar longas distâncias
+            pelo Atlântico e Índico em busca de <strong>rotas comerciais</strong>, especiarias e territórios.</p>
+
+            <h3>2. Instrumentos de navegação</h3>
+            <ul>
+              <li><span class="hl">Bússola</span> — indica o Norte com agulha magnetizada e rosa dos ventos.</li>
+              <li><span class="hl">Astrolábio</span> — mede a altura do Sol ao meio-dia para calcular posição.</li>
+              <li><span class="hl">Quadrante</span> — ajuda a medir a altura da Estrela Polar.</li>
+            </ul>
+            <p>Antes de embarcar, navegantes estudavam mapas antigos e aprimoravam esses instrumentos.</p>
+
+            <h3>3. Caravelas</h3>
+            <p>Navios ágeis, com velas triangulares, usados nas viagens de descoberta e comércio.</p>
+
+            <h3>4. Marcos das navegações portuguesas</h3>
+            <ul>
+              <li><strong>1415</strong> — conquista de <span class="hl">Ceuta</span> (início da expansão marítima).</li>
+              <li><strong>1498</strong> — <span class="hl">Vasco da Gama</span> chega às Índias contornando a África.</li>
+              <li><strong>1500</strong> — <span class="hl">Pedro Álvares Cabral</span> chega ao Brasil.</li>
+            </ul>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Perigos <em>reais</em> no mar: tempestades, falta de alimento. Perigos <em>imaginários</em> nos mapas antigos:
+              monstros marinhos desenhados por desconhecimento.
+            </div>`,
+            resumo: `
+            <h3>Grandes Navegações — síntese</h3>
+            <table>
+              <thead><tr><th>Conceito</th><th>Ideia-chave</th></tr></thead>
+              <tbody>
+                <tr><td>Objetivo</td><td>Novas rotas comerciais · especiarias · territórios</td></tr>
+                <tr><td>Navio</td><td>Caravela — velas triangulares · ágil</td></tr>
+                <tr><td>Bússola</td><td>Localizar o Norte · rosa dos ventos</td></tr>
+                <tr><td>Astrolábio / Quadrante</td><td>Medir posição pelo Sol ou Estrela Polar</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Datas importantes</h3>
+            <table>
+              <thead><tr><th>Ano</th><th>Evento</th></tr></thead>
+              <tbody>
+                <tr><td>1415</td><td>Conquista de Ceuta</td></tr>
+                <tr><td>1498</td><td>Vasco da Gama chega à Índia</td></tr>
+                <tr><td>1500</td><td>Cabral chega ao Brasil</td></tr>
+              </tbody>
+            </table>`,
+            dicas: `
+            <ul>
+              <li>Associe cada instrumento à função: bússola = direção · astrolábio/quadrante = posição.</li>
+              <li>Não confunda Vasco da Gama (Índia, 1498) com Cabral (Brasil, 1500).</li>
+              <li>Em questões com imagem de mapa antigo, monstros marinhos são medo do desconhecido, não fatos.</li>
+              <li>Ceuta (1415) marca o início da expansão marítima portuguesa.</li>
+              <li>Caravelas permitiam voltar contra o vento — essencial nas longas viagens.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "O que foram as Grandes Navegações?",
+                options: [
+                    "Guerras apenas dentro da Europa",
+                    "Expedições marítimas europeias em busca de rotas e comércio",
+                    "Viagens feitas só por navios a vapor",
+                    "Rotas terrestres pela Ásia"
+                ],
+                correctAnswer: 1,
+                explanation: "Grandes Navegações = viagens marítimas de longa distância, especialmente a partir do século XV.",
+                modelAnswer: "Resposta correta: expedições marítimas europeias em busca de rotas e comércio."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual instrumento indica a direção do Norte?",
+                options: [
+                    "Astrolábio",
+                    "Quadrante",
+                    "Bússola",
+                    "Telescópio"
+                ],
+                correctAnswer: 2,
+                explanation: "A bússola usa agulha magnetizada apontando para o Norte.",
+                modelAnswer: "Resposta correta: bússola."
+            },
+            {
+                type: "multiple-choice",
+                question: "Em que ano os portugueses conquistaram Ceuta?",
+                options: [
+                    "1500",
+                    "1415",
+                    "1498",
+                    "1320"
+                ],
+                correctAnswer: 1,
+                explanation: "Ceuta foi conquistada em 1415, marco inicial da expansão portuguesa.",
+                modelAnswer: "Resposta correta: 1415."
+            },
+            {
+                type: "multiple-choice",
+                question: "Quem chegou ao Brasil em 1500?",
+                options: [
+                    "Vasco da Gama",
+                    "Cristóvão Colombo",
+                    "Pedro Álvares Cabral",
+                    "Fernão de Magalhães"
+                ],
+                correctAnswer: 2,
+                explanation: "Pedro Álvares Cabral comandou a expedição que chegou ao território brasileiro em 1500.",
+                modelAnswer: "Resposta correta: Pedro Álvares Cabral."
+            },
+            {
+                type: "multiple-choice",
+                question: "Vasco da Gama é associado principalmente a:",
+                options: [
+                    "A conquista de Ceuta",
+                    "A chegada às Índias contornando a África",
+                    "A descoberta do Brasil",
+                    "A invenção da bússola"
+                ],
+                correctAnswer: 1,
+                explanation: "Em 1498, Vasco da Gama alcançou as Índias pelo cabo da Boa Esperança.",
+                modelAnswer: "Resposta correta: a chegada às Índias contornando a África."
+            },
+            {
+                type: "short-answer",
+                question: "Cite um perigo real e um perigo imaginário que aparecem em mapas antigos de navegação.",
+                keywords: [
+                    "tempestade",
+                    "monstro",
+                    "fome",
+                    "mar",
+                    "imaginário",
+                    "real"
+                ],
+                explanation: "Perigos reais: tempestades, falta de comida. Imaginários: monstros marinhos desenhados por medo/desconhecimento.",
+                modelAnswer: "Resposta esperada: perigo real — tempestade ou falta de provisões; imaginário — monstros marinhos."
+            },
+            {
+                type: "multiple-choice",
+                question: "Para que servia o astrolábio?",
+                options: [
+                    "Medir a temperatura do mar",
+                    "Calcular posição pela altura do Sol",
+                    "Medir a profundidade",
+                    "Prever terremotos"
+                ],
+                correctAnswer: 1,
+                explanation: "O astrolábio media a altura do Sol ao meio-dia para estimar a posição do navio.",
+                modelAnswer: "Resposta correta: calcular posição pela altura do Sol."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual navio é símbolo das Grandes Navegações portuguesas?",
+                options: [
+                    "Transatlântico",
+                    "Caravela",
+                    "Barca a remo",
+                    "Submarino"
+                ],
+                correctAnswer: 1,
+                explanation: "As caravelas eram navios ágeis usados nas viagens de descoberta.",
+                modelAnswer: "Resposta correta: caravela."
+            }
+        ]
+    },
+    geografia: {
+        title: "Geografia",
+        icon: "GE",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 7 e 8</strong>: divisas e conflitos territoriais, cartografia moderna (VANT, satélites),
+            IBGE, regiões do Brasil, estados, capitais e necessidades regionais.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Divisas e demarcação</h3>
+            <p><span class="hl">Divisa</span> é a linha que separa estados ou municípios. Quando o mapa é impreciso ou antigo,
+            podem surgir <strong>conflitos</strong> — moradores e prefeituras discordam sobre a qual estado pertencem.</p>
+            <p>A Constituição de 1988 prevê que estados resolvam essas disputas; mapas precisos ajudam nisso.</p>
+
+            <h3>2. Cartografia hoje</h3>
+            <p>Tecnologias como <strong>satélites</strong> e <strong>VANTs</strong> (drones) produzem mapas mais rápidos e exatos
+            do que desenhos antigos feitos à mão.</p>
+
+            <h3>3. IBGE</h3>
+            <p><span class="hl">Instituto Brasileiro de Geografia e Estatística</span> — criado em 1937. Faz censo a cada 10 anos,
+            estuda território, população e condições de vida.</p>
+
+            <h3>4. Regiões do Brasil</h3>
+            <p>O Brasil tem <strong>5 regiões</strong>: Norte, Nordeste, Centro-Oeste, Sudeste e Sul.</p>
+            <ul>
+              <li>Maior <strong>área</strong>: Norte</li>
+              <li>Maior <strong>população</strong>: Sudeste</li>
+            </ul>
+
+            <h3>5. Estados e capitais</h3>
+            <p>27 unidades federativas (26 estados + DF). Cada estado tem uma <strong>capital</strong> — sede do governo estadual.</p>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Obras públicas (hospitais, rodovias, escolas) dependem do tamanho da população e das necessidades de cada região.
+            </div>`,
+            resumo: `
+            <h3>IBGE — dados-chave</h3>
+            <table>
+              <thead><tr><th>Item</th><th>Informação</th></tr></thead>
+              <tbody>
+                <tr><td>Sigla</td><td>Instituto Brasileiro de Geografia e Estatística</td></tr>
+                <tr><td>Criação</td><td>1937</td></tr>
+                <tr><td>Funções</td><td>Censo · estatísticas · estudo do território</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Regiões brasileiras</h3>
+            <table>
+              <thead><tr><th>Região</th><th>Destaque</th></tr></thead>
+              <tbody>
+                <tr><td>Norte</td><td>Maior área</td></tr>
+                <tr><td>Sudeste</td><td>Maior população</td></tr>
+                <tr><td>Nordeste · Sul · Centro-Oeste</td><td>Necessidades específicas de infraestrutura</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Capitais (exemplos)</h3>
+            <table>
+              <thead><tr><th>Estado</th><th>Capital</th></tr></thead>
+              <tbody>
+                <tr><td>Espírito Santo</td><td>Vitória</td></tr>
+                <tr><td>Pará</td><td>Belém</td></tr>
+                <tr><td>Maranhão</td><td>São Luís</td></tr>
+                <tr><td>Santa Catarina</td><td>Florianópolis</td></tr>
+                <tr><td>Goiás</td><td>Goiânia</td></tr>
+              </tbody>
+            </table>`,
+            dicas: `
+            <ul>
+              <li>IBGE ≠ «Instituto Brasileiro de Gestão» — leia todas as alternativas.</li>
+              <li>Brasil = 5 regiões · 27 UFs (inclui DF).</li>
+              <li>Mapa antigo × foto de satélite: diferença = tecnologia e precisão.</li>
+              <li>Conflitos de divisas geram problemas para municípios (escolas, hospitais).</li>
+              <li>Associe obras públicas às necessidades locais e ao tamanho da população.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "O que significa a sigla IBGE?",
+                options: [
+                    "Instituto Brasileiro de Gestão Escolar",
+                    "Instituto Brasileiro de Geografia e Estatística",
+                    "Instituto Brasileiro de Geologia e Energia",
+                    "Instituto Brasileiro de Governo e Educação"
+                ],
+                correctAnswer: 1,
+                explanation: "IBGE = Instituto Brasileiro de Geografia e Estatística.",
+                modelAnswer: "Resposta correta: Instituto Brasileiro de Geografia e Estatística."
+            },
+            {
+                type: "multiple-choice",
+                question: "Quantas regiões formam o Brasil hoje?",
+                options: [
+                    "4",
+                    "5",
+                    "6",
+                    "27"
+                ],
+                correctAnswer: 1,
+                explanation: "O Brasil está dividido em 5 grandes regiões.",
+                modelAnswer: "Resposta correta: 5."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual região tem a maior área territorial?",
+                options: [
+                    "Sudeste",
+                    "Sul",
+                    "Norte",
+                    "Nordeste"
+                ],
+                correctAnswer: 2,
+                explanation: "A região Norte possui a maior extensão de território.",
+                modelAnswer: "Resposta correta: Norte."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual é a capital do Espírito Santo?",
+                options: [
+                    "Belém",
+                    "Vitória",
+                    "Goiânia",
+                    "Florianópolis"
+                ],
+                correctAnswer: 1,
+                explanation: "Vitória é a capital do Espírito Santo.",
+                modelAnswer: "Resposta correta: Vitória."
+            },
+            {
+                type: "multiple-choice",
+                question: "Por que mapas imprecisos causam conflitos entre estados?",
+                options: [
+                    "Porque mudam a cor da bandeira",
+                    "Porque dificultam saber a qual estado pertence cada município",
+                    "Porque apagam os rios",
+                    "Porque somem as capitais"
+                ],
+                correctAnswer: 1,
+                explanation: "Sem demarcação clara, municípios podem ficar sem apoio do estado correto.",
+                modelAnswer: "Resposta correta: dificultam saber a qual estado pertence cada município."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual tecnologia ajuda a produzir mapas mais precisos hoje?",
+                options: [
+                    "Apenas lápis e papel",
+                    "Satélites e VANTs (drones)",
+                    "Somente bússolas",
+                    "Pinturas rupestres"
+                ],
+                correctAnswer: 1,
+                explanation: "Satélites e drones fotografam o território com alta precisão.",
+                modelAnswer: "Resposta correta: satélites e VANTs (drones)."
+            },
+            {
+                type: "short-answer",
+                question: "Qual região brasileira concentra a maior população?",
+                keywords: [
+                    "sudeste",
+                    "Sudeste"
+                ],
+                explanation: "A região Sudeste concentra o maior número de habitantes.",
+                modelAnswer: "Resposta esperada: Sudeste."
+            },
+            {
+                type: "multiple-choice",
+                question: "O IBGE realiza o censo da população a cada quantos anos?",
+                options: [
+                    "5",
+                    "10",
+                    "15",
+                    "20"
+                ],
+                correctAnswer: 1,
+                explanation: "O censo demográfico brasileiro é feito a cada 10 anos.",
+                modelAnswer: "Resposta correta: 10."
+            }
+        ]
+    },
+    ciencias: {
+        title: "Ciências",
+        icon: "CI",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 9 e 10</strong>: cadeias alimentares na horta, predadores e presas,
+            decompositores, microrganismos, higiene alimentar e compostagem/lixo orgânico.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Cadeia alimentar</h3>
+            <p>Mostra quem come quem. Exemplo na horta:</p>
+            <ul>
+              <li><span class="hl">Produtores</span> — plantas (tomate, alface, morango).</li>
+              <li><span class="hl">Consumidores</span> — lagartas, pulgões, percevejos (herbívoros).</li>
+              <li><span class="hl">Predadores</span> — joaninhas (comem pulgões), papa-lagartas (comem lagartas).</li>
+              <li><span class="hl">Decompositores</span> — fungos, bactérias e minhocas reciclam matéria orgânica no solo.</li>
+            </ul>
+
+            <h3>2. Polinizadores</h3>
+            <p>Abelhas visitam flores e ajudam na reprodução das plantas — relação benéfica para ambos.</p>
+
+            <h3>3. Microrganismos patogênicos</h3>
+            <p>Alguns fungos, bactérias e vírus causam doenças — são <strong>patogênicos</strong> quando prejudicam a saúde.</p>
+
+            <h3>4. Higienização de hortaliças</h3>
+            <ol>
+              <li>Retirar partes estragadas</li>
+              <li>Lavar em água corrente</li>
+              <li>Deixar em solução clorada por 15 minutos (desinfecção)</li>
+              <li>Enxaguar em água potável</li>
+              <li>Secar com papel-toalha ou ao ar</li>
+            </ol>
+
+            <h3>5. Compostagem</h3>
+            <p>Restos orgânicos (cascas, folhas) viram adubo com ajuda de decompositores — reduz lixo e nutre a horta.</p>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Limpeza remove sujeira visível; <strong>desinfecção</strong> reduz microrganismos que a limpeza não eliminou.
+            </div>`,
+            resumo: `
+            <h3>Cadeia alimentar — papéis</h3>
+            <table>
+              <thead><tr><th>Papel</th><th>Exemplo na horta</th></tr></thead>
+              <tbody>
+                <tr><td>Produtor</td><td>Tomate, alface, morango</td></tr>
+                <tr><td>Herbívoro</td><td>Lagarta, pulgão</td></tr>
+                <tr><td>Predador</td><td>Joaninha, papa-lagartas</td></tr>
+                <tr><td>Decompositor</td><td>Minhoca, fungos, bactérias</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Higienização — 5 passos</h3>
+            <p>Retirar estragados → lavar → cloro 15 min → enxaguar → secar</p>
+
+            <h3>Vocabulário</h3>
+            <ul>
+              <li><strong>Patogênico</strong> — causa doença</li>
+              <li><strong>Desinfecção</strong> — elimina microrganismos restantes</li>
+              <li><strong>Compostagem</strong> — reciclar restos orgânicos em adubo</li>
+            </ul>`,
+            dicas: `
+            <ul>
+              <li>Produtor sempre é ser vivo que faz fotossíntese (plantas, algas).</li>
+              <li>Decompositores fecham a cadeia — sem eles, restos acumulam no solo.</li>
+              <li>Joaninha é predadora de pulgão — não confunda com herbívoro.</li>
+              <li>Higienização ≠ só lavar: desinfecção com cloro é etapa extra.</li>
+              <li>Compostagem liga lixo orgânico à saúde da horta.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Na horta, quem são os produtores?",
+                options: [
+                    "Lagartas",
+                    "Plantas como tomate e alface",
+                    "Papa-lagartas",
+                    "Minhocas"
+                ],
+                correctAnswer: 1,
+                explanation: "Produtores produzem alimento por fotossíntese — as plantas da horta.",
+                modelAnswer: "Resposta correta: plantas como tomate e alface."
+            },
+            {
+                type: "multiple-choice",
+                question: "A joaninha na folha de alface é:",
+                options: [
+                    "Produtora",
+                    "Herbívora",
+                    "Predadora de pulgões",
+                    "Decompositora"
+                ],
+                correctAnswer: 2,
+                explanation: "Joaninhas comem pulgões — são predadoras.",
+                modelAnswer: "Resposta correta: predadora de pulgões."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual ser vivo decompõe restos orgânicos no solo?",
+                options: [
+                    "Abelha",
+                    "Minhoca",
+                    "Percevejo",
+                    "Tomate"
+                ],
+                correctAnswer: 1,
+                explanation: "Minhocas, fungos e bactérias decompõem matéria orgânica.",
+                modelAnswer: "Resposta correta: minhoca."
+            },
+            {
+                type: "multiple-choice",
+                question: "O que significa «patogênico»?",
+                options: [
+                    "Que ajuda na polinização",
+                    "Que pode causar doença",
+                    "Que faz fotossíntese",
+                    "Que vive só no mar"
+                ],
+                correctAnswer: 1,
+                explanation: "Patogênico = prejudicial à saúde, capaz de causar doença.",
+                modelAnswer: "Resposta correta: que pode causar doença."
+            },
+            {
+                type: "multiple-choice",
+                question: "Quantos minutos as hortaliças devem ficar na solução clorada?",
+                options: [
+                    "5",
+                    "10",
+                    "15",
+                    "60"
+                ],
+                correctAnswer: 2,
+                explanation: "O caderno indica imersão na solução clorada por 15 minutos.",
+                modelAnswer: "Resposta correta: 15."
+            },
+            {
+                type: "short-answer",
+                question: "Cite dois microrganismos que podem representar risco à saúde nos alimentos.",
+                keywords: [
+                    "bactéria",
+                    "bacteria",
+                    "vírus",
+                    "virus",
+                    "fungo",
+                    "fungos"
+                ],
+                explanation: "Bactérias, vírus e fungos patogênicos podem contaminar alimentos.",
+                modelAnswer: "Resposta esperada: bactérias e vírus (ou fungos)."
+            },
+            {
+                type: "multiple-choice",
+                question: "Para que serve a compostagem?",
+                options: [
+                    "Aumentar lixo na lixeira",
+                    "Transformar restos orgânicos em adubo",
+                    "Eliminar plantas",
+                    "Atrair predadores"
+                ],
+                correctAnswer: 1,
+                explanation: "Compostagem recicla restos orgânicos em adubo para a horta.",
+                modelAnswer: "Resposta correta: transformar restos orgânicos em adubo."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual relação descreve abelha e flor de morango?",
+                options: [
+                    "Predação",
+                    "Polinização benéfica",
+                    "Decomposição",
+                    "Competição por solo"
+                ],
+                correctAnswer: 1,
+                explanation: "Abelhas polinizam flores enquanto buscam néctar — relação benéfica.",
+                modelAnswer: "Resposta correta: polinização benéfica."
+            }
+        ]
+    },
+    matematica: {
+        title: "Matemática",
+        icon: "MA",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 17, 19, 20 e 21</strong>: sequências repetitivas e recursivas,
+            igualdade e equivalência, multiplicação e quadriláteros.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Sequências repetitivas</h3>
+            <p>Têm um <strong>motivo</strong> que se repete: ▲▲● ▲▲● ▲▲●… (dois triângulos e um círculo).</p>
+
+            <h3>2. Sequências recursivas</h3>
+            <p>Cada termo segue uma <strong>regra de crescimento</strong>: 0, 2, 4, 6… (+2 a cada passo) ou figuras
+            que ganham 1 triângulo por vez.</p>
+
+            <h3>3. Igualdade e equivalência</h3>
+            <p>Duas expressões são equivalentes quando têm o <strong>mesmo valor</strong>:</p>
+            <ul>
+              <li>75 + 35 + 5 = 80 + 35 (somamos 5 aos 75 para chegar a 80)</li>
+              <li>87 − 49 ≠ 77 − 49 (lados diferentes após compensação errada)</li>
+            </ul>
+            <p>Se Ana e Francisco começam com o mesmo dinheiro e terminam iguais, diferenças nas compras se compensam.</p>
+
+            <h3>4. Multiplicação</h3>
+            <p>Revisar fatos, decomposição e problemas do caderno (Módulo 20).</p>
+
+            <h3>5. Quadriláteros</h3>
+            <p>Polígonos de <strong>4 lados</strong>: quadrado, retângulo, paralelogramo, trapézio, losango.
+            Observe lados paralelos e ângulos retos.</p>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Antes de marcar = ou ≠, calcule ou simplifique os dois lados da expressão.
+            </div>`,
+            resumo: `
+            <h3>Sequências</h3>
+            <table>
+              <thead><tr><th>Tipo</th><th>Característica</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Repetitiva</td><td>Motivo que se repete</td><td>▲▲● ▲▲● …</td></tr>
+                <tr><td>Recursiva</td><td>Cresce ou diminui por regra fixa</td><td>0, 2, 4, 6… (+2)</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Igualdade</h3>
+            <p>Mesma mudança nos dois lados mantém a igualdade. Calcule antes de comparar.</p>
+
+            <h3>Quadriláteros</h3>
+            <table>
+              <thead><tr><th>Figura</th><th>Traço principal</th></tr></thead>
+              <tbody>
+                <tr><td>Quadrado</td><td>4 lados iguais · 4 ângulos retos</td></tr>
+                <tr><td>Retângulo</td><td>Lados opostos iguais · 4 ângulos retos</td></tr>
+                <tr><td>Paralelogramo</td><td>Lados opostos paralelos</td></tr>
+                <tr><td>Trapézio</td><td>Um par de lados paralelos</td></tr>
+              </tbody>
+            </table>`,
+            dicas: `
+            <ul>
+              <li>Sequência repetitiva: circule o bloco que volta a aparecer.</li>
+              <li>Sequência recursiva: descubra o que muda de um termo ao próximo.</li>
+              <li>Em igualdades, faça a conta dos dois lados antes de decidir.</li>
+              <li>Problemas de dinheiro: «sobra igual» significa que gastos diferentes se compensam.</li>
+              <li>Quadrilátero = 4 lados — conte antes de classificar.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Na sequência ▲▲● ▲▲● ▲▲●, o tipo é:",
+                options: [
+                    "Recursiva",
+                    "Repetitiva",
+                    "Aleatória",
+                    "Decrescente"
+                ],
+                correctAnswer: 1,
+                explanation: "O bloco ▲▲● se repete — sequência repetitiva.",
+                modelAnswer: "Resposta correta: repetitiva."
+            },
+            {
+                type: "multiple-choice",
+                question: "Na sequência 0, 2, 4, 6, 8… qual é a regra?",
+                options: [
+                    "Multiplicar por 2",
+                    "Somar 2 a cada termo",
+                    "Subtrair 2",
+                    "Repetir 0 e 2"
+                ],
+                correctAnswer: 1,
+                explanation: "Cada termo aumenta 2 unidades — sequência recursiva de crescimento.",
+                modelAnswer: "Resposta correta: somar 2 a cada termo."
+            },
+            {
+                type: "multiple-choice",
+                question: "75 + 35 + 5 = 80 + 35. A igualdade é:",
+                options: [
+                    "Verdadeira",
+                    "Falsa",
+                    "Impossível saber",
+                    "Só verdadeira se 5 = 0"
+                ],
+                correctAnswer: 0,
+                explanation: "75 + 5 = 80, então os dois lados valem 115.",
+                modelAnswer: "Resposta correta: verdadeira."
+            },
+            {
+                type: "multiple-choice",
+                question: "87 − 49 = 77 − 49. A igualdade é:",
+                options: [
+                    "Verdadeira",
+                    "Falsa",
+                    "Verdadeira só no domingo",
+                    "Verdadeira se 49 = 0"
+                ],
+                correctAnswer: 1,
+                explanation: "87 − 49 = 38, mas 77 − 49 = 28 — valores diferentes.",
+                modelAnswer: "Resposta correta: falsa."
+            },
+            {
+                type: "multiple-choice",
+                question: "Ana Clara gastou R$ 52 em um livro e Francisco R$ 45. Começaram com o mesmo dinheiro e sobraram iguais. O lanche de Francisco:",
+                options: [
+                    "Custou R$ 7 a menos que o de Ana",
+                    "Custou R$ 7 a mais que o de Ana",
+                    "Foi de graça",
+                    "Custou o dobro"
+                ],
+                correctAnswer: 1,
+                explanation: "Francisco gastou R$ 7 a menos no livro, então gastou R$ 7 a mais no lanche para sobrar igual.",
+                modelAnswer: "Resposta correta: custou R$ 7 a mais que o de Ana."
+            },
+            {
+                type: "multiple-choice",
+                question: "Thomas tinha R$ 170, gastou R$ 120 na mochila e sobrou R$ 50. Ricardo gastou R$ 80 e também sobrou R$ 50. Ricardo tinha:",
+                options: [
+                    "R$ 100",
+                    "R$ 120",
+                    "R$ 130",
+                    "R$ 150"
+                ],
+                correctAnswer: 2,
+                explanation: "Ricardo: valor inicial − 80 = 50 → inicial = 130.",
+                modelAnswer: "Resposta correta: R$ 130."
+            },
+            {
+                type: "multiple-choice",
+                question: "Quantos lados tem um quadrilátero?",
+                options: [
+                    "3",
+                    "4",
+                    "5",
+                    "6"
+                ],
+                correctAnswer: 1,
+                explanation: "Quadrilátero = polígono de 4 lados.",
+                modelAnswer: "Resposta correta: 4."
+            },
+            {
+                type: "short-answer",
+                question: "Qual figura tem 4 lados iguais e 4 ângulos retos?",
+                keywords: [
+                    "quadrado",
+                    "Quadrado"
+                ],
+                explanation: "Quadrado tem 4 lados congruentes e 4 ângulos de 90°.",
+                modelAnswer: "Resposta esperada: quadrado."
+            }
+        ]
+    }
+};
+
+
+    /* Modelo padrão de seções (na ordem em que devem aparecer).
+       Para mudar nomes ou ordem, basta editar este array.
+       A seção "conteudo" agrupa Resumo + Explicação geral, com switch
+       (Resumo aparece por padrão). */
+    const SECTION_TEMPLATE = [
+
+
+      { key: "percurso",   title: "1. Percurso de estudo",     openByDefault: true  },
+      { key: "conteudo",   title: "2. Conteúdo",               openByDefault: false },
+      { key: "exercicios", title: "3. Exercícios interativos", openByDefault: false },
+      { key: "dicas",      title: "4. Dicas finais de prova",  openByDefault: false }
+    ];
+
+
+    /* =========================================================
+       SIMULADO DA PI — projeto «Da horta ao mapa» (15 questões)
+       ========================================================= */
+    const simulado = {
+    title: "Simulado da PI",
+    icon: "★",
+    intro: `Um teste com <strong>15 questões</strong> (3 por disciplina), todas de múltipla escolha,
+              ligadas ao texto abaixo sobre o projeto «Da horta ao mapa» e ao conteúdo das abas.`,
+    textTitle: "Texto-base — Da horta ao mapa, do lixo ao adubo",
+    text: `
+            <p>Na Escola Verde, os alunos do <strong>4º ano</strong> criaram uma <strong>horta comunitária</strong>.
+            Plantaram tomates, alfaces e morangos. Para controlar pulgões, observaram <strong>joaninhas</strong>;
+            para polinizar as flores, abelhas visitavam os canteiros. Restos de folhas e cascas iam para a
+            <strong>compostagem</strong>, onde minhocas e microrganismos transformavam lixo orgânico em adubo.</p>
+
+            <p>Antes de consumir as hortaliças, a merendeira seguia cinco passos de <strong>higienização</strong>,
+            incluindo 15 minutos em solução clorada. Quando uma mangueira de irrigação chegou com defeito,
+            a professora de Português ajudou a redigir uma <strong>carta de reclamação</strong> ao fornecedor,
+            descrevendo a compra feita em março e pedindo troca imediata.</p>
+
+            <p>Em Geografia, o grupo consultou dados do <strong>IBGE</strong> (instituto criado em 1937) e montou
+            um mapa das <strong>cinco regiões</strong> do Brasil, destacando que o <strong>Norte</strong> tem a maior
+            área e o <strong>Sudeste</strong> concentra a maior população. Colocaram pinos nas capitais:
+            <strong>Vitória</strong> (ES), <strong>Belém</strong> (PA) e <strong>Florianópolis</strong> (SC).</p>
+
+            <p>Na feira de História, uma maquete de <strong>caravela</strong> lembrou as Grandes Navegações.
+            O cartaz explicava o uso da <strong>bússola</strong> e citava <strong>1415</strong> (Ceuta),
+            <strong>1498</strong> (Vasco da Gama na Índia) e <strong>1500</strong> (Cabral no Brasil).</p>
+
+            <p>Para organizar canteiros, os alunos de Matemática montaram <strong>sequências repetitivas</strong>
+            de azulejos coloridos e calcularam compras: se dois pacotes de sementes custam R$ 12 cada e
+            uma mochila de ferramentas R$ 80, quem começa com R$ 130 e compra só a mochila sobra R$ 50.</p>`,
+    questions: [
+        {
+            discipline: "Língua Portuguesa",
+            question: "No texto, a carta de reclamação sobre a mangueira defeituosa provavelmente descreve a compra em qual tempo verbal?",
+            options: [
+                "Futuro",
+                "Pretérito (passado)",
+                "Infinitivo",
+                "Imperativo"
+            ],
+            correctAnswer: 1,
+            explanation: "O defeito e a compra em março já aconteceram — usa-se pretérito na descrição do fato."
+        },
+        {
+            discipline: "Língua Portuguesa",
+            question: "A pergunta «o que vão fazer?» no final de uma reclamação indica expectativa de ação:",
+            options: [
+                "No passado remoto",
+                "No futuro",
+                "No imperativo negativo",
+                "No infinitivo pessoal"
+            ],
+            correctAnswer: 1,
+            explanation: "«Vão fazer» aponta para uma ação que a empresa ainda deve realizar."
+        },
+        {
+            discipline: "Língua Portuguesa",
+            question: "«As professoras organizaram a feira.» — Se o sujeito fosse «A professora», o verbo ficaria:",
+            options: [
+                "organizaram",
+                "organiza",
+                "organizou",
+                "organizamos"
+            ],
+            correctAnswer: 2,
+            explanation: "Sujeito singular exige «organizou» no pretérito."
+        },
+        {
+            discipline: "História",
+            question: "Segundo o cartaz da feira, em 1498 Vasco da Gama:",
+            options: [
+                "Chegou ao Brasil",
+                "Conquistou Ceuta",
+                "Chegou às Índias",
+                "Inventou a bússola"
+            ],
+            correctAnswer: 2,
+            explanation: "1498 marca a chegada de Vasco da Gama às Índias."
+        },
+        {
+            discipline: "História",
+            question: "O instrumento citado no texto para indicar o Norte durante as navegações é:",
+            options: [
+                "Astrolábio",
+                "Quadrante",
+                "Bússola",
+                "Telescópio"
+            ],
+            correctAnswer: 2,
+            explanation: "O texto menciona explicitamente a bússola na maquete."
+        },
+        {
+            discipline: "História",
+            question: "A conquista de Ceuta, associada ao início da expansão portuguesa, ocorreu em:",
+            options: [
+                "1500",
+                "1415",
+                "1937",
+                "1498"
+            ],
+            correctAnswer: 1,
+            explanation: "1415 = conquista de Ceuta, citada no cartaz."
+        },
+        {
+            discipline: "Geografia",
+            question: "De acordo com o texto, o IBGE foi criado em:",
+            options: [
+                "1988",
+                "1937",
+                "1500",
+                "1415"
+            ],
+            correctAnswer: 1,
+            explanation: "O texto informa que o IBGE foi criado em 1937."
+        },
+        {
+            discipline: "Geografia",
+            question: "Qual região brasileira tem a maior área, segundo o mapa montado pelos alunos?",
+            options: [
+                "Sudeste",
+                "Sul",
+                "Norte",
+                "Centro-Oeste"
+            ],
+            correctAnswer: 2,
+            explanation: "O texto destaca o Norte como região de maior área."
+        },
+        {
+            discipline: "Geografia",
+            question: "Florianópolis é capital de qual estado mencionado no mapa?",
+            options: [
+                "Espírito Santo",
+                "Pará",
+                "Santa Catarina",
+                "Goiás"
+            ],
+            correctAnswer: 2,
+            explanation: "Florianópolis é a capital de Santa Catarina."
+        },
+        {
+            discipline: "Ciências",
+            question: "As joaninhas na horta da Escola Verde ajudam controlando:",
+            options: [
+                "Pulgões",
+                "Minhocas",
+                "Tomates",
+                "Abelhas"
+            ],
+            correctAnswer: 0,
+            explanation: "Joaninhas são predadoras de pulgões, citadas no texto."
+        },
+        {
+            discipline: "Ciências",
+            question: "Na compostagem descrita, quem transforma restos orgânicos em adubo?",
+            options: [
+                "Apenas abelhas",
+                "Minhocas e microrganismos",
+                "Papa-lagartas",
+                "Estudantes com cloro"
+            ],
+            correctAnswer: 1,
+            explanation: "Minhocas e microrganismos decompõem matéria orgânica na compostagem."
+        },
+        {
+            discipline: "Ciências",
+            question: "Quantos minutos as hortaliças ficam na solução clorada, segundo a merendeira?",
+            options: [
+                "5",
+                "10",
+                "15",
+                "30"
+            ],
+            correctAnswer: 2,
+            explanation: "O texto cita 15 minutos de imersão em solução clorada."
+        },
+        {
+            discipline: "Matemática",
+            question: "Dois pacotes de sementes a R$ 12 cada custam no total:",
+            options: [
+                "R$ 12",
+                "R$ 14",
+                "R$ 24",
+                "R$ 36"
+            ],
+            correctAnswer: 2,
+            explanation: "2 × 12 = 24 reais."
+        },
+        {
+            discipline: "Matemática",
+            question: "Quem começa com R$ 130, gasta R$ 80 na mochila e sobra:",
+            options: [
+                "R$ 40",
+                "R$ 50",
+                "R$ 60",
+                "R$ 210"
+            ],
+            correctAnswer: 1,
+            explanation: "130 − 80 = 50 reais de troco."
+        },
+        {
+            discipline: "Matemática",
+            question: "Os azulejos coloridos organizados em blocos que se repetem formam sequência:",
+            options: [
+                "Recursiva de subtração",
+                "Repetitiva",
+                "Aleatória sem padrão",
+                "Só numérica"
+            ],
+            correctAnswer: 1,
+            explanation: "Quando um bloco inteiro se repete, trata-se de sequência repetitiva."
+        }
+    ]
+};
+
+
+    /* Estado em memória para acompanhar o progresso por disciplina. */
+    const progressState = {};
+
+
+
+    /* =========================================================
+       2. RENDERIZAÇÃO DE ABAS E PAINÉIS
+       ====================================================a===== */
+    function renderTabs() {
+      const nav = document.getElementById("nav-tabs");
+      const content = document.getElementById("content");
+      nav.innerHTML = "";
+      content.innerHTML = "";
+
+      Object.entries(subjects).forEach(([key, subject], index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.target = key;
+        btn.innerHTML = `<span class="tab-icon">${subject.icon}</span>${subject.title}`;
+        btn.addEventListener("click", () => activateSubject(key));
+        nav.appendChild(btn);
+
+        const panel = document.createElement("section");
+        panel.className = "subject-panel";
+        panel.id = `panel-${key}`;
+        panel.innerHTML = renderSubjectPanel(key, subject);
+        content.appendChild(panel);
+
+        progressState[key] = { answered: new Set(), correct: new Set() };
+
+        if (index === 0) activateSubject(key);
+      });
+
+      // Aba especial do simulado, ao lado das disciplinas.
+      const simBtn = document.createElement("button");
+      simBtn.type = "button";
+      simBtn.dataset.target = "simulado";
+      simBtn.classList.add("tab--simulado");
+      simBtn.innerHTML = `<span class="tab-icon">${simulado.icon}</span>${simulado.title}`;
+      simBtn.addEventListener("click", () => activateSubject("simulado"));
+      nav.appendChild(simBtn);
+
+      const simPanel = document.createElement("section");
+      simPanel.className = "subject-panel";
+      simPanel.id = "panel-simulado";
+      simPanel.innerHTML = renderSimuladoPanel(simulado);
+      content.appendChild(simPanel);
+
+      bindAccordions();
+      bindContentSwitch();
+      bindExerciseEvents();
+      bindSimuladoEvents();
+    }
+
+    function activateSubject(key) {
+      document.querySelectorAll(".nav-tabs button").forEach(b => {
+        b.classList.toggle("active", b.dataset.target === key);
+      });
+      document.querySelectorAll(".subject-panel").forEach(p => {
+        p.classList.toggle("active", p.id === `panel-${key}`);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================
+       3. RENDERIZAÇÃO DE PAINEL DE DISCIPLINA
+       ========================================================= */
+    function renderSubjectPanel(key, subject) {
+      const exercisesHtml = subject.exercises
+        .map((ex, i) => renderExercise(key, ex, i))
+        .join("");
+
+      const sectionsHtml = SECTION_TEMPLATE.map(sec => {
+        let body;
+        if (sec.key === "exercicios") {
+          body = exercisesHtml || `<p>Nenhum exercício cadastrado ainda.</p>`;
+        } else if (sec.key === "conteudo") {
+          const resumoHtml = subject.sections.resumo || `<p>Resumo em preparação.</p>`;
+          const explicacaoHtml = subject.sections.explicacao || `<p>Conteúdo em preparação.</p>`;
+          body = `
+            <div class="content-switch" role="tablist" aria-label="Modo de visualização do conteúdo">
+              <button type="button" class="content-switch__btn active"
+                      role="tab" aria-selected="true" data-view="resumo">Resumo</button>
+              <button type="button" class="content-switch__btn"
+                      role="tab" aria-selected="false" data-view="explicacao">Conteúdo geral</button>
+            </div>
+            <div class="content-view active" data-view="resumo">${resumoHtml}</div>
+            <div class="content-view" data-view="explicacao">${explicacaoHtml}</div>
+          `;
+        } else {
+          body = subject.sections[sec.key] || `<p>Conteúdo em preparação.</p>`;
+        }
+
+        return `
+          <div class="accordion ${sec.openByDefault ? "open" : ""}">
+            <button class="accordion__header" type="button">
+              <span>${sec.title}</span>
+              <span class="chevron">▶</span>
+            </button>
+            <div class="accordion__body">
+              ${body}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="subject-header">
+          <h2>
+            <span class="subject-icon">${subject.icon}</span>
+            ${subject.title}
+          </h2>
+          <div class="progress" id="progress-${key}">
+            <div class="progress__label">
+              <span>Progresso da disciplina</span>
+              <span class="progress__text">0 / ${subject.exercises.length}</span>
+            </div>
+            <div class="progress__bar">
+              <div class="progress__fill"></div>
+            </div>
+          </div>
+        </div>
+        ${sectionsHtml}
+      `;
+    }
+
+    /* =========================================================
+       4. RENDERIZAÇÃO DE EXERCÍCIOS
+       ========================================================= */
+    function renderExercise(subjectKey, ex, index) {
+      const exId = `${subjectKey}-ex-${index}`;
+      if (ex.type === "multiple-choice") {
+        const optionsHtml = ex.options.map((opt, i) => `
+          <label class="option" data-index="${i}">
+            <input type="radio" name="${exId}" value="${i}" />
+            <span>${opt}</span>
+          </label>
+        `).join("");
+
+        return `
+          <div class="exercise" data-id="${exId}" data-type="multiple-choice"
+               data-correct="${ex.correctAnswer}">
+            <div class="exercise__label">Exercício ${index + 1} — Múltipla escolha</div>
+            <div class="exercise__question">${ex.question}</div>
+            <div class="options">${optionsHtml}</div>
+            <div class="exercise__actions">
+              <button class="btn btn--primary" data-action="check">Verificar resposta</button>
+              <button class="btn btn--ghost" data-action="show-model">Mostrar resposta/modelo</button>
+            </div>
+            <div class="feedback"></div>
+            <div class="model-answer">
+              <h4>Resposta modelo</h4>
+              <p>${ex.modelAnswer}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      if (ex.type === "short-answer") {
+        return `
+          <div class="exercise short-answer" data-id="${exId}" data-type="short-answer"
+               data-keywords="${(ex.keywords || []).join("|")}">
+            <div class="exercise__label">Exercício ${index + 1} — Resposta curta</div>
+            <div class="exercise__question">${ex.question}</div>
+            <textarea placeholder="Escreva sua resposta aqui..."></textarea>
+            <div class="exercise__actions">
+              <button class="btn btn--primary" data-action="check">Verificar resposta</button>
+              <button class="btn btn--ghost" data-action="show-model">Mostrar resposta/modelo</button>
+            </div>
+            <div class="feedback"></div>
+            <div class="model-answer">
+              <h4>Resposta modelo</h4>
+              <p>${ex.modelAnswer}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      return "";
+    }
+
+    /* =========================================================
+       5. EVENTOS: ACCORDIONS, EXERCÍCIOS E VERIFICAÇÃO
+       ========================================================= */
+    function bindAccordions() {
+      document.querySelectorAll(".accordion__header").forEach(header => {
+        header.addEventListener("click", () => {
+          header.parentElement.classList.toggle("open");
+        });
+      });
+    }
+
+    /* Alterna entre as visualizações "Resumo" e "Conteúdo geral"
+       dentro da seção de Conteúdo. */
+    function bindContentSwitch() {
+      document.querySelectorAll(".content-switch").forEach(group => {
+        const buttons = group.querySelectorAll(".content-switch__btn");
+        const container = group.parentElement;
+        buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const target = btn.dataset.view;
+            buttons.forEach(b => {
+              const isActive = b === btn;
+              b.classList.toggle("active", isActive);
+              b.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+            container.querySelectorAll(".content-view").forEach(v => {
+              v.classList.toggle("active", v.dataset.view === target);
+            });
+          });
+        });
+      });
+    }
+
+    function bindExerciseEvents() {
+      document.querySelectorAll(".exercise").forEach(exEl => {
+        const type = exEl.dataset.type;
+
+        if (type === "multiple-choice") {
+          exEl.querySelectorAll(".option").forEach(opt => {
+            opt.addEventListener("click", () => {
+              exEl.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+              opt.classList.add("selected");
+              const radio = opt.querySelector("input");
+              if (radio) radio.checked = true;
+            });
+          });
+        }
+
+        exEl.querySelectorAll("[data-action]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const action = btn.dataset.action;
+            if (action === "check") checkAnswer(exEl);
+            if (action === "show-model") toggleModel(exEl);
+          });
+        });
+      });
+    }
+
+    function checkAnswer(exEl) {
+      const type = exEl.dataset.type;
+      const feedback = exEl.querySelector(".feedback");
+      const subjectKey = exEl.dataset.id.split("-ex-")[0];
+      const exerciseId = exEl.dataset.id;
+
+      // Recupera a explicação a partir do modelo de dados, sem depender do DOM.
+      const indexMatch = exerciseId.match(/-ex-(\d+)$/);
+      const exerciseIndex = indexMatch ? parseInt(indexMatch[1], 10) : null;
+      const exerciseData = exerciseIndex !== null
+        ? subjects[subjectKey].exercises[exerciseIndex]
+        : null;
+
+      // ---- Múltipla escolha ----
+      if (type === "multiple-choice") {
+        const selected = exEl.querySelector("input[type='radio']:checked");
+        if (!selected) {
+          showFeedback(feedback, "info", "Selecione uma alternativa antes de verificar.");
+          return;
+        }
+
+        const correctIndex = parseInt(exEl.dataset.correct, 10);
+        const chosen = parseInt(selected.value, 10);
+        const isCorrect = chosen === correctIndex;
+
+        exEl.querySelectorAll(".option").forEach(o => {
+          o.classList.remove("correct", "incorrect");
+        });
+        const chosenOption = exEl.querySelector(`.option[data-index="${chosen}"]`);
+        if (chosenOption) chosenOption.classList.add(isCorrect ? "correct" : "incorrect");
+
+        if (isCorrect) {
+          showFeedback(
+            feedback, "success",
+            `Você acertou! ${exerciseData ? exerciseData.explanation : ""}`
+          );
+        } else {
+          showFeedback(
+            feedback, "error",
+            `Resposta incorreta. ${exerciseData ? exerciseData.explanation : ""}`
+          );
+        }
+
+        registerAnswer(subjectKey, exerciseId, isCorrect);
+        return;
+      }
+
+      // ---- Resposta curta ----
+      if (type === "short-answer") {
+        const textarea = exEl.querySelector("textarea");
+        const answer = (textarea.value || "").toLowerCase().trim();
+
+        if (!answer) {
+          showFeedback(feedback, "info", "Escreva uma resposta antes de verificar.");
+          return;
+        }
+
+        const keywords = (exEl.dataset.keywords || "")
+          .split("|")
+          .map(k => k.toLowerCase().trim())
+          .filter(Boolean);
+
+        const matched = keywords.filter(k => answer.includes(k));
+        const ratio = keywords.length ? matched.length / keywords.length : 0;
+        const isGood = ratio >= 0.5;
+
+        if (isGood) {
+          showFeedback(
+            feedback, "success",
+            `Boa resposta! Você mencionou ideias importantes${
+              matched.length ? " (" + matched.join(", ") + ")" : ""
+            }.`
+          );
+        } else {
+          showFeedback(
+            feedback, "error",
+            "Sua resposta pode melhorar. Veja a resposta modelo para comparar."
+          );
+        }
+
+        registerAnswer(subjectKey, exerciseId, isGood);
+      }
+    }
+
+    function showFeedback(el, kind, message) {
+      el.className = `feedback show feedback--${kind}`;
+      el.textContent = message;
+    }
+
+    function toggleModel(exEl) {
+      const model = exEl.querySelector(".model-answer");
+      model.classList.toggle("show");
+    }
+
+    /* =========================================================
+       6. PROGRESSO POR DISCIPLINA
+       ========================================================= */
+    function registerAnswer(subjectKey, exerciseId, isCorrect) {
+      const state = progressState[subjectKey];
+      state.answered.add(exerciseId);
+      if (isCorrect) state.correct.add(exerciseId);
+      else state.correct.delete(exerciseId);
+      updateProgress(subjectKey);
+    }
+
+    function updateProgress(subjectKey) {
+      const total = subjects[subjectKey].exercises.length;
+      const correct = progressState[subjectKey].correct.size;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      const wrap = document.getElementById(`progress-${subjectKey}`);
+      if (!wrap) return;
+      wrap.querySelector(".progress__text").textContent = `${correct} / ${total}`;
+      wrap.querySelector(".progress__fill").style.width = `${percent}%`;
+    }
+
+    /* =========================================================
+       7. SIMULADO DA PI
+       Renderiza o painel completo com texto-base, blocos por
+       disciplina e botões de finalizar/refazer.
+       ========================================================= */
+    function renderSimuladoPanel(sim) {
+      // Agrupa as questões mantendo a ordem em que aparecem.
+      const blocks = [];
+      const blockIndex = new Map();
+      sim.questions.forEach((q, i) => {
+        if (!blockIndex.has(q.discipline)) {
+          blockIndex.set(q.discipline, blocks.length);
+          blocks.push({ discipline: q.discipline, items: [] });
+        }
+        blocks[blockIndex.get(q.discipline)].items.push({ ...q, _index: i });
+      });
+
+      const blocksHtml = blocks.map(b => `
+        <div class="sim-block">
+          <div class="sim-block__title">${b.discipline}</div>
+          ${b.items.map(q => renderSimQuestion(q)).join("")}
+        </div>
+      `).join("");
+
+      return `
+        <div class="subject-header">
+          <h2>
+            <span class="subject-icon">${sim.icon}</span>
+            ${sim.title}
+          </h2>
+        </div>
+
+        <p style="color: var(--text-soft); margin-top: -6px;">${sim.intro}</p>
+
+        <article class="sim-text">
+          <h3>${sim.textTitle}</h3>
+          ${sim.text}
+        </article>
+
+        <div class="sim-result" id="sim-result"></div>
+
+        ${blocksHtml}
+
+        <div class="sim-footer">
+          <button class="btn btn--primary" id="sim-finalize">Finalizar simulado</button>
+          <button class="btn btn--ghost"   id="sim-reset">Tentar novamente</button>
+        </div>
+      `;
+    }
+
+    function renderSimQuestion(q) {
+      const optionsHtml = q.options.map((opt, i) => `
+        <label class="sim-option" data-index="${i}">
+          <input type="radio" name="sim-q-${q._index}" value="${i}" />
+          <span>${opt}</span>
+        </label>
+      `).join("");
+
+      return `
+        <div class="sim-question"
+             data-id="sim-q-${q._index}"
+             data-correct="${q.correctAnswer}"
+             data-discipline="${q.discipline}"
+             data-explanation="${(q.explanation || '').replace(/"/g, '&quot;')}">
+          <div class="sim-question__head">Questão ${q._index + 1} — ${q.discipline}</div>
+          <div class="sim-question__text">${q.question}</div>
+          <div class="sim-options">${optionsHtml}</div>
+        </div>
+      `;
+    }
+
+    function bindSimuladoEvents() {
+      // Selecionar alternativa.
+      document.querySelectorAll(".sim-question .sim-option").forEach(opt => {
+        opt.addEventListener("click", () => {
+          const q = opt.closest(".sim-question");
+          q.querySelectorAll(".sim-option").forEach(o => o.classList.remove("selected"));
+          opt.classList.add("selected");
+          const radio = opt.querySelector("input");
+          if (radio) radio.checked = true;
+        });
+      });
+
+      const finalize = document.getElementById("sim-finalize");
+      if (finalize) finalize.addEventListener("click", finalizeSimulado);
+
+      const reset = document.getElementById("sim-reset");
+      if (reset) reset.addEventListener("click", resetSimulado);
+    }
+
+    function finalizeSimulado() {
+      const questions = document.querySelectorAll(".sim-question");
+      const byDiscipline = {};
+      let totalCorrect = 0;
+      const total = questions.length;
+
+      questions.forEach(q => {
+        const d = q.dataset.discipline;
+        if (!byDiscipline[d]) byDiscipline[d] = { correct: 0, total: 0 };
+        byDiscipline[d].total += 1;
+
+        const correctIdx = parseInt(q.dataset.correct, 10);
+        const selected = q.querySelector("input[type='radio']:checked");
+
+        // Limpa marcações anteriores antes de pintar de novo.
+        q.querySelectorAll(".sim-option").forEach(o => {
+          o.classList.remove("correct", "incorrect");
+        });
+
+        // Sempre destaca a alternativa correta em verde.
+        const correctOpt = q.querySelector(`.sim-option[data-index="${correctIdx}"]`);
+        if (correctOpt) correctOpt.classList.add("correct");
+
+        if (selected) {
+          const chosen = parseInt(selected.value, 10);
+          const isCorrect = chosen === correctIdx;
+          if (!isCorrect) {
+            const chosenOpt = q.querySelector(`.sim-option[data-index="${chosen}"]`);
+            if (chosenOpt) chosenOpt.classList.add("incorrect");
+          } else {
+            totalCorrect++;
+            byDiscipline[d].correct++;
+          }
+        }
+      });
+
+      showSimuladoResult(totalCorrect, total, byDiscipline);
+    }
+
+    function showSimuladoResult(correct, total, byDiscipline) {
+      const result = document.getElementById("sim-result");
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      let message;
+      if (percent >= 80)      message = "Excelente! Você está muito bem preparado para a prova.";
+      else if (percent >= 60) message = "Bom trabalho! Revise os pontos em que ficou em dúvida.";
+      else if (percent >= 40) message = "Você já sabe boa parte. Volte aos resumos das disciplinas mais difíceis.";
+      else                    message = "Vamos reforçar mais! Reabra as abas das disciplinas e tente de novo.";
+
+      const breakdownHtml = Object.entries(byDiscipline).map(([d, s]) => {
+        let cls = "sim-score--low";
+        if (s.correct === s.total) cls = "sim-score--ok";
+        else if (s.correct >= Math.ceil(s.total / 2)) cls = "sim-score--med";
+        return `
+          <div class="sim-score ${cls}">
+            <span>${d}</span>
+            <strong>${s.correct} / ${s.total}</strong>
+          </div>
+        `;
+      }).join("");
+
+      result.innerHTML = `
+        <h3>Resultado do simulado</h3>
+        <div class="sim-result__total">
+          Você acertou <strong>${correct} de ${total}</strong> questões (${percent}%).
+        </div>
+        <p style="color: var(--text-soft); margin: 6px 0 0;">${message}</p>
+
+        <h4>Pontuação por disciplina (0 a 3)</h4>
+        <div class="sim-result__grid">${breakdownHtml}</div>
+      `;
+      result.classList.add("show");
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetSimulado() {
+      document.querySelectorAll(".sim-question .sim-option").forEach(o => {
+        o.classList.remove("selected", "correct", "incorrect");
+        const r = o.querySelector("input");
+        if (r) r.checked = false;
+      });
+      const result = document.getElementById("sim-result");
+      if (result) {
+        result.innerHTML = "";
+        result.classList.remove("show");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================
+       8. INICIALIZAÇÃO
+       ========================================================= */
+    document.addEventListener("DOMContentLoaded", renderTabs);
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "review_id": "benjamin-pi-4ano",
+  "student": "Benjamin",
+  "grade": "4º ano",
+  "exam": "PI — Prova Integrada (2º trimestre)",
+  "format": "monolith_html",
+  "template": "PI_review.html",
+  "disciplines": [
+    "portugues",
+    "historia",
+    "geografia",
+    "ciencias",
+    "matematica"
+  ],
+  "exercises_per_discipline": {
+    "portugues": 8,
+    "historia": 8,
+    "geografia": 8,
+    "ciencias": 8,
+    "matematica": 8
+  },
+  "total_discipline_exercises": 40,
+  "simulado_questions": 15,
+  "output_path": "output/benjamin-pi-4ano/",
+  "generated_at": "2026-08-31T03:26:15.247248+00:00"
+}
