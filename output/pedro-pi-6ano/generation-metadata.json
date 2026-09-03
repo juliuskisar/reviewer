@@ -1,0 +1,32 @@
+{
+  "review_id": "pedro-pi-6ano",
+  "student": "Pedro",
+  "grade": "6º ano",
+  "exam": "PI — Prova Integrada (2º trimestre)",
+  "format": "monolith_html",
+  "template": "PI_review.html",
+  "disciplines": [
+    "ingles",
+    "geografia",
+    "matematica",
+    "desenho",
+    "ciencias",
+    "portugues",
+    "espanhol",
+    "historia"
+  ],
+  "exercises_per_discipline": {
+    "ingles": 8,
+    "geografia": 8,
+    "matematica": 9,
+    "desenho": 6,
+    "ciencias": 8,
+    "portugues": 8,
+    "espanhol": 6,
+    "historia": 8
+  },
+  "total_discipline_exercises": 61,
+  "simulado_questions": 24,
+  "output_path": "output/pedro-pi-6ano/",
+  "generated_at": "2026-09-03T20:12:06.245008+00:00"
+}
