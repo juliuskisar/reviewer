@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://school-review.local/schemas/exercises.schema.json",
+  "title": "Exercises",
+  "description": "Exercícios estruturados com gabaritos e rastreabilidade",
+  "type": "object",
+  "required": ["version", "review_id", "exercises"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "const": "1.0" },
+    "review_id": { "type": "string", "minLength": 1 },
+    "exercises": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/exercise" }
+    }
+  },
+  "$defs": {
+    "exercise_type": {
+      "type": "string",
+      "enum": [
+        "multiple_choice",
+        "true_false",
+        "open_response",
+        "written_language",
+        "matching",
+        "map_capital"
+      ]
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["basic", "intermediate", "advanced"]
+    },
+    "exercise": {
+      "type": "object",
+      "required": ["id", "type", "topic", "question", "difficulty"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "$ref": "#/$defs/exercise_type" },
+        "topic": { "type": "string" },
+        "question": { "type": "string", "minLength": 1 },
+        "options": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 2
+        },
+        "correct_answer": {
+          "description": "Índice (0-based) para múltipla escolha; boolean para V/F; string para aberta",
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "boolean" },
+            { "type": "string" }
+          ]
+        },
+        "explanation": { "type": "string" },
+        "difficulty": { "$ref": "#/$defs/difficulty" },
+        "source_assets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "section": {
+          "type": "string",
+          "enum": ["exercises", "final_quiz", "desafios", "escrita"]
+        },
+        "input_mode": {
+          "type": "string",
+          "enum": ["word", "sentence"],
+          "description": "written_language — campo curto (palavra) ou frase"
+        },
+        "accepted_answers": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "written_language — variantes aceitas além de correct_answer"
+        },
+        "mistake_hints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["contains", "message"],
+            "properties": {
+              "contains": { "type": "string", "minLength": 1 },
+              "message": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          },
+          "description": "written_language — feedback se a resposta contiver o trecho (ex.: gooder)"
+        },
+        "matching_pairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["left", "right"],
+            "properties": {
+              "left": { "type": "string" },
+              "right": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "open_response_checklist": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "visual": {
+          "type": "object",
+          "required": ["type", "content"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map"]
+            },
+            "content": { "type": "object" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "multiple_choice" } } },
+          "then": {
+            "required": ["options", "correct_answer", "explanation"],
+            "properties": {
+              "correct_answer": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "true_false" } } },
+          "then": {
+            "required": ["correct_answer", "explanation"],
+            "properties": {
+              "correct_answer": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "open_response" } } },
+          "then": {
+            "required": ["open_response_checklist"],
+            "properties": {
+              "correct_answer": { "type": "string" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "written_language" } } },
+          "then": {
+            "required": ["correct_answer", "explanation", "input_mode"],
+            "properties": {
+              "correct_answer": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "map_capital" } } },
+          "then": {
+            "required": ["explanation", "visual"],
+            "properties": {
+              "visual": {
+                "type": "object",
+                "required": ["type", "content"],
+                "properties": {
+                  "type": { "const": "brazil_map" },
+                  "content": { "type": "object" }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  }
+}

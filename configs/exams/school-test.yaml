@@ -1,0 +1,45 @@
+version: 1
+
+id: school-test
+name: Prova escolar
+
+exam:
+  type: school_test
+  objective: review
+  expected_duration_minutes: 45
+
+content:
+  source_policy: assets_first
+  prioritize:
+    - concepts_explicitly_present
+    - highlighted_vocabulary
+    - teacher_examples
+    - exercises_similar_to_materials
+
+  avoid:
+    - unrelated_curiosities
+    - unnecessary_advanced_topics
+    - excessive_technical_language
+
+page:
+  format: static_html
+  sections:
+    - study_route
+    - explanations
+    - quick_summary
+    - attention_points
+    - guided_examples
+    - exercises
+    - final_quiz
+    - exam_tips
+
+exercises:
+  total: 20
+  require_explanation: true
+  allow_retry: true
+
+validation:
+  require_source_mapping: true
+  validate_answer_key: true
+  validate_html: true
+  validate_image_paths: true

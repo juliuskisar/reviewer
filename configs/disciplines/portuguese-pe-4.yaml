@@ -1,0 +1,49 @@
+version: 1
+
+id: portuguese-pe-4
+name: Língua Portuguesa — PE 4º ano (2º trimestre)
+
+objectives:
+  - Interpretar infográficos e textos informativos sobre brincadeiras
+  - Reconhecer recursos gráfico-visuais e pesquisa escolar
+  - Formar palavras derivadas com sufixos (-agem, -esa, -eza, -ez, -ês)
+  - Aplicar regras de nasalidade (til, m, n)
+  - Ler verbetes de dicionário e artigos enciclopédicos
+
+preferred_components:
+  - concept_grid
+  - comparison_table
+  - route_steps
+  - accordion
+  - bar_chart
+
+exercise_types:
+  - multiple_choice
+  - reading_passage
+
+common_errors:
+  - topic: infographic
+    description: Confundir texto verbal puro com infográfico
+    prevention: Infográfico = texto + recursos gráfico-visuais juntos
+  - topic: suffixes
+    description: Escrever -ês com z ou -eza com s
+    prevention: Nacionalidade = -ês/-esa com s · adjetivo→substantivo = -eza/-ez com z
+  - topic: nasal
+    description: Usar til no meio da palavra sem sufixo
+    prevention: Til em sílaba tônica final — exceto com -zinho, -mente etc.
+  - topic: dictionary
+    description: Confundir dicionário com enciclopédia
+    prevention: Dicionário = significado de palavras · enciclopédia = informações sobre assuntos
+
+pedagogical_strategies:
+  - Transcrever textos da apostila como base dos exercícios
+  - Pelo menos dois textos completos com múltiplas questões cada
+  - Incluir afirmativas I–IV no estilo Teste do caderno
+  - Linguagem clara para 4º ano
+
+validation:
+  require_reading_passage_in_exercises: true
+  flag_ambiguous_interpretation: true
+
+pe_modules:
+  primary: [5, 6]

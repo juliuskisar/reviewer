@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Workspace temporário (mantém estrutura via .gitkeep)
+workspace/**/*
+!workspace/.gitkeep
+!workspace/**/.gitkeep
+
+# Output gerado (exceto exemplos commitados via demo)
+# output/**/*
+# !output/.gitkeep
+# !output/example-review/
+# !output/pedro-pe-geografia-2tri/
+# !output/pedro-pe-matematica-2tri/
+# !output/benjamin-pe-historia-2tri/
+# !output/benjamin-pe-ciencias-2tri/
+
+# Assets do usuário (conteúdo privado)
+assets/*
+!assets/README.md
+!assets/example-review/
+!assets/pedro_pe_geografia_2_tri/
+!assets/pedro_pe_geografia_3_tri/
+!assets/pedro_pe_matematica_2_tri/
+!assets/pedro_pe_matematica_3_tri/
+!assets/pedro_pe_historia_2_tri/
+!assets/pedro_pe_historia_3_tri/
+!assets/pedro_pe_ciencias_2_tri/
+!assets/pedro_pe_ingles_2_tri/
+!assets/pedro_pe_portugues_2_tri/
+!assets/pedro_pe_espanhol_2_tri/
+!assets/benjamin_pe_historia_2_tri/
+!assets/benjamin_pe_ciencias_2_tri/
+!assets/benjamin_pe_ciencias_3_tri/
+!assets/benjamin_pe_matematica_2_tri/
+!assets/benjamin_pe_matematica_3_tri/
+!assets/benjamin_pe_geografia_2_tri/
+!assets/benjamin_pe_portugues_2_tri/
+!assets/benjamin_pe_portugues_3_tri/
+!assets/benjamin_pi_4_ano/
+!assets/helena_pe_ciencias_2_tri/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+input_images/
+historical_images/

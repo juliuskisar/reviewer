@@ -1,0 +1,27 @@
+version: 1
+
+id: pedro-student
+
+student:
+  name: Pedro
+  age: 11
+  grade: "6º ano"
+  language: pt-BR
+
+learning:
+  prior_knowledge: basic
+  preferred_explanation_style:
+    - clear
+    - progressive
+    - example_driven
+    - visual
+
+accessibility:
+  avoid_excessive_text_blocks: true
+  minimum_font_size_px: 16
+  do_not_rely_only_on_color: true
+
+notes: >
+  Aluno do 6º ano do Ensino Fundamental. Revisões PE de Geografia, Matemática,
+  Ciências, Português, Inglês e Espanhol (2º trimestre). Prefere explicações
+  visuais, blocos curtos de texto e exercícios no estilo do material do Caderno 2.

@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "review_id": "example-review",
+  "generated_at": "2026-06-15T12:00:00+00:00",
+  "manifest_present": true,
+  "assets": [
+    {
+      "file": "assets/example-review/page-001.svg",
+      "format": "svg",
+      "order": 1,
+      "subject": "mathematics",
+      "unit": "geometric_solids",
+      "importance": "required",
+      "classification": {
+        "discipline": "mathematics",
+        "topics": ["geometric_solids"],
+        "confidence": "observed",
+        "observations": ["ilustração de sólidos geométricos"],
+        "inferences": [],
+        "uncertainties": []
+      }
+    }
+  ],
+  "topics": [
+    {
+      "id": "geometric_solids",
+      "label": "Sólidos Geométricos",
+      "source_assets": ["assets/example-review/page-001.svg"],
+      "confidence": "observed"
+    }
+  ],
+  "summary": {
+    "total_assets": 1,
+    "formats": ["svg"],
+    "disciplines_detected": ["mathematics"],
+    "unreadable_files": [],
+    "duplicates": []
+  }
+}

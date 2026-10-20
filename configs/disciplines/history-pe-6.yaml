@@ -1,0 +1,55 @@
+version: 1
+
+id: history-pe-6
+name: História — PE 6º ano (2º trimestre)
+
+objectives:
+  - Comparar sociedades igualitárias e hierárquicas na América pré-colombiana
+  - Conhecer maias, astecas e incas: organização social, economia e heranças culturais
+  - Reconhecer diversidade africana e tipos de fontes históricas (oral, arqueológica, escrita)
+  - Compreender comércio trans-saara e reinos africanos (Gana, Mali, Congo)
+  - Analisar origens, sociedade, religião e poder no Egito antigo
+
+preferred_components:
+  - timeline
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - true_false
+  - matching
+
+common_errors:
+  - topic: mayans
+    description: Confundir Teotihuacán (cidade mesoamericana) com capital maia
+    prevention: Lembrar cidades maias — Tikal, Chichén Itzá, Copán
+  - topic: aztecs
+    description: Achar que cacau era só alimento, não moeda
+    prevention: Sementes de cacau usadas como moeda no império asteca
+  - topic: incas
+    description: Confundir quipu com sistema de escrita alfabética
+    prevention: Quipu = cordas com nós para contas e registros administrativos
+  - topic: africa_sources
+    description: Achar que sociedades sem escrita não tinham cultura
+    prevention: Valorizar griôs, mitos, arqueologia e tradição oral
+  - topic: ancient_egypt
+    description: Confundir cheia e vazante do Nilo
+    prevention: Cheia = jul–out; vazante = nov–mar; plantio após a cheia
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 9 → 10 → 11
+  - Usar comparações entre maias, astecas e incas
+  - Incluir vocabulário do caderno: chinampa, quipu, manicongo, teocracia, nomo
+  - Exercícios autossuficientes, estilo Teste do livro
+  - Linguagem clara para 6º ano
+
+validation:
+  require_historical_context: true
+  flag_anachronisms: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [9, 10, 11]

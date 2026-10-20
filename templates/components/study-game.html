@@ -1,0 +1,67 @@
+{% for block in section.blocks %}
+  {% if block.type == 'study_game' %}
+  <div class="study-game" data-component="study-game"
+       data-mode="{{ block.content.mode }}"
+       data-game-id="{{ block.content.game_id | e }}">
+    {% if block.content.instructions %}
+    <p class="study-game__instructions">{{ block.content.instructions }}</p>
+    {% endif %}
+    <div class="study-game__header">
+      <div class="study-game__stat">
+        <span class="study-game__stat-label">Acertos</span>
+        {% if block.content.mode == 'sort_buckets' %}
+        <span class="study-game__score">0 / {{ block.content.sort_items|length }}</span>
+        {% else %}
+        <span class="study-game__score">0 / {{ block.content.left|length }}</span>
+        {% endif %}
+      </div>
+      <button type="button" class="btn btn-secondary study-game__reset">Jogar novamente</button>
+    </div>
+    {% if block.content.mode == 'sort_buckets' %}
+    <div class="study-game__buckets">
+      {% for bucket in block.content.buckets %}
+      <div class="study-game__bucket" data-bucket-id="{{ bucket.id }}">
+        <h3 class="study-game__bucket-title">{{ bucket.label }}</h3>
+        {% if bucket.hint %}<p class="study-game__bucket-hint">{{ bucket.hint }}</p>{% endif %}
+        <div class="study-game__bucket-drop" aria-label="Área {{ bucket.label }}"></div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="study-game__pool" aria-label="Trechos para classificar">
+      <h3 class="study-game__pool-title">Trechos</h3>
+      <div class="study-game__items">
+        {% for item in block.content.sort_items %}
+        <button type="button" class="study-game__chip" data-item-id="{{ item.id }}" data-answer="{{ item.answer }}">{{ item.text }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    {% elif block.content.mode == 'match_pairs' %}
+    <div class="study-game__match-grid">
+      <div class="study-game__match-col">
+        <h3 class="study-game__col-title">Exemplos</h3>
+        {% for item in block.content.left %}
+        <button type="button" class="study-game__match-card study-game__match-card--left"
+                data-side="left" data-item-id="{{ item.id }}"
+                data-match="{{ block.content.answers[item.id] }}">{{ item.text }}</button>
+        {% endfor %}
+      </div>
+      <div class="study-game__match-col">
+        <h3 class="study-game__col-title">Recursos de humor</h3>
+        {% for item in block.content.right %}
+        <button type="button" class="study-game__match-card study-game__match-card--right"
+                data-side="right" data-item-id="{{ item.id }}">{{ item.text }}</button>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    <div class="study-game__feedback" role="status" aria-live="polite"></div>
+    <div class="study-game__victory is-hidden" role="status">
+      <strong>Parabéns!</strong>
+      <p class="study-game__victory-text"></p>
+    </div>
+  </div>
+  {% else %}
+    {% set block = block %}
+    {% include "components/block.html" %}
+  {% endif %}
+{% endfor %}

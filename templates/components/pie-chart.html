@@ -1,0 +1,35 @@
+<figure class="pie-chart" data-component="pie-chart">
+  {% if block.content.title %}
+  <figcaption class="pie-chart__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  {% set slices = block.content.slices %}
+  {% set total = slices | map(attribute='value') | sum %}
+  {% set ns = namespace(offset=0, gradient_parts=[]) %}
+  {% for slice in slices %}
+  {% set pct = (slice.value / total * 100) if total else 0 %}
+  {% set color = slice.color | default('var(--primary)') %}
+  {% set _ = ns.gradient_parts.append(color ~ ' ' ~ ns.offset ~ '% ' ~ (ns.offset + pct) ~ '%') %}
+  {% set ns.offset = ns.offset + pct %}
+  {% endfor %}
+  <div class="pie-chart__body">
+    <div
+      class="pie-chart__plot"
+      style="background: conic-gradient({{ ns.gradient_parts | join(', ') }});"
+      role="img"
+      aria-label="{{ block.content.aria_label | default(block.content.title | default('Gráfico de pizza')) }}"
+    ></div>
+    <ul class="pie-chart__legend">
+      {% for slice in slices %}
+      {% set pct = (slice.value / total * 100) if total else 0 %}
+      <li class="pie-chart__legend-item">
+        <span class="pie-chart__swatch" style="background-color: {{ slice.color | default('var(--primary)') }};"></span>
+        <span class="pie-chart__legend-label">{{ slice.label }}</span>
+        <span class="pie-chart__legend-value">{{ slice.value }}{{ block.content.unit | default('') }} ({{ '%.0f' | format(pct) }}%)</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if block.content.caption %}
+  <p class="pie-chart__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

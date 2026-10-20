@@ -1,0 +1,37 @@
+<figure class="line-chart" data-component="line-chart">
+  {% if block.content.title %}
+  <figcaption class="line-chart__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  {% set points = block.content.points %}
+  {% set max_val = block.content.max_value if block.content.max_value is defined else (points | map(attribute='value') | max) %}
+  {% set count = points | length %}
+  {% set ns = namespace(coords=[]) %}
+  {% for point in points %}
+  {% set x = ((loop.index0 / (count - 1)) * 100) if count > 1 else 50 %}
+  {% set y = (100 - (point.value / max_val * 100)) if max_val else 100 %}
+  {% set _ = ns.coords.append(x ~ ',' ~ y) %}
+  {% endfor %}
+  <div class="line-chart__plot" role="img" aria-label="{{ block.content.aria_label | default(block.content.title | default('Gráfico de linhas')) }}">
+    <svg class="line-chart__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <polyline class="line-chart__line" points="{{ ns.coords | join(' ') }}" />
+      {% for point in points %}
+      {% set x = ((loop.index0 / (count - 1)) * 100) if count > 1 else 50 %}
+      {% set y = (100 - (point.value / max_val * 100)) if max_val else 100 %}
+      <circle class="line-chart__dot" cx="{{ x }}" cy="{{ y }}" r="2.5" />
+      {% endfor %}
+    </svg>
+    <div class="line-chart__labels">
+      {% for point in points %}
+      <span class="line-chart__x-label">{{ point.label }}</span>
+      {% endfor %}
+    </div>
+    <div class="line-chart__values">
+      {% for point in points %}
+      <span class="line-chart__value-label">{{ point.value }}{{ block.content.y_unit | default('') }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% if block.content.caption %}
+  <p class="line-chart__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

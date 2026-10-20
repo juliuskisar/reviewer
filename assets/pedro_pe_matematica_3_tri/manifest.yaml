@@ -1,0 +1,263 @@
+version: 1
+review:
+  id: pedro-pe-matematica-3tri
+  title: Revisão de Matemática — PE 3º Trimestre (Pedro, 6º ano)
+student:
+  config: configs/students/pedro-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/math-pe-6.yaml
+assets:
+- file: page-001.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 1
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-002.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 2
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-003.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 3
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-004.jpg
+  subject: math
+  unit: parity
+  importance: medium
+  order: 4
+  notes: Módulos 16/21/27/31 — parity
+- file: page-005.jpg
+  subject: math
+  unit: mmc
+  importance: medium
+  order: 5
+  notes: Módulos 16/21/27/31 — mmc
+- file: page-006.jpg
+  subject: math
+  unit: parity
+  importance: medium
+  order: 6
+  notes: Módulos 16/21/27/31 — parity
+- file: page-007.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 7
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-008.jpg
+  subject: math
+  unit: divisibility_extra
+  importance: medium
+  order: 8
+  notes: Módulos 16/21/27/31 — divisibility_extra
+- file: page-009.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 9
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-010.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 10
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-011.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 11
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-012.jpg
+  subject: math
+  unit: divisibility
+  importance: medium
+  order: 12
+  notes: Módulos 16/21/27/31 — divisibility
+- file: page-013.jpg
+  subject: math
+  unit: prime_numbers
+  importance: medium
+  order: 13
+  notes: Módulos 16/21/27/31 — prime_numbers
+- file: page-014.jpg
+  subject: math
+  unit: prime_numbers
+  importance: medium
+  order: 14
+  notes: Módulos 16/21/27/31 — prime_numbers
+- file: page-015.jpg
+  subject: math
+  unit: multiples_divisors
+  importance: medium
+  order: 15
+  notes: Módulos 16/21/27/31 — multiples_divisors
+- file: page-016.jpg
+  subject: math
+  unit: prime_numbers
+  importance: medium
+  order: 16
+  notes: Módulos 16/21/27/31 — prime_numbers
+- file: page-017.jpg
+  subject: math
+  unit: multiples_divisors
+  importance: medium
+  order: 17
+  notes: Módulos 16/21/27/31 — multiples_divisors
+- file: page-018.jpg
+  subject: math
+  unit: area_conversion
+  importance: medium
+  order: 18
+  notes: Módulos 16/21/27/31 — area_conversion
+- file: page-019.jpg
+  subject: math
+  unit: area_perimeter
+  importance: medium
+  order: 19
+  notes: Módulos 16/21/27/31 — area_perimeter
+- file: page-020.jpg
+  subject: math
+  unit: multiples_divisors
+  importance: medium
+  order: 20
+  notes: Módulos 16/21/27/31 — multiples_divisors
+- file: page-021.jpg
+  subject: math
+  unit: area_perimeter
+  importance: medium
+  order: 21
+  notes: Módulos 16/21/27/31 — area_perimeter
+- file: page-022.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 22
+  notes: Módulos 16/21/27/31 — measures
+- file: page-023.jpg
+  subject: math
+  unit: area_conversion
+  importance: medium
+  order: 23
+  notes: Módulos 16/21/27/31 — area_conversion
+- file: page-024.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 24
+  notes: Módulos 16/21/27/31 — measures
+- file: page-025.jpg
+  subject: math
+  unit: area_conversion
+  importance: medium
+  order: 25
+  notes: Módulos 16/21/27/31 — area_conversion
+- file: page-026.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 26
+  notes: Módulos 16/21/27/31 — measures
+- file: page-027.jpg
+  subject: math
+  unit: area_perimeter
+  importance: medium
+  order: 27
+  notes: Módulos 16/21/27/31 — area_perimeter
+- file: page-028.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 28
+  notes: Módulos 16/21/27/31 — measures
+- file: page-029.jpg
+  subject: math
+  unit: area_perimeter
+  importance: medium
+  order: 29
+  notes: Módulos 16/21/27/31 — area_perimeter
+- file: page-030.jpg
+  subject: math
+  unit: area_conversion
+  importance: medium
+  order: 30
+  notes: Módulos 16/21/27/31 — area_conversion
+- file: page-031.jpg
+  subject: math
+  unit: area_conversion
+  importance: medium
+  order: 31
+  notes: Módulos 16/21/27/31 — area_conversion
+- file: page-032.jpg
+  subject: math
+  unit: area_perimeter
+  importance: medium
+  order: 32
+  notes: Módulos 16/21/27/31 — area_perimeter
+- file: page-033.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 33
+  notes: Módulos 16/21/27/31 — measures
+- file: page-034.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 34
+  notes: Módulos 16/21/27/31 — measures
+- file: page-035.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 35
+  notes: Módulos 16/21/27/31 — measures
+- file: page-036.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 36
+  notes: Módulos 16/21/27/31 — measures
+- file: page-037.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 37
+  notes: Módulos 16/21/27/31 — measures
+- file: page-038.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 38
+  notes: Módulos 16/21/27/31 — measures
+- file: page-039.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 39
+  notes: Módulos 16/21/27/31 — measures
+- file: page-040.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 40
+  notes: Módulos 16/21/27/31 — measures
+- file: page-041.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 41
+  notes: Módulos 16/21/27/31 — measures
+- file: page-042.jpg
+  subject: math
+  unit: measures
+  importance: medium
+  order: 42
+  notes: Módulos 16/21/27/31 — measures

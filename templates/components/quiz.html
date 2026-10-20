@@ -1,0 +1,99 @@
+<div class="quiz" data-component="quiz" data-quiz-id="{{ quiz_id | default('main') }}">
+  {% for exercise in exercises %}
+  <article class="quiz-item" id="exercise-{{ exercise.id }}" data-exercise-id="{{ exercise.id }}"
+           data-type="{{ exercise.type }}" data-section="{{ exercise.section | default('exercises') }}">
+    <h3 class="quiz-item__question">
+      <span class="quiz-item__number">{{ loop.index }}.</span>
+      {{ exercise.question }}
+    </h3>
+
+    {% if exercise.visual %}
+    <div class="quiz-item__visual">
+      {% include "components/exercise-visual.html" %}
+    </div>
+    {% endif %}
+
+    {% if exercise.type == 'multiple_choice' %}
+    <fieldset class="quiz-options">
+      <legend class="visually-hidden">Opções da questão {{ loop.index }}</legend>
+      {% for option in exercise.options %}
+      <label class="quiz-option">
+        <input type="radio" name="{{ exercise.id }}" value="{{ loop.index0 }}">
+        <span>{{ option }}</span>
+      </label>
+      {% endfor %}
+    </fieldset>
+
+    {% elif exercise.type == 'true_false' %}
+    <fieldset class="quiz-options">
+      <legend class="visually-hidden">Verdadeiro ou falso</legend>
+      <label class="quiz-option">
+        <input type="radio" name="{{ exercise.id }}" value="true">
+        <span>Verdadeiro</span>
+      </label>
+      <label class="quiz-option">
+        <input type="radio" name="{{ exercise.id }}" value="false">
+        <span>Falso</span>
+      </label>
+    </fieldset>
+
+    {% elif exercise.type == 'open_response' %}
+    <div class="open-response" data-component="open-response">
+      <label for="answer-{{ exercise.id }}" class="visually-hidden">Sua resposta</label>
+      <textarea id="answer-{{ exercise.id }}" rows="3" placeholder="Escreva sua resposta aqui..."></textarea>
+      {% if exercise.open_response_checklist %}
+      <div class="checklist" aria-label="Checklist de autoavaliação">
+        <p><strong>Checklist (não corrige automaticamente):</strong></p>
+        <ul>
+          {% for item in exercise.open_response_checklist %}
+          <li><label><input type="checkbox"> {{ item }}</label></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+
+    {% elif exercise.type == 'written_language' %}
+    <div class="written-language" data-component="written-language">
+      <label for="answer-{{ exercise.id }}" class="written-language__label">Sua resposta (em inglês):</label>
+      {% if exercise.input_mode == 'word' %}
+      <input type="text" class="written-input written-input--word" id="answer-{{ exercise.id }}"
+             autocomplete="off" spellcheck="false" placeholder="Type one word…">
+      {% else %}
+      <textarea class="written-input written-input--sentence" id="answer-{{ exercise.id }}"
+                rows="2" autocomplete="off" spellcheck="false" placeholder="Write a short sentence…"></textarea>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="quiz-actions">
+      <button type="button" class="btn btn-primary btn-check" data-exercise-id="{{ exercise.id }}"
+              {% if exercise.type == 'open_response' %}disabled aria-disabled="true"{% endif %}>
+        {% if exercise.type == 'open_response' %}Ver checklist{% else %}Verificar{% endif %}
+      </button>
+      <button type="button" class="btn btn-secondary btn-show-answer" data-exercise-id="{{ exercise.id }}">
+        Mostrar resposta
+      </button>
+    </div>
+    <div class="quiz-feedback" id="feedback-{{ exercise.id }}" role="status" aria-live="polite"></div>
+    <div class="quiz-answer is-hidden" id="answer-reveal-{{ exercise.id }}">
+      {% if exercise.type == 'map_capital' %}
+      <p><strong>Capital:</strong> <span class="map-capital-reveal">Selecione um estado no mapa.</span></p>
+      {% if exercise.explanation %}<p><strong>Dica:</strong> {{ exercise.explanation }}</p>{% endif %}
+      {% elif exercise.type == 'written_language' %}
+      <p><strong>Resposta modelo:</strong> {{ exercise.correct_answer }}</p>
+      {% if exercise.explanation %}<p><strong>Explicação:</strong> {{ exercise.explanation }}</p>{% endif %}
+      {% elif exercise.type != 'open_response' %}
+      <p><strong>Resposta:</strong>
+        {% if exercise.type == 'multiple_choice' %}{{ exercise.options[exercise.correct_answer] }}
+        {% elif exercise.type == 'true_false' %}{{ 'Verdadeiro' if exercise.correct_answer else 'Falso' }}
+        {% endif %}
+      </p>
+      {% if exercise.explanation %}<p><strong>Explicação:</strong> {{ exercise.explanation }}</p>{% endif %}
+      {% else %}
+      <p><strong>Resposta esperada:</strong> {{ exercise.correct_answer | default('Consulte o checklist.') }}</p>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</div>

@@ -1,0 +1,45 @@
+version: 1
+
+id: olympiad
+name: Olimpíada escolar
+
+exam:
+  type: olympiad
+  objective: competition_prep
+  expected_duration_minutes: 90
+
+content:
+  source_policy: assets_and_curriculum
+  prioritize:
+    - problem_solving
+    - reasoning_steps
+    - non_routine_questions
+    - conceptual_depth
+
+  avoid:
+    - trivial_recall_only
+    - excessive_memorization
+    - content_outside_level
+
+page:
+  format: static_html
+  sections:
+    - study_route
+    - explanations
+    - guided_examples
+    - attention_points
+    - exercises
+    - final_quiz
+    - exam_tips
+    - parent_support
+
+exercises:
+  total: 30
+  require_explanation: true
+  allow_retry: true
+
+validation:
+  require_source_mapping: true
+  validate_answer_key: true
+  validate_html: true
+  validate_image_paths: true

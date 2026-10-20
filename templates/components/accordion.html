@@ -1,0 +1,12 @@
+<details class="accordion-item">
+  <summary>{{ block.content.title }}</summary>
+  <div class="accordion-item__body">
+    {% if block.content.body is string %}
+    <p>{{ block.content.body }}</p>
+    {% else %}
+    {% for item in block.content.body %}
+    <p>{{ item }}</p>
+    {% endfor %}
+    {% endif %}
+  </div>
+</details>

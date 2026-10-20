@@ -1,0 +1,61 @@
+<details class="parent-support" data-component="parent-support">
+  <summary>Área dos responsáveis (clique para expandir)</summary>
+  <div class="parent-support__body">
+    <p class="parent-support__notice">
+      Esta seção é destinada a pais, mães ou responsáveis. Fica separada da experiência principal do aluno.
+    </p>
+
+    {% if parent_support.discussion_questions %}
+    <h3>Perguntas para conversar</h3>
+    <ul>
+      {% for q in parent_support.discussion_questions %}
+      <li>{{ q }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if parent_support.help_without_spoiling %}
+    <h3>Como ajudar sem entregar a resposta</h3>
+    <ul>
+      {% for tip in parent_support.help_without_spoiling %}
+      <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if parent_support.topics_needing_attention %}
+    <h3>Tópicos que merecem atenção</h3>
+    <ul>
+      {% for topic in parent_support.topics_needing_attention %}
+      <li>{{ topic }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if parent_support.open_response_criteria %}
+    <h3>Critérios para respostas discursivas</h3>
+    {% for item in parent_support.open_response_criteria %}
+    <div class="parent-criteria">
+      <p><strong>Exercício {{ item.exercise_id }}:</strong> {{ item.criteria }}</p>
+      {% if item.expected_answer %}
+      <p><strong>Resposta esperada:</strong> {{ item.expected_answer }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if parent_answers %}
+    <h3>Gabarito completo</h3>
+    <div class="parent-answers">
+      {% for ex in parent_answers %}
+      <p><strong>{{ ex.id }}:</strong>
+        {% if ex.type == 'multiple_choice' %}{{ ex.options[ex.correct_answer] }}
+        {% elif ex.type == 'true_false' %}{{ 'Verdadeiro' if ex.correct_answer else 'Falso' }}
+        {% else %}{{ ex.correct_answer | default('Ver critérios acima') }}
+        {% endif %}
+      </p>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</details>

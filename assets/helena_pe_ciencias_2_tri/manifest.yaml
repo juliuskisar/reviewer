@@ -1,0 +1,179 @@
+version: 1
+review:
+  id: helena-pe-ciencias-2tri
+  title: Revisão de Ciências — PE 2º Trimestre (Helena, 7º ano)
+student:
+  config: configs/students/helena-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/science-pe-7.yaml
+assets:
+- file: page-001.jpg
+  subject: science
+  unit: ozone_acid_rain
+  importance: high
+  order: 1
+  notes: Chuva ácida em Cubatão e Tubarão; ozônio troposférico e estratosférico
+- file: page-002.jpg
+  subject: science
+  unit: air_composition
+  importance: medium
+  order: 2
+  notes: CO₂ e nitrogênio — usos e propriedades
+- file: page-003.jpg
+  subject: science
+  unit: ozone_acid_rain
+  importance: high
+  order: 3
+  notes: Óxidos de N e S; formação da chuva ácida
+- file: page-004.jpg
+  subject: science
+  unit: waterborne_diseases
+  importance: high
+  order: 4
+  notes: Cólera, giardíase, amebíase e DDA em enchentes
+- file: page-005.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: high
+  order: 5
+  notes: Aquecedores a gás e intoxicação por CO
+- file: page-006.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: high
+  order: 6
+  notes: Poluição interna; combustão completa e incompleta
+- file: page-007.jpg
+  subject: science
+  unit: waterborne_diseases
+  importance: high
+  order: 7
+  notes: Hepatites A/E e leptospirose
+- file: page-008.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: medium
+  order: 8
+  notes: COVs e contaminantes biológicos
+- file: page-009.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: high
+  order: 9
+  notes: Fumaça de cigarito e tabagismo passivo
+- file: page-010.jpg
+  subject: science
+  unit: greenhouse_warming
+  importance: high
+  order: 10
+  notes: Ciclo do carbono e consequências do aquecimento global
+- file: page-011.jpg
+  subject: science
+  unit: atmospheric_pollutants
+  importance: high
+  order: 11
+  notes: Tabela de poluentes, fontes e impactos
+- file: page-012.jpg
+  subject: science
+  unit: waterborne_diseases
+  importance: medium
+  order: 12
+  notes: Doenças transmitidas pela água; agentes causadores e vetores
+- file: page-013.jpg
+  subject: science
+  unit: respiratory_thermal
+  importance: high
+  order: 13
+  notes: Efeito estufa no carro; sistema respiratório
+- file: page-014.jpg
+  subject: science
+  unit: greenhouse_warming
+  importance: high
+  order: 14
+  notes: Diagrama do efeito estufa atmosférico
+- file: page-015.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: high
+  order: 15
+  notes: Produtos de limpeza e riscos químicos
+- file: page-016.jpg
+  subject: science
+  unit: sanitation_floods
+  importance: medium
+  order: 16
+  notes: Enchentes, deslizamentos e doenças hídricas
+- file: page-017.jpg
+  subject: science
+  unit: atmospheric_pollutants
+  importance: high
+  order: 17
+  notes: MP, CO, CO₂ e CH₄ — fontes e efeitos
+- file: page-018.jpg
+  subject: science
+  unit: respiratory_thermal
+  importance: high
+  order: 18
+  notes: Asma, bronquite, enfisema; inversão térmica
+- file: page-019.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: medium
+  order: 19
+  notes: Chama azul x amarela; fuligem
+- file: page-020.jpg
+  subject: science
+  unit: vector_diseases
+  importance: high
+  order: 20
+  notes: Doenças por vetores — dengue, malária, tifo
+- file: page-021.jpg
+  subject: science
+  unit: ozone_acid_rain
+  importance: high
+  order: 21
+  notes: Buraco na camada de ozônio e CFCs
+- file: page-022.jpg
+  subject: science
+  unit: air_composition
+  importance: high
+  order: 22
+  notes: Composição do ar — gráfico de pizza N₂/O₂/outros
+- file: page-023.jpg
+  subject: science
+  unit: sanitation_floods
+  importance: medium
+  order: 23
+  notes: Manejo de águas pluviais; Petrópolis 2022
+- file: page-024.jpg
+  subject: science
+  unit: vector_diseases
+  importance: high
+  order: 24
+  notes: Malária no Brasil — gráfico de barras
+- file: page-025.jpg
+  subject: science
+  unit: indoor_pollution
+  importance: medium
+  order: 25
+  notes: Mistura de produtos de limpeza; álcool gel
+- file: page-026.jpg
+  subject: science
+  unit: sanitation_floods
+  importance: high
+  order: 26
+  notes: Saneamento básico — resíduos, ETA, ETE
+- file: page-027.jpg
+  subject: science
+  unit: vector_diseases
+  importance: high
+  order: 27
+  notes: Tabela de doenças por vetores
+- file: page-028.jpg
+  subject: science
+  unit: greenhouse_warming
+  importance: medium
+  order: 28
+  notes: Efeito estufa em estufa de plantas

@@ -1,0 +1,54 @@
+version: 1
+
+id: geography-pe-4
+name: Geografia — PE 4º ano (2º trimestre)
+
+objectives:
+  - Compreender a bandeira do Brasil como símbolo nacional e o significado das cores e estrelas
+  - Relacionar o número de estrelas na bandeira às unidades federativas ao longo do tempo
+  - Analisar mapas políticos históricos do Brasil (1942–1977, 1977–1988, após 1988)
+  - Explicar causas e consequências da criação de novos estados (Mato Grosso do Sul, Tocantins)
+  - Diferenciar mapa político e mapa físico; interpretar altitude e legenda de relevo
+  - Reconhecer divisas entre estados e propostas de novas divisões territoriais
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: flag_stars
+    description: Achar que as estrelas representam apenas estados, sem o Distrito Federal
+    prevention: Cada estrela = uma unidade federativa (estado ou DF)
+  - topic: political_maps
+    description: Confundir períodos históricos dos mapas políticos
+    prevention: Memorizar: 1942–77 (sem MS e TO), 1977–88 (com MS, sem TO), após 1988 (27 UFs)
+  - topic: mato_grosso
+    description: Achar que Campo Grande era capital de Mato Grosso
+    prevention: Cuiabá sempre capital de MT; Campo Grande capital de MS desde 1977
+  - topic: physical_maps
+    description: Confundir mapa político com mapa físico
+    prevention: Político = divisas de estados; físico = relevo, rios, altitude
+  - topic: altitude
+    description: Achar que verde claro indica montanhas altas
+    prevention: Verde claro = até 100 m; marrom = acima de 1201 m
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 6 do caderno
+  - Usar linha do tempo dos mapas políticos brasileiros
+  - Incluir vocabulário: divisa, marco, plebiscito, altitude, unidade federativa
+  - Exercícios autossuficientes, estilo Teste e Atividade do livro
+  - Linguagem simples para 4º ano
+
+validation:
+  validate_geographic_terms: true
+  flag_outdated_map_references: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [6]
+  supplementary: []

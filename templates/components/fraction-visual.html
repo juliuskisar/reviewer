@@ -1,0 +1,28 @@
+<figure class="fraction-visual" data-component="fraction-visual">
+  {% if block.content.title %}
+  <figcaption class="fraction-visual__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  {% if block.content.intro %}
+  <p class="fraction-visual__intro">{{ block.content.intro }}</p>
+  {% endif %}
+  <div class="fraction-visual__bars" role="img" aria-label="{{ block.content.aria_label | default('Representação visual de frações') }}">
+    {% for bar in block.content.bars %}
+    <div class="fraction-visual__bar-row">
+      {% if bar.label %}<span class="fraction-visual__bar-label">{{ bar.label }}</span>{% endif %}
+      <div class="fraction-visual__bar" style="--segments: {{ bar.segments }};">
+        {% for i in range(bar.segments) %}
+        <div class="fraction-segment{% if i < bar.filled %} fraction-segment--filled{% else %} fraction-segment--empty{% endif %}" aria-hidden="true">
+          <span class="fraction-segment__chocolate"></span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if block.content.summary %}
+  <p class="fraction-visual__summary"><strong>{{ block.content.summary }}</strong></p>
+  {% endif %}
+  {% if block.content.caption %}
+  <p class="fraction-visual__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

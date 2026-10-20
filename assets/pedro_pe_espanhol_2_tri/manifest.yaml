@@ -1,0 +1,119 @@
+version: 1
+review:
+  id: pedro-pe-espanhol-2tri
+  title: Revisão de Espanhol — PE 2º Trimestre (Pedro, 6º ano)
+student:
+  config: configs/students/pedro-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/spanish-pe-6.yaml
+assets:
+- file: page-001.jpg
+  subject: spanish
+  unit: descripciones_fisicas
+  importance: medium
+  order: 1
+  notes: Módulo 3 — introdução ¿Cómo somos? + tabla ser/estar/llamarse/vivir
+- file: page-002.jpg
+  subject: spanish
+  unit: descripciones_fisicas
+  importance: medium
+  order: 2
+  notes: Para empezar + cómic Gaturro + actividad 1
+- file: page-003.jpg
+  subject: spanish
+  unit: descripciones_fisicas
+  importance: high
+  order: 3
+  notes: Descripciones Paloma, Julio, Juan, Lucía (act. 2-3)
+- file: page-004.jpg
+  subject: spanish
+  unit: genero_numero
+  importance: medium
+  order: 4
+  notes: Actividades 4-7 + cómic niño/niña
+- file: page-005.jpg
+  subject: spanish
+  unit: genero_numero
+  importance: high
+  order: 5
+  notes: Género de sustantivos y adjetivos
+- file: page-006.jpg
+  subject: spanish
+  unit: genero_numero
+  importance: high
+  order: 6
+  notes: Número + artículos + heterogenéricos
+- file: page-007.jpg
+  subject: spanish
+  unit: articulos
+  importance: high
+  order: 7
+  notes: Artículos + ser/tener/llevar
+- file: page-008.jpg
+  subject: spanish
+  unit: ser_tener_llevar
+  importance: high
+  order: 8
+  notes: Uso de ser/tener/llevar + vocabulario descripción
+- file: page-009.jpg
+  subject: spanish
+  unit: ropa_cuerpo
+  importance: high
+  order: 9
+  notes: Partes del cuerpo + poema La niña que se va al mar
+- file: page-010.jpg
+  subject: spanish
+  unit: ropa_cuerpo
+  importance: medium
+  order: 10
+  notes: Poema preguntas + adivinanzas ropa + imágenes prendas
+- file: page-011.jpg
+  subject: spanish
+  unit: ropa_cuerpo
+  importance: medium
+  order: 11
+  notes: Tener/llevar con ropa + Módulo 4 intro
+- file: page-012.jpg
+  subject: spanish
+  unit: profesiones
+  importance: high
+  order: 12
+  notes: Módulo 4 ¿A qué te dedicas? + adivinanzas profesiones
+- file: page-013.jpg
+  subject: spanish
+  unit: familia
+  importance: high
+  order: 13
+  notes: Textos Fernando, Beatriz, Lucía + matching profesiones
+- file: page-014.jpg
+  subject: spanish
+  unit: familia
+  importance: medium
+  order: 14
+  notes: Entrevista Alicia + género entrevista
+- file: page-015.jpg
+  subject: spanish
+  unit: trabajar_tener_estar
+  importance: high
+  order: 15
+  notes: Cómic Gaturro + presente trabajar/tener/estar
+- file: page-016.jpg
+  subject: spanish
+  unit: trabajar_tener_estar
+  importance: high
+  order: 16
+  notes: Ejercicios conjugación + lista profesiones
+- file: page-017.jpg
+  subject: spanish
+  unit: profesiones
+  importance: medium
+  order: 17
+  notes: Ilustración ciudad — 20 profesiones numeradas
+- file: page-018.jpg
+  subject: spanish
+  unit: profesiones
+  importance: medium
+  order: 18
+  notes: Sigue estudiando — profesiones y verbos

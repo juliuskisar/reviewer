@@ -1,0 +1,48 @@
+version: 1
+
+id: portuguese-pe-6
+name: Língua Portuguesa — PE 6º ano (2º trimestre)
+
+objectives:
+  - Reconhecer gêneros normativos e instrucionais
+  - Analisar estrutura de textos legais e regras de netiqueta
+  - Identificar sintagma verbal, modos e formas nominais
+  - Usar advérbios, locuções adverbiais e pontuação em listas
+  - Interpretar narrativas de humor e transformar discurso direto/indireto
+
+preferred_components:
+  - concept_grid
+  - comparison_table
+  - route_steps
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - reading_passage
+
+common_errors:
+  - topic: text_genres
+    description: Confundir texto normativo com instrucional
+    prevention: Normativo = regras/proibições; instrucional = ensinar a fazer algo
+  - topic: verbs_moods
+    description: Confundir imperativo com indicativo
+    prevention: Imperativo dá ordem ou conselho — «Evite», «Seja»
+  - topic: adverbs
+    description: Confundir mal (advérbio) com mau (adjetivo)
+    prevention: mal ↔ bem · mau ↔ bom
+  - topic: speech
+    description: Manter travessões ao passar para discurso indireto
+    prevention: No indireto, use «que» ou «se» e ajuste tempos verbais
+
+pedagogical_strategies:
+  - Transcrever textos da apostila como base dos exercícios
+  - Pelo menos dois textos completos com múltiplas questões cada
+  - Incluir afirmativas I–IV no estilo Teste do caderno
+  - Linguagem clara para 6º ano
+
+validation:
+  require_reading_passage_in_exercises: true
+  flag_ambiguous_interpretation: true
+
+pe_modules:
+  primary: [19, 20, 22, 23]

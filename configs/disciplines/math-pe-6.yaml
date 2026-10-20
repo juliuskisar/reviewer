@@ -1,0 +1,46 @@
+version: 1
+
+id: math-pe-6
+name: Matemática — PE 6º ano (2º trimestre)
+
+objectives:
+  - Resolver expressões numéricas com parênteses, potências e ordem das operações
+  - Multiplicar e dividir números decimais usando compensação e propriedades da divisão
+  - Diferenciar divisões com e sem subdivisão do resto em problemas contextualizados
+  - Relacionar divisão com frações e números mistos
+  - Calcular razões, médias e interpretar gráficos estatísticos
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: order_operations
+    description: Fazer adição antes da multiplicação
+    prevention: Multiplicação e divisão antes de adição e subtração
+  - topic: decimal_multiply
+    description: Errar a vírgula no produto
+    prevention: Somar casas decimais dos fatores ou usar compensação
+  - topic: decimal_divide
+    description: Esquecer de multiplicar dividendo e divisor pelo mesmo número
+    prevention: Transformar divisor decimal em natural (×10, ×100…)
+  - topic: division_fraction
+    description: Confundir quociente inteiro com fração imprópria
+    prevention: 7 ÷ 4 = 7/4 = 1 + 3/4
+
+pedagogical_strategies:
+  - Organizar Módulos 18, 19 e 24
+  - Exercícios autossuficientes com dados embutidos (tabelas, gráficos descritos)
+  - Linguagem clara para 6º ano
+
+validation:
+  require_scientific_accuracy: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [18, 19, 24]

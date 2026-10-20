@@ -1,0 +1,40 @@
+version: 1
+
+id: quick-review
+name: Revisão rápida
+
+exam:
+  type: quick_review
+  objective: recap
+  expected_duration_minutes: 20
+
+content:
+  source_policy: assets_first
+  prioritize:
+    - key_concepts
+    - quick_summary
+    - common_errors
+
+  avoid:
+    - long_explanations
+    - advanced_extensions
+    - large_exercise_sets
+
+page:
+  format: static_html
+  sections:
+    - study_route
+    - quick_summary
+    - attention_points
+    - exercises
+
+exercises:
+  total: 8
+  require_explanation: true
+  allow_retry: true
+
+validation:
+  require_source_mapping: true
+  validate_answer_key: true
+  validate_html: true
+  validate_image_paths: true

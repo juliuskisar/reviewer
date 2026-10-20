@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://school-review.local/schemas/audit-report.schema.json",
+  "title": "AuditReport",
+  "description": "Relatório de auditoria da revisão gerada",
+  "type": "object",
+  "required": ["version", "review_id", "status", "generated_at", "checks"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "const": "1.0" },
+    "review_id": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["passed", "passed_with_warnings", "failed"]
+    },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_checks": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "errors": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/check_result" }
+    },
+    "blocking_issues": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "check_severity": {
+      "type": "string",
+      "enum": ["info", "warning", "error"]
+    },
+    "check_result": {
+      "type": "object",
+      "required": ["id", "name", "severity", "passed"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "severity": { "$ref": "#/$defs/check_severity" },
+        "passed": { "type": "boolean" },
+        "message": { "type": "string" },
+        "details": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

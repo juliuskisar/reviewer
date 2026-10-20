@@ -1,0 +1,27 @@
+version: 1
+
+id: benjamin-student
+
+student:
+  name: Benjamin
+  age: 9
+  grade: "4º ano"
+  language: pt-BR
+
+learning:
+  prior_knowledge: basic
+  preferred_explanation_style:
+    - clear
+    - short_blocks
+    - example_driven
+    - visual_text
+
+accessibility:
+  avoid_excessive_text_blocks: true
+  minimum_font_size_px: 16
+  do_not_rely_only_on_color: true
+
+notes: >
+  Aluno do 4º ano do Ensino Fundamental. Prefere textos curtos, blocos visuais (cards)
+  e exercícios no estilo Teste/Atividade do caderno. Revisões PE já feitas:
+  História, Ciências, Matemática, Geografia e Português (2º trimestre).

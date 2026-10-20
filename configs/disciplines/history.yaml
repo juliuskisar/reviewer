@@ -1,0 +1,38 @@
+version: 1
+
+id: history
+name: História
+
+objectives:
+  - Compreender processos históricos e suas causas
+  - Relacionar eventos em linha do tempo
+  - Desenvolver pensamento crítico sobre fontes
+
+preferred_components:
+  - timeline
+  - accordion
+  - comparison_table
+  - tabs
+
+exercise_types:
+  - multiple_choice
+  - true_false
+  - open_response
+  - matching
+
+common_errors:
+  - topic: chronology
+    description: Inverter ordem de eventos
+    prevention: Usar linha do tempo visual
+  - topic: cause_effect
+    description: Confundir causa e consequência
+    prevention: Exercícios de associação causa-efeito
+
+pedagogical_strategies:
+  - Organizar conteúdo cronologicamente
+  - Conectar passado ao presente de forma simples
+  - Usar mapas conceituais e linhas do tempo
+
+validation:
+  require_historical_context_in_open: true
+  flag_anachronisms: true

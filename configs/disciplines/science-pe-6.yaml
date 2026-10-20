@@ -1,0 +1,47 @@
+version: 1
+
+id: science-pe-6
+name: Ciências — PE 6º ano (2º trimestre)
+
+objectives:
+  - Classificar resíduos sólidos (RSU e RSS) e identificar destinos adequados
+  - Explicar reciclagem, coleta seletiva, os 4 Rs e a PNRS
+  - Analisar poluição por resíduos, metais pesados, vetores e doenças
+  - Compreender saneamento básico, tratamento de água (ETA) e esgoto (ETE)
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - true_false
+
+common_errors:
+  - topic: waste_destinations
+    description: Confundir lixão com aterro sanitário
+    prevention: Lixão não tem impermeabilização; aterro sanitário coleta chorume e gases
+  - topic: recycling
+    description: Achar que tudo pode ser reciclado
+    prevention: Nem todo resíduo é reciclável — separar e limpar materiais corretos
+  - topic: sewage_sanitation
+    description: Acreditar que água tratada e esgoto são o mesmo serviço
+    prevention: ETA trata água para consumo; ETE trata esgoto antes de devolver ao ambiente
+  - topic: pollution_health
+    description: Descartar pilhas e baterias no lixo comum
+    prevention: Metais pesados contaminam solo e água — usar pontos de coleta específicos
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 9 → 10 → 11 → 12
+  - Usar exemplos brasileiros (Abrelpe, SNIS, PNRS)
+  - Exercícios autossuficientes, estilo Teste/Atividade do caderno
+  - Linguagem clara para 6º ano
+
+validation:
+  require_scientific_accuracy: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [9, 10, 11, 12]

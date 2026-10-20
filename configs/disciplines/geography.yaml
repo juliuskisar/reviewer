@@ -1,0 +1,37 @@
+version: 1
+
+id: geography
+name: Geografia
+
+objectives:
+  - Compreender relações entre sociedade e espaço
+  - Interpretar mapas e representações cartográficas
+  - Identificar fenômenos naturais e humanos
+
+preferred_components:
+  - comparison_table
+  - tabs
+  - timeline
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - matching
+  - open_response
+
+common_errors:
+  - topic: map_reading
+    description: Confundir escala e distância real
+    prevention: Exemplos com mapas simples e legendas
+  - topic: climate_biomes
+    description: Associar clima apenas à temperatura
+    prevention: Incluir precipitação e vegetação
+
+pedagogical_strategies:
+  - Usar mapas e diagramas sempre que possível
+  - Relacionar fenômenos locais a conceitos globais
+  - Comparar regiões de forma estruturada
+
+validation:
+  validate_geographic_terms: true
+  flag_outdated_map_references: true

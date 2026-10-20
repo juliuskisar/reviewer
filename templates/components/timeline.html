@@ -1,0 +1,12 @@
+<ol class="timeline" data-component="timeline">
+  {% for event in block.content.events %}
+  <li class="timeline__item">
+    <span class="timeline__marker" aria-hidden="true"></span>
+    <div class="timeline__content">
+      {% if event.date %}<time class="timeline__date">{{ event.date }}</time>{% endif %}
+      <strong>{{ event.title }}</strong>
+      {% if event.description %}<p>{{ event.description }}</p>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>

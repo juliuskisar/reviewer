@@ -1,0 +1,245 @@
+version: 1
+review:
+  id: pedro-pe-ciencias-2tri
+  title: Revisão de Ciências — PE 2º Trimestre (Pedro, 6º ano)
+student:
+  config: configs/students/pedro-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/science-pe-6.yaml
+assets:
+- file: page-001.jpg
+  subject: science
+  unit: solid_waste
+  importance: medium
+  order: 1
+  notes: RSU, composição e mapas conceituais
+- file: page-002.jpg
+  subject: science
+  unit: sewage_sanitation
+  importance: medium
+  order: 2
+  notes: Índices de saneamento por região
+- file: page-003.jpg
+  subject: science
+  unit: pollution_health
+  importance: medium
+  order: 3
+  notes: Resíduos, poluição e doenças
+- file: page-004.jpg
+  subject: science
+  unit: sewage_sanitation
+  importance: medium
+  order: 4
+  notes: ETE — estações de tratamento de esgoto
+- file: page-005.jpg
+  subject: science
+  unit: solid_waste
+  importance: medium
+  order: 5
+  notes: Módulo 9 — resíduos sólidos e destinos
+- file: page-006.jpg
+  subject: science
+  unit: pollution_health
+  importance: medium
+  order: 6
+  notes: Metais pesados e cadeia alimentar
+- file: page-007.jpg
+  subject: science
+  unit: sewage_sanitation
+  importance: medium
+  order: 7
+  notes: Módulo 12 — saneamento básico
+- file: page-008.jpg
+  subject: science
+  unit: waste_destinations
+  importance: medium
+  order: 8
+  notes: Aterros sanitários e controlados
+- file: page-009.jpg
+  subject: science
+  unit: waste_destinations
+  importance: medium
+  order: 9
+  notes: Incineração e resíduos especiais
+- file: page-010.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 10
+  notes: Módulo 10 — 4 Rs e reciclagem
+- file: page-011.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 11
+  notes: Consumismo e PNRS
+- file: page-012.jpg
+  subject: science
+  unit: pollution_health
+  importance: medium
+  order: 12
+  notes: Metais pesados e saúde
+- file: page-013.jpg
+  subject: science
+  unit: health_sanitation
+  importance: medium
+  order: 13
+  notes: Teste — saúde e resíduos
+- file: page-014.jpg
+  subject: science
+  unit: solid_waste
+  importance: medium
+  order: 14
+  notes: O que é lixo — números do Brasil
+- file: page-015.jpg
+  subject: science
+  unit: water_treatment
+  importance: medium
+  order: 15
+  notes: Poços e aquíferos
+- file: page-016.jpg
+  subject: science
+  unit: vectors_diseases
+  importance: medium
+  order: 16
+  notes: Módulo 11 — poluição e saúde pública
+- file: page-017.jpg
+  subject: science
+  unit: sewage_sanitation
+  importance: medium
+  order: 17
+  notes: Esgoto a céu aberto e mortalidade infantil
+- file: page-018.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 18
+  notes: Vantagens da reciclagem
+- file: page-019.jpg
+  subject: science
+  unit: solid_waste
+  importance: medium
+  order: 19
+  notes: Mapa conceitual de resíduos
+- file: page-020.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 20
+  notes: Cooperativas de reciclagem
+- file: page-021.jpg
+  subject: science
+  unit: waste_destinations
+  importance: medium
+  order: 21
+  notes: Compostagem e biodigestores
+- file: page-022.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 22
+  notes: Reciclagem de metais e plásticos
+- file: page-023.jpg
+  subject: science
+  unit: waste_destinations
+  importance: medium
+  order: 23
+  notes: Incineração x compostagem
+- file: page-024.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 24
+  notes: Produção de vidro, metal e plástico
+- file: page-025.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 25
+  notes: Coleta seletiva — cores das lixeiras
+- file: page-026.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 26
+  notes: Como reciclar papel e vidro
+- file: page-027.jpg
+  subject: science
+  unit: solid_waste
+  importance: medium
+  order: 27
+  notes: RSU — classificação e destinos
+- file: page-028.jpg
+  subject: science
+  unit: sewage_sanitation
+  importance: medium
+  order: 28
+  notes: Mapa de saneamento no Brasil
+- file: page-029.jpg
+  subject: science
+  unit: water_treatment
+  importance: medium
+  order: 29
+  notes: ETA — tratamento de água
+- file: page-030.jpg
+  subject: science
+  unit: vectors_diseases
+  importance: medium
+  order: 30
+  notes: Vetores e doenças
+- file: page-031.jpg
+  subject: science
+  unit: water_treatment
+  importance: medium
+  order: 31
+  notes: Caminho da água na ETA
+- file: page-032.jpg
+  subject: science
+  unit: pollution_health
+  importance: medium
+  order: 32
+  notes: Poluição do lixão — chorume
+- file: page-033.jpg
+  subject: science
+  unit: waste_destinations
+  importance: medium
+  order: 33
+  notes: Lixão — contaminação do solo
+- file: page-034.jpg
+  subject: science
+  unit: health_sanitation
+  importance: medium
+  order: 34
+  notes: Saúde, doença e saneamento básico
+- file: page-035.jpg
+  subject: science
+  unit: water_treatment
+  importance: medium
+  order: 35
+  notes: Tratamento de água e esgoto
+- file: page-036.jpg
+  subject: science
+  unit: waste_destinations
+  importance: medium
+  order: 36
+  notes: Autoclave e compostagem
+- file: page-037.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 37
+  notes: Os 4 Rs e consumismo
+- file: page-038.jpg
+  subject: science
+  unit: sewage_sanitation
+  importance: medium
+  order: 38
+  notes: Fossas sépticas e esgoto
+- file: page-039.jpg
+  subject: science
+  unit: recycling
+  importance: medium
+  order: 39
+  notes: PNRS e logística reversa

@@ -1,0 +1,16 @@
+{% if exercise.visual.type == 'bar_chart' %}
+{% set block = exercise.visual %}
+{% include "components/bar-chart.html" %}
+{% elif exercise.visual.type == 'pie_chart' %}
+{% set block = exercise.visual %}
+{% include "components/pie-chart.html" %}
+{% elif exercise.visual.type == 'line_chart' %}
+{% set block = exercise.visual %}
+{% include "components/line-chart.html" %}
+{% elif exercise.visual.type == 'fraction_visual' %}
+{% set block = exercise.visual %}
+{% include "components/fraction-visual.html" %}
+{% elif exercise.visual.type == 'brazil_map' %}
+{% set block = exercise.visual %}
+{% include "components/brazil-map.html" %}
+{% endif %}

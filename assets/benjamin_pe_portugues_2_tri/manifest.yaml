@@ -1,0 +1,341 @@
+version: 1
+review:
+  id: benjamin-pe-portugues-2tri
+  title: Revisão de Português — PE 2º Trimestre (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/portuguese-pe-4.yaml
+assets:
+- file: page-001.jpg
+  subject: portuguese
+  unit: infographic
+  importance: medium
+  order: 1
+  notes: Infográfico e importância de brincar
+- file: page-002.jpg
+  subject: portuguese
+  unit: infographic
+  importance: medium
+  order: 2
+  notes: Infográfico e importância de brincar
+- file: page-003.jpg
+  subject: portuguese
+  unit: infographic
+  importance: medium
+  order: 3
+  notes: Infográfico e importância de brincar
+- file: page-004.jpg
+  subject: portuguese
+  unit: infographic
+  importance: medium
+  order: 4
+  notes: Infográfico e importância de brincar
+- file: page-005.jpg
+  subject: portuguese
+  unit: visual_resources
+  importance: medium
+  order: 5
+  notes: Recursos gráfico-visuais
+- file: page-006.jpg
+  subject: portuguese
+  unit: visual_resources
+  importance: medium
+  order: 6
+  notes: Recursos gráfico-visuais
+- file: page-007.jpg
+  subject: portuguese
+  unit: visual_resources
+  importance: medium
+  order: 7
+  notes: Recursos gráfico-visuais
+- file: page-008.jpg
+  subject: portuguese
+  unit: visual_resources
+  importance: medium
+  order: 8
+  notes: Recursos gráfico-visuais
+- file: page-009.jpg
+  subject: portuguese
+  unit: infographic
+  importance: medium
+  order: 9
+  notes: Infográfico e importância de brincar
+- file: page-010.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 10
+  notes: Sufixos derivacionais
+- file: page-011.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 11
+  notes: Sufixos derivacionais
+- file: page-012.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 12
+  notes: Sufixos derivacionais
+- file: page-013.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 13
+  notes: Sufixos derivacionais
+- file: page-014.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 14
+  notes: Sufixos derivacionais
+- file: page-015.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 15
+  notes: Sufixos derivacionais
+- file: page-016.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 16
+  notes: Sufixos derivacionais
+- file: page-017.jpg
+  subject: portuguese
+  unit: nasal
+  importance: medium
+  order: 17
+  notes: Marcas de nasalidade
+- file: page-018.jpg
+  subject: portuguese
+  unit: nasal
+  importance: medium
+  order: 18
+  notes: Marcas de nasalidade
+- file: page-019.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 19
+  notes: Sufixos derivacionais
+- file: page-020.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 20
+  notes: Pesquisa escolar e produção de texto
+- file: page-021.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 21
+  notes: Pesquisa escolar e produção de texto
+- file: page-022.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 22
+  notes: Pesquisa escolar e produção de texto
+- file: page-023.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 23
+  notes: Pesquisa escolar e produção de texto
+- file: page-024.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 24
+  notes: Pesquisa escolar e produção de texto
+- file: page-025.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 25
+  notes: Pesquisa escolar e produção de texto
+- file: page-026.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 26
+  notes: Pesquisa escolar e produção de texto
+- file: page-027.jpg
+  subject: portuguese
+  unit: joca_reading
+  importance: medium
+  order: 27
+  notes: Texto informativo Jornal Joca
+- file: page-028.jpg
+  subject: portuguese
+  unit: visual_resources
+  importance: medium
+  order: 28
+  notes: Recursos gráfico-visuais
+- file: page-029.jpg
+  subject: portuguese
+  unit: suffixes
+  importance: medium
+  order: 29
+  notes: Sufixos derivacionais
+- file: page-030.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 30
+  notes: Pesquisa escolar e produção de texto
+- file: page-031.jpg
+  subject: portuguese
+  unit: research
+  importance: medium
+  order: 31
+  notes: Pesquisa escolar e produção de texto
+- file: page-032.jpg
+  subject: portuguese
+  unit: dictionary
+  importance: medium
+  order: 32
+  notes: Verbetes de dicionário
+- file: page-033.jpg
+  subject: portuguese
+  unit: dictionary
+  importance: medium
+  order: 33
+  notes: Verbetes de dicionário
+- file: page-034.jpg
+  subject: portuguese
+  unit: dictionary
+  importance: medium
+  order: 34
+  notes: Verbetes de dicionário
+- file: page-035.jpg
+  subject: portuguese
+  unit: dictionary
+  importance: medium
+  order: 35
+  notes: Verbetes de dicionário
+- file: page-036.jpg
+  subject: portuguese
+  unit: dictionary
+  importance: medium
+  order: 36
+  notes: Verbetes de dicionário
+- file: page-037.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 37
+  notes: Artigo enciclopédico
+- file: page-038.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 38
+  notes: Artigo enciclopédico
+- file: page-039.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 39
+  notes: Artigo enciclopédico
+- file: page-040.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 40
+  notes: Artigo enciclopédico
+- file: page-041.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 41
+  notes: Artigo enciclopédico
+- file: page-042.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 42
+  notes: Artigo enciclopédico
+- file: page-043.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 43
+  notes: Artigo enciclopédico
+- file: page-044.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 44
+  notes: Artigo enciclopédico
+- file: page-045.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 45
+  notes: Artigo enciclopédico
+- file: page-046.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 46
+  notes: Artigo enciclopédico
+- file: page-047.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 47
+  notes: Artigo enciclopédico
+- file: page-048.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 48
+  notes: Artigo enciclopédico
+- file: page-049.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 49
+  notes: Artigo enciclopédico
+- file: page-050.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 50
+  notes: Artigo enciclopédico
+- file: page-051.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 51
+  notes: Artigo enciclopédico
+- file: page-052.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 52
+  notes: Artigo enciclopédico
+- file: page-053.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 53
+  notes: Artigo enciclopédico
+- file: page-054.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 54
+  notes: Artigo enciclopédico
+- file: page-055.jpg
+  subject: portuguese
+  unit: encyclopedia
+  importance: medium
+  order: 55
+  notes: Artigo enciclopédico

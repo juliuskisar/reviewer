@@ -1,0 +1,52 @@
+version: 1
+
+id: science-pe-7
+name: Ciências — PE 7º ano (2º trimestre)
+
+objectives:
+  - Descrever a composição do ar e os principais poluentes atmosféricos
+  - Explicar efeito estufa, aquecimento global e ciclo do carbono
+  - Diferenciar ozônio troposférico e estratosférico; compreender chuva ácida
+  - Analisar poluição do ar interno — combustão, CO, produtos de limpeza e tabagismo
+  - Relacionar poluição atmosférica a doenças respiratórias e inversão térmica
+  - Revisar saneamento básico, enchentes e doenças de veiculação hídrica e por vetores
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+  - bar_chart
+  - pie_chart
+  - line_chart
+
+exercise_types:
+  - multiple_choice
+  - true_false
+
+common_errors:
+  - topic: ozone
+    description: Confundir ozônio da troposfera (poluente) com o da estratosfera (protetor)
+    prevention: Troposfera = poluição fotoquímica; estratosfera = filtra raios UV
+  - topic: combustion
+    description: Achar que chama amarela indica combustão completa
+    prevention: Chama azul = completa (CO₂); amarela = incompleta (CO e fuligem)
+  - topic: greenhouse
+    description: Confundir efeito estufa natural com intensificação pelo aquecimento global
+    prevention: GEE retêm calor naturalmente; excesso de CO₂ e CH₄ intensifica o efeito
+  - topic: disease_agents
+    description: Confundir agente causador com agente transmissor (vetor)
+    prevention: Causador = microrganismo; vetor = transporta o causador (mosquito, rato, mosca)
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 9 → 10 → 11 (ar, poluição, saneamento e doenças)
+  - Usar gráficos renderizados (pizza, barras, linha) quando o caderno trabalha interpretação
+  - Exercícios autossuficientes, estilo Teste/Atividade do caderno
+  - Linguagem clara para 7º ano
+
+validation:
+  require_scientific_accuracy: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [9, 10, 11]

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ asset_base }}review.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
+
+  <header class="page-header">
+    <div class="page-header__inner">
+      <h1>{{ title }}</h1>
+      {% if subtitle %}<p class="subtitle">{{ subtitle }}</p>{% endif %}
+      <div class="header-badges">
+        {% if discipline %}<span class="header-badge">{{ discipline }}</span>{% endif %}
+        {% if grade %}<span class="header-badge">{{ grade }}</span>{% endif %}
+        {% if metadata.exam_type %}<span class="header-badge">{{ metadata.exam_type }}</span>{% endif %}
+      </div>
+      {% include "components/progress.html" %}
+    </div>
+  </header>
+
+  <nav class="nav-tabs" aria-label="Seções da revisão">
+    <div class="nav-tabs__inner" role="tablist">
+      {% for section in sections %}
+      <button type="button" role="tab" class="nav-tab{% if loop.first %} is-active{% endif %}"
+              id="tab-{{ section.id }}" data-panel="panel-{{ section.id }}"
+              aria-selected="{{ 'true' if loop.first else 'false' }}"
+              aria-controls="panel-{{ section.id }}">
+        {{ section.title }}
+      </button>
+      {% endfor %}
+      {% if exercises %}
+      <button type="button" role="tab" class="nav-tab"
+              id="tab-exercises" data-panel="panel-exercises"
+              aria-selected="false" aria-controls="panel-exercises">
+        Exercícios
+      </button>
+      {% endif %}
+      {% if written_exercises %}
+      <button type="button" role="tab" class="nav-tab"
+              id="tab-escrita" data-panel="panel-escrita"
+              aria-selected="false" aria-controls="panel-escrita">
+        Prática escrita
+      </button>
+      {% endif %}
+      {% if challenge_exercises %}
+      <button type="button" role="tab" class="nav-tab"
+              id="tab-desafios" data-panel="panel-desafios"
+              aria-selected="false" aria-controls="panel-desafios">
+        Desafios
+      </button>
+      {% endif %}
+      {% if parent_support %}
+      <button type="button" role="tab" class="nav-tab"
+              id="tab-parent-support" data-panel="panel-parent-support"
+              aria-selected="false" aria-controls="panel-parent-support">
+        Responsáveis
+      </button>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main id="main-content" class="main-content">
+    {% for section in sections %}
+    <div id="panel-{{ section.id }}" class="page-panel{% if loop.first %} is-active{% endif %}"
+         role="tabpanel" aria-labelledby="tab-{{ section.id }}"{% if not loop.first %} hidden{% endif %}>
+      <section class="review-section" data-section-type="{{ section.type }}" data-panel-id="{{ section.id }}">
+        <h2>{{ section.title }}</h2>
+        {% if section.type in ['explanations', 'quick_summary', 'interactive_maps'] %}
+          {% include "components/explanations-section.html" %}
+        {% elif section.type == 'capital_game' %}
+          {% include "components/capital-game.html" %}
+        {% elif section.type == 'study_game' %}
+          {% include "components/study-game.html" %}
+        {% else %}
+          {% for block in section.blocks %}
+            {% include "components/block.html" %}
+          {% endfor %}
+        {% endif %}
+      </section>
+    </div>
+    {% endfor %}
+
+    {% if exercises %}
+    <div id="panel-exercises" class="page-panel" role="tabpanel"
+         aria-labelledby="tab-exercises" hidden>
+      <section class="review-section" data-section-type="exercises" data-panel-id="exercises">
+        <h2>Exercícios</h2>
+        {% include "components/quiz.html" %}
+      </section>
+    </div>
+    {% endif %}
+
+    {% if written_exercises %}
+    <div id="panel-escrita" class="page-panel" role="tabpanel"
+         aria-labelledby="tab-escrita" hidden>
+      <section class="review-section review-section--escrita" data-section-type="escrita" data-panel-id="escrita">
+        <h2>Prática escrita</h2>
+        <div class="panel-intro escrita-intro" role="note">
+          <strong>Escreva em inglês</strong>
+          <p>Complete com uma palavra ou uma frase curta. Clique em <em>Verificar</em> — o corretor compara sua resposta, sugere a forma certa e explica.</p>
+        </div>
+        {% with exercises=written_exercises, quiz_id='written' %}
+        {% include "components/quiz.html" %}
+        {% endwith %}
+      </section>
+    </div>
+    {% endif %}
+
+    {% if challenge_exercises %}
+    <div id="panel-desafios" class="page-panel" role="tabpanel"
+         aria-labelledby="tab-desafios" hidden>
+      <section class="review-section review-section--desafios" data-section-type="desafios" data-panel-id="desafios">
+        <h2>Desafios</h2>
+        <div class="panel-intro desafios-intro" role="note">
+          <strong>Para quem quer ir além</strong>
+          <p>Questões mais difíceis, no estilo dos problemas exigentes da apostila. Tente resolver sozinho antes de verificar — aqui vale errar e tentar de novo!</p>
+        </div>
+        {% with exercises=challenge_exercises %}
+        {% include "components/quiz.html" %}
+        {% endwith %}
+      </section>
+    </div>
+    {% endif %}
+
+    {% if parent_support %}
+    <div id="panel-parent-support" class="page-panel" role="tabpanel"
+         aria-labelledby="tab-parent-support" hidden>
+      <section class="review-section parent-section" data-section-type="parent_support" data-panel-id="parent-support">
+        {% include "components/parent-support.html" %}
+      </section>
+    </div>
+    {% endif %}
+  </main>
+
+  <footer class="page-footer">
+    {% if metadata.get('student_name') == 'Pedro' %}
+    <p>Boa prova, Pedro! Confie no que você revisou.</p>
+    {% elif metadata.get('student_name') == 'Benjamin' %}
+    <p>Boa prova, Benjamin! Vai com calma — você consegue.</p>
+    {% else %}
+    <p>Boa prova! Confie no que você revisou.</p>
+    {% endif %}
+    <button type="button" class="btn btn-secondary" id="btn-reset-progress">Reiniciar progresso</button>
+  </footer>
+
+  <script>
+    window.REVIEW_DATA = {{ review_data_json | safe }};
+    window.BRAZIL_MAP_DATA = {{ map_data_json | safe }};
+  </script>
+  <script src="{{ asset_base }}review.js"></script>
+</body>
+</html>

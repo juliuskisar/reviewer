@@ -1,0 +1,72 @@
+{% if block.type == 'paragraph' %}
+<p>{{ block.content.text }}</p>
+
+{% elif block.type == 'heading' %}
+<h{{ block.content.level | default(3) }}>{{ block.content.text }}</h{{ block.content.level | default(3) }}>
+
+{% elif block.type == 'list' %}
+{% if block.content.ordered %}
+<ol>{% for item in block.content['items'] %}<li>{{ item }}</li>{% endfor %}</ol>
+{% else %}
+<ul>{% for item in block.content['items'] %}<li>{{ item }}</li>{% endfor %}</ul>
+{% endif %}
+
+{% elif block.type == 'quick_summary' %}
+{% include "components/quick-summary.html" %}
+
+{% elif block.type == 'attention_point' %}
+<div class="callout callout--warning" role="note">
+  <strong>Atenção:</strong> {{ block.content.text }}
+</div>
+
+{% elif block.type == 'exam_tip' %}
+<div class="callout callout--tip" role="note">
+  <strong>Dica de prova:</strong> {{ block.content.text }}
+</div>
+
+{% elif block.type == 'guided_example' %}
+{% include "components/guided-example.html" %}
+
+{% elif block.type == 'comparison_table' %}
+{% include "components/comparison-table.html" %}
+
+{% elif block.type == 'timeline' %}
+{% include "components/timeline.html" %}
+
+{% elif block.type == 'accordion_item' %}
+{# acordeões são agrupados externamente #}
+{% elif block.type == 'callout' %}
+<div class="callout callout--{{ block.content.variant | default('info') }}" role="note">
+  {% if block.content.title %}<strong>{{ block.content.title }}</strong> {% endif %}{{ block.content.text }}
+</div>
+
+{% elif block.type == 'concept_grid' %}
+{% include "components/concept-grid.html" %}
+
+{% elif block.type == 'panel_intro' %}
+{% include "components/panel-intro.html" %}
+
+{% elif block.type == 'route_steps' %}
+{% include "components/route-steps.html" %}
+
+{% elif block.type == 'bar_chart' %}
+{% include "components/bar-chart.html" %}
+
+{% elif block.type == 'pie_chart' %}
+{% include "components/pie-chart.html" %}
+
+{% elif block.type == 'line_chart' %}
+{% include "components/line-chart.html" %}
+
+{% elif block.type == 'fraction_visual' %}
+{% include "components/fraction-visual.html" %}
+
+{% elif block.type == 'brazil_map' %}
+{% include "components/brazil-map.html" %}
+
+{% elif block.type == 'image' %}
+<figure class="content-image">
+  <img src="{{ asset_base }}{{ block.content.file }}" alt="{{ block.content.alt | default('') }}" loading="lazy">
+  {% if block.content.caption %}<figcaption>{{ block.content.caption }}</figcaption>{% endif %}
+</figure>
+{% endif %}

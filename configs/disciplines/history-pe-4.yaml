@@ -1,0 +1,52 @@
+version: 1
+
+id: history-pe-4
+name: História — PE 4º ano (2º trimestre)
+
+objectives:
+  - Conhecer vestígios da pré-história e dos povos indígenas do território brasileiro
+  - Diferenciar modos de vida nômade e sedentário
+  - Compreender o comércio de especiarias e as conexões entre continentes
+  - Reconhecer motivações e instrumentos das navegações portuguesas
+  - Relacionar fontes históricas (mapas, reportagens, achados arqueológicos) ao passado
+
+preferred_components:
+  - timeline
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - true_false
+  - matching
+
+common_errors:
+  - topic: sambaquis
+    description: Confundir sambaqui com montanha natural
+    prevention: Lembrar origem tupi — amontoado de conchas
+  - topic: tupi_guarani
+    description: Achar que todos os povos indígenas eram iguais
+    prevention: Comparar tradições Umbu, sambaquis, ceramistas e Tupi
+  - topic: spices
+    description: Não saber por que especiarias eram valiosas
+    prevention: Conservar alimentos, tempero, medicina, perfume
+  - topic: navigation
+    description: Confundir medos reais (tempestades) com monstros marinhos
+    prevention: Separar lenda cartográfica de perigos reais da navegação
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 4 → 5 → 6
+  - Usar linha do tempo dos povos do Brasil
+  - Incluir vocabulário destacado no caderno
+  - Exercícios autossuficientes, estilo Teste do livro
+  - Linguagem simples para 4º ano
+
+validation:
+  require_historical_context: true
+  flag_anachronisms: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [4, 5, 6]

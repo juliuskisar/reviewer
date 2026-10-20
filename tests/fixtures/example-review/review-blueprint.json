@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "review_id": "example-review",
+  "title": "Revisão de Matemática — Sólidos Geométricos",
+  "discipline": "mathematics",
+  "student_grade": "4º ano",
+  "objectives": [
+    "Identificar e nomear sólidos geométricos comuns",
+    "Diferenciar cilindro, cone, esfera e prisma",
+    "Reconhecer faces, arestas e vértices em poliedros"
+  ],
+  "topics": [
+    {
+      "id": "geometric_solids",
+      "label": "Sólidos Geométricos",
+      "depth": "basic",
+      "order": 1,
+      "source_assets": [
+        "assets/example-review/page-001.svg",
+        "assets/example-review/teacher-notes.svg"
+      ]
+    }
+  ],
+  "sections": [
+    { "id": "route", "type": "study_route", "title": "Roteiro de estudo", "order": 1 },
+    { "id": "explain", "type": "explanations", "title": "Explicações", "order": 2, "topic_ids": ["geometric_solids"] },
+    { "id": "summary", "type": "quick_summary", "title": "Resumo rápido", "order": 3 },
+    { "id": "attention", "type": "attention_points", "title": "Pontos de atenção", "order": 4 },
+    { "id": "example", "type": "guided_examples", "title": "Exemplo guiado", "order": 5 },
+    { "id": "tips", "type": "exam_tips", "title": "Dicas para a prova", "order": 6 }
+  ],
+  "components": ["guided_example", "quick_summary", "comparison_table", "quiz", "parent_support"],
+  "exercise_plan": {
+    "total": 3,
+    "distribution": [
+      { "type": "multiple_choice", "count": 2, "difficulty": "basic" },
+      { "type": "open_response", "count": 1, "difficulty": "basic" }
+    ]
+  },
+  "prerequisites": ["Reconhecer formas planas (círculo, quadrado, triângulo)"],
+  "common_errors": [
+    {
+      "topic_id": "geometric_solids",
+      "description": "Confundir cilindro com prisma",
+      "prevention_tip": "Lembre: cilindro tem bases circulares; prisma tem bases poligonais"
+    }
+  ],
+  "source_mapping_required": true
+}

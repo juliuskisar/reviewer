@@ -1,0 +1,13 @@
+<div class="explanation-accordions">
+  {% for block in section.blocks %}
+    {% if block.type == 'heading' %}
+      {% if not loop.first %}</div></details>{% endif %}
+      <details class="accordion-item explanation-accordion"{% if loop.first %} open{% endif %}>
+        <summary>{{ block.content.text }}</summary>
+        <div class="accordion-item__body">
+    {% else %}
+      {% include "components/block.html" %}
+    {% endif %}
+  {% endfor %}
+  {% if section.blocks %}</div></details>{% endif %}
+</div>

@@ -1,0 +1,8 @@
+<div class="quick-summary" data-component="quick-summary" role="region" aria-label="Resumo rápido">
+  <h3>{{ block.content.title | default('Resumo rápido') }}</h3>
+  <ul>
+    {% for item in block.content['items'] %}
+    <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</div>

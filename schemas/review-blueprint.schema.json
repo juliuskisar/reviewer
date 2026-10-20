@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://school-review.local/schemas/review-blueprint.schema.json",
+  "title": "ReviewBlueprint",
+  "description": "Plano pedagógico da revisão antes da geração de conteúdo",
+  "type": "object",
+  "required": ["version", "review_id", "objectives", "topics", "sections", "exercise_plan"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "const": "1.0" },
+    "review_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string" },
+    "discipline": { "type": "string" },
+    "student_grade": { "type": "string" },
+    "objectives": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "topics": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/topic_plan" }
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/section_plan" }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "tabs", "accordion", "quiz", "timeline", "comparison_table",
+          "guided_example", "quick_summary", "attention_point", "exam_tip",
+          "parent_support", "open_response", "progress",
+          "concept_grid", "panel_intro", "route_steps",
+          "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map", "capital_game", "study_game"
+        ]
+      }
+    },
+    "exercise_plan": { "$ref": "#/$defs/exercise_plan" },
+    "prerequisites": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "common_errors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/common_error" }
+    },
+    "source_mapping_required": { "type": "boolean", "default": true }
+  },
+  "$defs": {
+    "topic_plan": {
+      "type": "object",
+      "required": ["id", "label", "depth", "order"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "depth": {
+          "type": "string",
+          "enum": ["introductory", "basic", "intermediate", "advanced"]
+        },
+        "order": { "type": "integer", "minimum": 1 },
+        "source_assets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "section_plan": {
+      "type": "object",
+      "required": ["id", "type", "order"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "study_route", "explanations", "quick_summary", "interactive_maps",
+            "capital_game", "study_game", "attention_points",
+            "guided_examples", "exercises", "final_quiz", "exam_tips", "parent_support"
+          ]
+        },
+        "title": { "type": "string" },
+        "order": { "type": "integer", "minimum": 1 },
+        "topic_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "exercise_plan": {
+      "type": "object",
+      "required": ["total", "distribution"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 1 },
+        "distribution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "count", "difficulty"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["multiple_choice", "true_false", "open_response", "matching"]
+              },
+              "count": { "type": "integer", "minimum": 0 },
+              "difficulty": {
+                "type": "string",
+                "enum": ["basic", "intermediate", "advanced"]
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "common_error": {
+      "type": "object",
+      "required": ["topic_id", "description"],
+      "properties": {
+        "topic_id": { "type": "string" },
+        "description": { "type": "string" },
+        "prevention_tip": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://school-review.local/schemas/material-map.schema.json",
+  "title": "MaterialMap",
+  "description": "Mapa de materiais educacionais inspecionados a partir de assets",
+  "type": "object",
+  "required": ["version", "review_id", "generated_at", "assets", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Versão do contrato material-map"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identificador da revisão"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data/hora de geração ISO 8601"
+    },
+    "manifest_present": {
+      "type": "boolean",
+      "description": "Indica se um manifest.yaml foi encontrado"
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/asset_entry" }
+    },
+    "topics": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/topic_entry" }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_assets", "formats", "disciplines_detected"],
+      "properties": {
+        "total_assets": { "type": "integer", "minimum": 0 },
+        "formats": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "disciplines_detected": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "unreadable_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "duplicates": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "confidence_level": {
+      "type": "string",
+      "enum": ["observed", "inferred", "uncertain"]
+    },
+    "asset_entry": {
+      "type": "object",
+      "required": ["file", "format", "order", "classification"],
+      "additionalProperties": false,
+      "properties": {
+        "file": { "type": "string", "minLength": 1 },
+        "format": { "type": "string", "minLength": 1 },
+        "order": { "type": "integer", "minimum": 1 },
+        "subject": { "type": "string" },
+        "unit": { "type": "string" },
+        "importance": {
+          "type": "string",
+          "enum": ["required", "high", "medium", "low", "optional"]
+        },
+        "notes": { "type": "string" },
+        "classification": {
+          "type": "object",
+          "required": ["discipline", "topics", "confidence"],
+          "properties": {
+            "discipline": { "type": "string" },
+            "topics": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "confidence": { "$ref": "#/$defs/confidence_level" },
+            "observations": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "inferences": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "uncertainties": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "topic_entry": {
+      "type": "object",
+      "required": ["id", "label", "source_assets"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "source_assets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "confidence": { "$ref": "#/$defs/confidence_level" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

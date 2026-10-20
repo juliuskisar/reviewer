@@ -1,0 +1,365 @@
+version: 1
+review:
+  id: benjamin-pe-matematica-2tri
+  title: Revisão de Matemática — PE 2º Trimestre (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/math-pe-4.yaml
+assets:
+- file: page-001.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 1
+  notes: Página 1 do caderno de Matemática PE
+- file: page-002.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 2
+  notes: Página 2 do caderno de Matemática PE
+- file: page-003.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 3
+  notes: Página 3 do caderno de Matemática PE
+- file: page-004.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 4
+  notes: Página 4 do caderno de Matemática PE
+- file: page-005.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 5
+  notes: Página 5 do caderno de Matemática PE
+- file: page-006.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 6
+  notes: Página 6 do caderno de Matemática PE
+- file: page-007.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 7
+  notes: Página 7 do caderno de Matemática PE
+- file: page-008.jpg
+  subject: mathematics
+  unit: module10_natural_numbers
+  importance: medium
+  order: 8
+  notes: Página 8 do caderno de Matemática PE
+- file: page-009.jpg
+  subject: mathematics
+  unit: module10_place_value
+  importance: medium
+  order: 9
+  notes: Página 9 do caderno de Matemática PE
+- file: page-010.jpg
+  subject: mathematics
+  unit: module10_place_value
+  importance: medium
+  order: 10
+  notes: Página 10 do caderno de Matemática PE
+- file: page-011.jpg
+  subject: mathematics
+  unit: module10_place_value
+  importance: medium
+  order: 11
+  notes: Página 11 do caderno de Matemática PE
+- file: page-012.jpg
+  subject: mathematics
+  unit: module10_place_value
+  importance: medium
+  order: 12
+  notes: Página 12 do caderno de Matemática PE
+- file: page-013.jpg
+  subject: mathematics
+  unit: module10_place_value
+  importance: medium
+  order: 13
+  notes: Página 13 do caderno de Matemática PE
+- file: page-014.jpg
+  subject: mathematics
+  unit: module10_place_value
+  importance: medium
+  order: 14
+  notes: Página 14 do caderno de Matemática PE
+- file: page-015.jpg
+  subject: mathematics
+  unit: module11_compensation
+  importance: medium
+  order: 15
+  notes: Página 15 do caderno de Matemática PE
+- file: page-016.jpg
+  subject: mathematics
+  unit: module11_compensation
+  importance: medium
+  order: 16
+  notes: Página 16 do caderno de Matemática PE
+- file: page-017.jpg
+  subject: mathematics
+  unit: module11_compensation
+  importance: medium
+  order: 17
+  notes: Página 17 do caderno de Matemática PE
+- file: page-018.jpg
+  subject: mathematics
+  unit: module11_compensation
+  importance: medium
+  order: 18
+  notes: Página 18 do caderno de Matemática PE
+- file: page-019.jpg
+  subject: mathematics
+  unit: module11_compensation
+  importance: medium
+  order: 19
+  notes: Página 19 do caderno de Matemática PE
+- file: page-020.jpg
+  subject: mathematics
+  unit: module11_compensation
+  importance: medium
+  order: 20
+  notes: Página 20 do caderno de Matemática PE
+- file: page-021.jpg
+  subject: mathematics
+  unit: module11_bar_chart
+  importance: medium
+  order: 21
+  notes: Página 21 do caderno de Matemática PE
+- file: page-022.jpg
+  subject: mathematics
+  unit: module11_bar_chart
+  importance: medium
+  order: 22
+  notes: Página 22 do caderno de Matemática PE
+- file: page-023.jpg
+  subject: mathematics
+  unit: module11_bar_chart
+  importance: medium
+  order: 23
+  notes: Página 23 do caderno de Matemática PE
+- file: page-024.jpg
+  subject: mathematics
+  unit: module11_bar_chart
+  importance: medium
+  order: 24
+  notes: Página 24 do caderno de Matemática PE
+- file: page-025.jpg
+  subject: mathematics
+  unit: module11_bar_chart
+  importance: medium
+  order: 25
+  notes: Página 25 do caderno de Matemática PE
+- file: page-026.jpg
+  subject: mathematics
+  unit: module11_bar_chart
+  importance: medium
+  order: 26
+  notes: Página 26 do caderno de Matemática PE
+- file: page-027.jpg
+  subject: mathematics
+  unit: module12_parallel_perpendicular
+  importance: medium
+  order: 27
+  notes: Página 27 do caderno de Matemática PE
+- file: page-028.jpg
+  subject: mathematics
+  unit: module12_parallel_perpendicular
+  importance: medium
+  order: 28
+  notes: Página 28 do caderno de Matemática PE
+- file: page-029.jpg
+  subject: mathematics
+  unit: module12_parallel_perpendicular
+  importance: medium
+  order: 29
+  notes: Página 29 do caderno de Matemática PE
+- file: page-030.jpg
+  subject: mathematics
+  unit: module12_parallel_perpendicular
+  importance: medium
+  order: 30
+  notes: Página 30 do caderno de Matemática PE
+- file: page-031.jpg
+  subject: mathematics
+  unit: module12_parallel_perpendicular
+  importance: medium
+  order: 31
+  notes: Página 31 do caderno de Matemática PE
+- file: page-032.jpg
+  subject: mathematics
+  unit: module12_parallel_perpendicular
+  importance: medium
+  order: 32
+  notes: Página 32 do caderno de Matemática PE
+- file: page-033.jpg
+  subject: mathematics
+  unit: module13_multiply_powers
+  importance: medium
+  order: 33
+  notes: Página 33 do caderno de Matemática PE
+- file: page-034.jpg
+  subject: mathematics
+  unit: module13_multiply_powers
+  importance: medium
+  order: 34
+  notes: Página 34 do caderno de Matemática PE
+- file: page-035.jpg
+  subject: mathematics
+  unit: module13_multiply_powers
+  importance: medium
+  order: 35
+  notes: Página 35 do caderno de Matemática PE
+- file: page-036.jpg
+  subject: mathematics
+  unit: module13_multiply_powers
+  importance: medium
+  order: 36
+  notes: Página 36 do caderno de Matemática PE
+- file: page-037.jpg
+  subject: mathematics
+  unit: module13_multiply_powers
+  importance: medium
+  order: 37
+  notes: Página 37 do caderno de Matemática PE
+- file: page-038.jpg
+  subject: mathematics
+  unit: module13_multiply_powers
+  importance: medium
+  order: 38
+  notes: Página 38 do caderno de Matemática PE
+- file: page-039.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 39
+  notes: Página 39 do caderno de Matemática PE
+- file: page-040.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 40
+  notes: Página 40 do caderno de Matemática PE
+- file: page-041.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 41
+  notes: Página 41 do caderno de Matemática PE
+- file: page-042.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 42
+  notes: Página 42 do caderno de Matemática PE
+- file: page-043.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 43
+  notes: Página 43 do caderno de Matemática PE
+- file: page-044.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 44
+  notes: Página 44 do caderno de Matemática PE
+- file: page-045.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 45
+  notes: Página 45 do caderno de Matemática PE
+- file: page-046.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 46
+  notes: Página 46 do caderno de Matemática PE
+- file: page-047.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 47
+  notes: Página 47 do caderno de Matemática PE
+- file: page-048.jpg
+  subject: mathematics
+  unit: module14_division
+  importance: medium
+  order: 48
+  notes: Página 48 do caderno de Matemática PE
+- file: page-049.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 49
+  notes: Página 49 do caderno de Matemática PE
+- file: page-050.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 50
+  notes: Página 50 do caderno de Matemática PE
+- file: page-051.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 51
+  notes: Página 51 do caderno de Matemática PE
+- file: page-052.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 52
+  notes: Página 52 do caderno de Matemática PE
+- file: page-053.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 53
+  notes: Página 53 do caderno de Matemática PE
+- file: page-054.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 54
+  notes: Página 54 do caderno de Matemática PE
+- file: page-055.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 55
+  notes: Página 55 do caderno de Matemática PE
+- file: page-056.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 56
+  notes: Página 56 do caderno de Matemática PE
+- file: page-057.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 57
+  notes: Página 57 do caderno de Matemática PE
+- file: page-058.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 58
+  notes: Página 58 do caderno de Matemática PE
+- file: page-059.jpg
+  subject: mathematics
+  unit: module15_angles
+  importance: medium
+  order: 59
+  notes: Página 59 do caderno de Matemática PE

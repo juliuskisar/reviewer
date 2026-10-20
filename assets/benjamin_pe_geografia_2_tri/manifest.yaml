@@ -1,0 +1,119 @@
+version: 1
+review:
+  id: benjamin-pe-geografia-2tri
+  title: Revisão de Geografia — PE 2º Trimestre (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/geography-pe-4.yaml
+assets:
+- file: page-001.jpg
+  subject: geography
+  unit: physical_maps
+  importance: medium
+  order: 1
+  notes: Mapa físico do Sudeste — altitude e rios
+- file: page-002.jpg
+  subject: geography
+  unit: goias_tocantins
+  importance: medium
+  order: 2
+  notes: Texto A divisão do estado de Goiás
+- file: page-003.jpg
+  subject: geography
+  unit: flag_stars
+  importance: medium
+  order: 3
+  notes: Bandeira 1942–1977 e estados faltantes
+- file: page-004.jpg
+  subject: geography
+  unit: goias_tocantins
+  importance: medium
+  order: 4
+  notes: Atividade sobre divisão de Goiás
+- file: page-005.jpg
+  subject: geography
+  unit: flag_stars
+  importance: medium
+  order: 5
+  notes: Bandeira 1977–1988 — 26 estrelas
+- file: page-006.jpg
+  subject: geography
+  unit: political_maps
+  importance: medium
+  order: 6
+  notes: Mapa político 1977–1988
+- file: page-007.jpg
+  subject: geography
+  unit: proposals
+  importance: medium
+  order: 7
+  notes: Propostas de novos estados e população IBGE
+- file: page-008.jpg
+  subject: geography
+  unit: borders
+  importance: medium
+  order: 8
+  notes: Observando as divisas — PR e SC
+- file: page-009.jpg
+  subject: geography
+  unit: mato_grosso
+  importance: medium
+  order: 9
+  notes: Divisão de Mato Grosso — jornal 1977
+- file: page-010.jpg
+  subject: geography
+  unit: proposals
+  importance: medium
+  order: 10
+  notes: Proposta de divisão do Pará em 2011
+- file: page-011.jpg
+  subject: geography
+  unit: new_states
+  importance: medium
+  order: 11
+  notes: A criação de novos estados
+- file: page-012.jpg
+  subject: geography
+  unit: mato_grosso
+  importance: medium
+  order: 12
+  notes: Atividade divisão de Mato Grosso
+- file: page-013.jpg
+  subject: geography
+  unit: physical_maps
+  importance: medium
+  order: 13
+  notes: Mapa físico — altitude e cores
+- file: page-014.jpg
+  subject: geography
+  unit: flag_stars
+  importance: medium
+  order: 14
+  notes: Bandeira após 1988 — 27 estrelas
+- file: page-015.jpg
+  subject: geography
+  unit: political_maps
+  importance: medium
+  order: 15
+  notes: Mapa político 1942–1977
+- file: page-016.jpg
+  subject: geography
+  unit: flag_stars
+  importance: medium
+  order: 16
+  notes: As estrelas da bandeira — atividade
+- file: page-017.jpg
+  subject: geography
+  unit: flag_colors
+  importance: medium
+  order: 17
+  notes: Nossa bandeira — cores e símbolos
+- file: page-018.jpg
+  subject: geography
+  unit: political_maps
+  importance: medium
+  order: 18
+  notes: Mapa político após 1988

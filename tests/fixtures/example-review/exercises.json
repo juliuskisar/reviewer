@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "review_id": "example-review",
+  "exercises": [
+    {
+      "id": "math-geo-001",
+      "type": "multiple_choice",
+      "topic": "geometric_solids",
+      "question": "Qual sólido possui duas bases circulares?",
+      "options": ["Cone", "Cilindro", "Pirâmide", "Esfera"],
+      "correct_answer": 1,
+      "explanation": "O cilindro possui duas bases circulares paralelas, como uma lata.",
+      "difficulty": "basic",
+      "source_assets": ["assets/example-review/teacher-notes.svg"],
+      "section": "exercises"
+    },
+    {
+      "id": "math-geo-002",
+      "type": "multiple_choice",
+      "topic": "geometric_solids",
+      "question": "Qual sólido NÃO possui nenhuma face plana?",
+      "options": ["Prisma", "Pirâmide", "Esfera", "Cubo"],
+      "correct_answer": 2,
+      "explanation": "A esfera tem apenas superfície curva, sem faces planas.",
+      "difficulty": "basic",
+      "source_assets": ["assets/example-review/teacher-notes.svg"],
+      "section": "exercises"
+    },
+    {
+      "id": "math-geo-003",
+      "type": "open_response",
+      "topic": "geometric_solids",
+      "question": "João disse que uma lata de refrigerante é um prisma. Ele está certo? Explique por quê.",
+      "correct_answer": "Não. A lata é um cilindro porque tem duas bases circulares e faces laterais curvas.",
+      "difficulty": "basic",
+      "source_assets": ["assets/example-review/page-001.svg"],
+      "section": "exercises",
+      "open_response_checklist": [
+        "Identifiquei que a lata tem bases circulares",
+        "Expliquei que prisma tem bases poligonais, não circulares",
+        "Dei o nome correto do sólido (cilindro)"
+      ]
+    }
+  ]
+}

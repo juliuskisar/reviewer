@@ -1,0 +1,26 @@
+version: 1
+
+id: example-student
+
+student:
+  name: Ana
+  age: 10
+  grade: "4º ano"
+  language: pt-BR
+
+learning:
+  prior_knowledge: basic
+  preferred_explanation_style:
+    - clear
+    - progressive
+    - example_driven
+    - visual
+
+accessibility:
+  avoid_excessive_text_blocks: true
+  minimum_font_size_px: 16
+  do_not_rely_only_on_color: true
+
+notes: >
+  Aluna do 4º ano do Ensino Fundamental. Prefere explicações com exemplos
+  concretos e blocos curtos de texto.

@@ -1,0 +1,55 @@
+version: 1
+
+id: spanish-pe-6
+name: Espanhol — PE 6º ano (2º trimestre)
+
+objectives:
+  - Describir personas físicamente con ser, tener y llevar (Módulo 3)
+  - Usar vocabulario de ropa y partes del cuerpo
+  - Aplicar reglas de género y número de sustantivos y adjetivos
+  - Empregar artículos definidos e indefinidos
+  - Reconocer palabras heterogenéricas (español × portugués)
+  - Nombrar profesiones y expresar «trabajar como»
+  - Hablar de familia y parentesco
+  - Conjugar trabajar, tener y estar en presente de indicativo
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: ser_tener_llevar
+    description: Usar ser para partes del cuerpo (Soy el pelo negro)
+    prevention: Tener + parte del cuerpo; ser + adjetivo general
+  - topic: ser_tener_llevar
+    description: Confundir llevar (ropa) con tener (cuerpo)
+    prevention: Llevar = pendientes, camisa; tener = pelo, ojos
+  - topic: genero_numero
+    description: Plural incorrecto (casas → casae)
+    prevention: Vocal → -s; consonante → -es; -z → -ces
+  - topic: articulos
+    description: Usar la con águila acentuada
+    prevention: el/un águila, el/un hada
+  - topic: trabajar_tener_estar
+    description: Conjugar usted en 2ª persona
+    prevention: Usted trabaja / tiene / está (3ª p. sg.)
+  - topic: familia
+    description: Confundir en paro con enfermo
+    prevention: En paro = desempleado, sin trabajo
+
+pedagogical_strategies:
+  - Seguir Módulos 3 (¿Cómo somos?) e 4 (¿A qué te dedicas?) do caderno
+  - Explicações em português com exemplos em espanhol
+  - Exercícios autossuficientes — enunciado completo
+  - Variar combinações I–IV e posição do gabarito
+
+validation:
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [3, 4]

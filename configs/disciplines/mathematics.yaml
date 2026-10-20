@@ -1,0 +1,42 @@
+version: 1
+
+id: mathematics
+name: Matemática
+
+objectives:
+  - Desenvolver raciocínio lógico e resolução de problemas
+  - Consolidar conceitos numéricos e geométricos
+  - Aplicar procedimentos com compreensão, não apenas memorização
+
+preferred_components:
+  - guided_example
+  - comparison_table
+  - accordion
+  - quiz
+
+exercise_types:
+  - multiple_choice
+  - true_false
+  - open_response
+
+common_errors:
+  - topic: operations
+    description: Trocar a ordem das operações em expressões
+    prevention: Revisar prioridade de multiplicação e divisão
+  - topic: geometric_solids
+    description: Confundir faces, arestas e vértices
+    prevention: Usar modelos concretos ou desenhos rotulados
+  - topic: fractions
+    description: Somar numeradores e denominadores separadamente
+    prevention: Enfatizar denominador comum antes de somar
+
+pedagogical_strategies:
+  - Explicar com exemplos concretos antes de abstrações
+  - Usar representações visuais para geometria
+  - Progressão do simples ao complexo
+  - Verificar compreensão com perguntas intermediárias
+
+validation:
+  validate_numeric_answers: true
+  require_step_explanation_for_open: true
+  check_unit_consistency: true

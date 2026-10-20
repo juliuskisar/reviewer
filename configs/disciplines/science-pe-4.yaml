@@ -1,0 +1,48 @@
+version: 1
+
+id: science-pe-4
+name: Ciências — PE 4º ano (2º trimestre)
+
+objectives:
+  - Compreender que seres vivos precisam de energia e classificar animais por hábito alimentar
+  - Explicar fotossíntese, partes das plantas e o papel da clorofila
+  - Reconhecer pigmentos naturais e a diferença entre óleos essenciais e vegetais
+  - Entender fósseis, paleontologia e dinossauros brasileiros
+  - Analisar relações predador-presa e cadeias alimentares com produtores, consumidores e decompositores
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - true_false
+
+common_errors:
+  - topic: photosynthesis
+    description: Achar que plantas se alimentam como animais
+    prevention: Plantas produzem alimento pela fotossíntese (luz + água + CO₂)
+  - topic: food_chains
+    description: Inverter a direção da cadeia alimentar
+    prevention: Setas mostram quem serve de alimento para quem
+  - topic: oxygen
+    description: Acreditar que só florestas produzem oxigênio
+    prevention: Algas e fitoplâncton dos oceanos produzem grande parte do O₂
+  - topic: fossils
+    description: Confundir fóssil com animal vivo
+    prevention: Fóssil = vestígio preservado há milhares ou milhões de anos
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 5 → 6 → 7 → 8 → 9
+  - Usar exemplos da floresta tropical e da horta
+  - Exercícios autossuficientes, estilo Teste/Atividade do caderno
+  - Linguagem simples para 4º ano
+
+validation:
+  require_scientific_accuracy: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [5, 6, 7, 8, 9]

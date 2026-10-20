@@ -1,0 +1,29 @@
+version: 1
+
+review:
+  id: example-review
+  title: Revisão de Matemática — Sólidos Geométricos
+
+student:
+  config: configs/students/example-student.yaml
+
+exam:
+  config: configs/exams/school-test.yaml
+
+disciplines:
+  - config: configs/disciplines/mathematics.yaml
+
+assets:
+  - file: page-001.svg
+    subject: mathematics
+    unit: geometric_solids
+    importance: required
+    order: 1
+
+  - file: teacher-notes.svg
+    subject: mathematics
+    importance: high
+    order: 2
+    notes: Conteúdo destacado pela professora
+
+ignore: []

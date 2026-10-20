@@ -1,0 +1,37 @@
+version: 1
+
+id: science
+name: Ciências
+
+objectives:
+  - Compreender fenômenos naturais por observação e explicação
+  - Relacionar teoria a experimentos simples
+  - Desenvolver curiosidade científica fundamentada
+
+preferred_components:
+  - guided_example
+  - accordion
+  - comparison_table
+  - quiz
+
+exercise_types:
+  - multiple_choice
+  - true_false
+  - open_response
+
+common_errors:
+  - topic: states_of_matter
+    description: Confundir fusão com vaporização
+    prevention: Diagramas de mudanças de estado
+  - topic: food_chains
+    description: Inverter produtor e consumidor
+    prevention: Exemplos visuais de cadeias alimentares
+
+pedagogical_strategies:
+  - Partir de observações do cotidiano
+  - Usar analogias apropriadas à idade
+  - Separar fato científico de opinião
+
+validation:
+  require_evidence_based_explanations: true
+  flag_unsafe_experiment_suggestions: true

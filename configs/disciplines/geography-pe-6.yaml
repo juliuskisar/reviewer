@@ -1,0 +1,58 @@
+version: 1
+
+id: geography-pe-6
+name: Geografia — PE 6º ano (2º trimestre)
+
+objectives:
+  - Compreender a posição da Terra no Sistema Solar
+  - Identificar camadas internas da Terra e movimentos das placas tectônicas
+  - Diferenciar tipos de rochas e o ciclo das rochas
+  - Reconhecer formas de relevo terrestre e submarino
+  - Interpretar mapas de altimetria do relevo brasileiro
+  - Relacionar vulcanismo e terremotos à tectônica de placas
+
+preferred_components:
+  - comparison_table
+  - tabs
+  - timeline
+  - accordion
+  - guided_example
+
+exercise_types:
+  - multiple_choice
+  - true_false
+  - matching
+  - open_response
+
+common_errors:
+  - topic: solar_system
+    description: Confundir origem do Universo (13,8 bi anos) com idade do Sistema Solar (4,6 bi anos)
+    prevention: Usar linha do tempo separada para Universo e Sistema Solar
+  - topic: plate_tectonics
+    description: Achar que deriva continental e tectônica de placas são a mesma teoria completa
+    prevention: Explicar que Wegener propôs a deriva; a tectônica explica o mecanismo
+  - topic: rock_cycle
+    description: Confundir rocha magmática com metamórfica
+    prevention: Associar magma/resfriamento à magmática; calor+pressão à metamórfica
+  - topic: map_reading
+    description: Achar que altitudes altas predominam no Brasil
+    prevention: Ler legenda do mapa de altimetria — verde/amarelo predomina
+  - topic: relief_forms
+    description: Confundir planalto com planície
+    prevention: Planalto = área elevada com topo aplanado; planície = área baixa e plana
+
+pedagogical_strategies:
+  - Usar mapas, diagramas e esquemas do material do aluno
+  - Organizar conteúdo na ordem Módulo 5 → Módulo 6
+  - Incluir exercícios no estilo "Teste" e "Atividade" do caderno
+  - Relacionar conceitos globais ao relevo brasileiro
+  - Destacar vocabulário: Pangeia, dorsal mesoceânica, fossa oceânica, altimetria
+
+validation:
+  validate_geographic_terms: true
+  flag_outdated_map_references: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [5, 6]
+  supplementary: [7]

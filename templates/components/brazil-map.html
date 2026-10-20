@@ -1,0 +1,125 @@
+<figure class="brazil-map" data-component="brazil-map"
+  data-period="{{ block.content.period | default('post_1988') }}"
+  data-mode="{{ block.content.mode | default('evolution') }}"
+  data-highlight="{{ (block.content.highlight or []) | join(',') }}"
+  data-interactive="{{ 'true' if block.content.get('interactive', true) else 'false' }}">
+  {% if block.content.title %}
+  <figcaption class="brazil-map__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  {% if block.content.intro %}
+  <p class="brazil-map__intro">{{ block.content.intro }}</p>
+  {% endif %}
+
+  {% if block.content.show_mode_toggle %}
+  <div class="brazil-map__modes" role="group" aria-label="Modo de exploração do mapa">
+    {% for key, mode in map_data.modes.items() %}
+    <button type="button"
+            class="brazil-map__mode-btn{% if key == (block.content.mode | default('evolution')) %} is-active{% endif %}"
+            data-mode="{{ key }}"
+            title="{{ mode.description }}">{{ mode.label }}</button>
+    {% endfor %}
+  </div>
+  <p class="brazil-map__mode-desc" data-mode-desc></p>
+  {% endif %}
+
+  {% if block.content.show_period_toggle %}
+  <div class="brazil-map__periods" role="group" aria-label="Período do mapa político">
+    {% for key, period in map_data.periods.items() %}
+    <button type="button"
+            class="brazil-map__period-btn{% if key == (block.content.period | default('post_1988')) %} is-active{% endif %}"
+            data-period="{{ key }}">{{ period.label }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="brazil-map__layout">
+    <svg class="brazil-map__svg" viewBox="{{ map_data.viewBox }}"
+         role="img"
+         aria-label="{{ block.content.aria_label | default('Mapa político do Brasil') }}">
+      <g class="brazil-map__states">
+        {% for state in map_data.states %}
+        <g class="brazil-map__state-group"
+           data-state="{{ state.id }}"
+           data-name="{{ state.name }}"
+           data-capital="{{ state.capital }}"
+           data-region="{{ state.region }}"
+           {% if state.created %}data-created="{{ state.created }}"{% endif %}>
+          {% for path in state.paths %}
+          <path class="brazil-map__state" d="{{ path }}"
+                data-state="{{ state.id }}"
+                tabindex="0"
+                role="button"
+                aria-label="{{ state.name }} ({{ state.id }})"/>
+          {% endfor %}
+        </g>
+        {% endfor %}
+      </g>
+      <g class="brazil-map__merged is-hidden" aria-hidden="true">
+        {% for merged in map_data.merged %}
+        <g class="brazil-map__merged-group is-hidden"
+           data-merged="{{ merged.id }}"
+           data-name="{{ merged.name }}"
+           data-capital="{{ merged.capital }}"
+           data-region="{{ merged.region }}"
+           data-note="{{ merged.note }}">
+          {% for path in merged.paths %}
+          <path class="brazil-map__state brazil-map__state--merged" d="{{ path }}"
+                data-merged="{{ merged.id }}"
+                tabindex="0"
+                role="button"
+                aria-label="{{ merged.name }}"/>
+          {% endfor %}
+        </g>
+        {% endfor %}
+      </g>
+      <g class="brazil-map__labels is-hidden" aria-hidden="true">
+        {% for state in map_data.states %}
+        <text class="brazil-map__label" data-for="{{ state.id }}"
+              x="{{ state.label_x }}" y="{{ state.label_y }}"
+              text-anchor="middle">{{ state.capital }}</text>
+        {% endfor %}
+        {% for merged in map_data.merged %}
+        <text class="brazil-map__label brazil-map__label--merged is-hidden"
+              data-for="{{ merged.id }}"
+              x="{{ merged.label_x }}" y="{{ merged.label_y }}"
+              text-anchor="middle">{{ merged.capital }}</text>
+        {% endfor %}
+      </g>
+    </svg>
+    <aside class="brazil-map__panel" aria-live="polite">
+      <p class="brazil-map__hint">Clique em um estado para ver detalhes.</p>
+      <div class="brazil-map__capital-quiz is-hidden">
+        {% if block.content.mode == 'capital_game' %}
+        <p class="brazil-map__game-state-name"></p>
+        <label class="brazil-map__capital-label">
+          <span class="brazil-map__capital-label-text">Capital:</span>
+          <input type="text" class="brazil-map__capital-input"
+                 autocomplete="off" spellcheck="false" placeholder="Digite a capital…" />
+        </label>
+        <p class="brazil-map__capital-feedback" role="status"></p>
+        <button type="button" class="btn btn-primary brazil-map__capital-submit">Confirmar</button>
+        {% else %}
+        <label class="brazil-map__capital-label">
+          <span class="brazil-map__capital-label-text"></span>
+          <input type="text" class="brazil-map__capital-input"
+                 autocomplete="off" spellcheck="false" placeholder="Digite a capital…" />
+        </label>
+        <p class="brazil-map__capital-prompt">Depois clique em <strong>Verificar</strong> abaixo.</p>
+        {% endif %}
+      </div>
+      <div class="brazil-map__detail is-hidden">
+        <h4 class="brazil-map__detail-name"></h4>
+        <dl class="brazil-map__detail-meta">
+          <dt>Capital</dt>
+          <dd class="brazil-map__detail-capital"></dd>
+          <dt>Região</dt>
+          <dd class="brazil-map__detail-region"></dd>
+        </dl>
+        <p class="brazil-map__detail-note"></p>
+      </div>
+    </aside>
+  </div>
+  {% if block.content.caption %}
+  <p class="brazil-map__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

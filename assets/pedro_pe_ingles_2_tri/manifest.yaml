@@ -1,0 +1,107 @@
+version: 1
+review:
+  id: pedro-pe-ingles-2tri
+  title: Revisão de Inglês — PE 2º Trimestre (Pedro, 6º ano)
+student:
+  config: configs/students/pedro-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/english-pe-6.yaml
+assets:
+- file: page-001.jpg
+  subject: english
+  unit: simple_past_regular
+  importance: high
+  order: 1
+  notes: Unit 3 — Language Ground 1 — Simple Past affirmative regular verbs
+- file: page-002.jpg
+  subject: english
+  unit: spelling_rules
+  importance: medium
+  order: 2
+  notes: Pronunciation of -ed endings; transport past sentences; Powerbocking
+- file: page-003.jpg
+  subject: english
+  unit: spelling_rules
+  importance: high
+  order: 3
+  notes: Bear Grylls reading; Language Ground 2 — spelling rules
+- file: page-004.jpg
+  subject: english
+  unit: irregular_verbs
+  importance: high
+  order: 4
+  notes: Unit 4 — Simple Past affirmative and negative; regular vs irregular
+- file: page-005.jpg
+  subject: english
+  unit: simple_past_negative
+  importance: medium
+  order: 5
+  notes: Jules Verne text; History Quiz listen up
+- file: page-006.jpg
+  subject: english
+  unit: questions_short_answers
+  importance: high
+  order: 6
+  notes: Great European Disasters; Did questions; could/couldn't
+- file: page-007.jpg
+  subject: english
+  unit: simple_past_regular
+  importance: medium
+  order: 7
+  notes: Louis Blériot biography; Lucy's dad travel matching
+- file: page-008.jpg
+  subject: english
+  unit: transport_travel
+  importance: medium
+  order: 8
+  notes: Singapore travel text; roller coaster story; personal past sentences
+- file: page-009.jpg
+  subject: english
+  unit: spelling_rules
+  importance: high
+  order: 9
+  notes: Spelling chart -ed/-d/-ied; Thomas Davenport biography
+- file: page-010.jpg
+  subject: english
+  unit: simple_past_negative
+  importance: high
+  order: 10
+  notes: Pizza history; verb table; negative rewrite
+- file: page-011.jpg
+  subject: english
+  unit: time_expressions
+  importance: medium
+  order: 11
+  notes: Newspaper headlines; Martha's week affirmative/negative
+- file: page-012.jpg
+  subject: english
+  unit: could_couldnt
+  importance: high
+  order: 12
+  notes: Did questions matching; could/couldn't with verbs
+- file: page-013.jpg
+  subject: english
+  unit: transport_travel
+  importance: high
+  order: 13
+  notes: Unit 3 Going Places — transportation vocabulary
+- file: page-014.jpg
+  subject: english
+  unit: simple_past_regular
+  importance: high
+  order: 14
+  notes: Language Genie — grammar summary Units 3 and 4
+- file: page-015.jpg
+  subject: english
+  unit: time_expressions
+  importance: high
+  order: 15
+  notes: Recall It 2 — Frida Kahlo; time expressions; spelling chart
+- file: page-016.jpg
+  subject: english
+  unit: transport_travel
+  importance: medium
+  order: 16
+  notes: Recall It 2 — vocabulary board game Units 3 and 4

@@ -1,0 +1,23 @@
+<figure class="bar-chart" data-component="bar-chart">
+  {% if block.content.title %}
+  <figcaption class="bar-chart__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  {% set bars = block.content.bars %}
+  {% set max_val = block.content.max_value if block.content.max_value is defined else (bars | map(attribute='value') | max) %}
+  <div class="bar-chart__plot" role="img" aria-label="{{ block.content.aria_label | default(block.content.title | default('Gráfico de barras')) }}">
+    {% for bar in bars %}
+    {% set pct = (bar.value / max_val * 100) if max_val else 0 %}
+    <div class="bar-chart__row">
+      <span class="bar-chart__label">{{ bar.label }}</span>
+      <div class="bar-chart__track" aria-hidden="true">
+        <div class="bar-chart__fill" style="width: {{ pct }}%; background-color: {{ bar.color | default('var(--primary)') }};">
+          <span class="bar-chart__value">{{ bar.value }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if block.content.caption %}
+  <p class="bar-chart__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

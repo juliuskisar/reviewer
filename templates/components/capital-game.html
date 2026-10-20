@@ -1,0 +1,39 @@
+<div class="capital-game" data-component="capital-game">
+  <div class="capital-game__header">
+    <div class="capital-game__stat">
+      <span class="capital-game__stat-label">Acertos</span>
+      <span class="capital-game__score">0 / 27</span>
+    </div>
+    <div class="capital-game__stat">
+      <span class="capital-game__stat-label">Tempo</span>
+      <span class="capital-game__timer">00:00</span>
+    </div>
+  </div>
+
+  {% for block in section.blocks %}
+    {% if block.type != 'brazil_map' %}
+      {% include "components/block.html" %}
+    {% endif %}
+  {% endfor %}
+
+  {% set block = {
+    "content": {
+      "mode": "capital_game",
+      "period": "post_1988",
+      "show_period_toggle": False,
+      "show_mode_toggle": False,
+      "interactive": True,
+      "aria_label": "Mapa do jogo das capitais",
+    }
+  } %}
+  {% include "components/brazil-map.html" %}
+
+  <div class="capital-game__victory is-hidden" role="status" aria-live="polite">
+    <strong>Parabéns!</strong>
+    <p class="capital-game__victory-text"></p>
+  </div>
+
+  <div class="capital-game__actions">
+    <button type="button" class="btn btn-secondary capital-game__reset">Jogar novamente</button>
+  </div>
+</div>

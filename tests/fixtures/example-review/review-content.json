@@ -1,0 +1,188 @@
+{
+  "version": "1.0",
+  "review_id": "example-review",
+  "title": "Revisão de Matemática — Sólidos Geométricos",
+  "subtitle": "Preparação para prova escolar — 4º ano",
+  "language": "pt-BR",
+  "discipline": "Matemática",
+  "grade": "4º ano",
+  "metadata": {
+    "student_name": "Ana",
+    "exam_type": "Prova escolar",
+    "estimated_duration_minutes": 45
+  },
+  "study_route": [
+    { "order": 1, "title": "Ler as explicações", "description": "Entenda cada sólido geométrico", "section_id": "explain" },
+    { "order": 2, "title": "Revisar o resumo", "description": "Fixe os pontos principais", "section_id": "summary" },
+    { "order": 3, "title": "Praticar exercícios", "description": "Teste seu conhecimento", "section_id": "exercises" }
+  ],
+  "sections": [
+    {
+      "id": "route",
+      "type": "study_route",
+      "title": "Roteiro de estudo",
+      "blocks": [
+        {
+          "type": "list",
+          "content": {
+            "ordered": true,
+            "items": [
+              "Leia as explicações sobre cada sólido",
+              "Revise o resumo rápido",
+              "Observe os pontos de atenção",
+              "Siga o exemplo guiado",
+              "Faça os exercícios"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "explain",
+      "type": "explanations",
+      "title": "Explicações",
+      "blocks": [
+        {
+          "type": "heading",
+          "content": { "level": 3, "text": "O que são sólidos geométricos?" },
+          "topic_id": "geometric_solids",
+          "sources": [{
+            "asset": "assets/example-review/page-001.svg",
+            "origin_type": "observed",
+            "evidence": ["ilustração de pirâmide, cilindro e prisma"]
+          }]
+        },
+        {
+          "type": "paragraph",
+          "content": {
+            "text": "Sólidos geométricos são formas tridimensionais — ou seja, têm comprimento, largura e altura. Eles aparecem no nosso dia a dia: uma caixa de sapato é um prisma, uma lata é um cilindro, uma bola é uma esfera."
+          },
+          "topic_id": "geometric_solids",
+          "sources": [{
+            "asset": "assets/example-review/teacher-notes.svg",
+            "origin_type": "observed",
+            "evidence": ["anotações sobre cilindro, cone e esfera"]
+          }]
+        },
+        {
+          "type": "comparison_table",
+          "content": {
+            "caption": "Comparando sólidos geométricos",
+            "headers": ["Sólido", "Bases", "Exemplo do cotidiano"],
+            "rows": [
+              ["Cilindro", "2 bases circulares", "Lata de refrigerante"],
+              ["Cone", "1 base circular + 1 vértice", "Casquinha de sorvete"],
+              ["Esfera", "Nenhuma face plana", "Bola de futebol"],
+              ["Prisma", "2 bases iguais (polígonos)", "Caixa de sapato"]
+            ]
+          },
+          "topic_id": "geometric_solids",
+          "sources": [{
+            "asset": "assets/example-review/teacher-notes.svg",
+            "origin_type": "observed",
+            "evidence": ["cilindro: 2 bases circulares", "cone: 1 base circular + 1 vértice"]
+          }]
+        }
+      ]
+    },
+    {
+      "id": "summary",
+      "type": "quick_summary",
+      "title": "Resumo rápido",
+      "blocks": [
+        {
+          "type": "quick_summary",
+          "content": {
+            "title": "O essencial para a prova",
+            "items": [
+              "Cilindro → 2 bases circulares",
+              "Cone → 1 base circular e 1 vértice (ponta)",
+              "Esfera → superfície curva, sem faces planas",
+              "Prisma → 2 bases iguais e faces laterais retangulares",
+              "Pirâmide → 1 base e faces triangulares que se encontram no vértice"
+            ]
+          },
+          "topic_id": "geometric_solids",
+          "sources": [{
+            "asset": "assets/example-review/teacher-notes.svg",
+            "origin_type": "observed",
+            "evidence": ["lista de propriedades dos sólidos"]
+          }]
+        }
+      ]
+    },
+    {
+      "id": "attention",
+      "type": "attention_points",
+      "title": "Pontos de atenção",
+      "blocks": [
+        {
+          "type": "attention_point",
+          "content": {
+            "text": "Não confunda cilindro com prisma! O cilindro tem bases circulares (redondas). O prisma tem bases com formato de polígono (triângulo, quadrado, etc.)."
+          },
+          "topic_id": "geometric_solids"
+        }
+      ]
+    },
+    {
+      "id": "example",
+      "type": "guided_examples",
+      "title": "Exemplo guiado",
+      "blocks": [
+        {
+          "type": "guided_example",
+          "content": {
+            "title": "Como identificar um sólido?",
+            "steps": [
+              { "title": "Observe as bases", "text": "Conte quantas bases o objeto tem e qual é o formato delas (circular ou poligonal)." },
+              { "title": "Veja as faces laterais", "text": "As faces laterais são retas (prisma/pirâmide) ou curvas (cilindro/cone/esfera)?" },
+              { "title": "Procure vértices", "text": "Cones e pirâmides têm um vértice (ponta). Cilindros e esferas não têm vértice." }
+            ],
+            "conclusion": "Uma lata de refrigerante tem 2 bases circulares e faces laterais curvas → é um cilindro."
+          },
+          "topic_id": "geometric_solids",
+          "sources": [{
+            "asset": "assets/example-review/page-001.svg",
+            "origin_type": "inferred",
+            "evidence": ["exemplos visuais de sólidos"]
+          }]
+        }
+      ]
+    },
+    {
+      "id": "tips",
+      "type": "exam_tips",
+      "title": "Dicas para a prova",
+      "blocks": [
+        {
+          "type": "exam_tip",
+          "content": {
+            "text": "Antes de responder, desenhe o sólido ou imagine um objeto do cotidiano parecido. Isso ajuda a não confundir as formas."
+          }
+        }
+      ]
+    }
+  ],
+  "parent_support": {
+    "discussion_questions": [
+      "Você consegue encontrar um cilindro, um cone e uma esfera em casa?",
+      "Qual a diferença entre a base de um cilindro e a base de um prisma?"
+    ],
+    "help_without_spoiling": [
+      "Peça ao aluno para contar as bases antes de dar o nome do sólido.",
+      "Use objetos reais (lata, bola, caixa) para comparar."
+    ],
+    "topics_needing_attention": [
+      "Diferença entre cilindro e prisma",
+      "Identificação de vértices em pirâmides e cones"
+    ],
+    "open_response_criteria": [
+      {
+        "exercise_id": "math-geo-003",
+        "criteria": "A resposta deve mencionar bases circulares e faces laterais curvas.",
+        "expected_answer": "Cilindro, porque tem duas bases circulares e a superfície lateral é curva."
+      }
+    ]
+  }
+}

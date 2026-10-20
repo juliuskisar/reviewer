@@ -1,0 +1,395 @@
+version: 1
+review:
+  id: benjamin-pe-matematica-3tri
+  title: Revisão de Matemática — PE 3º Trimestre (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/mathematics-pe-4.yaml
+assets:
+- file: page-001.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 1
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-002.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 2
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-003.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 3
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-004.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 4
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-005.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 5
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-006.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 6
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-007.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 7
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-008.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 8
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-009.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 9
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-010.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 10
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-011.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 11
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-012.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 12
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-013.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 13
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-014.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 14
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-015.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 15
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-016.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 16
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-017.jpg
+  subject: mathematics
+  unit: module23_decimals
+  importance: medium
+  order: 17
+  notes: Módulo 23 — decimais e sistema monetário
+- file: page-018.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 18
+  notes: Módulo 22 — retângulos e losangos
+- file: page-019.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 19
+  notes: Módulo 22 — retângulos e losangos
+- file: page-020.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 20
+  notes: Módulo 22 — retângulos e losangos
+- file: page-021.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 21
+  notes: Módulo 22 — retângulos e losangos
+- file: page-022.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 22
+  notes: Módulo 22 — retângulos e losangos
+- file: page-023.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 23
+  notes: Módulo 22 — retângulos e losangos
+- file: page-024.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 24
+  notes: Módulo 22 — retângulos e losangos
+- file: page-025.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 25
+  notes: Módulo 22 — retângulos e losangos
+- file: page-026.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 26
+  notes: Módulo 22 — retângulos e losangos
+- file: page-027.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 27
+  notes: Módulo 22 — retângulos e losangos
+- file: page-028.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 28
+  notes: Módulo 22 — retângulos e losangos
+- file: page-029.jpg
+  subject: mathematics
+  unit: module22_rect_rhombus
+  importance: medium
+  order: 29
+  notes: Módulo 22 — retângulos e losangos
+- file: page-030.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 30
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-031.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 31
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-032.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 32
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-033.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 33
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-034.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 34
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-035.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 35
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-036.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 36
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-037.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 37
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-038.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 38
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-039.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 39
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-040.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 40
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-041.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 41
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-042.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 42
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-043.jpg
+  subject: mathematics
+  unit: module21_quadrilaterals
+  importance: medium
+  order: 43
+  notes: Módulo 21 — quadriláteros e trapézios
+- file: page-044.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 44
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-045.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 45
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-046.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 46
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-047.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 47
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-048.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 48
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-049.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 49
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-050.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 50
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-051.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 51
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-052.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 52
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-053.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 53
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-054.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 54
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-055.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 55
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-056.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 56
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-057.jpg
+  subject: mathematics
+  unit: module20_tabuada
+  importance: medium
+  order: 57
+  notes: Módulo 20 — regularidades da tabuada
+- file: page-058.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 58
+  notes: Módulo 19 — relações entre operações
+- file: page-059.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 59
+  notes: Módulo 19 — relações entre operações
+- file: page-060.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 60
+  notes: Módulo 19 — relações entre operações
+- file: page-061.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 61
+  notes: Módulo 19 — relações entre operações
+- file: page-062.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 62
+  notes: Módulo 19 — relações entre operações
+- file: page-063.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 63
+  notes: Módulo 19 — relações entre operações
+- file: page-064.jpg
+  subject: mathematics
+  unit: module19_equality
+  importance: medium
+  order: 64
+  notes: Módulo 19 — relações entre operações

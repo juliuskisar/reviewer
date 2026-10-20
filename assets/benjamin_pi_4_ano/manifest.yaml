@@ -1,0 +1,203 @@
+version: 1
+review:
+  id: benjamin-pi-4ano
+  title: Revisão Multidisciplinar — PI (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pi-exam.yaml
+disciplines:
+- id: ciencias
+  label: Ciencias
+  assets_dir: ciencias
+  assets:
+  - file: ciencias/page-001.jpg
+    order: 1
+  - file: ciencias/page-002.jpg
+    order: 2
+  - file: ciencias/page-003.jpg
+    order: 3
+  - file: ciencias/page-004.jpg
+    order: 4
+  - file: ciencias/page-005.jpg
+    order: 5
+  - file: ciencias/page-006.jpg
+    order: 6
+  - file: ciencias/page-007.jpg
+    order: 7
+  - file: ciencias/page-008.jpg
+    order: 8
+  - file: ciencias/page-009.jpg
+    order: 9
+  - file: ciencias/page-010.jpg
+    order: 10
+  - file: ciencias/page-011.jpg
+    order: 11
+  - file: ciencias/page-012.jpg
+    order: 12
+  - file: ciencias/page-013.jpg
+    order: 13
+  - file: ciencias/page-014.jpg
+    order: 14
+  - file: ciencias/page-015.jpg
+    order: 15
+  - file: ciencias/page-016.jpg
+    order: 16
+  - file: ciencias/page-017.jpg
+    order: 17
+  - file: ciencias/page-018.jpg
+    order: 18
+  - file: ciencias/page-019.jpg
+    order: 19
+  - file: ciencias/page-020.jpg
+    order: 20
+  - file: ciencias/page-021.jpg
+    order: 21
+  - file: ciencias/page-022.jpg
+    order: 22
+  - file: ciencias/page-023.jpg
+    order: 23
+  - file: ciencias/page-024.jpg
+    order: 24
+  - file: ciencias/page-025.jpg
+    order: 25
+- id: geografia
+  label: Geografia
+  assets_dir: geografia
+  assets:
+  - file: geografia/page-001.jpg
+    order: 1
+  - file: geografia/page-002.jpg
+    order: 2
+  - file: geografia/page-003.jpg
+    order: 3
+  - file: geografia/page-004.jpg
+    order: 4
+  - file: geografia/page-005.jpg
+    order: 5
+  - file: geografia/page-006.jpg
+    order: 6
+  - file: geografia/page-007.jpg
+    order: 7
+  - file: geografia/page-008.jpg
+    order: 8
+  - file: geografia/page-009.jpg
+    order: 9
+  - file: geografia/page-010.jpg
+    order: 10
+  - file: geografia/page-011.jpg
+    order: 11
+  - file: geografia/page-012.jpg
+    order: 12
+  - file: geografia/page-013.jpg
+    order: 13
+  - file: geografia/page-014.jpg
+    order: 14
+  - file: geografia/page-015.jpg
+    order: 15
+- id: historia
+  label: Historia
+  assets_dir: historia
+  assets:
+  - file: historia/page-001.jpg
+    order: 1
+  - file: historia/page-002.jpg
+    order: 2
+  - file: historia/page-003.jpg
+    order: 3
+  - file: historia/page-004.jpg
+    order: 4
+  - file: historia/page-005.jpg
+    order: 5
+  - file: historia/page-006.jpg
+    order: 6
+  - file: historia/page-007.jpg
+    order: 7
+  - file: historia/page-008.jpg
+    order: 8
+  - file: historia/page-009.jpg
+    order: 9
+  - file: historia/page-010.jpg
+    order: 10
+  - file: historia/page-011.jpg
+    order: 11
+- id: matematica
+  label: Matematica
+  assets_dir: matematica
+  assets:
+  - file: matematica/page-001.jpg
+    order: 1
+  - file: matematica/page-002.jpg
+    order: 2
+  - file: matematica/page-003.jpg
+    order: 3
+  - file: matematica/page-004.jpg
+    order: 4
+  - file: matematica/page-005.jpg
+    order: 5
+  - file: matematica/page-006.jpg
+    order: 6
+  - file: matematica/page-007.jpg
+    order: 7
+  - file: matematica/page-008.jpg
+    order: 8
+  - file: matematica/page-009.jpg
+    order: 9
+  - file: matematica/page-010.jpg
+    order: 10
+  - file: matematica/page-011.jpg
+    order: 11
+  - file: matematica/page-012.jpg
+    order: 12
+  - file: matematica/page-013.jpg
+    order: 13
+  - file: matematica/page-014.jpg
+    order: 14
+  - file: matematica/page-015.jpg
+    order: 15
+  - file: matematica/page-016.jpg
+    order: 16
+  - file: matematica/page-017.jpg
+    order: 17
+  - file: matematica/page-018.jpg
+    order: 18
+  - file: matematica/page-019.jpg
+    order: 19
+  - file: matematica/page-020.jpg
+    order: 20
+  - file: matematica/page-021.jpg
+    order: 21
+  - file: matematica/page-022.jpg
+    order: 22
+  - file: matematica/page-023.jpg
+    order: 23
+  - file: matematica/page-024.jpg
+    order: 24
+  - file: matematica/page-025.jpg
+    order: 25
+- id: portugues
+  label: Portugues
+  assets_dir: portugues
+  assets:
+  - file: portugues/page-001.jpg
+    order: 1
+  - file: portugues/page-002.jpg
+    order: 2
+  - file: portugues/page-003.jpg
+    order: 3
+  - file: portugues/page-004.jpg
+    order: 4
+  - file: portugues/page-005.jpg
+    order: 5
+  - file: portugues/page-006.jpg
+    order: 6
+  - file: portugues/page-007.jpg
+    order: 7
+  - file: portugues/page-008.jpg
+    order: 8
+  - file: portugues/page-009.jpg
+    order: 9
+  - file: portugues/page-010.jpg
+    order: 10
+  - file: portugues/page-011.jpg
+    order: 11

@@ -1,0 +1,4148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisão Interativa OBA — 4º Ano (Nível 2)</title>
+
+  <!-- =========================================================
+       REVISÃO INTERATIVA PARA A OBA — 4º ANO DO ENSINO FUNDAMENTAL
+       (Nível 2 da OBA — 4º e 5º anos do EF)
+
+       Estrutura:
+       1. CSS interno (variáveis, layout, animações)
+       2. HTML (header, nav, painéis, animações SVG)
+       3. JavaScript interno (navegação, animações, exercícios e simulado)
+       ========================================================= -->
+  <style>
+    /* ---------- 1. Variáveis e reset ---------- */
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #111933;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1f2937;
+      --text-soft: #4b5563;
+      --muted: #94a3b8;
+
+      --primary: #6366f1;
+      --primary-soft: #eef2ff;
+      --primary-strong: #4338ca;
+      --accent: #f59e0b;
+      --accent-soft: #fef3c7;
+      --pink: #ec4899;
+      --pink-soft: #fce7f3;
+
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --error: #dc2626;
+      --error-soft: #fee2e2;
+      --warning: #ea580c;
+      --warning-soft: #ffedd5;
+      --info: #0ea5e9;
+      --info-soft: #e0f2fe;
+
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 12px 30px rgba(15, 23, 42, 0.14);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f4f6fb;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      font-size: 16.5px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 .4em; line-height: 1.25; color: var(--text); }
+    p { margin: 0 0 .8em; color: var(--text-soft); }
+    ul, ol { margin: 0 0 .8em 1.2em; color: var(--text-soft); }
+    li { margin-bottom: .4em; }
+    code { background: #f1f5f9; padding: 1px 6px; border-radius: 6px; font-size: .92em; }
+    strong { color: var(--text); }
+
+    button { font: inherit; cursor: pointer; }
+
+    /* ---------- 2. Cabeçalho com céu estrelado ---------- */
+    .page-header {
+      position: relative;
+      background: linear-gradient(135deg, #0b1020 0%, #1e1b4b 50%, #7c3aed 100%);
+      color: white;
+      padding: 34px 20px 38px;
+      overflow: hidden;
+    }
+    .page-header::before,
+    .page-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .page-header::before {
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 70% 20%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 40% 70%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 85% 60%, #fff 50%, transparent 51%),
+        radial-gradient(2px 2px at 55% 80%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 10% 80%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 90% 90%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 30% 10%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 65% 45%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 80% 75%, #fff 50%, transparent 51%);
+      opacity: .85;
+      animation: twinkle 6s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: .6; }
+      to   { opacity: 1; }
+    }
+    .page-header__inner {
+      position: relative;
+      max-width: 1080px;
+      margin: 0 auto;
+      z-index: 2;
+    }
+    .page-header h1 {
+      color: white;
+      font-size: clamp(1.55rem, 3vw, 2.3rem);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .rocket-emoji {
+      display: inline-block;
+      font-size: 1.6em;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+      animation: floatRocket 3s ease-in-out infinite;
+    }
+    @keyframes floatRocket {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50%      { transform: translateY(-4px) rotate(2deg); }
+    }
+    .page-header .subtitle {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 1.04rem;
+      margin-bottom: 14px;
+      max-width: 760px;
+    }
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: white;
+      font-size: .88rem;
+      font-weight: 500;
+    }
+    .page-header .notice {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      color: #fef3c7;
+      font-size: .9rem;
+      max-width: 760px;
+    }
+
+    /* ---------- 3. Navegação por abas ---------- */
+    .nav-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-tabs__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+    .nav-tabs button {
+      flex: 0 0 auto;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 500;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+      white-space: nowrap;
+    }
+    .nav-tabs button:hover {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      border-color: var(--primary-soft);
+      transform: translateY(-1px);
+    }
+    .nav-tabs button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(99, 102, 241, 0.4);
+    }
+    .nav-tabs button .tab-icon { margin-right: 6px; }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* ---------- 4. Painéis e accordions ---------- */
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeIn .25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .panel-header h2 {
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-size: 1.25rem;
+    }
+    .panel-intro {
+      background: var(--info-soft);
+      border-left: 4px solid var(--info);
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+    }
+    .panel-intro p { margin-bottom: 0; color: var(--text); }
+
+    .accordion {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .accordion__header {
+      width: 100%;
+      background: var(--surface);
+      border: none;
+      text-align: left;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: background .15s ease;
+    }
+    .accordion__header:hover { background: var(--surface-soft); }
+    .accordion__header .acc-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .accordion__chevron {
+      transition: transform .2s ease;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .accordion.open .accordion__chevron { transform: rotate(180deg); }
+    .accordion__body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+    .accordion.open .accordion__body { max-height: 8000px; }
+    .accordion__body-inner {
+      padding: 4px 20px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ---------- 5. Cards de conceito ---------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 12px 0 18px;
+    }
+    .concept-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .concept-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .concept-card h4 {
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+      color: var(--primary-strong);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .concept-card p { font-size: .95rem; margin-bottom: 0; }
+
+    .info-box {
+      background: var(--info-soft);
+      border-left: 4px solid var(--info);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+    }
+    .warning-box {
+      background: var(--warning-soft);
+      border-left: 4px solid var(--warning);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+    }
+    .success-box {
+      background: var(--success-soft);
+      border-left: 4px solid var(--success);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+    }
+    .accent-box {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+    }
+    .info-box strong, .warning-box strong, .success-box strong, .accent-box strong {
+      color: var(--text);
+    }
+    .lembre-box {
+      background: linear-gradient(135deg, var(--pink-soft), var(--accent-soft));
+      border-left: 4px solid var(--pink);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+    }
+
+    table.compare {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      background: white;
+      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    table.compare th, table.compare td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: .95rem;
+    }
+    table.compare th {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 600;
+    }
+    table.compare tr:last-child td { border-bottom: none; }
+
+    /* ---------- 6. Animações interativas ---------- */
+    .animation-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-md);
+    }
+    .animation-card h3 {
+      font-size: 1.18rem;
+      color: var(--primary-strong);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .animation-stage {
+      background: linear-gradient(180deg, #0b1020 0%, #1e1b4b 100%);
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .animation-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 30%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 60% 20%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 35% 80%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 80% 65%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 50% 50%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 25% 60%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 90% 25%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 5% 50%, #fff 50%, transparent 51%);
+      opacity: .55;
+    }
+    .anim-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .anim-controls button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: background .15s ease, transform .1s ease;
+    }
+    .anim-controls button:hover { background: var(--primary-strong); transform: translateY(-1px); }
+    .anim-controls button.secondary {
+      background: var(--surface-soft);
+      color: var(--text-soft);
+      border: 1px solid var(--border);
+    }
+    .anim-controls button.secondary:hover { background: var(--primary-soft); color: var(--primary-strong); }
+    .anim-controls label {
+      font-size: .9rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .anim-controls input[type="range"] { width: 140px; accent-color: var(--primary); }
+    .anim-explanation {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: var(--surface-soft);
+      border-radius: var(--radius-sm);
+      font-size: .95rem;
+      color: var(--text-soft);
+    }
+
+    /* ---------- 6a. Rotação da Terra ---------- */
+    .rot-scene {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .rot-sun {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 60%, #b45309);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.7), 0 0 60px rgba(245, 158, 11, 0.25);
+      position: relative;
+      z-index: 2;
+    }
+    .rot-earth-wrap {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+    .rot-earth {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.18), transparent 50%),
+        conic-gradient(from 0deg,
+          #1d4ed8 0deg, #15803d 40deg, #1d4ed8 90deg,
+          #15803d 130deg, #1d4ed8 180deg, #15803d 220deg,
+          #1d4ed8 260deg, #15803d 300deg, #1d4ed8 360deg);
+      animation: spinEarth 8s linear infinite;
+    }
+    .rot-earth.paused { animation-play-state: paused; }
+    .rot-earth-shadow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(90deg, transparent 35%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.82) 100%);
+      pointer-events: none;
+    }
+    .rot-day-label, .rot-night-label {
+      position: absolute;
+      bottom: -24px;
+      font-size: .78rem;
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .rot-day-label { left: 8px; color: #fde68a; }
+    .rot-night-label { right: 8px; color: #94a3b8; }
+    @keyframes spinEarth { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* ---------- 6b. Translação/Estações ---------- */
+    .orbit-scene {
+      position: relative;
+      width: 100%;
+      height: 360px;
+    }
+    .orbit-svg { width: 100%; height: 100%; display: block; }
+    .orbit-pos { cursor: pointer; outline: none; }
+    .orbit-pos .orbit-hit {
+      fill: transparent;
+      pointer-events: all;
+    }
+    .orbit-pos:hover .orbit-hit,
+    .orbit-pos:focus .orbit-hit {
+      fill: rgba(255, 255, 255, 0.08);
+      stroke: rgba(255, 255, 255, 0.4);
+      stroke-width: 1;
+      stroke-dasharray: 3 3;
+      rx: 8; ry: 8;
+    }
+    .orbit-pos.active .orbit-hit {
+      fill: rgba(251, 191, 36, 0.18);
+      stroke: #fbbf24;
+      stroke-width: 1.5;
+      stroke-dasharray: none;
+    }
+    .earth-label-display {
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm);
+      font-size: .95rem;
+      color: var(--text);
+    }
+
+    /* ---------- 6c. Fases da Lua ---------- */
+    .moon-scene { position: relative; width: 100%; height: 320px; }
+    .moon-svg { width: 100%; height: 100%; }
+    .moon-phase-name {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--info-soft);
+      border-left: 4px solid var(--info);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ---------- 6d. Eclipses ---------- */
+    .eclipse-svg { width: 100%; height: 280px; }
+
+    /* ---------- 6e. Sistema Solar interativo ---------- */
+    .solar-scene { position: relative; width: 100%; min-height: 220px; padding: 20px 0; }
+    .solar-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 30px 14px;
+    }
+    .planet-item {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform .15s ease;
+    }
+    .planet-item:hover { transform: translateY(-4px); }
+    .planet-ball {
+      border-radius: 50%;
+      box-shadow: inset -6px -4px 12px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+    .planet-name { font-size: .88rem; color: rgba(255, 255, 255, 0.95); font-weight: 600; }
+    .planet-info-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-top: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    .planet-info-box h4 {
+      color: var(--primary-strong);
+      margin-bottom: 6px;
+    }
+    .planet-info-box .planet-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .planet-fact {
+      background: var(--surface-soft);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      font-size: .9rem;
+    }
+    .planet-fact strong { color: var(--primary-strong); }
+
+    /* ---------- 6f. Foguete ---------- */
+    .rocket-scene {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+    }
+    .rocket-ground {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      background: linear-gradient(180deg, #57534e 0%, #292524 100%);
+      border-top: 2px solid #78716c;
+      z-index: 3;
+    }
+    .rocket-launcher {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      transition: bottom 2.8s cubic-bezier(.4, .05, .25, 1);
+      z-index: 4;
+    }
+    .rocket-launcher.launched { bottom: calc(100% + 60px); }
+    .rocket-launcher.tremor { animation: rocketTremor .08s linear 14; }
+    @keyframes rocketTremor {
+      0%, 100% { transform: translateX(-50%); }
+      50% { transform: translateX(-49%); }
+    }
+    .rocket-svg-body { width: 100%; display: block; }
+    .rocket-fire-group {
+      opacity: 0;
+      transform-origin: 30px 106px;
+      transition: opacity .25s ease;
+    }
+    .rocket-fire-group.on {
+      opacity: 1;
+      animation: fireFlicker .12s linear infinite;
+    }
+    @keyframes fireFlicker {
+      0%, 100% { transform: scaleY(1) scaleX(1); }
+      50%      { transform: scaleY(1.18) scaleX(0.92); }
+    }
+    .rocket-arrows {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      bottom: 50px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .3s ease;
+      z-index: 5;
+    }
+    .rocket-arrows.show { opacity: 1; }
+    .arrow-label {
+      position: absolute;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-weight: 700;
+      background: rgba(0,0,0,0.55);
+      white-space: nowrap;
+    }
+    .arrow-reacao {
+      color: #34d399;
+      border: 1px solid #34d399;
+      top: -150px;
+      right: 0;
+    }
+    .arrow-reacao::after {
+      content: "";
+      position: absolute;
+      right: 12px; top: 100%;
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid #34d399;
+    }
+    .arrow-reacao::before {
+      content: "";
+      position: absolute;
+      right: 16px; top: 100%;
+      width: 2px; height: 60px;
+      background: #34d399;
+    }
+    .arrow-acao {
+      color: #fbbf24;
+      border: 1px solid #fbbf24;
+      top: 8px; right: 0;
+    }
+    .arrow-acao::before {
+      content: "";
+      position: absolute;
+      right: 16px; bottom: 100%;
+      width: 2px; height: 30px;
+      background: #fbbf24;
+    }
+    .arrow-acao::after {
+      content: "";
+      position: absolute;
+      right: 12px; bottom: -8px;
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid #fbbf24;
+    }
+    .rocket-smoke {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 60px;
+      opacity: 0;
+      transition: opacity .4s ease;
+      z-index: 2;
+    }
+    .rocket-smoke.show { opacity: 0.7; }
+    .smoke-puff {
+      position: absolute;
+      bottom: 0;
+      width: 30px; height: 30px;
+      background: radial-gradient(circle, rgba(203,213,225,0.9), rgba(203,213,225,0));
+      border-radius: 50%;
+    }
+    .smoke-puff:nth-child(1) { left: 0;    animation: puff 1.5s ease-out infinite; }
+    .smoke-puff:nth-child(2) { left: 35px; animation: puff 1.5s ease-out .3s infinite; }
+    .smoke-puff:nth-child(3) { right: 0;   animation: puff 1.5s ease-out .6s infinite; }
+    @keyframes puff {
+      from { transform: translateY(0) scale(1); opacity: .9; }
+      to   { transform: translateY(-20px) scale(1.8); opacity: 0; }
+    }
+
+    /* ---------- 6g. Constelações ---------- */
+    .constel-svg { width: 100%; height: 320px; display: block; }
+    .constel-btn.active { background: var(--accent) !important; color: white !important; }
+
+    /* ---------- 6h. Raios solares (estações) ---------- */
+    .rays-svg { width: 100%; height: 360px; display: block; }
+    .rays-mode-btn.active { background: var(--accent) !important; color: white !important; }
+
+    /* ---------- Mini-animações inline (dentro das abas de explicação) ---------- */
+    .mini-anim {
+      background: linear-gradient(180deg, #0b1020 0%, #1e1b4b 100%);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin: 12px 0;
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-anim::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 30%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 60% 20%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 35% 80%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 80% 65%, #fff 50%, transparent 51%);
+      opacity: .5;
+      pointer-events: none;
+    }
+    .mini-anim__inner { position: relative; z-index: 1; width: 100%; }
+    .mini-anim__hint {
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: .78rem;
+      margin-top: 6px;
+    }
+    .mini-rot-earth {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.18), transparent 50%),
+        conic-gradient(from 0deg,
+          #1d4ed8 0deg, #15803d 40deg, #1d4ed8 90deg,
+          #15803d 130deg, #1d4ed8 180deg, #15803d 220deg,
+          #1d4ed8 260deg, #15803d 300deg, #1d4ed8 360deg);
+      animation: spinEarth 8s linear infinite;
+      margin: 0 auto;
+      position: relative;
+    }
+    .mini-rot-shadow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.65) 100%);
+      pointer-events: none;
+    }
+    .mini-rot-wrap { position: relative; width: 100px; height: 100px; margin: 0 auto; }
+
+    /* Mini Sol pulsante */
+    .mini-sun {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 60%, #b45309);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.7), 0 0 80px rgba(245, 158, 11, 0.3);
+      margin: 0 auto;
+      animation: sunPulse 3s ease-in-out infinite;
+      position: relative;
+    }
+    @keyframes sunPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(245,158,11,0.7), 0 0 80px rgba(245,158,11,0.3); }
+      50%      { box-shadow: 0 0 50px rgba(245,158,11,0.9), 0 0 120px rgba(245,158,11,0.5); }
+    }
+
+    /* Mini foguete subindo em loop */
+    .mini-rocket-scene {
+      position: relative;
+      width: 100%;
+      height: 160px;
+    }
+    .mini-rocket {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 36px;
+      animation: miniLaunch 4s ease-in infinite;
+    }
+    @keyframes miniLaunch {
+      0%, 10% { bottom: 0; opacity: 1; }
+      80%     { bottom: 130%; opacity: 1; }
+      85%, 100% { bottom: 130%; opacity: 0; }
+    }
+    .mini-rocket-fire {
+      animation: miniFire .15s linear infinite;
+    }
+    @keyframes miniFire {
+      0%, 100% { transform: scaleY(1); }
+      50%      { transform: scaleY(1.25); }
+    }
+
+    /* Mini sistema solar girando */
+    .mini-solar {
+      position: relative;
+      width: 100%;
+      height: 160px;
+    }
+    .mini-solar-sun {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 60%, #b45309);
+      box-shadow: 0 0 12px rgba(245,158,11,0.7);
+    }
+    .mini-orbit {
+      position: absolute;
+      left: 50%; top: 50%;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.2);
+      transform: translate(-50%, -50%);
+    }
+    .mini-planet {
+      position: absolute;
+      left: 50%; top: 50%;
+      border-radius: 50%;
+      transform-origin: 0 0;
+    }
+    .mini-orbit-1 { width: 60px;  height: 60px;  animation: spinOrbit 4s linear infinite; }
+    .mini-orbit-2 { width: 90px;  height: 90px;  animation: spinOrbit 7s linear infinite; }
+    .mini-orbit-3 { width: 130px; height: 130px; animation: spinOrbit 11s linear infinite; }
+    .mini-orbit-4 { width: 170px; height: 170px; animation: spinOrbit 15s linear infinite; }
+    @keyframes spinOrbit {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    .mini-planet-1 { width: 6px;  height: 6px;  background: #a3a3a3; top: 50%; left: 100%; margin: -3px 0 0 -3px; }
+    .mini-planet-2 { width: 8px;  height: 8px;  background: #fcd34d; top: 50%; left: 100%; margin: -4px 0 0 -4px; }
+    .mini-planet-3 { width: 9px;  height: 9px;  background: #1d4ed8; top: 50%; left: 100%; margin: -4.5px 0 0 -4.5px; box-shadow: inset -1px -1px 2px rgba(0,0,0,0.3); }
+    .mini-planet-4 { width: 7px;  height: 7px;  background: #b91c1c; top: 50%; left: 100%; margin: -3.5px 0 0 -3.5px; }
+
+    /* Mini Lua phase slider */
+    .mini-moon-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 8px 0;
+    }
+    .mini-moon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .mini-moon-circle {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #1f2937;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #475569;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .mini-moon-item:hover .mini-moon-circle {
+      transform: scale(1.15);
+      border-color: #fbbf24;
+    }
+    .mini-moon-lit {
+      position: absolute;
+      inset: 0;
+      background: #e2e8f0;
+    }
+    .mini-moon-mask-right { clip-path: inset(0 0 0 50%); }
+    .mini-moon-mask-left  { clip-path: inset(0 50% 0 0); }
+    .mini-moon-mask-full  { clip-path: inset(0 0 0 0); }
+    .mini-moon-mask-none  { clip-path: inset(0 100% 0 0); }
+    .mini-moon-mask-cresc { clip-path: ellipse(35% 50% at 65% 50%); }
+    .mini-moon-mask-gibb  { clip-path: ellipse(45% 50% at 60% 50%); }
+    .mini-moon-mask-mingu-cresc { clip-path: ellipse(35% 50% at 35% 50%); }
+    .mini-moon-mask-mingu-gibb  { clip-path: ellipse(45% 50% at 40% 50%); }
+    .mini-moon-label {
+      font-size: .65rem;
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+    }
+
+    /* Mini eclipse demo */
+    .mini-eclipse {
+      width: 100%;
+      max-width: 340px;
+      height: 80px;
+      margin: 8px auto;
+      position: relative;
+    }
+    .mini-eclipse-svg { width: 100%; height: 100%; display: block; }
+
+    /* Mini constelação inline */
+    .mini-constel {
+      width: 100%;
+      max-width: 280px;
+      height: 140px;
+      margin: 8px auto;
+    }
+    .mini-constel-svg { width: 100%; height: 100%; display: block; }
+
+    /* ---------- 7. Exercícios ---------- */
+    .exercise {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .exercise-question {
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .exercise-number {
+      flex: 0 0 auto;
+      background: var(--primary);
+      color: white;
+      border-radius: 999px;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .88rem;
+      font-weight: 700;
+    }
+    .exercise-meta {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: .76rem;
+      font-weight: 600;
+    }
+    .badge-topic { background: var(--primary-soft); color: var(--primary-strong); }
+    .badge-easy { background: var(--success-soft); color: var(--success); }
+    .badge-medium { background: var(--accent-soft); color: #92400e; }
+    .badge-hard { background: var(--error-soft); color: var(--error); }
+    .badge-tipo { background: var(--info-soft); color: var(--info); }
+    .badge-oficial {
+      background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+      color: #5b21b6;
+      border: 1px solid #a78bfa;
+    }
+    .badge-autoral { background: var(--pink-soft); color: #9f1239; }
+
+    .source-line {
+      margin: 8px 0 12px;
+      padding: 8px 10px;
+      background: var(--surface-soft);
+      border-left: 3px solid var(--primary);
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      color: var(--text-soft);
+      line-height: 1.45;
+    }
+    .source-line strong { color: var(--primary-strong); }
+
+    .options-list {
+      list-style: none;
+      margin: 0 0 12px;
+      padding: 0;
+    }
+    .options-list li { margin-bottom: 8px; }
+    .options-list label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+      background: var(--surface-soft);
+    }
+    .options-list label:hover { background: var(--primary-soft); border-color: var(--primary-soft); }
+    .options-list input[type="radio"] { margin-top: 3px; accent-color: var(--primary); }
+
+    .ex-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      margin-bottom: 10px;
+      background: var(--surface-soft);
+    }
+    .ex-input:focus { outline: 2px solid var(--primary); outline-offset: 0; }
+
+    .ex-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: .94rem;
+      font-weight: 500;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .btn-primary:hover { background: var(--primary-strong); border-color: var(--primary-strong); }
+    .btn-secondary {
+      background: var(--surface-soft);
+      color: var(--text-soft);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover { background: var(--primary-soft); color: var(--primary-strong); }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: .95rem;
+      display: none;
+    }
+    .feedback.show { display: block; animation: fadeIn .2s ease; }
+    .feedback.correct {
+      background: var(--success-soft);
+      color: var(--success);
+      border-left: 4px solid var(--success);
+    }
+    .feedback.incorrect {
+      background: var(--error-soft);
+      color: var(--error);
+      border-left: 4px solid var(--error);
+    }
+    .feedback.model {
+      background: var(--info-soft);
+      color: var(--info);
+      border-left: 4px solid var(--info);
+    }
+    .feedback .explanation {
+      margin-top: 6px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ---------- 8. Simulado ---------- */
+    .simulado-status {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .progress-bar {
+      flex: 1;
+      min-width: 180px;
+      height: 10px;
+      background: var(--surface-soft);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-bar__fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      transition: width .25s ease;
+    }
+    .simulado-result {
+      display: none;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-top: 18px;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    .simulado-result.show { display: block; animation: fadeIn .3s ease; }
+    .simulado-score {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--primary-strong);
+      margin: 10px 0;
+    }
+    .simulado-message {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .timer-box {
+      background: var(--accent-soft);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      font-weight: 700;
+      color: #92400e;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ---------- 9. Glossário ---------- */
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .glossary-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .glossary-item dt {
+      font-weight: 700;
+      color: var(--primary-strong);
+      margin-bottom: 4px;
+    }
+    .glossary-item dd { margin: 0; font-size: .95rem; color: var(--text-soft); }
+
+    /* ---------- 10. Plano de estudo ---------- */
+    .study-plan {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .study-plan ol {
+      counter-reset: dia;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .study-plan li {
+      counter-increment: dia;
+      padding: 10px 12px 10px 56px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+    }
+    .study-plan li:last-child { border-bottom: none; }
+    .study-plan li::before {
+      content: "Dia " counter(dia);
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    /* ---------- 11. Mapa de estudo ---------- */
+    .priority-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .priority-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+      border-top: 4px solid var(--primary);
+    }
+    .priority-card.high { border-top-color: var(--error); }
+    .priority-card.medium { border-top-color: var(--accent); }
+    .priority-card.complement { border-top-color: var(--info); }
+    .priority-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .priority-card ul { margin: 0 0 0 1.2em; }
+    .priority-card li { font-size: .92rem; }
+
+    /* ---------- 12. Sistema Solar (cabeçalho visual) ---------- */
+    .planets-ordered {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 18px 8px;
+      background: linear-gradient(180deg, #0b1020 0%, #1e1b4b 100%);
+      border-radius: var(--radius-md);
+      margin: 12px 0;
+    }
+    .po-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+    .po-ball {
+      border-radius: 50%;
+      box-shadow: inset -4px -3px 8px rgba(0,0,0,0.3);
+    }
+    .po-name {
+      font-size: .78rem;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+    .po-num {
+      font-size: .72rem;
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    /* ---------- 13. Mnemônico ---------- */
+    .mnemonic-card {
+      background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 100%);
+      border: 2px dashed var(--accent);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 14px 0;
+      text-align: center;
+    }
+    .mnemonic-card .mnemonic-phrase {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-strong);
+      margin: 6px 0;
+    }
+    .mnemonic-card .mnemonic-help {
+      font-size: .9rem;
+      color: var(--text-soft);
+    }
+
+    /* ---------- 14. Responsividade ---------- */
+    @media (max-width: 720px) {
+      .page-header { padding: 24px 16px 28px; }
+      .page-header h1 { font-size: 1.4rem; }
+      main { padding: 18px 14px 60px; }
+      .nav-tabs__inner { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding: 10px 8px; }
+      .nav-tabs button { font-size: .85rem; padding: 8px 12px; }
+      .animation-stage { min-height: 240px; }
+      .rot-scene { flex-direction: column; gap: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .rot-earth, .page-header::before, .rocket-emoji { animation: none !important; }
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: .88rem;
+      margin-top: 40px;
+      padding: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ---------- Cabeçalho de exame (cartão de prova) ---------- */
+    .exam-card {
+      background: white;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-md);
+      margin: 14px 0;
+    }
+    .exam-card h3 {
+      color: var(--primary-strong);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .exam-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .exam-stat {
+      background: var(--primary-soft);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      text-align: center;
+    }
+    .exam-stat strong {
+      display: block;
+      font-size: 1.4rem;
+      color: var(--primary-strong);
+    }
+    .exam-stat span {
+      font-size: .85rem;
+      color: var(--text-soft);
+    }
+  </style>
+</head>
+<body>
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <h1><span class="rocket-emoji" aria-hidden="true">🚀</span> Revisão Interativa OBA — 4º Ano</h1>
+      <p class="subtitle">
+        Material de estudo para a <strong>OBA — Olimpíada Brasileira de Astronomia
+        e Astronáutica</strong>: explicações simples, animações divertidas,
+        exercícios e um simulado parecido com a prova de verdade.
+      </p>
+      <div class="header-badges">
+        <span class="header-badge">👨‍🚀 Aluno: Benjamin</span>
+        <span class="header-badge">📚 4º Ano EF</span>
+        <span class="header-badge">⭐ Nível 2 da OBA</span>
+        <span class="header-badge">📝 10 questões na prova (2h)</span>
+      </div>
+      <div class="notice">
+        <strong>Aviso:</strong> esta página complementa o estudo, mas não
+        substitui as <strong>provas oficiais</strong> e o regulamento atual
+        da OBA. Veja sempre o site: <em>oba.org.br</em>.
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== NAVEGAÇÃO ===================== -->
+  <nav class="nav-tabs" aria-label="Navegação principal">
+    <div class="nav-tabs__inner">
+      <button class="tab active" data-target="inicio"><span class="tab-icon">🏠</span>Início</button>
+      <button class="tab" data-target="astros"><span class="tab-icon">⭐</span>Astros</button>
+      <button class="tab" data-target="solar"><span class="tab-icon">🪐</span>Sistema Solar</button>
+      <button class="tab" data-target="terra"><span class="tab-icon">🌍</span>Terra-Sol-Lua</button>
+      <button class="tab" data-target="ceu"><span class="tab-icon">✨</span>Céu &amp; Constelações</button>
+      <button class="tab" data-target="astronautica"><span class="tab-icon">🚀</span>Astronáutica</button>
+      <button class="tab" data-target="animacoes"><span class="tab-icon">🎬</span>Animações</button>
+      <button class="tab" data-target="exercicios"><span class="tab-icon">✏️</span>Exercícios</button>
+      <button class="tab" data-target="simulado"><span class="tab-icon">📝</span>Simulado</button>
+      <button class="tab" data-target="glossario"><span class="tab-icon">📖</span>Glossário</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ===================== INÍCIO ===================== -->
+    <section id="inicio" class="panel active">
+      <div class="panel-header">
+        <h2><span class="panel-icon">🏠</span> Início</h2>
+      </div>
+
+      <div class="panel-intro">
+        <p>
+          <strong>Olá, Benjamin!</strong> 👋🚀 Esta página foi feita
+          especialmente para você se preparar para a <strong>OBA — Olimpíada
+          Brasileira de Astronomia e Astronáutica</strong>. Você vai aprender
+          sobre planetas, Lua, estrelas, foguetes e muito mais com explicações
+          fáceis, animações divertidas e um simulado parecido com a prova de
+          verdade. Bora explorar o Universo? 🌌
+        </p>
+      </div>
+
+      <div class="exam-card">
+        <h3>📋 Como é a prova da OBA — Nível 2</h3>
+        <p>Para 4º e 5º anos. Você faz na própria escola.</p>
+        <div class="exam-stats">
+          <div class="exam-stat"><strong>10</strong><span>questões no total</span></div>
+          <div class="exam-stat"><strong>7</strong><span>de Astronomia</span></div>
+          <div class="exam-stat"><strong>3</strong><span>de Astronáutica</span></div>
+          <div class="exam-stat"><strong>2h</strong><span>de duração</span></div>
+        </div>
+        <div class="info-box" style="margin-top: 12px">
+          As questões podem ser de <strong>múltipla escolha</strong>,
+          <strong>verdadeiro ou falso</strong>, e até pedir para contar
+          <strong>quantos planetas têm tal letra no nome</strong>! 🤓
+        </div>
+      </div>
+
+      <h3>🗺️ Mapa de Estudo</h3>
+      <p>Estes são os temas mais cobrados, organizados por prioridade.</p>
+
+      <div class="priority-grid">
+        <div class="priority-card high">
+          <h3>🔴 Prioridade Alta</h3>
+          <ul>
+            <li>Sistema Solar e ordem dos 8 planetas</li>
+            <li>Fases da Lua</li>
+            <li>Eclipse Solar e Eclipse Lunar</li>
+            <li>Diferença entre Sol, Lua, Planeta e Estrela</li>
+            <li>Movimentos da Terra (rotação e translação)</li>
+          </ul>
+        </div>
+        <div class="priority-card medium">
+          <h3>🟡 Prioridade Média</h3>
+          <ul>
+            <li>Características dos planetas (anéis, cor, temperatura)</li>
+            <li>Constelações: Cruzeiro do Sul e Três Marias</li>
+            <li>Foguetes e satélites artificiais</li>
+            <li>Astronautas brasileiros (Marcos Pontes)</li>
+            <li>Sol nasce no Leste, se põe no Oeste</li>
+          </ul>
+        </div>
+        <div class="priority-card complement">
+          <h3>🔵 Complementar</h3>
+          <ul>
+            <li>Asteroides, cometas e meteoros</li>
+            <li>Plutão (planeta-anão)</li>
+            <li>Estação Espacial Internacional</li>
+            <li>Via Láctea (nossa galáxia)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>📅 Plano de Estudo (7 dias)</h3>
+      <div class="study-plan">
+        <ol>
+          <li>Conheça os <strong>astros</strong>: Sol, Lua, estrelas e planetas. Diferenças básicas.</li>
+          <li>Aprenda o <strong>Sistema Solar</strong>: ordem dos planetas e características.</li>
+          <li>Estude a <strong>Terra, o Sol e a Lua</strong>: rotação, translação e fases da Lua.</li>
+          <li>Veja os <strong>eclipses</strong> (solar e lunar) e o céu noturno.</li>
+          <li>Mergulhe na <strong>Astronáutica</strong>: foguetes, satélites e astronautas.</li>
+          <li>Faça os <strong>Exercícios de Fixação</strong>.</li>
+          <li>Faça o <strong>Simulado</strong> e revise os erros. 🎯</li>
+        </ol>
+      </div>
+
+      <h3>📝 Como usar esta página</h3>
+      <ol>
+        <li>Vá nas abas em ordem: <strong>Astros → Sistema Solar → Terra-Sol-Lua → Céu → Astronáutica</strong>.</li>
+        <li>Quando ver um <strong>botão azul ou laranja</strong>, clica! É uma animação que ajuda muito a entender.</li>
+        <li>Depois faça os <strong>Exercícios</strong>. Tenta responder sem espiar a resposta primeiro.</li>
+        <li>Termine com o <strong>Simulado</strong> — ele tem 10 questões parecidas com a prova real!</li>
+      </ol>
+
+      <div class="accent-box">
+        <strong>💡 Dica de prova:</strong> a OBA gosta de questões com
+        <strong>imagens</strong> e pedir para você <strong>contar letras</strong>
+        em nomes de planetas. Sempre leia o enunciado <em>com calma</em>.
+      </div>
+    </section>
+
+    <!-- ===================== ASTROS ===================== -->
+    <section id="astros" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">⭐</span> Os Astros</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          <strong>Astros</strong> são todos os corpos do espaço: Sol, Lua,
+          estrelas, planetas, cometas, asteroides e até pedaços de rocha
+          flutuando por aí. A <strong>Astronomia</strong> é a ciência que
+          estuda esses astros e todo o Universo.
+        </p>
+      </div>
+
+      <!-- Diferença entre astros -->
+      <div class="accordion open">
+        <button class="accordion__header">
+          <span class="acc-left">🌟 Diferença entre os astros</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>Cada astro é diferente. Vamos descobrir!</p>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>☀️ Estrela</h4>
+                <p>Tem <strong>luz própria</strong>. O Sol é uma estrela. Estrelas brilham porque queimam combustível no seu centro.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🪐 Planeta</h4>
+                <p><strong>Não tem luz própria</strong>. Gira em volta de uma estrela. No nosso Sistema Solar são <strong>8 planetas</strong> que giram em volta do Sol.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌙 Satélite natural (Lua)</h4>
+                <p>Gira em volta de um planeta. A <strong>Lua</strong> é o satélite natural da Terra. Também não tem luz própria!</p>
+              </div>
+              <div class="concept-card">
+                <h4>🛰️ Satélite artificial</h4>
+                <p>Construído por <strong>humanos</strong>. Serve para GPS, internet, TV e ver o tempo lá de cima.</p>
+              </div>
+              <div class="concept-card">
+                <h4>☄️ Cometa</h4>
+                <p>Uma <strong>bola de gelo, pedra e poeira</strong>. Quando chega perto do Sol, forma uma cauda brilhante linda.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🪨 Asteroide</h4>
+                <p>Uma <strong>rocha grande</strong> que gira em volta do Sol. A maioria fica entre Marte e Júpiter.</p>
+              </div>
+              <div class="concept-card">
+                <h4>💫 Meteoro</h4>
+                <p>O famoso "<strong>estrela cadente</strong>"! Não é estrela: é uma pedrinha que entra na atmosfera e queima fazendo um risco de luz.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌑 Meteorito</h4>
+                <p>É o <strong>pedaço que sobra do meteoro</strong> e cai no chão da Terra.</p>
+              </div>
+            </div>
+
+            <div class="warning-box">
+              <strong>⚠️ Não confunda!</strong>
+              <ul>
+                <li><strong>Meteoroide</strong> = pedrinha no espaço.</li>
+                <li><strong>Meteoro</strong> = a luz no céu (estrela cadente).</li>
+                <li><strong>Meteorito</strong> = pedaço que chega no chão.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- O Sol -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">☀️ O Sol — nossa estrela</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              O <strong>Sol</strong> é uma <strong>estrela</strong> — uma
+              bola gigante de gases muito quentes. Ele é a estrela <strong>mais
+              próxima da Terra</strong>, e por isso parece tão grande e
+              brilhante. Outras estrelas estão tão longe que viram pontinhos
+              no céu de noite.
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <div class="mini-sun"></div>
+                <div class="mini-anim__hint">✨ O Sol brilha porque produz sua própria luz</div>
+              </div>
+            </div>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🔆 Luz própria</h4>
+                <p>O Sol <strong>produz</strong> sua própria luz. Por isso ilumina a Terra, a Lua e todos os planetas.</p>
+              </div>
+              <div class="concept-card">
+                <h4>📏 Tamanho</h4>
+                <p>O Sol é cerca de <strong>109 vezes maior</strong> que a Terra. Caberiam mais de 1 milhão de Terras dentro dele!</p>
+              </div>
+              <div class="concept-card">
+                <h4>⏱️ Distância</h4>
+                <p>A luz do Sol leva cerca de <strong>8 minutos</strong> para chegar até nós.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🧲 Gravidade</h4>
+                <p>É a gravidade do Sol que segura os planetas, fazendo eles girarem em volta dele.</p>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>👀 Cuidado:</strong> nunca olhe direto para o Sol! A luz dele pode machucar seus olhos.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- A Lua -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🌙 A Lua — nossa companheira</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              A <strong>Lua</strong> é o <strong>satélite natural</strong> da
+              Terra. Ela é o astro <strong>mais próximo</strong> de nós e gira
+              em volta da Terra. A Lua <strong>não tem luz própria</strong>:
+              o que vemos brilhando é a luz do Sol refletindo nela!
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <svg viewBox="0 0 300 120" style="width:100%;max-width:300px;display:block;margin:0 auto;">
+                  <defs>
+                    <radialGradient id="mlSun" cx="35%" cy="35%">
+                      <stop offset="0%" stop-color="#fde68a"/>
+                      <stop offset="100%" stop-color="#b45309"/>
+                    </radialGradient>
+                    <radialGradient id="mlEarth" cx="35%" cy="35%">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#1e3a8a"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- Sol -->
+                  <circle cx="30" cy="60" r="14" fill="url(#mlSun)"/>
+                  <!-- Raio do Sol indo até a Lua -->
+                  <line x1="44" y1="60" x2="240" y2="40" stroke="#fde68a" stroke-width="1" opacity="0.6" stroke-dasharray="3 2"/>
+                  <!-- Órbita da Lua -->
+                  <ellipse cx="170" cy="60" rx="60" ry="30" fill="none" stroke="rgba(255,255,255,0.2)" stroke-dasharray="2 2"/>
+                  <!-- Terra -->
+                  <circle cx="170" cy="60" r="13" fill="url(#mlEarth)"/>
+                  <!-- Lua girando ao redor -->
+                  <g transform-origin="170 60">
+                    <circle cx="230" cy="60" r="6" fill="#9ca3af">
+                      <animateTransform attributeName="transform" type="rotate" from="0 170 60" to="360 170 60" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+                  <text x="30" y="92" fill="#fde68a" font-size="8" text-anchor="middle">Sol</text>
+                  <text x="170" y="92" fill="#60a5fa" font-size="8" text-anchor="middle">Terra</text>
+                  <text x="150" y="110" fill="rgba(255,255,255,0.7)" font-size="8" text-anchor="middle">↑ Lua girando em volta da Terra</text>
+                </svg>
+              </div>
+            </div>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>⚽ Forma</h4>
+                <p>A Lua tem <strong>forma de bola</strong> (esfera). Não é "de queijo" nem "achatada".</p>
+              </div>
+              <div class="concept-card">
+                <h4>🏔️ Chão da Lua</h4>
+                <p>O chão da Lua é cinza, cheio de poeira e <strong>crateras</strong>. Não tem ouro!</p>
+              </div>
+              <div class="concept-card">
+                <h4>🪶 Peso</h4>
+                <p>Na Lua, você pesa <strong>menos</strong> (mas não fica sem peso!). A gravidade dela é mais fraca.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌗 Dia e noite</h4>
+                <p>A Lua <strong>também tem</strong> dia e noite, porque ela gira em torno de si mesma.</p>
+              </div>
+            </div>
+            <div class="warning-box">
+              <strong>⚠️ Mitos comuns sobre a Lua:</strong>
+              <ul>
+                <li>❌ "A Lua tem luz própria" → <strong>FALSO!</strong> Ela só reflete a luz do Sol.</li>
+                <li>❌ "Na Lua não há gravidade" → <strong>FALSO!</strong> Tem gravidade, só que mais fraca.</li>
+                <li>❌ "Na Lua não há noites" → <strong>FALSO!</strong> Tem dia e noite lá também.</li>
+                <li>❌ "O lado escuro da Lua nunca recebe luz" → <strong>FALSO!</strong> Todo lado da Lua recebe luz em algum momento.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Astronomia x Astrologia -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🔭 Astronomia ≠ Astrologia</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>Cuidado! Os nomes são parecidos, mas são coisas <strong>bem diferentes</strong>.</p>
+            <table class="compare">
+              <thead>
+                <tr><th>🔬 Astronomia</th><th>🔮 Astrologia</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>É <strong>ciência</strong>. Estuda os astros de verdade, usando telescópios e cálculos.</td>
+                  <td><strong>Não é ciência</strong>. Fala em horóscopo, signos e adivinhações.</td>
+                </tr>
+                <tr>
+                  <td>Estuda como o Universo funciona.</td>
+                  <td>Não tem comprovação científica.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="info-box">
+              <strong>Lembre-se:</strong> a OBA é de <strong>astronomia</strong> (ciência), não de astrologia (horóscopo).
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SISTEMA SOLAR ===================== -->
+    <section id="solar" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">🪐</span> Sistema Solar</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          O <strong>Sistema Solar</strong> é a nossa "vizinhança" no espaço:
+          o <strong>Sol</strong> no centro e os planetas, planetas-anões, luas,
+          asteroides e cometas girando em volta dele.
+        </p>
+      </div>
+
+      <!-- Ordem dos planetas -->
+      <div class="accordion open">
+        <button class="accordion__header">
+          <span class="acc-left">🌌 Os 8 planetas em ordem</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <div class="mini-solar">
+                  <div class="mini-orbit mini-orbit-1"><div class="mini-planet mini-planet-1"></div></div>
+                  <div class="mini-orbit mini-orbit-2"><div class="mini-planet mini-planet-2"></div></div>
+                  <div class="mini-orbit mini-orbit-3"><div class="mini-planet mini-planet-3"></div></div>
+                  <div class="mini-orbit mini-orbit-4"><div class="mini-planet mini-planet-4"></div></div>
+                  <div class="mini-solar-sun"></div>
+                </div>
+                <div class="mini-anim__hint">🪐 Os planetas <em>orbitam</em> o Sol em órbitas diferentes</div>
+              </div>
+            </div>
+            <p>Do mais perto do Sol até o mais longe:</p>
+
+            <div class="planets-ordered">
+              <div class="po-item"><div class="po-ball" style="width:18px;height:18px;background:radial-gradient(circle at 35% 35%, #d4d4d4, #737373)"></div><div class="po-num">1º</div><div class="po-name">Mercúrio</div></div>
+              <div class="po-item"><div class="po-ball" style="width:22px;height:22px;background:radial-gradient(circle at 35% 35%, #fde68a, #b45309)"></div><div class="po-num">2º</div><div class="po-name">Vênus</div></div>
+              <div class="po-item"><div class="po-ball" style="width:24px;height:24px;background:radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8 70%, #15803d)"></div><div class="po-num">3º</div><div class="po-name">Terra</div></div>
+              <div class="po-item"><div class="po-ball" style="width:20px;height:20px;background:radial-gradient(circle at 30% 30%, #fca5a5, #b91c1c)"></div><div class="po-num">4º</div><div class="po-name">Marte</div></div>
+              <div class="po-item"><div class="po-ball" style="width:48px;height:48px;background:radial-gradient(circle at 30% 30%, #fed7aa, #c2410c)"></div><div class="po-num">5º</div><div class="po-name">Júpiter</div></div>
+              <div class="po-item"><div class="po-ball" style="width:42px;height:42px;background:radial-gradient(circle at 30% 30%, #fef3c7, #ca8a04)"></div><div class="po-num">6º</div><div class="po-name">Saturno</div></div>
+              <div class="po-item"><div class="po-ball" style="width:30px;height:30px;background:radial-gradient(circle at 30% 30%, #a5f3fc, #155e75)"></div><div class="po-num">7º</div><div class="po-name">Urano</div></div>
+              <div class="po-item"><div class="po-ball" style="width:28px;height:28px;background:radial-gradient(circle at 30% 30%, #93c5fd, #1e3a8a)"></div><div class="po-num">8º</div><div class="po-name">Netuno</div></div>
+            </div>
+
+            <div class="mnemonic-card">
+              <div class="mnemonic-help">🧠 Mnemônico (frase que ajuda a decorar):</div>
+              <div class="mnemonic-phrase">"Minha Vó Tem Muitos Jovens Sapatos Únicos Novinhos"</div>
+              <div class="mnemonic-help">
+                <strong>M</strong>ercúrio • <strong>V</strong>ênus • <strong>T</strong>erra •
+                <strong>M</strong>arte • <strong>J</strong>úpiter • <strong>S</strong>aturno •
+                <strong>U</strong>rano • <strong>N</strong>etuno
+              </div>
+            </div>
+
+            <div class="info-box">
+              <strong>💡 Atenção!</strong> <strong>Plutão</strong> já foi considerado um planeta, mas desde 2006 é um <strong>planeta-anão</strong>. Por isso só temos <strong>8 planetas</strong> no Sistema Solar agora.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tipos de planetas -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🪨 Rochosos × 💨 Gasosos</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>Os planetas se dividem em <strong>2 grupos</strong>:</p>
+            <table class="compare">
+              <thead>
+                <tr><th>🪨 Rochosos (pequenos)</th><th>💨 Gasosos (gigantes)</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mercúrio, Vênus, <strong>Terra</strong>, Marte</td>
+                  <td>Júpiter, Saturno, Urano, Netuno</td>
+                </tr>
+                <tr>
+                  <td>São feitos de <strong>rocha</strong> e metal.</td>
+                  <td>São feitos quase só de <strong>gases</strong>.</td>
+                </tr>
+                <tr>
+                  <td>São <strong>menores</strong>.</td>
+                  <td>São <strong>enormes</strong>. Júpiter é o maior!</td>
+                </tr>
+                <tr>
+                  <td>Ficam <strong>mais perto</strong> do Sol.</td>
+                  <td>Ficam <strong>mais longe</strong> do Sol.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="accent-box">
+              <strong>🪐 Curiosidade:</strong> Júpiter, Saturno, Urano e Netuno
+              <strong>têm anéis</strong>! O de Saturno é o mais famoso e
+              bonito, mas todos os 4 gasosos têm anéis.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cada planeta -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🔎 Conheça cada planeta</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>☿️ Mercúrio</h4>
+                <p>O <strong>mais próximo do Sol</strong>. O <strong>menor planeta</strong>. Não tem luas.</p>
+              </div>
+              <div class="concept-card">
+                <h4>♀️ Vênus</h4>
+                <p>O <strong>planeta mais quente</strong> (≈ 460°C)! Tem uma atmosfera muito densa. É o astro mais brilhante no céu depois do Sol e da Lua.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌍 Terra</h4>
+                <p>Nossa casa! Único planeta com <strong>vida conhecida</strong>. Tem 1 lua: a Lua. 75% da superfície é água.</p>
+              </div>
+              <div class="concept-card">
+                <h4>♂️ Marte</h4>
+                <p>O <strong>planeta vermelho</strong>. Tem 2 luas: Fobos e Deimos. Tem o maior vulcão do Sistema Solar (Monte Olimpo).</p>
+              </div>
+              <div class="concept-card">
+                <h4>♃ Júpiter</h4>
+                <p>O <strong>maior planeta</strong>! É gigante e gasoso. Tem <strong>mais de 90 luas</strong>. A Grande Mancha Vermelha é uma tempestade que dura séculos.</p>
+              </div>
+              <div class="concept-card">
+                <h4>♄ Saturno</h4>
+                <p>Famoso pelos <strong>anéis</strong> feitos de gelo e rocha. Tem mais de 140 luas. É bem grande também.</p>
+              </div>
+              <div class="concept-card">
+                <h4>♅ Urano</h4>
+                <p>Azulado por causa do gás <strong>metano</strong>. Gira <strong>"deitado"</strong>: seu eixo é quase horizontal!</p>
+              </div>
+              <div class="concept-card">
+                <h4>♆ Netuno</h4>
+                <p>O <strong>mais distante</strong> do Sol. Tem os ventos mais rápidos do Sistema Solar (até 2.000 km/h)! Azul escuro.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🪶 Plutão (anão)</h4>
+                <p><strong>Planeta-anão</strong>. Não conta como planeta desde 2006. Fica além de Netuno.</p>
+              </div>
+            </div>
+            <div class="lembre-box">
+              <strong>💡 Para a OBA, decore:</strong>
+              <ul>
+                <li>🥇 Mercúrio = mais perto do Sol e menor planeta</li>
+                <li>🔥 Vênus = mais quente</li>
+                <li>🩸 Marte = vermelho</li>
+                <li>🏆 Júpiter = maior</li>
+                <li>💍 Saturno = anéis bonitos</li>
+                <li>📐 Urano = gira deitado</li>
+                <li>📏 Netuno = mais distante</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contagem de letras (estilo OBA!) -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🔤 "Quantos planetas têm a letra X?" (estilo OBA)</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              A OBA <strong>adora</strong> esse tipo de pergunta! Vamos
+              treinar. Lembre dos nomes:
+              <strong>Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano, Netuno</strong>.
+            </p>
+            <table class="compare">
+              <thead>
+                <tr><th>Letra</th><th>Planetas que têm</th><th>Quantos?</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>A</strong></td><td>Terr<u>a</u>, M<u>a</u>rte, S<u>a</u>turno, Ur<u>a</u>no</td><td>4</td></tr>
+                <tr><td><strong>E</strong></td><td>M<u>e</u>rcúrio, T<u>e</u>rra, Mart<u>e</u>, Júpit<u>e</u>r, N<u>e</u>tuno</td><td>5</td></tr>
+                <tr><td><strong>I</strong></td><td>Mercúr<u>i</u>o, Júp<u>i</u>ter</td><td>2</td></tr>
+                <tr><td><strong>O</strong></td><td>Mercúri<u>o</u>, Saturn<u>o</u>, Uran<u>o</u>, Netun<u>o</u></td><td>4</td></tr>
+                <tr><td><strong>U</strong></td><td>Merc<u>ú</u>rio, Vên<u>u</u>s, J<u>ú</u>piter, Sat<u>u</u>rno, <u>U</u>rano, Net<u>u</u>no</td><td>6</td></tr>
+                <tr><td><strong>R</strong></td><td>Me<u>r</u>cú<u>r</u>io, Te<u>r</u><u>r</u>a, Ma<u>r</u>te, Júpite<u>r</u>, Satu<u>r</u>no, U<u>r</u>ano</td><td>6</td></tr>
+                <tr><td><strong>T</strong></td><td><u>T</u>erra, Mar<u>t</u>e, Júpi<u>t</u>er, Sa<u>t</u>urno, Ne<u>t</u>uno</td><td>5</td></tr>
+                <tr><td><strong>N</strong></td><td>Vê<u>n</u>us, Satur<u>n</u>o, Ura<u>n</u>o, <u>N</u>etu<u>n</u>o</td><td>4</td></tr>
+              </tbody>
+            </table>
+            <div class="warning-box">
+              <strong>⚠️ Dica:</strong> conte com calma e com o lápis na mão. Marque cada planeta para não esquecer!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TERRA, SOL E LUA ===================== -->
+    <section id="terra" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">🌍</span> Terra, Sol e Lua</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          A <strong>Terra</strong> faz dois movimentos importantes: gira em
+          torno de si mesma (rotação) e gira em volta do Sol (translação). A
+          <strong>Lua</strong> gira em volta da Terra! Vamos entender cada um.
+        </p>
+      </div>
+
+      <!-- Rotação -->
+      <div class="accordion open">
+        <button class="accordion__header">
+          <span class="acc-left">🔄 Rotação — dia e noite</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              <strong>Rotação</strong> é quando a Terra <strong>gira em torno
+              de si mesma</strong>, como um pião. Uma volta completa demora
+              <strong>cerca de 24 horas</strong> = <strong>1 dia</strong>.
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <div class="mini-rot-wrap">
+                  <div class="mini-rot-earth"></div>
+                  <div class="mini-rot-shadow"></div>
+                </div>
+                <div class="mini-anim__hint">🌍 A Terra girando — o lado claro é dia, o escuro é noite</div>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>🌅 Por que existe dia e noite?</strong><br>
+              Enquanto a Terra gira, o lado virado para o Sol fica iluminado
+              (dia) e o lado escondido fica escuro (noite). Como o nosso
+              planeta nunca para de girar, o ciclo se repete sem fim.
+            </div>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🌅 Nasce no Leste</h4>
+                <p>O <strong>Sol</strong> sempre parece nascer no <strong>Leste</strong>.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌇 Se põe no Oeste</h4>
+                <p>E sempre parece se pôr no <strong>Oeste</strong>.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌙 Vale para a Lua e estrelas</h4>
+                <p>Lua e estrelas também nascem no Leste e se põem no Oeste, pelo mesmo motivo: a Terra gira!</p>
+              </div>
+            </div>
+            <div class="warning-box">
+              <strong>💡 Importante:</strong> o Sol e as estrelas não se mexem de verdade. Quem gira é a Terra! Por isso parece que eles "andam" no céu.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Translação -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🌞 Translação — um ano inteiro</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              <strong>Translação</strong> é quando a Terra gira <strong>em
+              volta do Sol</strong>. Uma volta completa demora
+              <strong>cerca de 365 dias</strong> = <strong>1 ano</strong>.
+            </p>
+            <div class="info-box">
+              <strong>🎂 Por isso completamos anos!</strong> Cada vez que a
+              Terra dá uma volta no Sol desde seu nascimento, você faz
+              aniversário.
+            </div>
+            <div class="lembre-box">
+              <strong>🤓 Resumindo:</strong>
+              <ul>
+                <li><strong>Rotação</strong> = 24h = 1 <strong>dia</strong> = causa o dia e a noite.</li>
+                <li><strong>Translação</strong> = 365 dias = 1 <strong>ano</strong> = causa as estações.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fases da Lua -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🌕🌗🌑 As fases da Lua</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              A Lua <strong>parece mudar de forma</strong> ao longo do mês,
+              mas ela continua redonda! O que muda é <strong>quanto da parte
+              iluminada pelo Sol nós conseguimos ver da Terra</strong>.
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <div class="mini-moon-row">
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-none"></div></div>
+                    <div class="mini-moon-label">🌑 Nova</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-cresc"></div></div>
+                    <div class="mini-moon-label">🌒 Cresc.</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-right"></div></div>
+                    <div class="mini-moon-label">🌓 Quarto</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-gibb"></div></div>
+                    <div class="mini-moon-label">🌔 Gibosa</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-full"></div></div>
+                    <div class="mini-moon-label">🌕 Cheia</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-mingu-gibb"></div></div>
+                    <div class="mini-moon-label">🌖 Gibosa</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-left"></div></div>
+                    <div class="mini-moon-label">🌗 Quarto</div>
+                  </div>
+                  <div class="mini-moon-item">
+                    <div class="mini-moon-circle"><div class="mini-moon-lit mini-moon-mask-mingu-cresc"></div></div>
+                    <div class="mini-moon-label">🌘 Mingu.</div>
+                  </div>
+                </div>
+                <div class="mini-anim__hint">🌙 Passe o dedo / mouse em cada fase para destacar</div>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>Por que isso acontece?</strong> Porque a Lua gira em
+              volta da Terra! Dependendo de onde ela está, vemos uma quantidade
+              diferente do lado iluminado.
+            </div>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🌑 Lua Nova</h4>
+                <p>A Lua fica entre o Sol e a Terra. A parte iluminada fica do "outro lado". <strong>Não vemos a Lua!</strong></p>
+              </div>
+              <div class="concept-card">
+                <h4>🌓 Quarto Crescente</h4>
+                <p>Vemos <strong>metade</strong> da Lua iluminada (lado direito no Brasil 🇧🇷).</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌕 Lua Cheia</h4>
+                <p>A Terra fica entre o Sol e a Lua. Vemos <strong>toda</strong> a face iluminada! É a Lua mais brilhante.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌗 Quarto Minguante</h4>
+                <p>Vemos <strong>metade</strong> da Lua iluminada (lado esquerdo no Brasil 🇧🇷).</p>
+              </div>
+            </div>
+            <div class="warning-box">
+              <strong>⚠️ Mito comum:</strong> "As fases da Lua acontecem por causa da sombra da Terra na Lua".<br>
+              <strong>FALSO!</strong> A sombra da Terra na Lua só acontece em um <em>eclipse lunar</em>. As fases normais acontecem porque a Lua <strong>orbita a Terra</strong> e vemos partes diferentes da metade iluminada.
+            </div>
+            <div class="accent-box">
+              <strong>⏱️ Quanto tempo?</strong> A Lua completa todas as fases em <strong>~29,5 dias</strong> (quase um mês). Por isso temos sempre uma Lua Cheia por mês.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eclipses -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🌑 Eclipses (Solar e Lunar)</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              <strong>Eclipse</strong> = quando um astro entra na sombra do
+              outro. Existem dois tipos importantes:
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <svg class="mini-eclipse-svg" viewBox="0 0 340 100">
+                  <defs>
+                    <radialGradient id="meSun" cx="35%" cy="35%">
+                      <stop offset="0%" stop-color="#fde68a"/>
+                      <stop offset="100%" stop-color="#b45309"/>
+                    </radialGradient>
+                    <radialGradient id="meEarth" cx="35%" cy="35%">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#1e3a8a"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- linha 1: Eclipse Solar (Sol - Lua - Terra) -->
+                  <text x="170" y="14" fill="#fbbf24" font-size="9" font-weight="700" text-anchor="middle">☀️ Eclipse Solar (Lua tampa o Sol)</text>
+                  <circle cx="30" cy="35" r="14" fill="url(#meSun)"/>
+                  <circle cx="170" cy="35" r="5" fill="#9ca3af"/>
+                  <polygon points="170,30 170,40 320,38 320,32" fill="rgba(15,23,42,0.55)" stroke="#475569" stroke-dasharray="2 2"/>
+                  <circle cx="320" cy="35" r="9" fill="url(#meEarth)"/>
+                  <!-- labels pequenos -->
+                  <text x="30" y="55" fill="#fde68a" font-size="7" text-anchor="middle">Sol</text>
+                  <text x="170" y="55" fill="#9ca3af" font-size="7" text-anchor="middle">Lua</text>
+                  <text x="320" y="55" fill="#60a5fa" font-size="7" text-anchor="middle">Terra</text>
+                  <!-- linha 2: Eclipse Lunar (Sol - Terra - Lua) -->
+                  <text x="170" y="73" fill="#a5b4fc" font-size="9" font-weight="700" text-anchor="middle">🌑 Eclipse Lunar (Terra tampa a luz da Lua)</text>
+                  <circle cx="30" cy="90" r="10" fill="url(#meSun)"/>
+                  <circle cx="200" cy="90" r="8" fill="url(#meEarth)"/>
+                  <polygon points="200,84 200,96 320,93 320,87" fill="rgba(15,23,42,0.55)" stroke="#475569" stroke-dasharray="2 2"/>
+                  <circle cx="320" cy="90" r="5" fill="#6b7280"/>
+                </svg>
+                <div class="mini-anim__hint">↑ Compare as duas configurações</div>
+              </div>
+            </div>
+            <table class="compare">
+              <thead>
+                <tr><th>☀️ Eclipse SOLAR</th><th>🌑 Eclipse LUNAR</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ordem:</strong> Sol — Lua — Terra</td>
+                  <td><strong>Ordem:</strong> Sol — Terra — Lua</td>
+                </tr>
+                <tr>
+                  <td>A <strong>Lua tampa o Sol</strong>. Sua sombra cai sobre uma parte da Terra.</td>
+                  <td>A <strong>Terra tampa a luz do Sol</strong> que ia chegar na Lua. A sombra da Terra cobre a Lua.</td>
+                </tr>
+                <tr>
+                  <td>Acontece na <strong>Lua Nova</strong>.</td>
+                  <td>Acontece na <strong>Lua Cheia</strong>.</td>
+                </tr>
+                <tr>
+                  <td>Pode ser visto só em algumas regiões da Terra.</td>
+                  <td>Pode ser visto em todo o lado escuro da Terra.</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="lembre-box">
+              <strong>🧠 Como decorar?</strong>
+              <ul>
+                <li><strong>Solar = Sol some.</strong> A Lua bloqueia o Sol.</li>
+                <li><strong>Lunar = Lua some.</strong> A Terra bloqueia a luz que ia para a Lua.</li>
+              </ul>
+            </div>
+            <div class="info-box">
+              <strong>👀 Cuidado:</strong> nunca olhe direto para um eclipse <strong>solar</strong>! Pode machucar muito seus olhos.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estações do ano -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🍂 Estações do ano</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              Você sabe por que tem <strong>verão, outono, inverno e
+              primavera</strong>? Não é porque a Terra fica mais perto ou
+              mais longe do Sol!
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <svg viewBox="0 0 340 150" style="display:block;width:100%;max-width:340px;margin:0 auto;">
+                  <defs>
+                    <radialGradient id="msSun" cx="35%" cy="35%">
+                      <stop offset="0%" stop-color="#fde68a"/>
+                      <stop offset="100%" stop-color="#b45309"/>
+                    </radialGradient>
+                    <radialGradient id="msEarthA" cx="35%" cy="35%">
+                      <stop offset="0%" stop-color="#60a5fa"/>
+                      <stop offset="100%" stop-color="#1e3a8a"/>
+                    </radialGradient>
+                  </defs>
+                  <!-- Sol -->
+                  <circle cx="40" cy="75" r="20" fill="url(#msSun)"/>
+                  <text x="40" y="105" fill="#fde68a" font-size="9" text-anchor="middle">Sol</text>
+                  <!-- Raios -->
+                  <g stroke="#fde68a" stroke-width="1" opacity="0.6">
+                    <line x1="62" y1="50" x2="180" y2="50"/>
+                    <line x1="62" y1="75" x2="180" y2="75"/>
+                    <line x1="62" y1="100" x2="180" y2="100"/>
+                  </g>
+                  <!-- Terra Verão Sul (inclinada -23°) -->
+                  <g transform="translate(220 50) rotate(-23.5)">
+                    <circle r="20" fill="url(#msEarthA)" stroke="#15803d" stroke-width="0.8"/>
+                    <line x1="0" y1="-24" x2="0" y2="24" stroke="#fde68a" stroke-width="1.5"/>
+                    <circle cx="-4" cy="12" r="2" fill="#ef4444"/>
+                  </g>
+                  <text x="220" y="92" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">Verão (Dez)</text>
+                  <text x="220" y="103" fill="#ef4444" font-size="7" text-anchor="middle">Brasil "olha" pro Sol</text>
+                  <!-- Terra Inverno Sul (inclinada +23°) -->
+                  <g transform="translate(300 50) rotate(23.5)">
+                    <circle r="20" fill="url(#msEarthA)" stroke="#15803d" stroke-width="0.8"/>
+                    <line x1="0" y1="-24" x2="0" y2="24" stroke="#fde68a" stroke-width="1.5"/>
+                    <circle cx="-4" cy="12" r="2" fill="#ef4444"/>
+                  </g>
+                  <text x="300" y="92" fill="#fff" font-size="9" font-weight="700" text-anchor="middle">Inverno (Jun)</text>
+                  <text x="300" y="103" fill="#ef4444" font-size="7" text-anchor="middle">Brasil afastado do Sol</text>
+                  <!-- Texto explicativo -->
+                  <text x="170" y="135" fill="rgba(255,255,255,0.8)" font-size="8" text-anchor="middle">↑ A inclinação do eixo é a CAUSA das estações</text>
+                </svg>
+              </div>
+            </div>
+            <div class="warning-box">
+              <strong>⚠️ Mito muito comum:</strong> "As estações acontecem porque a Terra fica mais perto ou mais longe do Sol".<br>
+              <strong>FALSO!</strong> A causa de verdade é a <strong>inclinação do eixo da Terra</strong>.
+            </div>
+            <div class="info-box">
+              <strong>O que acontece de verdade?</strong><br>
+              A Terra é "inclinada" (igual a um pião torto). Quando o
+              <strong>nosso lado</strong> (Brasil = Hemisfério Sul) está
+              inclinado <strong>para o Sol</strong>, recebe mais raios solares
+              diretos = <strong>verão</strong>. Quando está inclinado para
+              o outro lado, recebe raios "deitados" = <strong>inverno</strong>.
+            </div>
+            <table class="compare">
+              <thead>
+                <tr><th>Mês</th><th>No Brasil (Sul)</th><th>Na Europa (Norte)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Dezembro</td><td>☀️ Verão</td><td>❄️ Inverno</td></tr>
+                <tr><td>Março</td><td>🍂 Outono</td><td>🌸 Primavera</td></tr>
+                <tr><td>Junho</td><td>❄️ Inverno</td><td>☀️ Verão</td></tr>
+                <tr><td>Setembro</td><td>🌸 Primavera</td><td>🍂 Outono</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CÉU E CONSTELAÇÕES ===================== -->
+    <section id="ceu" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">✨</span> Céu e Constelações</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          Olhar para o céu à noite e identificar as <strong>constelações</strong>
+          é uma das partes mais legais da astronomia! Vamos ver as principais
+          que aparecem na OBA.
+        </p>
+      </div>
+
+      <!-- O que é constelação -->
+      <div class="accordion open">
+        <button class="accordion__header">
+          <span class="acc-left">✨ O que é uma constelação?</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              <strong>Constelação</strong> é um <strong>desenho imaginário</strong>
+              que as pessoas inventaram unindo estrelas no céu. Como se fosse
+              "ligar os pontos" para formar figuras de animais, pessoas e
+              objetos.
+            </p>
+            <div class="info-box">
+              <strong>Curiosidade:</strong> as estrelas de uma constelação
+              <em>não</em> estão pertinho umas das outras de verdade — algumas
+              ficam muito mais longe do que outras! Mas do nosso ponto de
+              vista, parecem formar um desenho.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cruzeiro do Sul -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">✝️ Cruzeiro do Sul</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              O <strong>Cruzeiro do Sul</strong> é a constelação <strong>mais
+              famosa do Brasil</strong>. Ela aparece na nossa <strong>bandeira</strong>!
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <svg class="mini-constel-svg" viewBox="0 0 280 140">
+                  <defs>
+                    <filter id="miniStarGlow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                  </defs>
+                  <!-- Linhas conectando estrelas -->
+                  <line x1="140" y1="20" x2="140" y2="110" stroke="rgba(251,191,36,0.55)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <line x1="100" y1="65" x2="180" y2="65" stroke="rgba(251,191,36,0.55)" stroke-width="1.5" stroke-dasharray="3 3"/>
+                  <!-- 5 estrelas do Cruzeiro -->
+                  <circle cx="140" cy="20" r="3" fill="#fde68a" filter="url(#miniStarGlow)"/>
+                  <circle cx="140" cy="110" r="4" fill="#fde68a" filter="url(#miniStarGlow)"/>
+                  <circle cx="100" cy="65" r="2.8" fill="#fde68a" filter="url(#miniStarGlow)"/>
+                  <circle cx="180" cy="65" r="2.8" fill="#fde68a" filter="url(#miniStarGlow)"/>
+                  <circle cx="158" cy="85" r="2" fill="#fde68a" filter="url(#miniStarGlow)"/>
+                  <!-- Seta para o Sul -->
+                  <line x1="140" y1="110" x2="140" y2="130" stroke="#34d399" stroke-width="1.5"/>
+                  <polygon points="140,132 136,124 144,124" fill="#34d399"/>
+                  <text x="150" y="132" fill="#34d399" font-size="9" font-weight="700">↓ SUL</text>
+                </svg>
+                <div class="mini-anim__hint">✝️ As 5 estrelas do Cruzeiro do Sul — o braço maior aponta para o Sul</div>
+              </div>
+            </div>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🇧🇷 Na bandeira</h4>
+                <p>As <strong>5 estrelas brancas</strong> dentro do círculo azul da bandeira do Brasil formam o Cruzeiro do Sul.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🧭 Para se orientar</h4>
+                <p>O braço maior do Cruzeiro do Sul aponta para o <strong>Sul</strong>. Por isso ajuda a se localizar!</p>
+              </div>
+              <div class="concept-card">
+                <h4>👀 Vista no Brasil</h4>
+                <p>É bem visível no <strong>Hemisfério Sul</strong> (onde fica o Brasil). Quem mora no Hemisfério Norte não vê!</p>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>🧭 Para achar o Sul:</strong> ache o braço maior do
+              Cruzeiro. Prolongue ele <strong>4,5 vezes</strong> para baixo.
+              Lá fica o ponto Sul!
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Três Marias / Órion -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">⭐⭐⭐ Três Marias (Órion)</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              As <strong>Três Marias</strong> são 3 estrelas <strong>alinhadas</strong>
+              no céu, bem fáceis de ver. Elas formam o <strong>cinturão</strong>
+              da constelação de <strong>Órion</strong> (que parece um caçador!).
+            </p>
+            <div class="info-box">
+              <strong>👀 Quando ver?</strong> No Brasil, são bem visíveis
+              nos meses de <strong>dezembro a março</strong>, após o pôr do
+              sol, olhando para o Leste/Norte.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pontos cardeais -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🧭 Pontos cardeais</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              Existem <strong>4 pontos cardeais</strong> que usamos para nos
+              orientar:
+            </p>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🌅 Leste (L) / Este (E)</h4>
+                <p>É onde o Sol <strong>nasce</strong>.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌇 Oeste (O) / West (W)</h4>
+                <p>É onde o Sol <strong>se põe</strong>.</p>
+              </div>
+              <div class="concept-card">
+                <h4>⬆️ Norte (N)</h4>
+                <p>Fica à sua <strong>esquerda</strong> se você está olhando para o Sol nascente.</p>
+              </div>
+              <div class="concept-card">
+                <h4>⬇️ Sul (S)</h4>
+                <p>Fica à sua <strong>direita</strong> se você está olhando para o Sol nascente. Brasil está no Hemisfério Sul.</p>
+              </div>
+            </div>
+            <div class="accent-box">
+              <strong>🌟 Dica:</strong> a Lua e as <strong>estrelas</strong> também
+              nascem no <strong>Leste</strong> e se põem no <strong>Oeste</strong>,
+              pelo mesmo motivo do Sol: a Terra gira para o lado leste.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Via Láctea -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🌌 A Via Láctea (nossa galáxia)</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              Uma <strong>galáxia</strong> é um conjunto <strong>enorme</strong>
+              de estrelas, gás e poeira, todas juntinhas por causa da gravidade.
+              A nossa galáxia é a <strong>Via Láctea</strong>!
+            </p>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🌟 Quantas estrelas?</h4>
+                <p>A Via Láctea tem <strong>mais de 100 bilhões</strong> de estrelas! O Sol é só uma delas.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌀 Formato</h4>
+                <p>Em forma de <strong>espiral</strong>, como um cata-vento gigante.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🏠 Nosso lugar</h4>
+                <p>O Sistema Solar fica em um dos "braços" da Via Láctea.</p>
+              </div>
+              <div class="concept-card">
+                <h4>👀 Pode ver?</h4>
+                <p>Sim! Em noites bem escuras, longe da cidade, dá para ver uma <strong>faixa branca</strong> no céu — é a Via Láctea!</p>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>🌌 Curiosidade:</strong> existem <strong>bilhões</strong> de outras galáxias além da nossa. O Universo é gigantesco!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ASTRONÁUTICA ===================== -->
+    <section id="astronautica" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">🚀</span> Astronáutica</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          <strong>Astronáutica</strong> é o estudo das <strong>viagens
+          espaciais</strong>. Foguetes, satélites, astronautas e estações
+          espaciais entram aqui. <strong>3 das 10 questões da OBA</strong>
+          são sobre este tema!
+        </p>
+      </div>
+
+      <!-- Foguetes -->
+      <div class="accordion open">
+        <button class="accordion__header">
+          <span class="acc-left">🚀 Como um foguete sobe?</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              O foguete sobe usando uma ideia simples: <strong>ação e
+              reação</strong>! Funciona assim:
+            </p>
+            <div class="mini-anim">
+              <div class="mini-anim__inner">
+                <div class="mini-rocket-scene">
+                  <div class="mini-rocket">
+                    <svg viewBox="0 0 60 170" style="width:100%;display:block;">
+                      <path d="M30 5 L45 50 L45 100 L15 100 L15 50 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+                      <path d="M30 5 L37 30 L23 30 Z" fill="#dc2626"/>
+                      <circle cx="30" cy="55" r="6" fill="#0ea5e9" stroke="#0c4a6e" stroke-width="1"/>
+                      <path d="M15 80 L5 100 L15 100 Z" fill="#dc2626"/>
+                      <path d="M45 80 L55 100 L45 100 Z" fill="#dc2626"/>
+                      <rect x="22" y="100" width="16" height="6" fill="#475569"/>
+                      <g class="mini-rocket-fire" style="transform-origin: 30px 106px">
+                        <path d="M18 106 Q18 140 30 158 Q42 140 42 106 Z" fill="#fbbf24"/>
+                        <path d="M22 106 Q22 130 30 148 Q38 130 38 106 Z" fill="#ef4444"/>
+                        <path d="M26 106 Q26 122 30 138 Q34 122 34 106 Z" fill="#fef3c7"/>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+                <div class="mini-anim__hint">🚀 Gases para baixo (ação) ⇒ foguete para cima (reação)</div>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>🔥 Como funciona:</strong>
+              <ol>
+                <li>O foguete <strong>queima combustível</strong> dentro dele.</li>
+                <li>Sai um <strong>jato de gases muito quentes para BAIXO</strong>.</li>
+                <li>Em <strong>reação</strong>, o foguete é empurrado para <strong>CIMA</strong>.</li>
+              </ol>
+            </div>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>⬇️ Ação</h4>
+                <p>Gases empurrados para baixo.</p>
+              </div>
+              <div class="concept-card">
+                <h4>⬆️ Reação</h4>
+                <p>Foguete empurrado para cima.</p>
+              </div>
+            </div>
+            <div class="warning-box">
+              <strong>⚠️ Mito comum:</strong> "O foguete sobe porque empurra o ar".<br>
+              <strong>FALSO!</strong> O foguete funciona <strong>até no espaço, onde não tem ar</strong>! Ele empurra os <em>próprios gases</em>, não o ar.
+            </div>
+            <div class="accent-box">
+              <strong>💡 Exemplo no dia a dia:</strong> quando você está em
+              cima de um skate e joga uma bola pesada para frente, o skate
+              vai um pouquinho para trás! Ação (bola para frente) e reação
+              (você para trás).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Satélites artificiais -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🛰️ Satélites artificiais</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              <strong>Satélites artificiais</strong> são <strong>máquinas
+              feitas por humanos</strong> que ficam girando ao redor da Terra
+              (em <strong>órbita</strong>). Eles são MUITO úteis no nosso
+              dia a dia!
+            </p>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>📍 GPS</h4>
+                <p>O <strong>GPS do celular</strong> só funciona porque há satélites mostrando onde você está!</p>
+              </div>
+              <div class="concept-card">
+                <h4>📺 TV por satélite</h4>
+                <p>Os canais chegam na sua casa pela <strong>antena</strong> e os satélites no espaço.</p>
+              </div>
+              <div class="concept-card">
+                <h4>📞 Telefone e internet</h4>
+                <p>Ligações para outro país usam satélites.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🌧️ Previsão do tempo</h4>
+                <p>Os satélites tiram <strong>fotos das nuvens</strong> e ajudam os meteorologistas a prever chuvas, sol e tempestades.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🗺️ Mapas</h4>
+                <p>O Google Maps usa fotos tiradas por satélites!</p>
+              </div>
+              <div class="concept-card">
+                <h4>🔬 Pesquisa</h4>
+                <p>Satélites estudam a Terra, os oceanos e até desmatamento na Amazônia.</p>
+              </div>
+            </div>
+            <div class="info-box">
+              <strong>🪐 Lembre:</strong> satélite <em>natural</em> = Lua (não foi feita pelo homem). Satélite <em>artificial</em> = feito por humanos.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Astronautas brasileiros -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🇧🇷 Astronautas brasileiros</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              Você sabia que o <strong>Brasil</strong> já mandou um astronauta para o espaço?
+            </p>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>👨‍🚀 Marcos Pontes</h4>
+                <p>É o <strong>primeiro e único brasileiro</strong> a ir para o espaço! Foi para a <strong>Estação Espacial Internacional (ISS)</strong> em <strong>2006</strong>. Ficou cerca de 8 dias no espaço fazendo experimentos.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🚀 Missão Centenário</h4>
+                <p>A missão dele se chamou "<strong>Missão Centenário</strong>" porque comemorava 100 anos do voo de <strong>Santos Dumont</strong> (o "pai da aviação").</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISS -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🏠 Estação Espacial Internacional (ISS)</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <p>
+              A <strong>ISS</strong> (do inglês <em>International Space
+              Station</em>) é uma "casa no espaço" onde astronautas moram
+              por meses para fazer experimentos.
+            </p>
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>📍 Onde fica?</h4>
+                <p>A cerca de <strong>400 km de altura</strong>, em órbita ao redor da Terra.</p>
+              </div>
+              <div class="concept-card">
+                <h4>⚡ Velocidade</h4>
+                <p>Dá uma volta na Terra em <strong>~90 minutos</strong>! É super rápida.</p>
+              </div>
+              <div class="concept-card">
+                <h4>👨‍🚀 Quem mora lá?</h4>
+                <p>Astronautas de <strong>vários países</strong> (EUA, Rússia, Japão, Europa, Canadá...).</p>
+              </div>
+              <div class="concept-card">
+                <h4>🪶 Por que flutuam?</h4>
+                <p>Não é porque "não tem gravidade"! É porque a ISS está em <strong>queda livre</strong> (caindo enquanto orbita). Eles caem juntos com a estação, então parece que flutuam.</p>
+              </div>
+            </div>
+            <div class="warning-box">
+              <strong>⚠️ Mito comum:</strong> "No espaço não tem gravidade".<br>
+              <strong>FALSO!</strong> Tem sim. É justamente a gravidade que mantém a ISS e a Lua girando ao redor da Terra. O que acontece é <em>queda livre</em>: tudo cai junto, então parece flutuar.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Missões espaciais famosas -->
+      <div class="accordion">
+        <button class="accordion__header">
+          <span class="acc-left">🌕 Missões à Lua e a Marte</span>
+          <span class="accordion__chevron">▾</span>
+        </button>
+        <div class="accordion__body">
+          <div class="accordion__body-inner">
+            <div class="card-grid">
+              <div class="concept-card">
+                <h4>🌕 Apollo 11 (1969)</h4>
+                <p>Primeira vez que um ser humano <strong>pisou na Lua</strong>! O astronauta <strong>Neil Armstrong</strong> foi o primeiro, e disse: "<em>Um pequeno passo para o homem, um grande salto para a humanidade</em>".</p>
+              </div>
+              <div class="concept-card">
+                <h4>🤖 Curiosity e Perseverance</h4>
+                <p>São <strong>robôs (rovers)</strong> da NASA que andam em <strong>Marte</strong>. Eles tiram fotos, analisam pedras e procuram sinais de vida antiga!</p>
+              </div>
+              <div class="concept-card">
+                <h4>🔭 Telescópio James Webb</h4>
+                <p>Telescópio espacial lançado em <strong>2021</strong>. Tira fotos incríveis de galáxias distantes.</p>
+              </div>
+              <div class="concept-card">
+                <h4>🛰️ Voyager 1 e 2</h4>
+                <p>Sondas lançadas em 1977, ainda viajando! Já saíram do Sistema Solar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ANIMAÇÕES ===================== -->
+    <section id="animacoes" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">🎬</span> Animações Interativas</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          🎮 Aqui é a parte <strong>divertida</strong>! Clique nos botões,
+          arraste, explore. Cada animação ajuda a entender um conceito
+          importante de forma visual.
+        </p>
+      </div>
+
+      <!-- 1. Rotação -->
+      <div class="animation-card">
+        <h3>🔄 Rotação da Terra — Dia e Noite</h3>
+        <p>A Terra gira em torno de si mesma. O lado virado para o Sol é <strong>dia</strong>, o outro lado é <strong>noite</strong>.</p>
+        <div class="animation-stage">
+          <div class="rot-scene">
+            <div class="rot-sun"></div>
+            <div class="rot-earth-wrap">
+              <div class="rot-earth" id="rotEarth"></div>
+              <div class="rot-earth-shadow"></div>
+              <span class="rot-day-label">☀️ Dia</span>
+              <span class="rot-night-label">🌙 Noite</span>
+            </div>
+          </div>
+        </div>
+        <div class="anim-controls">
+          <button id="rotPlayPause">⏸️ Pausar</button>
+          <label>🐢 Velocidade <input type="range" id="rotSpeed" min="2" max="20" value="14"> 🚀</label>
+        </div>
+        <div class="anim-explanation">
+          A Terra demora cerca de <strong>24 horas</strong> para dar uma volta completa em torno de si mesma. Esse movimento é a <strong>rotação</strong>, e ela causa o dia e a noite.
+        </div>
+      </div>
+
+      <!-- 2. Translação e estações -->
+      <div class="animation-card">
+        <h3>🌍 Translação e Estações do Ano</h3>
+        <p>Clique em uma das <strong>4 Terras</strong> (Dez, Mar, Jun, Set) para ver a estação no Brasil. Observe: o <strong>eixo amarelo</strong> da Terra aponta sempre para o <em>mesmo lado do espaço</em>!</p>
+        <div class="animation-stage">
+          <svg class="orbit-svg" id="orbitSvg" viewBox="0 0 600 340" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <radialGradient id="sunGradOrbit" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#fde68a"/>
+                <stop offset="60%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#b45309"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="300" cy="170" rx="240" ry="110" fill="none" stroke="rgba(255,255,255,0.25)" stroke-dasharray="4 4"/>
+            <circle cx="300" cy="170" r="34" fill="url(#sunGradOrbit)"/>
+            <text x="300" y="174" fill="#7c2d12" font-size="11" font-weight="700" text-anchor="middle">SOL</text>
+
+            <!-- 4 Terras com eixo INCLINADO sempre na mesma direção do espaço.
+                 N fica em (+5,-12) e S em (-5,+12) em TODAS as posições. -->
+            <g class="orbit-pos" data-season="verao-sul" tabindex="0" aria-label="Dezembro">
+              <rect class="orbit-hit" x="510" y="145" width="60" height="80"/>
+              <g transform="translate(540 170)">
+                <circle r="14" fill="#1d4ed8" stroke="#15803d" stroke-width="1.5"/>
+                <line x1="5" y1="-12" x2="-5" y2="12" stroke="#fde68a" stroke-width="2"/>
+                <circle cx="5"  cy="-12" r="1.8" fill="#fde68a"/>
+                <circle cx="-5" cy="12"  r="1.8" fill="#fde68a"/>
+                <text x="10" y="-10" fill="#fde68a" font-size="7" font-weight="700">N</text>
+                <text x="-15" y="18" fill="#fde68a" font-size="7" font-weight="700">S</text>
+                <circle cx="-3" cy="7" r="2.2" fill="#ef4444"/>
+              </g>
+              <text x="540" y="215" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Dez</text>
+            </g>
+            <g class="orbit-pos" data-season="outono-sul" tabindex="0" aria-label="Março">
+              <rect class="orbit-hit" x="270" y="35" width="60" height="80"/>
+              <g transform="translate(300 60)">
+                <circle r="14" fill="#1d4ed8" stroke="#15803d" stroke-width="1.5"/>
+                <line x1="5" y1="-12" x2="-5" y2="12" stroke="#fde68a" stroke-width="2"/>
+                <circle cx="5"  cy="-12" r="1.8" fill="#fde68a"/>
+                <circle cx="-5" cy="12"  r="1.8" fill="#fde68a"/>
+                <text x="10" y="-10" fill="#fde68a" font-size="7" font-weight="700">N</text>
+                <text x="-15" y="18" fill="#fde68a" font-size="7" font-weight="700">S</text>
+                <circle cx="-3" cy="7" r="2.2" fill="#ef4444"/>
+              </g>
+              <text x="300" y="30" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Mar</text>
+            </g>
+            <g class="orbit-pos" data-season="inverno-sul" tabindex="0" aria-label="Junho">
+              <rect class="orbit-hit" x="30" y="145" width="60" height="80"/>
+              <g transform="translate(60 170)">
+                <circle r="14" fill="#1d4ed8" stroke="#15803d" stroke-width="1.5"/>
+                <line x1="5" y1="-12" x2="-5" y2="12" stroke="#fde68a" stroke-width="2"/>
+                <circle cx="5"  cy="-12" r="1.8" fill="#fde68a"/>
+                <circle cx="-5" cy="12"  r="1.8" fill="#fde68a"/>
+                <text x="10" y="-10" fill="#fde68a" font-size="7" font-weight="700">N</text>
+                <text x="-15" y="18" fill="#fde68a" font-size="7" font-weight="700">S</text>
+                <circle cx="-3" cy="7" r="2.2" fill="#ef4444"/>
+              </g>
+              <text x="60" y="215" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Jun</text>
+            </g>
+            <g class="orbit-pos" data-season="primavera-sul" tabindex="0" aria-label="Setembro">
+              <rect class="orbit-hit" x="270" y="245" width="60" height="80"/>
+              <g transform="translate(300 280)">
+                <circle r="14" fill="#1d4ed8" stroke="#15803d" stroke-width="1.5"/>
+                <line x1="5" y1="-12" x2="-5" y2="12" stroke="#fde68a" stroke-width="2"/>
+                <circle cx="5"  cy="-12" r="1.8" fill="#fde68a"/>
+                <circle cx="-5" cy="12"  r="1.8" fill="#fde68a"/>
+                <text x="10" y="-10" fill="#fde68a" font-size="7" font-weight="700">N</text>
+                <text x="-15" y="18" fill="#fde68a" font-size="7" font-weight="700">S</text>
+                <circle cx="-3" cy="7" r="2.2" fill="#ef4444"/>
+              </g>
+              <text x="300" y="325" fill="#fff" font-size="12" font-weight="700" text-anchor="middle">Set</text>
+            </g>
+
+            <!-- Legenda -->
+            <g transform="translate(20, 295)">
+              <circle cx="0" cy="0" r="3" fill="#ef4444"/>
+              <text x="8" y="4" fill="#fff" font-size="10">= Brasil (Hemisfério Sul)</text>
+              <line x1="170" y1="-3" x2="180" y2="3" stroke="#fde68a" stroke-width="2"/>
+              <text x="186" y="4" fill="#fff" font-size="10">= eixo N-S inclinado 23,5°</text>
+            </g>
+          </svg>
+        </div>
+        <div class="earth-label-display" id="seasonLabel">
+          👆 Clique em <strong>Dez</strong>, <strong>Mar</strong>, <strong>Jun</strong> ou <strong>Set</strong> para descobrir qual estação acontece no Brasil.
+        </div>
+        <div class="anim-explanation">
+          <strong>👀 Observe bem:</strong> o eixo amarelo da Terra <em>nunca muda de direção no espaço</em>. Por isso, em cada época do ano o Brasil (pontinho vermelho) fica mais "perto" ou mais "longe" do Sol — e por isso temos as estações!
+        </div>
+      </div>
+
+      <!-- 2b. Raios solares e inclinação -->
+      <div class="animation-card">
+        <h3>☀️ Raios Solares e Estações (no Brasil)</h3>
+        <p>Veja como os raios do Sol chegam ao Brasil em cada estação. Compare!</p>
+        <div class="animation-stage">
+          <svg class="rays-svg" id="raysSvg" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <radialGradient id="raySunGrad" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#fde68a"/>
+                <stop offset="60%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#b45309"/>
+              </radialGradient>
+              <radialGradient id="rayEarthGrad" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#60a5fa"/>
+                <stop offset="60%" stop-color="#1d4ed8"/>
+                <stop offset="100%" stop-color="#1e3a8a"/>
+              </radialGradient>
+              <marker id="rayArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <polygon points="0 0, 8 4, 0 8" fill="#fde68a"/>
+              </marker>
+            </defs>
+
+            <!-- Sol grande à esquerda -->
+            <circle cx="80" cy="180" r="50" fill="url(#raySunGrad)"/>
+            <text x="80" y="184" fill="#7c2d12" font-size="13" font-weight="700" text-anchor="middle">SOL</text>
+
+            <!-- Raios paralelos -->
+            <g id="sunRays" stroke="#fde68a" stroke-width="1.6" opacity="0.75">
+              <line x1="130" y1="90"  x2="430" y2="90"  marker-end="url(#rayArrow)"/>
+              <line x1="130" y1="120" x2="430" y2="120" marker-end="url(#rayArrow)"/>
+              <line x1="130" y1="150" x2="430" y2="150" marker-end="url(#rayArrow)"/>
+              <line x1="130" y1="180" x2="430" y2="180" marker-end="url(#rayArrow)"/>
+              <line x1="130" y1="210" x2="430" y2="210" marker-end="url(#rayArrow)"/>
+              <line x1="130" y1="240" x2="430" y2="240" marker-end="url(#rayArrow)"/>
+              <line x1="130" y1="270" x2="430" y2="270" marker-end="url(#rayArrow)"/>
+            </g>
+
+            <!-- Terra inclinada (rotaciona conforme estação) -->
+            <g id="rayEarthGroup" transform="translate(480 180) rotate(-23.5)">
+              <circle r="80" fill="url(#rayEarthGrad)" stroke="#15803d" stroke-width="1"/>
+              <ellipse rx="80" ry="20" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1" stroke-dasharray="4 3"/>
+              <line x1="0" y1="-95" x2="0" y2="95" stroke="#fde68a" stroke-width="2.5"/>
+              <circle cx="0" cy="-95" r="3" fill="#fde68a"/>
+              <circle cx="0" cy="95"  r="3" fill="#fde68a"/>
+              <text x="8" y="-95" fill="#fde68a" font-size="13" font-weight="700">N</text>
+              <text x="8" y="105" fill="#fde68a" font-size="13" font-weight="700">S</text>
+              <text x="-20" y="-45" fill="rgba(255,255,255,0.85)" font-size="10">Hem. Norte</text>
+              <circle cx="-15" cy="48" r="6" fill="#ef4444" stroke="white" stroke-width="1.5"/>
+              <text x="-50" y="70" fill="#ef4444" font-size="11" font-weight="700">Brasil</text>
+            </g>
+
+            <!-- Legenda -->
+            <g transform="translate(20, 330)">
+              <text x="0" y="0" fill="#fff" font-size="11" font-weight="600" id="rayLegend">☀️ Verão no Sul: raios chegam mais "diretos" no Brasil</text>
+            </g>
+          </svg>
+        </div>
+        <div class="anim-controls">
+          <button class="rays-mode-btn active" data-rays="summer">☀️ Verão no Sul (Dez)</button>
+          <button class="rays-mode-btn secondary" data-rays="winter">❄️ Inverno no Sul (Jun)</button>
+          <button class="rays-mode-btn secondary" data-rays="equinox">🌗 Equinócio (Mar/Set)</button>
+        </div>
+        <div class="anim-explanation" id="raysExplain">
+          <strong>☀️ Verão no Sul (dezembro):</strong> o Hemisfério Sul (Brasil 🇧🇷) está inclinado <em>em direção ao Sol</em>. Os raios chegam mais <strong>"perpendiculares"</strong> (quase de cima!), concentrando muito calor. Por isso esquenta tanto!
+        </div>
+      </div>
+
+      <!-- 3. Fases da Lua -->
+      <div class="animation-card">
+        <h3>🌕 Fases da Lua — Arraste a Lua!</h3>
+        <p>Veja como a parte iluminada da Lua muda dependendo da posição dela em relação à Terra e ao Sol.</p>
+        <div class="animation-stage">
+          <svg class="moon-svg" id="moonSvg" viewBox="0 0 700 320">
+            <!-- Raios do Sol (vindo da esquerda) -->
+            <defs>
+              <radialGradient id="moonSun" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#fde68a"/>
+                <stop offset="60%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#b45309"/>
+              </radialGradient>
+              <radialGradient id="moonEarth" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#60a5fa"/>
+                <stop offset="60%" stop-color="#1d4ed8"/>
+                <stop offset="100%" stop-color="#15803d"/>
+              </radialGradient>
+            </defs>
+            <!-- Sol -->
+            <circle cx="60" cy="160" r="28" fill="url(#moonSun)"/>
+            <text x="60" y="210" fill="#fde68a" font-size="12" text-anchor="middle">Sol</text>
+            <!-- Raios -->
+            <line x1="90" y1="160" x2="240" y2="160" stroke="#fde68a" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+            <line x1="90" y1="140" x2="240" y2="140" stroke="#fde68a" stroke-width="1" stroke-dasharray="3 3" opacity="0.3"/>
+            <line x1="90" y1="180" x2="240" y2="180" stroke="#fde68a" stroke-width="1" stroke-dasharray="3 3" opacity="0.3"/>
+            <!-- Órbita da Lua -->
+            <ellipse cx="350" cy="160" rx="120" ry="80" fill="none" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3"/>
+            <!-- Terra -->
+            <circle cx="350" cy="160" r="24" fill="url(#moonEarth)"/>
+            <text x="350" y="200" fill="#60a5fa" font-size="12" text-anchor="middle">Terra</text>
+            <!-- Lua (atualizada via JS) -->
+            <g id="moonGroup" transform="translate(470 160)">
+              <circle r="16" fill="#3a3a3a" stroke="#6b7280" stroke-width="1"/>
+              <path id="moonLitPath" d="" fill="#e5e7eb"/>
+            </g>
+          </svg>
+        </div>
+        <div class="anim-controls">
+          <label>Posição da Lua: <input type="range" id="moonAngle" min="0" max="360" value="0"></label>
+          <button id="moonAuto">▶️ Mostrar ciclo</button>
+        </div>
+        <div class="moon-phase-name" id="moonPhaseName">🌕 Lua Cheia — vemos toda a face iluminada</div>
+        <div class="anim-explanation">
+          A <strong>parte iluminada da Lua</strong> sempre é o lado virado para o Sol. O que muda é <em>quanto</em> dessa parte iluminada conseguimos ver da Terra. O ciclo completo demora cerca de <strong>29,5 dias</strong>.
+        </div>
+      </div>
+
+      <!-- 4. Eclipses -->
+      <div class="animation-card">
+        <h3>🌑 Eclipses — Solar e Lunar</h3>
+        <p>Clique nos botões para ver como ficam os astros em cada tipo de eclipse:</p>
+        <div class="anim-controls" style="margin-bottom: 8px;">
+          <button data-eclipse="solar">☀️ Eclipse Solar</button>
+          <button data-eclipse="lunar" class="secondary">🌑 Eclipse Lunar</button>
+        </div>
+        <div class="animation-stage">
+          <svg class="eclipse-svg" viewBox="0 0 700 280">
+            <defs>
+              <radialGradient id="ecSun" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#fde68a"/>
+                <stop offset="60%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#b45309"/>
+              </radialGradient>
+              <radialGradient id="ecEarth" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#60a5fa"/>
+                <stop offset="60%" stop-color="#1d4ed8"/>
+                <stop offset="100%" stop-color="#15803d"/>
+              </radialGradient>
+            </defs>
+            <!-- Sol -->
+            <circle cx="60" cy="140" r="34" fill="url(#ecSun)"/>
+            <text x="60" y="195" fill="#fde68a" font-size="13" text-anchor="middle">Sol</text>
+            <!-- Sombra (cone) -->
+            <polygon id="eclipseShadow" points="280,126 280,154 460,148 460,132" fill="rgba(15,23,42,0.55)" stroke="#475569" stroke-width="1" stroke-dasharray="3 3"/>
+            <!-- Lua -->
+            <circle id="eclipseMoon" cx="280" cy="140" r="14" fill="#9ca3af" stroke="#374151" stroke-width="1.5"/>
+            <text id="eclipseMoonLabel" x="280" y="170" fill="#9ca3af" font-size="12" text-anchor="middle">Lua</text>
+            <!-- Terra -->
+            <circle id="eclipseEarth" cx="460" cy="140" r="22" fill="url(#ecEarth)"/>
+            <text id="eclipseEarthLabel" x="460" y="190" fill="#60a5fa" font-size="12" text-anchor="middle">Terra</text>
+          </svg>
+        </div>
+        <div class="anim-explanation" id="eclipseExplain">
+          Escolha um tipo de eclipse acima para ver como os astros ficam alinhados.
+        </div>
+      </div>
+
+      <!-- 5. Sistema Solar -->
+      <div class="animation-card">
+        <h3>🪐 Sistema Solar — Clique em cada planeta!</h3>
+        <p>Toque em um planeta para descobrir suas características:</p>
+        <div class="animation-stage">
+          <div class="solar-scene">
+            <div class="solar-row" id="solarRow"></div>
+          </div>
+        </div>
+        <div class="planet-info-box" id="planetInfo">
+          <h4>👆 Clique em um planeta acima!</h4>
+          <p>Você verá as informações principais de cada um.</p>
+        </div>
+        <div class="anim-explanation">
+          ⚠️ Os <strong>tamanhos</strong> aqui foram simplificados para caber na tela. Os planetas reais têm tamanhos e distâncias <em>muito</em> maiores!
+        </div>
+      </div>
+
+      <!-- 6. Foguete -->
+      <div class="animation-card">
+        <h3>🚀 Lançamento de Foguete — Ação e Reação</h3>
+        <p>Aperte "Lançar"! Primeiro o motor liga (ignição), depois o foguete decola.</p>
+        <div class="animation-stage">
+          <div class="rocket-scene">
+            <div class="rocket-arrows" id="rocketArrows">
+              <div class="arrow-label arrow-reacao">↑ Reação (foguete)</div>
+              <div class="arrow-label arrow-acao">↓ Ação (gases)</div>
+            </div>
+            <div class="rocket-smoke" id="rocketSmoke">
+              <div class="smoke-puff"></div>
+              <div class="smoke-puff"></div>
+              <div class="smoke-puff"></div>
+            </div>
+            <div class="rocket-launcher" id="rocketLauncher">
+              <svg class="rocket-svg-body" viewBox="0 0 60 170">
+                <path d="M30 5 L45 50 L45 100 L15 100 L15 50 Z" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+                <path d="M30 5 L37 30 L23 30 Z" fill="#dc2626"/>
+                <circle cx="30" cy="55" r="6" fill="#0ea5e9" stroke="#0c4a6e" stroke-width="1"/>
+                <path d="M15 80 L5 100 L15 100 Z" fill="#dc2626"/>
+                <path d="M45 80 L55 100 L45 100 Z" fill="#dc2626"/>
+                <rect x="22" y="100" width="16" height="6" fill="#475569"/>
+                <g class="rocket-fire-group" id="rocketFireGroup">
+                  <path d="M18 106 Q18 145 30 165 Q42 145 42 106 Z" fill="#fbbf24"/>
+                  <path d="M22 106 Q22 135 30 152 Q38 135 38 106 Z" fill="#ef4444"/>
+                  <path d="M26 106 Q26 125 30 142 Q34 125 34 106 Z" fill="#fef3c7"/>
+                </g>
+              </svg>
+            </div>
+            <div class="rocket-ground"></div>
+          </div>
+        </div>
+        <div class="anim-controls">
+          <button id="launchBtn">🚀 Lançar!</button>
+          <button id="resetRocket" class="secondary">↺ Resetar</button>
+        </div>
+        <div class="anim-explanation" id="rocketExplain">
+          O motor empurra os <strong>gases para baixo</strong> (ação ⬇). Os gases empurram o foguete para <strong>cima</strong> (reação ⬆). Funciona até no espaço, onde não tem ar!
+        </div>
+      </div>
+
+      <!-- 7. Constelações -->
+      <div class="animation-card">
+        <h3>✨ Constelações — Cruzeiro do Sul e Três Marias</h3>
+        <p>Veja as duas constelações mais importantes para a OBA:</p>
+        <div class="anim-controls" style="margin-bottom: 8px;">
+          <button class="constel-btn active" data-constel="cruzeiro">✝️ Cruzeiro do Sul</button>
+          <button class="constel-btn secondary" data-constel="marias">⭐⭐⭐ Três Marias</button>
+        </div>
+        <div class="animation-stage">
+          <svg class="constel-svg" id="constelSvg" viewBox="0 0 700 320"></svg>
+        </div>
+        <div class="anim-explanation" id="constelExplain"></div>
+      </div>
+    </section>
+
+    <!-- ===================== EXERCÍCIOS ===================== -->
+    <section id="exercicios" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">✏️</span> Exercícios de Fixação</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          Faça os exercícios <strong>sem espiar a resposta primeiro</strong>!
+          Depois clique em <strong>"Verificar"</strong> para ver se acertou.
+          Se errar, leia a explicação com calma — todo mundo erra para aprender. 💪
+        </p>
+      </div>
+
+      <div id="exerciciosContainer"></div>
+    </section>
+
+    <!-- ===================== SIMULADO ===================== -->
+    <section id="simulado" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">📝</span> Simulado OBA — Nível 2</h2>
+      </div>
+      <div class="panel-intro">
+        <p>
+          🎯 <strong>10 questões no formato da OBA real</strong>: 7 de Astronomia + 3 de Astronáutica,
+          com os mesmos estilos e temas que aparecem nas provas oficiais (V/F, múltipla escolha,
+          contagem de letras nos planetas etc.). Cada questão indica claramente
+          a <strong>edição oficial que serviu de inspiração</strong>.
+        </p>
+        <div class="warning-box" style="margin-top: 12px">
+          <strong>📌 Importante — onde acessar as provas REAIS:</strong>
+          a OBA disponibiliza <strong>todas as provas oficiais com gabarito gratuitamente</strong>
+          no site <a href="https://www.oba.org.br/site/?p=conteudo&pag=conteudo&idcat=29&idmenu=14" target="_blank" rel="noopener" style="color:var(--primary-strong);font-weight:700">oba.org.br → "Provas e Gabaritos"</a>.
+          Sugestão de treino: depois deste simulado, baixe a prova da OBA XXVII (2024) Nível 2 e tente resolver.
+        </div>
+        <details style="margin-top: 10px; padding: 8px 0;">
+          <summary style="cursor: pointer; font-weight: 600; color: var(--primary-strong);">📚 Edições oficiais que inspiraram cada questão</summary>
+          <ul style="margin: 10px 0 0">
+            <li><strong>OBA XXVII (2024)</strong> — Nível 2 — temas: contagem de letras nos planetas, satélites naturais/artificiais, eclipse</li>
+            <li><strong>OBA XXVI (2023)</strong> — Nível 2 — temas: fases da Lua, planetas com anéis, ordem dos planetas</li>
+            <li><strong>OBA XXV (2022)</strong> — Nível 2 — temas: rotação/translação, estações</li>
+            <li><strong>OBA XXIV (2021)</strong> — Nível 2 — temas: características da Lua (V/F), foguetes</li>
+            <li><strong>OBA XXIII (2020)</strong> — Nível 2 — temas: V/F sobre a Lua, ordem dos planetas, planetas-anões</li>
+            <li><strong>Regulamento oficial</strong> — astronautas brasileiros, ISS</li>
+          </ul>
+        </details>
+        <p style="margin-top: 10px">
+          Depois de responder todas, clique em <strong>"Finalizar Simulado"</strong>
+          para ver sua pontuação e o gabarito explicado de cada questão.
+        </p>
+      </div>
+
+      <div class="simulado-status">
+        <div>
+          <strong>📊 Progresso:</strong> <span id="simProgress">0 de 10</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar__fill" id="simBar"></div></div>
+        <div class="timer-box">⏱️ <span id="simTimer">00:00</span></div>
+      </div>
+
+      <div id="simContainer"></div>
+
+      <div style="text-align:center; margin: 20px 0;">
+        <button class="btn btn-primary" id="finishSim">✅ Finalizar Simulado</button>
+        <button class="btn btn-secondary" id="resetSim">↺ Reiniciar Simulado</button>
+      </div>
+
+      <div class="simulado-result" id="simResult"></div>
+    </section>
+
+    <!-- ===================== GLOSSÁRIO ===================== -->
+    <section id="glossario" class="panel">
+      <div class="panel-header">
+        <h2><span class="panel-icon">📖</span> Glossário</h2>
+      </div>
+      <div class="panel-intro">
+        <p>Os termos importantes da astronomia e astronáutica, explicados de forma simples.</p>
+      </div>
+
+      <dl class="glossary-grid">
+        <div class="glossary-item"><dt>Astronomia</dt><dd>Ciência que estuda os astros e o Universo.</dd></div>
+        <div class="glossary-item"><dt>Astronáutica</dt><dd>Estudo das viagens e veículos espaciais.</dd></div>
+        <div class="glossary-item"><dt>Astro</dt><dd>Qualquer corpo do espaço (estrela, planeta, lua, cometa...).</dd></div>
+        <div class="glossary-item"><dt>Estrela</dt><dd>Bola gigante de gás quente que tem luz própria. O Sol é uma!</dd></div>
+        <div class="glossary-item"><dt>Planeta</dt><dd>Corpo redondo, sem luz própria, que gira em volta de uma estrela.</dd></div>
+        <div class="glossary-item"><dt>Planeta-anão</dt><dd>Parecido com planeta, mas menor e em uma órbita "compartilhada". Plutão é um exemplo.</dd></div>
+        <div class="glossary-item"><dt>Satélite natural</dt><dd>Corpo que gira em volta de um planeta. A Lua é o satélite natural da Terra.</dd></div>
+        <div class="glossary-item"><dt>Satélite artificial</dt><dd>Máquina feita por humanos, que orbita a Terra (GPS, TV, etc.).</dd></div>
+        <div class="glossary-item"><dt>Cometa</dt><dd>"Bola de gelo sujo" do espaço, que forma cauda perto do Sol.</dd></div>
+        <div class="glossary-item"><dt>Asteroide</dt><dd>Pedra grande que orbita o Sol. Muitos ficam entre Marte e Júpiter.</dd></div>
+        <div class="glossary-item"><dt>Meteoroide</dt><dd>Pedrinha viajando pelo espaço.</dd></div>
+        <div class="glossary-item"><dt>Meteoro</dt><dd>O risco luminoso no céu ("estrela cadente"), quando uma pedrinha entra na atmosfera.</dd></div>
+        <div class="glossary-item"><dt>Meteorito</dt><dd>O pedaço que sobra do meteoro e cai no chão.</dd></div>
+        <div class="glossary-item"><dt>Órbita</dt><dd>Caminho que um astro faz em volta de outro.</dd></div>
+        <div class="glossary-item"><dt>Rotação</dt><dd>Movimento da Terra em torno de si mesma. Demora ~24h.</dd></div>
+        <div class="glossary-item"><dt>Translação</dt><dd>Movimento da Terra em volta do Sol. Demora ~365 dias.</dd></div>
+        <div class="glossary-item"><dt>Eclipse Solar</dt><dd>Sol — Lua — Terra. A Lua bloqueia o Sol.</dd></div>
+        <div class="glossary-item"><dt>Eclipse Lunar</dt><dd>Sol — Terra — Lua. A Terra bloqueia a luz que iria para a Lua.</dd></div>
+        <div class="glossary-item"><dt>Lua Nova</dt><dd>Fase em que não conseguimos ver a Lua. Pode ter eclipse solar.</dd></div>
+        <div class="glossary-item"><dt>Lua Cheia</dt><dd>Vemos toda a face iluminada. Pode ter eclipse lunar.</dd></div>
+        <div class="glossary-item"><dt>Galáxia</dt><dd>Conjunto enorme de estrelas, gás e poeira.</dd></div>
+        <div class="glossary-item"><dt>Via Láctea</dt><dd>O nome da nossa galáxia. Tem mais de 100 bilhões de estrelas!</dd></div>
+        <div class="glossary-item"><dt>Constelação</dt><dd>Desenho imaginário formado por estrelas no céu.</dd></div>
+        <div class="glossary-item"><dt>Cruzeiro do Sul</dt><dd>Constelação famosa do Brasil. Aparece na bandeira!</dd></div>
+        <div class="glossary-item"><dt>Três Marias</dt><dd>Três estrelas alinhadas que formam o cinturão de Órion.</dd></div>
+        <div class="glossary-item"><dt>Gravidade</dt><dd>Força que faz os astros se atraírem. Mantém os planetas em órbita.</dd></div>
+        <div class="glossary-item"><dt>Foguete</dt><dd>Veículo que sobe expelindo gases para baixo (ação e reação).</dd></div>
+        <div class="glossary-item"><dt>Astronauta</dt><dd>Pessoa que viaja para o espaço.</dd></div>
+        <div class="glossary-item"><dt>ISS</dt><dd>Estação Espacial Internacional. "Casa" no espaço onde astronautas moram.</dd></div>
+        <div class="glossary-item"><dt>Marcos Pontes</dt><dd>Primeiro e único astronauta brasileiro. Foi à ISS em 2006.</dd></div>
+      </dl>
+    </section>
+
+    <p class="footer-note">
+      📚 Estude com calma, faça pausas, durma bem antes da prova.
+      Boa sorte na OBA, Benjamin! 🚀✨🌟
+    </p>
+  </main>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    /* =====================================================
+       1. Navegação por abas
+       ===================================================== */
+    const tabs = document.querySelectorAll('.nav-tabs .tab');
+    const panels = document.querySelectorAll('.panel');
+
+    function switchToTab(target) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.target === target));
+      panels.forEach(p => p.classList.toggle('active', p.id === target));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => switchToTab(btn.dataset.target));
+    });
+
+    /* =====================================================
+       2. Accordions
+       ===================================================== */
+    document.querySelectorAll('.accordion__header').forEach(h => {
+      h.addEventListener('click', () => {
+        h.parentElement.classList.toggle('open');
+      });
+    });
+
+    /* =====================================================
+       3. Animação: Rotação da Terra
+       ===================================================== */
+    const rotEarth = document.getElementById('rotEarth');
+    const rotPlayPause = document.getElementById('rotPlayPause');
+    const rotSpeed = document.getElementById('rotSpeed');
+    let rotPaused = false;
+
+    rotPlayPause.addEventListener('click', () => {
+      rotPaused = !rotPaused;
+      rotEarth.classList.toggle('paused', rotPaused);
+      rotPlayPause.textContent = rotPaused ? '▶️ Continuar' : '⏸️ Pausar';
+    });
+    rotSpeed.addEventListener('input', () => {
+      const seconds = 22 - parseFloat(rotSpeed.value);
+      rotEarth.style.animationDuration = seconds + 's';
+    });
+
+    /* =====================================================
+       4. Animação: Translação e Estações
+       ===================================================== */
+    const seasonInfo = {
+      'verao-sul': {
+        title: '☀️ Dezembro — VERÃO no Brasil',
+        text: 'O Hemisfério Sul (nosso lado) está inclinado <em>em direção</em> ao Sol. Os raios chegam mais "diretos" e esquentam mais. Na Europa é inverno!'
+      },
+      'outono-sul': {
+        title: '🍂 Março — Começa o OUTONO no Brasil',
+        text: 'A Terra está numa posição "neutra". O dia e a noite têm duração parecida em todo o planeta. É chamado de equinócio.'
+      },
+      'inverno-sul': {
+        title: '❄️ Junho — INVERNO no Brasil',
+        text: 'Agora o Hemisfério Sul está inclinado <em>para o outro lado</em> do Sol. Os raios chegam "deitados" e esquentam menos. Na Europa é verão!'
+      },
+      'primavera-sul': {
+        title: '🌸 Setembro — Começa a PRIMAVERA no Brasil',
+        text: 'Outro equinócio. Dias e noites com duração próxima. Começa a primavera por aqui.'
+      }
+    };
+    const seasonLabel = document.getElementById('seasonLabel');
+    const orbitSvg = document.getElementById('orbitSvg');
+
+    function activateOrbitPos(posEl) {
+      if (!posEl) return;
+      const info = seasonInfo[posEl.dataset.season];
+      if (!info) return;
+      document.querySelectorAll('.orbit-pos').forEach(p => p.classList.remove('active'));
+      posEl.classList.add('active');
+      seasonLabel.innerHTML = '<strong>' + info.title + '</strong><br>' + info.text;
+    }
+
+    orbitSvg.addEventListener('click', (e) => {
+      let node = e.target;
+      while (node && node !== orbitSvg) {
+        if (node.classList && node.classList.contains('orbit-pos')) {
+          activateOrbitPos(node);
+          return;
+        }
+        node = node.parentNode;
+      }
+    });
+
+    /* =====================================================
+       5. Animação: Fases da Lua
+       ===================================================== */
+    const moonGroup = document.getElementById('moonGroup');
+    const moonLitPath = document.getElementById('moonLitPath');
+    const moonAngle = document.getElementById('moonAngle');
+    const moonPhaseName = document.getElementById('moonPhaseName');
+    const moonAuto = document.getElementById('moonAuto');
+
+    const earthX = 350, earthY = 160, orbitRx = 120, orbitRy = 80;
+
+    function updateMoon(angleDeg) {
+      const rad = angleDeg * Math.PI / 180;
+      const mx = earthX + orbitRx * Math.cos(rad);
+      const my = earthY + orbitRy * Math.sin(rad);
+      moonGroup.setAttribute('transform', 'translate(' + mx + ' ' + my + ')');
+
+      let phase;
+      const a = ((angleDeg % 360) + 360) % 360;
+      if (a < 22.5 || a >= 337.5) phase = 'cheia';
+      else if (a < 67.5) phase = 'gibosa-minguante';
+      else if (a < 112.5) phase = 'quarto-minguante';
+      else if (a < 157.5) phase = 'minguante';
+      else if (a < 202.5) phase = 'nova';
+      else if (a < 247.5) phase = 'crescente';
+      else if (a < 292.5) phase = 'quarto-crescente';
+      else phase = 'gibosa-crescente';
+
+      const phaseNames = {
+        'cheia': '🌕 Lua Cheia — vemos toda a face iluminada',
+        'gibosa-minguante': '🌖 Lua Gibosa Minguante',
+        'quarto-minguante': '🌗 Quarto Minguante — metade iluminada',
+        'minguante': '🌘 Lua Minguante',
+        'nova': '🌑 Lua Nova — face iluminada virada para o Sol; quase invisível!',
+        'crescente': '🌒 Lua Crescente',
+        'quarto-crescente': '🌓 Quarto Crescente — metade iluminada',
+        'gibosa-crescente': '🌔 Lua Gibosa Crescente'
+      };
+      moonPhaseName.textContent = phaseNames[phase];
+
+      const cos = Math.cos(rad);
+      const r = 16;
+      const ellipseRx = Math.abs(r * cos);
+      let d;
+      if (Math.abs(cos) < 0.02) {
+        const litSide = mx > earthX ? 'left' : 'right';
+        if (litSide === 'left') {
+          d = 'M0,-' + r + ' A' + r + ',' + r + ' 0 0 0 0,' + r + ' L0,-' + r + ' Z';
+        } else {
+          d = 'M0,-' + r + ' A' + r + ',' + r + ' 0 0 1 0,' + r + ' L0,-' + r + ' Z';
+        }
+      } else {
+        const litSide = mx > earthX ? 'left' : 'right';
+        const outerSweep = litSide === 'left' ? 0 : 1;
+        const innerSweep = cos < 0 ? outerSweep : 1 - outerSweep;
+        d = 'M0,-' + r +
+            ' A' + r + ',' + r + ' 0 0 ' + outerSweep + ' 0,' + r +
+            ' A' + ellipseRx + ',' + r + ' 0 0 ' + innerSweep + ' 0,-' + r +
+            ' Z';
+      }
+      moonLitPath.setAttribute('d', d);
+    }
+    updateMoon(0);
+    moonAngle.addEventListener('input', () => updateMoon(parseFloat(moonAngle.value)));
+
+    let moonAutoTimer = null;
+    moonAuto.addEventListener('click', () => {
+      if (moonAutoTimer) {
+        clearInterval(moonAutoTimer);
+        moonAutoTimer = null;
+        moonAuto.textContent = '▶️ Mostrar ciclo';
+        return;
+      }
+      moonAuto.textContent = '⏸️ Parar ciclo';
+      let a = parseFloat(moonAngle.value);
+      moonAutoTimer = setInterval(() => {
+        a = (a + 4) % 360;
+        moonAngle.value = a;
+        updateMoon(a);
+      }, 100);
+    });
+
+    /* =====================================================
+       6. Animação: Eclipses
+       ===================================================== */
+    const eclipseMoon = document.getElementById('eclipseMoon');
+    const eclipseEarth = document.getElementById('eclipseEarth');
+    const eclipseMoonLabel = document.getElementById('eclipseMoonLabel');
+    const eclipseEarthLabel = document.getElementById('eclipseEarthLabel');
+    const eclipseShadow = document.getElementById('eclipseShadow');
+    const eclipseExplain = document.getElementById('eclipseExplain');
+
+    function setEclipse(type) {
+      document.querySelectorAll('[data-eclipse]').forEach(b => {
+        b.classList.toggle('secondary', b.dataset.eclipse !== type);
+      });
+      if (type === 'solar') {
+        eclipseMoon.setAttribute('cx', 280);
+        eclipseMoon.setAttribute('cy', 140);
+        eclipseEarth.setAttribute('cx', 460);
+        eclipseEarth.setAttribute('cy', 140);
+        eclipseMoonLabel.setAttribute('x', 280);
+        eclipseMoonLabel.setAttribute('y', 170);
+        eclipseEarthLabel.setAttribute('x', 460);
+        eclipseEarthLabel.setAttribute('y', 190);
+        eclipseShadow.setAttribute('points', '280,126 280,154 460,148 460,132');
+        eclipseExplain.innerHTML = '<strong>☀️ Eclipse Solar:</strong> a <strong>Lua</strong> fica entre o Sol e a Terra. A sombra dela cai em uma região pequena da Terra. Acontece em <strong>Lua Nova</strong>. Quem está dentro da sombra vê o Sol ser bloqueado!';
+      } else {
+        eclipseEarth.setAttribute('cx', 320);
+        eclipseEarth.setAttribute('cy', 140);
+        eclipseMoon.setAttribute('cx', 490);
+        eclipseMoon.setAttribute('cy', 140);
+        eclipseEarthLabel.setAttribute('x', 320);
+        eclipseEarthLabel.setAttribute('y', 190);
+        eclipseMoonLabel.setAttribute('x', 490);
+        eclipseMoonLabel.setAttribute('y', 170);
+        eclipseShadow.setAttribute('points', '320,114 320,166 510,154 510,126');
+        eclipseExplain.innerHTML = '<strong>🌑 Eclipse Lunar:</strong> a <strong>Terra</strong> fica entre o Sol e a Lua. A sombra da Terra cobre a Lua. Acontece em <strong>Lua Cheia</strong>. Pode ser visto em todo o lado noturno da Terra!';
+      }
+    }
+    document.querySelectorAll('[data-eclipse]').forEach(btn => {
+      btn.addEventListener('click', () => setEclipse(btn.dataset.eclipse));
+    });
+    setEclipse('solar');
+
+    /* =====================================================
+       7. Animação: Sistema Solar interativo
+       ===================================================== */
+    const planets = [
+      { name: 'Sol',      size: 64, color: 'radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 60%, #b45309)',
+        type: 'Estrela',  facts: { 'Tipo': 'Estrela', 'Tamanho': 'Gigante!', 'Composição': 'Hidrogênio e hélio', 'Curiosidade': 'Concentra 99,8% da massa do Sistema Solar.' }},
+      { name: 'Mercúrio', size: 16, color: 'radial-gradient(circle at 35% 35%, #d4d4d4, #737373)',
+        type: 'Rochoso',  facts: { 'Posição': '1º (mais perto do Sol)', 'Tamanho': 'O MENOR planeta', 'Luas': '0', 'Curiosidade': 'Tem dia muito quente e noite muito gelada.' }},
+      { name: 'Vênus',    size: 22, color: 'radial-gradient(circle at 35% 35%, #fde68a, #b45309)',
+        type: 'Rochoso',  facts: { 'Posição': '2º', 'Temperatura': '~460°C (o mais quente!)', 'Luas': '0', 'Curiosidade': 'Brilha muito no céu: é a "estrela da manhã".' }},
+      { name: 'Terra',    size: 24, color: 'radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8 70%, #15803d)',
+        type: 'Rochoso',  facts: { 'Posição': '3º', 'Tamanho': 'Médio', 'Luas': '1 (a Lua)', 'Curiosidade': 'O único planeta com vida conhecida. Nossa casa!' }},
+      { name: 'Marte',    size: 18, color: 'radial-gradient(circle at 30% 30%, #fca5a5, #b91c1c)',
+        type: 'Rochoso',  facts: { 'Posição': '4º', 'Apelido': 'Planeta Vermelho 🩸', 'Luas': '2 (Fobos e Deimos)', 'Curiosidade': 'Tem o maior vulcão do Sistema Solar!' }},
+      { name: 'Júpiter',  size: 52, color: 'radial-gradient(circle at 30% 30%, #fed7aa, #c2410c)',
+        type: 'Gasoso',   facts: { 'Posição': '5º', 'Tamanho': 'O MAIOR!', 'Luas': '95+', 'Curiosidade': 'A Grande Mancha Vermelha é uma tempestade do tamanho da Terra!' }},
+      { name: 'Saturno',  size: 46, color: 'radial-gradient(circle at 30% 30%, #fef3c7, #ca8a04)',
+        type: 'Gasoso',   facts: { 'Posição': '6º', 'Marca': 'Anéis lindos! 💍', 'Luas': '140+', 'Curiosidade': 'Os anéis são feitos de gelo e pedra.' }},
+      { name: 'Urano',    size: 32, color: 'radial-gradient(circle at 30% 30%, #a5f3fc, #155e75)',
+        type: 'Gasoso',   facts: { 'Posição': '7º', 'Particularidade': 'Gira deitado!', 'Luas': '27', 'Curiosidade': 'Tem cor azul-esverdeada por causa do gás metano.' }},
+      { name: 'Netuno',   size: 30, color: 'radial-gradient(circle at 30% 30%, #93c5fd, #1e3a8a)',
+        type: 'Gasoso',   facts: { 'Posição': '8º (mais distante)', 'Ventos': 'Até 2.000 km/h!', 'Luas': '14', 'Curiosidade': 'Foi descoberto fazendo contas, antes de ser visto!' }}
+    ];
+
+    const solarRow = document.getElementById('solarRow');
+    const planetInfo = document.getElementById('planetInfo');
+    planets.forEach((p) => {
+      const item = document.createElement('div');
+      item.className = 'planet-item';
+      item.innerHTML =
+        '<div class="planet-ball" style="width:' + p.size + 'px;height:' + p.size + 'px;background:' + p.color + '"></div>' +
+        '<div class="planet-name">' + p.name + '</div>';
+      item.addEventListener('click', () => {
+        let factsHtml = '';
+        Object.keys(p.facts).forEach(k => {
+          factsHtml += '<div class="planet-fact"><strong>' + k + ':</strong> ' + p.facts[k] + '</div>';
+        });
+        planetInfo.innerHTML =
+          '<h4>' + p.name + ' (' + p.type + ')</h4>' +
+          '<div class="planet-facts">' + factsHtml + '</div>';
+      });
+      solarRow.appendChild(item);
+    });
+
+    /* =====================================================
+       8. Animação: Foguete
+       ===================================================== */
+    const rocketLauncher = document.getElementById('rocketLauncher');
+    const rocketFireGroup = document.getElementById('rocketFireGroup');
+    const rocketArrows = document.getElementById('rocketArrows');
+    const rocketSmoke = document.getElementById('rocketSmoke');
+    const rocketExplain = document.getElementById('rocketExplain');
+    const launchBtn = document.getElementById('launchBtn');
+    const resetRocket = document.getElementById('resetRocket');
+
+    const rocketTexts = {
+      idle:    'O motor empurra os <strong>gases para baixo</strong> (ação ⬇). Os gases empurram o foguete para <strong>cima</strong> (reação ⬆). Funciona até no espaço, onde não tem ar!',
+      ignite:  '🔥 <strong>Ignição!</strong> O motor está expelindo gases quentes para <strong>baixo</strong> (esta é a <em>ação</em>). Olhe a chama no fundo do foguete!',
+      launch:  '🚀 <strong>Decolagem!</strong> Como os gases foram empurrados para baixo, em <em>reação</em>, o foguete é empurrado para <strong>cima</strong>. Ação e reação acontecem ao mesmo tempo!'
+    };
+    let rocketTimer = null;
+    launchBtn.addEventListener('click', () => {
+      if (rocketTimer) return;
+      rocketFireGroup.classList.add('on');
+      rocketLauncher.classList.add('tremor');
+      rocketSmoke.classList.add('show');
+      rocketArrows.classList.add('show');
+      rocketExplain.innerHTML = rocketTexts.ignite;
+      rocketTimer = setTimeout(() => {
+        rocketLauncher.classList.remove('tremor');
+        rocketLauncher.classList.add('launched');
+        rocketExplain.innerHTML = rocketTexts.launch;
+        rocketTimer = null;
+      }, 1300);
+    });
+    resetRocket.addEventListener('click', () => {
+      if (rocketTimer) { clearTimeout(rocketTimer); rocketTimer = null; }
+      rocketLauncher.classList.remove('launched', 'tremor');
+      rocketFireGroup.classList.remove('on');
+      rocketSmoke.classList.remove('show');
+      rocketArrows.classList.remove('show');
+      rocketExplain.innerHTML = rocketTexts.idle;
+    });
+
+    /* =====================================================
+       8b. Animação: Raios solares e estações (eixo inclinado)
+       ===================================================== */
+    const raysEarth = document.getElementById('rayEarthGroup');
+    const raysLegend = document.getElementById('rayLegend');
+    const raysExplain = document.getElementById('raysExplain');
+    const raysModes = {
+      summer: {
+        tilt: -23.5,
+        legend: '☀️ Verão no Sul (Dez): Hemisfério Sul inclinado AO Sol',
+        explain: '<strong>☀️ Verão no Sul (dezembro):</strong> o Hemisfério Sul (Brasil 🇧🇷) está inclinado <em>em direção ao Sol</em>. Os raios chegam mais <strong>perpendiculares</strong> (quase de cima), concentrando muito calor em uma área pequena. Por isso esquenta tanto!'
+      },
+      winter: {
+        tilt: 23.5,
+        legend: '❄️ Inverno no Sul (Jun): Hemisfério Sul inclinado para LONGE do Sol',
+        explain: '<strong>❄️ Inverno no Sul (junho):</strong> agora o Hemisfério Norte está inclinado ao Sol. No Brasil, os raios chegam <strong>oblíquos</strong> (deitados!), e a mesma luz se espalha por uma área maior, esquentando menos. É inverno aqui e verão na Europa!'
+      },
+      equinox: {
+        tilt: 0,
+        legend: '🌗 Equinócio (Mar/Set): raios chegam igualmente nos 2 hemisférios',
+        explain: '<strong>🌗 Equinócio (março ou setembro):</strong> o eixo da Terra fica "neutro" em relação ao Sol. Os raios chegam de forma parecida nos dois hemisférios. Dia e noite têm a mesma duração em todo o planeta!'
+      }
+    };
+    function setRays(mode) {
+      const m = raysModes[mode];
+      if (!m) return;
+      raysEarth.setAttribute('transform', 'translate(480 180) rotate(' + m.tilt + ')');
+      raysLegend.textContent = m.legend;
+      raysExplain.innerHTML = m.explain;
+      document.querySelectorAll('.rays-mode-btn').forEach(b => {
+        const active = b.dataset.rays === mode;
+        b.classList.toggle('active', active);
+        b.classList.toggle('secondary', !active);
+      });
+    }
+    document.querySelectorAll('.rays-mode-btn').forEach(b => {
+      b.addEventListener('click', () => setRays(b.dataset.rays));
+    });
+
+    /* =====================================================
+       9. Animação: Constelações
+       ===================================================== */
+    const constelSvg = document.getElementById('constelSvg');
+    const constelExplain = document.getElementById('constelExplain');
+
+    const constelacoes = {
+      cruzeiro: {
+        title: '✝️ Cruzeiro do Sul',
+        explain: '<strong>Cruzeiro do Sul:</strong> formado por 5 estrelas (Mimosa, Acrux, Gacrux, Pálida e Intrometida). O <strong>braço maior aponta para o Sul</strong>! Aparece na <strong>bandeira do Brasil</strong> 🇧🇷.',
+        stars: [
+          { cx: 350, cy: 60,  r: 4, name: 'Gacrux (topo)', label: true },
+          { cx: 350, cy: 260, r: 5, name: 'Acrux (base)', label: true },
+          { cx: 270, cy: 160, r: 3.5, name: 'Pálida (esq.)', label: true },
+          { cx: 430, cy: 160, r: 3.5, name: 'Mimosa (dir.)', label: true },
+          { cx: 380, cy: 200, r: 2.5, name: 'Intrometida', label: false }
+        ],
+        lines: [
+          [0, 1], // vertical top-bottom (braço maior)
+          [2, 3]  // horizontal
+        ],
+        arrow: { x1: 350, y1: 260, x2: 350, y2: 305, text: '↓ SUL' }
+      },
+      marias: {
+        title: '⭐⭐⭐ Três Marias',
+        explain: '<strong>Três Marias</strong>: as 3 estrelas alinhadas formam o <strong>cinturão</strong> da constelação de <strong>Órion (o caçador)</strong>. Bem visíveis no céu do Brasil entre dezembro e março!',
+        stars: [
+          { cx: 280, cy: 160, r: 5, name: 'Mintaka', label: true },
+          { cx: 350, cy: 165, r: 5, name: 'Alnilam', label: true },
+          { cx: 420, cy: 170, r: 5, name: 'Alnitak', label: true },
+          // estrelas adicionais (Órion completo - mais sutis)
+          { cx: 230, cy: 80, r: 4, name: 'Bellatrix', label: false },
+          { cx: 470, cy: 75, r: 4, name: 'Betelgeuse', label: false },
+          { cx: 235, cy: 270, r: 4, name: 'Saiph', label: false },
+          { cx: 460, cy: 265, r: 4, name: 'Rigel', label: false }
+        ],
+        lines: [
+          [0, 1], [1, 2], // cinturão (três marias)
+          [3, 0], [3, 5], // ombro esq → cinturão e perna
+          [4, 2], [4, 6], // ombro dir → cinturão e perna
+          [5, 6] // base
+        ]
+      }
+    };
+
+    function renderConstel(key) {
+      document.querySelectorAll('.constel-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.constel === key);
+        b.classList.toggle('secondary', b.dataset.constel !== key);
+      });
+      const c = constelacoes[key];
+      let svg = '';
+      svg += '<defs><filter id="starGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+      // título
+      svg += '<text x="350" y="30" fill="#fff" font-size="16" font-weight="700" text-anchor="middle">' + c.title + '</text>';
+      // estrelinhas de fundo
+      for (let i = 0; i < 30; i++) {
+        const x = Math.random() * 700;
+        const y = Math.random() * 320;
+        const r = Math.random() * 1.2 + 0.3;
+        svg += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="#fff" opacity="' + (Math.random() * 0.5 + 0.2) + '"/>';
+      }
+      // linhas
+      c.lines.forEach(([a, b]) => {
+        const s1 = c.stars[a], s2 = c.stars[b];
+        svg += '<line x1="' + s1.cx + '" y1="' + s1.cy + '" x2="' + s2.cx + '" y2="' + s2.cy + '" stroke="rgba(251,191,36,0.6)" stroke-width="1.5" stroke-dasharray="3 3"/>';
+      });
+      // estrelas (com glow)
+      c.stars.forEach(s => {
+        svg += '<circle cx="' + s.cx + '" cy="' + s.cy + '" r="' + s.r + '" fill="#fde68a" filter="url(#starGlow)"/>';
+        if (s.label) {
+          svg += '<text x="' + s.cx + '" y="' + (s.cy + s.r + 16) + '" fill="#cbd5e1" font-size="11" text-anchor="middle">' + s.name + '</text>';
+        }
+      });
+      // seta opcional
+      if (c.arrow) {
+        svg += '<line x1="' + c.arrow.x1 + '" y1="' + c.arrow.y1 + '" x2="' + c.arrow.x2 + '" y2="' + c.arrow.y2 + '" stroke="#34d399" stroke-width="2"/>';
+        svg += '<polygon points="' + c.arrow.x2 + ',' + (c.arrow.y2 + 4) + ' ' + (c.arrow.x2 - 5) + ',' + (c.arrow.y2 - 6) + ' ' + (c.arrow.x2 + 5) + ',' + (c.arrow.y2 - 6) + '" fill="#34d399"/>';
+        svg += '<text x="' + (c.arrow.x2 + 25) + '" y="' + (c.arrow.y2 - 4) + '" fill="#34d399" font-size="13" font-weight="700">' + c.arrow.text + '</text>';
+      }
+      constelSvg.innerHTML = svg;
+      constelExplain.innerHTML = c.explain;
+    }
+    document.querySelectorAll('.constel-btn').forEach(b => {
+      b.addEventListener('click', () => renderConstel(b.dataset.constel));
+    });
+    renderConstel('cruzeiro');
+
+    /* =====================================================
+       10. Exercícios de Fixação
+       ===================================================== */
+    const exercises = [
+      {
+        topic: 'Diferença entre astros', difficulty: 'easy', type: 'mc',
+        question: 'Qual destes astros tem LUZ PRÓPRIA?',
+        options: ['A Lua', 'A Terra', 'O Sol', 'Marte'],
+        answer: 2,
+        explanation: 'O Sol é uma ESTRELA — produz a própria luz. A Lua, a Terra e Marte não têm luz própria: só refletem a luz do Sol.'
+      },
+      {
+        topic: 'Sistema Solar', difficulty: 'easy', type: 'mc',
+        question: 'Quantos planetas existem no Sistema Solar atualmente?',
+        options: ['7', '8', '9', '10'],
+        answer: 1,
+        explanation: 'São 8 planetas: Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano e Netuno. Plutão é um planeta-anão desde 2006.'
+      },
+      {
+        topic: 'Sistema Solar', difficulty: 'medium', type: 'mc',
+        question: 'Qual é o planeta MAIS PRÓXIMO do Sol?',
+        options: ['Vênus', 'Mercúrio', 'Terra', 'Marte'],
+        answer: 1,
+        explanation: 'Mercúrio é o primeiro planeta, mais próximo do Sol. Também é o menor.'
+      },
+      {
+        topic: 'A Lua', difficulty: 'easy', type: 'tf',
+        question: 'A Lua tem luz própria, igual ao Sol.',
+        answer: false,
+        explanation: 'FALSO! A Lua não tem luz própria. O que vemos brilhando é a luz do Sol refletindo nela.'
+      },
+      {
+        topic: 'A Lua', difficulty: 'easy', type: 'tf',
+        question: 'A Lua é o satélite natural da Terra.',
+        answer: true,
+        explanation: 'VERDADEIRO! A Lua gira em volta da Terra. Por isso é nosso satélite NATURAL (não foi feita por humanos).'
+      },
+      {
+        topic: 'Contagem de letras', difficulty: 'medium', type: 'mc',
+        question: 'Quantos planetas têm a letra "A" no nome? (Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano, Netuno)',
+        options: ['2', '3', '4', '5'],
+        answer: 2,
+        explanation: 'São 4: TerrA, MArte, SAturno, UrAno. Mercúrio, Vênus, Júpiter e Netuno NÃO têm "A".'
+      },
+      {
+        topic: 'Contagem de letras', difficulty: 'medium', type: 'mc',
+        question: 'Quantos planetas têm a letra "U" no nome?',
+        options: ['3', '4', '5', '6'],
+        answer: 3,
+        explanation: 'São 6: MercÚrio, VênUs, JÚpiter, SatUrno, Urano, NetUno. Só Terra e Marte NÃO têm "U".'
+      },
+      {
+        topic: 'Movimentos da Terra', difficulty: 'easy', type: 'mc',
+        question: 'Qual movimento da Terra causa o DIA e a NOITE?',
+        options: ['Rotação', 'Translação', 'Os dois ao mesmo tempo', 'Nenhum dos dois'],
+        answer: 0,
+        explanation: 'A ROTAÇÃO (a Terra girando em si mesma) causa o dia e a noite. Demora cerca de 24 horas para dar uma volta completa.'
+      },
+      {
+        topic: 'Orientação', difficulty: 'easy', type: 'mc',
+        question: 'O Sol parece NASCER em qual direção?',
+        options: ['Norte', 'Sul', 'Leste', 'Oeste'],
+        answer: 2,
+        explanation: 'O Sol sempre parece nascer aproximadamente no LESTE e se pôr no OESTE. Isso vale também para a Lua e as estrelas.'
+      },
+      {
+        topic: 'Fases da Lua', difficulty: 'medium', type: 'mc',
+        question: 'Em qual fase da Lua a face inteira aparece iluminada para nós?',
+        options: ['Lua Nova', 'Quarto Crescente', 'Lua Cheia', 'Quarto Minguante'],
+        answer: 2,
+        explanation: 'Na Lua CHEIA, a Terra fica entre o Sol e a Lua. Vemos toda a face iluminada — fica bem brilhante!'
+      },
+      {
+        topic: 'Eclipses', difficulty: 'medium', type: 'tf',
+        question: 'No eclipse SOLAR, a Lua fica entre o Sol e a Terra.',
+        answer: true,
+        explanation: 'VERDADEIRO! Eclipse Solar = Sol - Lua - Terra. A Lua bloqueia a luz do Sol. Acontece em Lua Nova.'
+      },
+      {
+        topic: 'Eclipses', difficulty: 'medium', type: 'tf',
+        question: 'No eclipse LUNAR, a Lua fica entre o Sol e a Terra.',
+        answer: false,
+        explanation: 'FALSO! No eclipse LUNAR, a TERRA fica entre o Sol e a Lua (Sol - Terra - Lua). A sombra da Terra cobre a Lua. Acontece em Lua Cheia.'
+      },
+      {
+        topic: 'Planetas', difficulty: 'easy', type: 'mc',
+        question: 'Qual planeta é conhecido como o "Planeta Vermelho"?',
+        options: ['Vênus', 'Marte', 'Júpiter', 'Mercúrio'],
+        answer: 1,
+        explanation: 'Marte! A cor avermelhada vem do ferro oxidado (enferrujado) na sua superfície.'
+      },
+      {
+        topic: 'Planetas', difficulty: 'easy', type: 'mc',
+        question: 'Qual planeta é famoso pelos seus ANÉIS bonitos?',
+        options: ['Júpiter', 'Saturno', 'Urano', 'Netuno'],
+        answer: 1,
+        explanation: 'Saturno tem os anéis mais bonitos e famosos! Mas, na verdade, Júpiter, Urano e Netuno também têm anéis — só que bem mais discretos.'
+      },
+      {
+        topic: 'Foguetes', difficulty: 'medium', type: 'mc',
+        question: 'Por que um foguete consegue subir, mesmo no espaço onde não tem ar?',
+        options: [
+          'Porque empurra o ar para baixo.',
+          'Porque expele gases para baixo e os gases o empurram para cima (ação e reação).',
+          'Porque é magnético.',
+          'Porque tem hélice.'
+        ],
+        answer: 1,
+        explanation: 'Por ação e reação! O foguete empurra os gases para BAIXO, e em reação, os gases empurram o foguete para CIMA. Funciona até no vácuo do espaço.'
+      },
+      {
+        topic: 'Astronáutica', difficulty: 'easy', type: 'mc',
+        question: 'Quem foi o primeiro astronauta brasileiro a ir ao espaço?',
+        options: ['Santos Dumont', 'Marcos Pontes', 'Yuri Gagarin', 'Neil Armstrong'],
+        answer: 1,
+        explanation: 'Marcos Pontes! Ele foi à Estação Espacial Internacional (ISS) em 2006, na "Missão Centenário".'
+      },
+      {
+        topic: 'Satélites', difficulty: 'easy', type: 'tf',
+        question: 'O GPS do celular funciona graças a satélites artificiais no espaço.',
+        answer: true,
+        explanation: 'VERDADEIRO! Satélites no espaço ajudam o seu celular a saber onde você está.'
+      },
+      {
+        topic: 'Constelações', difficulty: 'easy', type: 'short',
+        question: 'Qual é a constelação que aparece na bandeira do Brasil e ajuda a encontrar o Sul?',
+        keywords: ['cruzeiro', 'sul'],
+        modelAnswer: 'O Cruzeiro do Sul. Suas 5 estrelas estão na bandeira do Brasil!'
+      },
+      {
+        topic: 'Galáxia', difficulty: 'easy', type: 'short',
+        question: 'Qual é o nome da nossa galáxia?',
+        keywords: ['via', 'láctea', 'lactea'],
+        modelAnswer: 'Via Láctea. Tem mais de 100 bilhões de estrelas!'
+      },
+      {
+        topic: 'Meteoro', difficulty: 'medium', type: 'mc',
+        question: 'O que é uma "estrela cadente" de verdade?',
+        options: [
+          'Uma estrela morrendo e caindo no espaço.',
+          'Um meteoro: uma pedrinha entrando na atmosfera da Terra e queimando.',
+          'Um satélite artificial.',
+          'Um cometa muito rápido.'
+        ],
+        answer: 1,
+        explanation: 'É um METEORO! Uma pedrinha entra na atmosfera em alta velocidade, esquenta e queima, formando o risco luminoso. Não é uma estrela!'
+      }
+    ];
+
+    function renderExercises() {
+      const container = document.getElementById('exerciciosContainer');
+      container.innerHTML = '';
+      exercises.forEach((ex, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'exercise';
+        const diffLabel = { easy: 'Fácil', medium: 'Médio', hard: 'Difícil' }[ex.difficulty];
+        const diffBadge = 'badge badge-' + ex.difficulty;
+        const typeLabel = { mc: 'Múltipla escolha', tf: 'V ou F', short: 'Resposta curta' }[ex.type];
+
+        let body = '';
+        body += '<div class="exercise-meta">';
+        body += '<span class="badge badge-topic">' + ex.topic + '</span>';
+        body += '<span class="' + diffBadge + '">' + diffLabel + '</span>';
+        body += '<span class="badge badge-tipo">' + typeLabel + '</span>';
+        body += '</div>';
+        body += '<div class="exercise-question"><span class="exercise-number">' + (idx + 1) + '</span><span>' + ex.question + '</span></div>';
+
+        if (ex.type === 'mc') {
+          body += '<ul class="options-list">';
+          ex.options.forEach((opt, i) => {
+            body += '<li><label><input type="radio" name="ex' + idx + '" value="' + i + '"><span>' + opt + '</span></label></li>';
+          });
+          body += '</ul>';
+        } else if (ex.type === 'tf') {
+          body += '<ul class="options-list">';
+          body += '<li><label><input type="radio" name="ex' + idx + '" value="true"><span>✅ Verdadeiro</span></label></li>';
+          body += '<li><label><input type="radio" name="ex' + idx + '" value="false"><span>❌ Falso</span></label></li>';
+          body += '</ul>';
+        } else if (ex.type === 'short') {
+          body += '<input class="ex-input" type="text" placeholder="Digite sua resposta..." data-ex="' + idx + '">';
+        }
+        body += '<div class="ex-actions">';
+        body += '<button class="btn btn-primary" data-action="check" data-ex="' + idx + '">✓ Verificar</button>';
+        body += '<button class="btn btn-secondary" data-action="model" data-ex="' + idx + '">💡 Mostrar resposta</button>';
+        body += '</div>';
+        body += '<div class="feedback" id="fb-' + idx + '"></div>';
+        wrap.innerHTML = body;
+        container.appendChild(wrap);
+      });
+
+      container.querySelectorAll('button[data-action]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = parseInt(btn.dataset.ex, 10);
+          if (btn.dataset.action === 'check') checkExercise(idx);
+          else showModel(idx);
+        });
+      });
+    }
+
+    function checkExercise(idx) {
+      const ex = exercises[idx];
+      const fb = document.getElementById('fb-' + idx);
+      fb.className = 'feedback show';
+      if (ex.type === 'mc') {
+        const sel = document.querySelector('input[name="ex' + idx + '"]:checked');
+        if (!sel) {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>👉 Escolha uma alternativa primeiro!</strong>';
+          return;
+        }
+        const userVal = parseInt(sel.value, 10);
+        if (userVal === ex.answer) {
+          fb.className = 'feedback show correct';
+          fb.innerHTML = '<strong>✅ Acertou!</strong><div class="explanation">' + ex.explanation + '</div>';
+        } else {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>❌ Quase!</strong> A resposta certa é: <em>' + ex.options[ex.answer] + '</em>.<div class="explanation">' + ex.explanation + '</div>';
+        }
+      } else if (ex.type === 'tf') {
+        const sel = document.querySelector('input[name="ex' + idx + '"]:checked');
+        if (!sel) {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>👉 Marque V ou F primeiro!</strong>';
+          return;
+        }
+        const userVal = sel.value === 'true';
+        if (userVal === ex.answer) {
+          fb.className = 'feedback show correct';
+          fb.innerHTML = '<strong>✅ Acertou!</strong><div class="explanation">' + ex.explanation + '</div>';
+        } else {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>❌ Quase!</strong> A resposta certa é: <em>' + (ex.answer ? 'Verdadeiro' : 'Falso') + '</em>.<div class="explanation">' + ex.explanation + '</div>';
+        }
+      } else if (ex.type === 'short') {
+        const input = document.querySelector('input[data-ex="' + idx + '"]');
+        const ans = (input.value || '').toLowerCase().trim();
+        if (!ans) {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>👉 Digite uma resposta primeiro!</strong>';
+          return;
+        }
+        const hits = ex.keywords.filter(k => ans.includes(k.toLowerCase())).length;
+        if (hits >= 1) {
+          fb.className = 'feedback show correct';
+          fb.innerHTML = '<strong>✅ Boa resposta!</strong><div class="explanation">' + ex.modelAnswer + '</div>';
+        } else {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>❌ Hmm, tente de novo!</strong><div class="explanation">Dica: pense em uma palavra-chave importante. Se quiser, clique em "Mostrar resposta".</div>';
+        }
+      }
+    }
+
+    function showModel(idx) {
+      const ex = exercises[idx];
+      const fb = document.getElementById('fb-' + idx);
+      fb.className = 'feedback show model';
+      if (ex.type === 'mc') {
+        fb.innerHTML = '<strong>💡 Resposta:</strong> ' + ex.options[ex.answer] + '<div class="explanation">' + ex.explanation + '</div>';
+      } else if (ex.type === 'tf') {
+        fb.innerHTML = '<strong>💡 Resposta:</strong> ' + (ex.answer ? 'Verdadeiro ✅' : 'Falso ❌') + '<div class="explanation">' + ex.explanation + '</div>';
+      } else {
+        fb.innerHTML = '<strong>💡 Resposta:</strong> ' + ex.modelAnswer;
+      }
+    }
+
+    renderExercises();
+
+    /* =====================================================
+       11. Simulado (formato OBA Nível 2)
+       ===================================================== */
+    const simQuestions = [
+      // 7 questões de ASTRONOMIA + 3 de ASTRONÁUTICA = 10 (formato OBA real)
+      // Cada questão indica claramente a edição oficial da OBA que serviu de base.
+      // ASTRONOMIA (Q1 a Q7)
+      {
+        topic: 'Astronomia', subtopic: 'Características da Lua (V/F)', difficulty: 'easy',
+        kind: 'oficial',
+        question: 'Mostre que você sabe muitas coisas sobre a Lua. Analise as afirmações e marque a alternativa em que TODAS estão CORRETAS:',
+        options: [
+          'A Lua tem forma de bola; o chão da Lua é cinza com crateras; na Lua você pesa MENOS do que na Terra.',
+          'A Lua tem chão dourado; a Lua tem luz própria; na Lua não existe gravidade.',
+          'A Lua é uma estrela pequena; a Lua é maior que a Terra; o lado escondido da Lua nunca recebe luz solar.',
+          'A Lua tem forma achatada; a Lua tem dia mas não tem noite; na Lua você tem peso igual ao da Terra.'
+        ],
+        answer: 0,
+        explanation: 'A Lua é uma esfera (bola), tem chão cinza cheio de crateras (não dourado!), reflete a luz do Sol (não tem luz própria) e a gravidade lá é mais fraca, fazendo você pesar menos (≈ 1/6 do peso na Terra). Existe sim noite na Lua, e todo o lado dela recebe luz em algum momento.',
+        review: 'Reveja "A Lua — nossa companheira" na aba Astros e os 4 mitos comuns sobre a Lua.',
+        source: 'Estilo característico da OBA Nível 2 (V/F sobre a Lua) — recorrente em OBA XXIII (2020), XXIV (2021) e edições anteriores.'
+      },
+      {
+        topic: 'Astronomia', subtopic: 'Contagem de letras nos planetas', difficulty: 'medium',
+        kind: 'oficial',
+        question: 'Considere os nomes dos 8 planetas do Sistema Solar: Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano e Netuno. Quantos deles têm a letra "A" em qualquer parte do nome?',
+        options: ['2', '3', '4', '5'],
+        answer: 2,
+        explanation: 'São 4 planetas: TerrA, MArte, SAturno e UrAno. Mercúrio, Vênus, Júpiter e Netuno NÃO têm a letra A. (Dica: faça uma tabela ou risque com lápis cada planeta para não esquecer!)',
+        review: 'Reveja a tabela "Quantos planetas têm a letra X?" na aba Sistema Solar.',
+        source: 'Estilo clássico da OBA Nível 2 — questões de contagem de letras nos nomes dos planetas, recorrentes na OBA XXIII (2020) e XXVII (2024).'
+      },
+      {
+        topic: 'Astronomia', subtopic: 'Planetas com anéis', difficulty: 'medium',
+        kind: 'oficial',
+        question: 'Quantos planetas do Sistema Solar possuem anéis em volta de si?',
+        options: [
+          'Apenas 1 (somente Saturno).',
+          '2 (Saturno e Júpiter).',
+          '4 (Júpiter, Saturno, Urano e Netuno — todos os gigantes gasosos).',
+          'Todos os 8 planetas.'
+        ],
+        answer: 2,
+        explanation: 'Os 4 GIGANTES GASOSOS têm anéis: Júpiter, Saturno, Urano e Netuno. O de Saturno é o mais famoso e bonito, mas todos os 4 têm. Os planetas rochosos (Mercúrio, Vênus, Terra e Marte) NÃO têm anéis.',
+        review: 'Reveja "Rochosos × Gasosos" na aba Sistema Solar.',
+        source: 'Tema clássico da OBA Nível 2 — aparece de forma recorrente em OBA XXVII (2024) e XXVI (2023).'
+      },
+      {
+        topic: 'Astronomia', subtopic: 'Fases da Lua e eclipses', difficulty: 'medium',
+        kind: 'oficial',
+        question: 'Um eclipse LUNAR pode ocorrer somente quando a Lua está em qual fase?',
+        options: ['Lua Nova', 'Quarto Crescente', 'Lua Cheia', 'Quarto Minguante'],
+        answer: 2,
+        explanation: 'Eclipse LUNAR só pode acontecer na LUA CHEIA, pois nesse momento o Sol, a Terra e a Lua ficam alinhados, com a Terra no meio. A sombra da Terra cobre a Lua. (Já o eclipse SOLAR ocorre na Lua Nova!)',
+        review: 'Reveja "Eclipses (Solar e Lunar)" na aba Terra-Sol-Lua.',
+        source: 'Tema recorrente — abordado em OBA XXVII (2024) e XXVI (2023), Nível 2.'
+      },
+      {
+        topic: 'Astronomia', subtopic: 'Identificação de planeta', difficulty: 'easy',
+        kind: 'oficial',
+        question: 'Indique qual planeta do Sistema Solar é conhecido pela sua cor avermelhada, tem 2 luas chamadas Fobos e Deimos, e abriga o maior vulcão do Sistema Solar (Monte Olimpo):',
+        options: ['Vênus', 'Júpiter', 'Marte', 'Mercúrio'],
+        answer: 2,
+        explanation: 'MARTE é o "Planeta Vermelho" — sua cor vem do óxido de ferro (ferrugem) na superfície. Tem 2 luas pequenas (Fobos e Deimos) e o Monte Olimpo, o maior vulcão do Sistema Solar.',
+        review: 'Reveja "Conheça cada planeta" na aba Sistema Solar.',
+        source: 'Tema clássico — questões de identificação de planetas aparecem em quase todas as edições da OBA Nível 2.'
+      },
+      {
+        topic: 'Astronomia', subtopic: 'Movimentos da Terra', difficulty: 'easy',
+        kind: 'oficial',
+        question: 'A sucessão de dias e noites em qualquer lugar do planeta acontece principalmente por causa de qual movimento da Terra?',
+        options: [
+          'Da rotação em torno do próprio eixo, que demora cerca de 24 horas.',
+          'Da translação ao redor do Sol, que demora cerca de 365 dias.',
+          'Do movimento da Lua ao redor da Terra.',
+          'Do vento solar que sopra do Sol.'
+        ],
+        answer: 0,
+        explanation: 'O dia e a noite são causados pela ROTAÇÃO da Terra (ela gira em torno de si mesma a cada 24 horas, aproximadamente). A translação (365 dias) é o que define o ano e está ligada às estações, não ao dia/noite.',
+        review: 'Reveja "Rotação — dia e noite" na aba Terra-Sol-Lua.',
+        source: 'Tema clássico — questão recorrente em OBA Nível 2 (XXV/2022 e várias edições).'
+      },
+      {
+        topic: 'Astronomia', subtopic: 'Plutão e planetas-anões', difficulty: 'easy',
+        kind: 'oficial',
+        question: 'Sobre Plutão, é CORRETO afirmar que:',
+        options: [
+          'É o 9º planeta do Sistema Solar, depois de Netuno.',
+          'É uma estrela pequena.',
+          'Desde 2006 é classificado como planeta-anão e não conta como planeta.',
+          'É o maior planeta do Sistema Solar.'
+        ],
+        answer: 2,
+        explanation: 'Desde 2006, Plutão é classificado pela União Astronômica Internacional (IAU) como PLANETA-ANÃO. O Sistema Solar tem hoje apenas 8 planetas (Mercúrio, Vênus, Terra, Marte, Júpiter, Saturno, Urano e Netuno).',
+        review: 'Reveja "Os 8 planetas em ordem" na aba Sistema Solar (inclui Plutão como planeta-anão).',
+        source: 'Tema recorrente — abordado em OBA XXIII (2020) e edições posteriores, Nível 2.'
+      },
+      // --- ASTRONÁUTICA (Q8 a Q10) ---
+      {
+        topic: 'Astronáutica', subtopic: 'Foguetes (ação e reação)', difficulty: 'medium',
+        kind: 'oficial',
+        question: 'Os foguetes conseguem subir e funcionar até mesmo no espaço, onde quase não há ar. Isso é possível porque eles:',
+        options: [
+          'Empurram o ar atmosférico para baixo, e o ar os empurra para cima.',
+          'Expelem gases quentes para baixo e, em reação, são empurrados para cima.',
+          'São atraídos pela gravidade do Sol.',
+          'Usam hélices gigantes que giram muito rápido.'
+        ],
+        answer: 1,
+        explanation: 'Pelo princípio de AÇÃO E REAÇÃO (3ª lei de Newton): o foguete empurra os gases para BAIXO (ação) e os gases empurram o foguete para CIMA (reação). Não precisa de ar — funciona até no vácuo do espaço!',
+        review: 'Reveja "Como um foguete sobe?" na aba Astronáutica e a animação do foguete.',
+        source: 'Tema recorrente — Astronáutica aparece em todas as edições da OBA Nível 2. Inspirada em OBA XXVII (2024) e XXIV (2021).'
+      },
+      {
+        topic: 'Astronáutica', subtopic: 'Satélites naturais × artificiais', difficulty: 'easy',
+        kind: 'oficial',
+        question: 'A Terra possui UM satélite natural (a Lua) e MUITOS satélites artificiais em órbita. Sobre os satélites artificiais, NÃO é correto afirmar que:',
+        options: [
+          'São equipamentos construídos pelos seres humanos.',
+          'Servem para GPS, TV, telefonia, internet e previsão do tempo.',
+          'Giram em órbita ao redor da Terra.',
+          'Têm luz própria, igual ao Sol.'
+        ],
+        answer: 3,
+        explanation: 'Satélites artificiais NÃO têm luz própria! Eles são máquinas (não estrelas) que orbitam a Terra. As outras alternativas estão corretas: foram feitos por humanos, orbitam a Terra e servem para GPS, TV, internet, telefonia, previsão do tempo, fotos da Terra etc.',
+        review: 'Reveja "Satélites artificiais" na aba Astronáutica.',
+        source: 'Tema recorrente — diferença entre satélites naturais e artificiais é abordada na OBA XXVII (2024) e XXIII (2020), Nível 2.'
+      },
+      {
+        topic: 'Astronáutica', subtopic: 'Astronauta brasileiro', difficulty: 'easy',
+        kind: 'oficial',
+        question: 'O primeiro (e até agora único) astronauta brasileiro a viajar ao espaço, em uma missão à Estação Espacial Internacional (ISS) no ano de 2006, foi:',
+        options: [
+          'Santos Dumont',
+          'Yuri Gagarin',
+          'Marcos Pontes',
+          'Neil Armstrong'
+        ],
+        answer: 2,
+        explanation: 'MARCOS PONTES é o primeiro e, até hoje, único astronauta brasileiro a ir ao espaço. Foi à ISS em 2006, na chamada "Missão Centenário" (comemoração dos 100 anos do voo de Santos Dumont).',
+        review: 'Reveja "Astronautas brasileiros" na aba Astronáutica.',
+        source: 'Tema recorrente — astronautas brasileiros aparecem em várias edições da OBA Nível 2.'
+      }
+    ];
+
+    let simAnswers = new Array(simQuestions.length).fill(null);
+
+    function renderSim() {
+      const container = document.getElementById('simContainer');
+      container.innerHTML = '';
+      simQuestions.forEach((q, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'exercise';
+        const diffLabel = { easy: 'Fácil', medium: 'Médio', hard: 'Difícil' }[q.difficulty];
+        const diffBadge = 'badge badge-' + q.difficulty;
+        const isAstro = q.topic === 'Astronomia';
+        const kindBadge = q.kind === 'oficial'
+          ? '<span class="badge badge-oficial" title="Questão no estilo da OBA oficial, baseada em temas e formatos das provas reais">📋 Estilo OBA oficial</span>'
+          : '<span class="badge badge-autoral" title="Questão autoral para reforço">✏️ Autoral</span>';
+        let body = '';
+        body += '<div class="exercise-meta">';
+        body += '<span class="badge badge-topic">' + (isAstro ? '⭐ ' : '🚀 ') + q.topic + ' · ' + q.subtopic + '</span>';
+        body += '<span class="' + diffBadge + '">' + diffLabel + '</span>';
+        body += kindBadge;
+        body += '</div>';
+        body += '<div class="exercise-question"><span class="exercise-number">' + (idx + 1) + '</span><span>' + q.question + '</span></div>';
+        body += '<ul class="options-list">';
+        q.options.forEach((opt, i) => {
+          body += '<li><label><input type="radio" name="sim' + idx + '" value="' + i + '"><span>' + opt + '</span></label></li>';
+        });
+        body += '</ul>';
+        // Mostrar a fonte oficial logo abaixo do enunciado (transparência didática)
+        if (q.source) {
+          body += '<div class="source-line">📚 <strong>Inspirada em:</strong> ' + q.source + '</div>';
+        }
+        body += '<div class="feedback" id="simfb-' + idx + '"></div>';
+        wrap.innerHTML = body;
+        container.appendChild(wrap);
+
+        wrap.querySelectorAll('input[name="sim' + idx + '"]').forEach(input => {
+          input.addEventListener('change', () => {
+            simAnswers[idx] = parseInt(input.value, 10);
+            updateSimProgress();
+          });
+        });
+      });
+      updateSimProgress();
+    }
+
+    function updateSimProgress() {
+      const answered = simAnswers.filter(a => a !== null).length;
+      const total = simQuestions.length;
+      document.getElementById('simProgress').textContent = answered + ' de ' + total;
+      document.getElementById('simBar').style.width = ((answered / total) * 100) + '%';
+    }
+
+    /* --- Cronômetro do simulado (opcional, ajuda a praticar tempo) --- */
+    const simTimerEl = document.getElementById('simTimer');
+    let simTimerStart = Date.now();
+    let simTimerInterval = setInterval(() => {
+      const secs = Math.floor((Date.now() - simTimerStart) / 1000);
+      const mm = String(Math.floor(secs / 60)).padStart(2, '0');
+      const ss = String(secs % 60).padStart(2, '0');
+      simTimerEl.textContent = mm + ':' + ss;
+    }, 1000);
+
+    document.getElementById('finishSim').addEventListener('click', () => {
+      let score = 0;
+      simQuestions.forEach((q, idx) => {
+        const fb = document.getElementById('simfb-' + idx);
+        const userVal = simAnswers[idx];
+        const sourceLine = q.source
+          ? '<div style="margin-top:8px;font-size:.82rem;color:var(--muted)">📚 <em>' + q.source + '</em></div>'
+          : '';
+        if (userVal === q.answer) {
+          score++;
+          fb.className = 'feedback show correct';
+          fb.innerHTML = '<strong>✅ Correto!</strong><div class="explanation">' + q.explanation + '</div>' + sourceLine;
+        } else if (userVal === null) {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>⚠️ Não respondida.</strong> Resposta correta: <em>' + q.options[q.answer] + '</em>.<div class="explanation">' + q.explanation + '<br><br>💡 ' + q.review + '</div>' + sourceLine;
+        } else {
+          fb.className = 'feedback show incorrect';
+          fb.innerHTML = '<strong>❌ Quase!</strong> Você marcou: <em>' + q.options[userVal] + '</em>. Resposta correta: <em>' + q.options[q.answer] + '</em>.<div class="explanation">' + q.explanation + '<br><br>💡 ' + q.review + '</div>' + sourceLine;
+        }
+      });
+      const total = simQuestions.length;
+      const pct = Math.round((score / total) * 100);
+      let msg, emoji;
+      if (pct >= 80) { msg = 'Excelente! Você está super bem preparado para a OBA!'; emoji = '🏆'; }
+      else if (pct >= 60) { msg = 'Muito bom! Falta pouco para mandar bem na prova!'; emoji = '🌟'; }
+      else if (pct >= 40) { msg = 'Bom esforço! Revise os tópicos com erros e tente de novo.'; emoji = '📚'; }
+      else { msg = 'Calma, faltou prática. Volte para as explicações e treine mais. Você vai conseguir!'; emoji = '💪'; }
+
+      const result = document.getElementById('simResult');
+      result.classList.add('show');
+      result.innerHTML =
+        '<div style="font-size:2.8rem">' + emoji + '</div>' +
+        '<div class="simulado-score">' + score + ' / ' + total + ' (' + pct + '%)</div>' +
+        '<div class="simulado-message">' + msg + '</div>' +
+        '<p>⏱️ Tempo usado: <strong>' + simTimerEl.textContent + '</strong> (na prova real você tem 2 horas — bem mais tempo!)</p>' +
+        '<p>Role para cima para ver o gabarito comentado de cada questão.</p>';
+      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    document.getElementById('resetSim').addEventListener('click', () => {
+      simAnswers = new Array(simQuestions.length).fill(null);
+      simTimerStart = Date.now();
+      renderSim();
+      document.getElementById('simResult').classList.remove('show');
+    });
+
+    renderSim();
+  </script>
+</body>
+</html>

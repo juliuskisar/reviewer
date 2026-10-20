@@ -1,0 +1,26 @@
+<div class="route-steps" data-component="route-steps">
+  {% if block.content.modules %}
+  <div class="route-modules">
+    {% for mod in block.content.modules %}
+    <span class="route-module-badge">{{ mod }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <ol class="route-steps__list">
+    {% for step in block.content.steps %}
+    <li class="route-step">
+      <div class="route-step__header">
+        <span class="route-step__num">{{ loop.index }}</span>
+        <strong>{{ step.title }}</strong>
+      </div>
+      <p>{{ step.description }}</p>
+      {% if step.tip %}<p class="route-step__tip">{{ step.tip }}</p>{% endif %}
+      {% if step.panel %}
+      <button type="button" class="route-step__link" data-goto-panel="panel-{{ step.panel }}">
+        Ir para {{ step.panel_label | default(step.panel) }} →
+      </button>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+</div>

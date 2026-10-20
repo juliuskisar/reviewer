@@ -1,0 +1,335 @@
+version: 1
+review:
+  id: benjamin-pe-ciencias-3tri
+  title: Revisão de Ciências — PE 3º Trimestre (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/science-pe-4.yaml
+assets:
+- file: page-001.jpg
+  subject: science
+  unit: module10_micro
+  importance: medium
+  order: 1
+  notes: Módulo 10 — microrganismos ao redor
+- file: page-002.jpg
+  subject: science
+  unit: module10_micro
+  importance: medium
+  order: 2
+  notes: Módulo 10 — microrganismos ao redor
+- file: page-003.jpg
+  subject: science
+  unit: module10_micro
+  importance: medium
+  order: 3
+  notes: Módulo 10 — microrganismos ao redor
+- file: page-004.jpg
+  subject: science
+  unit: module10_lab
+  importance: medium
+  order: 4
+  notes: Investigação em laboratório e escola
+- file: page-005.jpg
+  subject: science
+  unit: module10_lab
+  importance: medium
+  order: 5
+  notes: Investigação em laboratório e escola
+- file: page-006.jpg
+  subject: science
+  unit: module10_lab
+  importance: medium
+  order: 6
+  notes: Investigação em laboratório e escola
+- file: page-007.jpg
+  subject: science
+  unit: module10_lab
+  importance: medium
+  order: 7
+  notes: Investigação em laboratório e escola
+- file: page-008.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 8
+  notes: Experimentos e higiene das mãos
+- file: page-009.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 9
+  notes: Experimentos e higiene das mãos
+- file: page-010.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 10
+  notes: Experimentos e higiene das mãos
+- file: page-011.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 11
+  notes: Experimentos e higiene das mãos
+- file: page-012.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 12
+  notes: Experimentos e higiene das mãos
+- file: page-013.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 13
+  notes: Experimentos e higiene das mãos
+- file: page-014.jpg
+  subject: science
+  unit: module10_hands
+  importance: medium
+  order: 14
+  notes: Experimentos e higiene das mãos
+- file: page-015.jpg
+  subject: science
+  unit: module10_prevention
+  importance: medium
+  order: 15
+  notes: Alimentos, COVID e prevenção
+- file: page-016.jpg
+  subject: science
+  unit: module10_prevention
+  importance: medium
+  order: 16
+  notes: Alimentos, COVID e prevenção
+- file: page-017.jpg
+  subject: science
+  unit: module10_prevention
+  importance: medium
+  order: 17
+  notes: Alimentos, COVID e prevenção
+- file: page-018.jpg
+  subject: science
+  unit: module10_prevention
+  importance: medium
+  order: 18
+  notes: Alimentos, COVID e prevenção
+- file: page-019.jpg
+  subject: science
+  unit: module10_prevention
+  importance: medium
+  order: 19
+  notes: Alimentos, COVID e prevenção
+- file: page-020.jpg
+  subject: science
+  unit: module11_waste
+  importance: medium
+  order: 20
+  notes: Módulo 11 — resíduos e decomposição
+- file: page-021.jpg
+  subject: science
+  unit: module11_waste
+  importance: medium
+  order: 21
+  notes: Módulo 11 — resíduos e decomposição
+- file: page-022.jpg
+  subject: science
+  unit: module11_waste
+  importance: medium
+  order: 22
+  notes: Módulo 11 — resíduos e decomposição
+- file: page-023.jpg
+  subject: science
+  unit: module11_waste
+  importance: medium
+  order: 23
+  notes: Módulo 11 — resíduos e decomposição
+- file: page-024.jpg
+  subject: science
+  unit: module11_waste
+  importance: medium
+  order: 24
+  notes: Módulo 11 — resíduos e decomposição
+- file: page-025.jpg
+  subject: science
+  unit: module11_waste
+  importance: medium
+  order: 25
+  notes: Módulo 11 — resíduos e decomposição
+- file: page-026.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 26
+  notes: Compostagem e atividades
+- file: page-027.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 27
+  notes: Compostagem e atividades
+- file: page-028.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 28
+  notes: Compostagem e atividades
+- file: page-029.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 29
+  notes: Compostagem e atividades
+- file: page-030.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 30
+  notes: Compostagem e atividades
+- file: page-031.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 31
+  notes: Compostagem e atividades
+- file: page-032.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 32
+  notes: Compostagem e atividades
+- file: page-033.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 33
+  notes: Compostagem e atividades
+- file: page-034.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 34
+  notes: Compostagem e atividades
+- file: page-035.jpg
+  subject: science
+  unit: module11_compost
+  importance: medium
+  order: 35
+  notes: Compostagem e atividades
+- file: page-036.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 36
+  notes: Módulo 12 — leveduras
+- file: page-037.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 37
+  notes: Módulo 12 — leveduras
+- file: page-038.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 38
+  notes: Módulo 12 — leveduras
+- file: page-039.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 39
+  notes: Módulo 12 — leveduras
+- file: page-040.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 40
+  notes: Módulo 12 — leveduras
+- file: page-041.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 41
+  notes: Módulo 12 — leveduras
+- file: page-042.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 42
+  notes: Módulo 12 — leveduras
+- file: page-043.jpg
+  subject: science
+  unit: module12_yeast
+  importance: medium
+  order: 43
+  notes: Módulo 12 — leveduras
+- file: page-044.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 44
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-045.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 45
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-046.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 46
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-047.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 47
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-048.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 48
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-049.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 49
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-050.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 50
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-051.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 51
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-052.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 52
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-053.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 53
+  notes: Módulo 13 — álcool, antibióticos e vacinas
+- file: page-054.jpg
+  subject: science
+  unit: module13_health
+  importance: medium
+  order: 54
+  notes: Módulo 13 — álcool, antibióticos e vacinas

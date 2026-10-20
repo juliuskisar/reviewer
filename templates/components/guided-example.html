@@ -1,0 +1,14 @@
+<div class="guided-example" data-component="guided-example">
+  <h3>{{ block.content.title }}</h3>
+  <ol class="guided-example__steps">
+    {% for step in block.content.steps %}
+    <li>
+      <strong>{{ step.title }}</strong>
+      <p>{{ step.text }}</p>
+    </li>
+    {% endfor %}
+  </ol>
+  {% if block.content.conclusion %}
+  <p class="guided-example__conclusion"><strong>Conclusão:</strong> {{ block.content.conclusion }}</p>
+  {% endif %}
+</div>

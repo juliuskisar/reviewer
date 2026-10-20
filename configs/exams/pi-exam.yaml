@@ -1,0 +1,61 @@
+version: 1
+
+id: pi-exam
+name: Prova Integrada (PI) — Revisão multidisciplinar
+
+exam:
+  type: pi_exam
+  objective: integrated_review
+  expected_duration_minutes: 120
+  scope: multidisciplinary
+
+content:
+  source_policy: assets_first
+  prioritize:
+    - main_topics_per_discipline
+    - textbook_modules_in_scope
+    - vocabulary_and_key_concepts
+    - exam_style_activities
+
+  avoid:
+    - content_outside_current_trimester
+    - excessive_technical_language
+    - exercises_depending_on_missing_figures
+
+page:
+  format: static_html_monolith
+  template: PI_review.html
+  structure:
+    header: multidisciplinar
+    navigation: tabs_per_discipline
+    per_discipline:
+      - percurso
+      - conteudo  # switch Resumo ↔ Conteúdo geral
+      - exercicios
+      - dicas
+    simulado:
+      - texto_base
+      - questoes_por_disciplina
+
+exercises:
+  per_discipline_min: 5
+  per_discipline_max: 12
+  simulado_total_min: 20
+  simulado_total_max: 32
+  types:
+    - multiple_choice
+    - short_answer
+  require_explanation: true
+  require_model_answer: true
+
+validation:
+  require_texto_base_in_simulado: true
+  validate_answer_key: true
+  validate_html_offline: true
+  all_exercises_self_contained: true
+
+notes: >
+  A PI cobre várias disciplinas numa única prova. A revisão é uma página HTML
+  com aba por disciplina + aba Simulado da PI com texto-base integrador e
+  questões de múltipla escolha ligadas ao texto e ao conteúdo das disciplinas.
+  Referência de formato: PI_review.html (Pedro, 6º ano).

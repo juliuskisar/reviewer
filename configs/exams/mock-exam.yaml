@@ -1,0 +1,41 @@
+version: 1
+
+id: mock-exam
+name: Simulado
+
+exam:
+  type: mock_exam
+  objective: assessment
+  expected_duration_minutes: 60
+
+content:
+  source_policy: assets_first
+  prioritize:
+    - exam_style_questions
+    - time_management_tips
+    - mixed_difficulty
+
+  avoid:
+    - hints_during_questions
+    - immediate_answer_reveal
+    - unrelated_topics
+
+page:
+  format: static_html
+  sections:
+    - study_route
+    - exam_tips
+    - exercises
+    - final_quiz
+    - parent_support
+
+exercises:
+  total: 25
+  require_explanation: true
+  allow_retry: false
+
+validation:
+  require_source_mapping: true
+  validate_answer_key: true
+  validate_html: true
+  validate_image_paths: true

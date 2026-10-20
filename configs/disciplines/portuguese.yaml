@@ -1,0 +1,37 @@
+version: 1
+
+id: portuguese
+name: Língua Portuguesa
+
+objectives:
+  - Desenvolver leitura crítica e interpretação textual
+  - Consolidar regras de ortografia e gramática
+  - Ampliar vocabulário contextualizado
+
+preferred_components:
+  - accordion
+  - timeline
+  - comparison_table
+  - guided_example
+
+exercise_types:
+  - multiple_choice
+  - open_response
+  - matching
+
+common_errors:
+  - topic: accentuation
+    description: Confundir acentuação de oxítonas e paroxítonas
+    prevention: Revisar regras gerais com exemplos curtos
+  - topic: punctuation
+    description: Uso incorreto de vírgula em enumerações
+    prevention: Praticar leitura em voz alta
+
+pedagogical_strategies:
+  - Contextualizar regras em textos curtos
+  - Destacar padrões recorrentes
+  - Usar exemplos do cotidiano do aluno
+
+validation:
+  accept_multiple_valid_answers_for_open: true
+  flag_ambiguous_interpretation: true

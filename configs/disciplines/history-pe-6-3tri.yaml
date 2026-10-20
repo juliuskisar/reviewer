@@ -1,0 +1,47 @@
+version: 1
+
+id: history-pe-6-3tri
+name: História — PE 6º ano (3º trimestre)
+
+objectives:
+  - Conhecer a lenda de Rômulo e Remo e o legado romano no Ocidente
+  - Compreender a passagem da monarquia à república e a luta patrícios × plebeus
+  - Analisar instituições republicanas, a Lei das Doze Tábuas e a expansão no Mediterrâneo
+  - Descrever a vida urbana, lazer e organização social no Império
+  - Relacionar religião, cristianismo e crise imperial (divisão, invasões, ano 476)
+
+preferred_components:
+  - timeline
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: empire_religion
+    description: Achar que o Édito de Milão tornou o cristianismo religião oficial única
+    prevention: Édito de 313 = liberdade religiosa; oficialização veio depois
+  - topic: crisis_and_fall
+    description: Confundir queda do Ocidente (476) com fim total do Império Romano
+    prevention: Oriente (Constantinopla) continuou por séculos como Império Bizantino
+  - topic: republic_institutions
+    description: Achar que plebeus tinham os mesmos direitos políticos desde o início
+    prevention: Conquistas graduais — tribuno, Lei das Doze Tábuas, etc.
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 14 → 15
+  - Comparar República e Império; Ocidente e Oriente
+  - Vocabulário do caderno: res publica, imperium, insulae, chinampas não — termopólio, bárbaro
+  - Exercícios autossuficientes estilo Teste (afirmativas I–IV)
+  - Linguagem clara para 6º ano
+
+validation:
+  require_historical_context: true
+  flag_anachronisms: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [14, 15]

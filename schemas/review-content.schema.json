@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://school-review.local/schemas/review-content.schema.json",
+  "title": "ReviewContent",
+  "description": "Conteúdo pedagógico estruturado, sem HTML de apresentação",
+  "type": "object",
+  "required": ["version", "review_id", "title", "language", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "const": "1.0" },
+    "review_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "subtitle": { "type": "string" },
+    "language": { "type": "string", "pattern": "^[a-z]{2}(-[A-Z]{2})?$" },
+    "discipline": { "type": "string" },
+    "grade": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "student_name": { "type": ["string", "null"] },
+        "exam_type": { "type": "string" },
+        "estimated_duration_minutes": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/content_section" }
+    },
+    "study_route": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/study_step" }
+    },
+    "parent_support": { "$ref": "#/$defs/parent_support" }
+  },
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "required": ["asset", "origin_type"],
+      "properties": {
+        "asset": { "type": "string" },
+        "origin_type": {
+          "type": "string",
+          "enum": ["observed", "inferred", "supplementary"]
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "content_block": {
+      "type": "object",
+      "required": ["type", "content"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "paragraph", "list", "heading", "callout", "comparison_table",
+            "timeline", "guided_example", "quick_summary", "attention_point",
+            "exam_tip", "accordion_item", "image", "concept_grid", "panel_intro", "route_steps",
+            "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map",
+            "study_game"
+          ]
+        },
+        "content": {},
+        "topic_id": { "type": "string" },
+        "sources": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/source_ref" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "content_section": {
+      "type": "object",
+      "required": ["id", "type", "title", "blocks"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "study_route", "explanations", "quick_summary", "interactive_maps",
+            "capital_game", "study_game", "attention_points",
+            "guided_examples", "exercises", "final_quiz", "exam_tips", "parent_support"
+          ]
+        },
+        "title": { "type": "string" },
+        "blocks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/content_block" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "study_step": {
+      "type": "object",
+      "required": ["order", "title"],
+      "properties": {
+        "order": { "type": "integer", "minimum": 1 },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "section_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "parent_support": {
+      "type": "object",
+      "properties": {
+        "discussion_questions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "help_without_spoiling": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "topics_needing_attention": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "open_response_criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["exercise_id", "criteria"],
+            "properties": {
+              "exercise_id": { "type": "string" },
+              "criteria": { "type": "string" },
+              "expected_answer": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,51 @@
+version: 1
+
+id: english-pe-6
+name: Inglês — PE 6º ano (2º trimestre)
+
+objectives:
+  - Formar e reconhecer o Simple Past afirmativo de verbos regulares
+  - Aplicar regras de ortografia do passado (-ed, -d, -ied, consoante duplicada)
+  - Usar didn't + verbo base na forma negativa
+  - Conhecer formas irregulares frequentes (go, take, eat, be, have, etc.)
+  - Fazer perguntas com Did e respostas curtas (Yes/No)
+  - Usar could/couldn't para habilidade no passado
+  - Empregar marcadores temporais (yesterday, last year, ago, in/on)
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: spelling_rules
+    description: Esquecer de trocar -y por -ied (try → tried)
+    prevention: Consoante + y → -ied; vogal + y → só -ed
+  - topic: simple_past_negative
+    description: Usar didn't + verbo no passado (didn't went)
+    prevention: Depois de didn't sempre vem o verbo na forma base (didn't go)
+  - topic: questions_short_answers
+    description: Repetir o verbo principal na resposta curta
+    prevention: Resposta curta usa só did/didn't — não repete o verbo
+  - topic: irregular_verbs
+    description: Tratar verbos irregulares como regulares (goed, taked)
+    prevention: Memorizar pares base/past dos verbos do caderno
+  - topic: time_expressions
+    description: Confundir in e on com datas (in Monday)
+    prevention: on + dia da semana; in + mês/ano/estação
+
+pedagogical_strategies:
+  - Seguir Units 3 (Going Places) e 4 (History) do caderno Macmillan
+  - Explicações em português com exemplos em inglês
+  - Exercícios autossuficientes — enunciado completo em português ou inglês claro
+  - Variar combinações I–IV e posição do gabarito
+
+validation:
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [3, 4]

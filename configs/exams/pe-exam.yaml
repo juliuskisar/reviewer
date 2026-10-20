@@ -1,0 +1,72 @@
+version: 1
+
+id: pe-exam
+name: Prova Específica (PE) — Revisão preparatória
+
+exam:
+  type: pe_exam
+  objective: review
+  expected_duration_minutes: 50
+  trimester: 2
+
+content:
+  source_policy: assets_first
+  prioritize:
+    - concepts_explicitly_present
+    - highlighted_vocabulary
+    - textbook_activities_and_tests
+    - maps_and_diagrams
+    - pe_modules_scope
+
+  avoid:
+    - unrelated_curiosities
+    - content_outside_pe_modules
+    - excessive_technical_language
+    - hints_during_final_quiz
+
+page:
+  format: static_html
+  sections:
+    - study_route
+    - explanations
+    - quick_summary
+    - attention_points
+    - guided_examples
+    - exercises
+    - final_quiz
+    - exam_tips
+    - parent_support
+
+exercises:
+  total: 20
+  require_explanation: true
+  allow_retry: true
+
+validation:
+  require_source_mapping: true
+  validate_answer_key: true
+  validate_html: true
+  validate_image_paths: true
+
+pe_scope:
+  discipline: geography
+  grade: "6º ano"
+  modules:
+    - 5
+    - 6
+  topics:
+    - solar_system
+    - earth_internal_structure
+    - plate_tectonics
+    - continental_drift
+    - rock_types_and_cycle
+    - relief_forms
+    - brazilian_relief
+    - volcanism_earthquakes
+
+notes: >
+  A PE de Geografia do 2º trimestre (6º ano) cobre principalmente os
+  Módulos 5 e 6 do Caderno 2: Terra no Sistema Solar, estrutura interna,
+  tectônica de placas, tipos de rochas e formas do relevo (com foco no Brasil).
+  Imagens adicionais de clima/atmosfera (Módulo 7) podem ser usadas como
+  reforço, mas não são foco principal desta PE.

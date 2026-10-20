@@ -1,0 +1,49 @@
+version: 1
+
+id: math-pe-4
+name: Matemática — PE 4º ano (2º trimestre)
+
+objectives:
+  - Ler, comparar e ordenar números naturais até centena de milhar
+  - Aplicar a propriedade da compensação na subtração
+  - Interpretar gráficos de barras e comparar quantidades
+  - Reconhecer segmentos paralelos, concorrentes e perpendiculares
+  - Usar regularidades de multiplicação e divisão por 10, 100 e 1000
+  - Resolver divisões exatas e não exatas com interpretação do resto
+  - Classificar ângulos (reto, agudo, obtuso) e relacionar a giros
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - bar_chart
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: compensation
+    description: Achar que compensação só funciona somando ao minuendo
+    prevention: Somar ou subtrair o mesmo valor nos dois termos mantém a diferença
+  - topic: division
+    description: Ignorar o resto em problemas de embalagem ou transporte
+    prevention: Quando sobra, pode ser preciso mais uma caixa ou ônibus
+  - topic: division_powers
+    description: Confundir dividir por 10 com dividir por 100
+    prevention: Dividir por 10 remove um zero; por 100 remove dois zeros
+  - topic: angles
+    description: Confundir ângulo agudo com obtuso
+    prevention: Agudo < 90°; reto = 90°; obtuso > 90°
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 10 → 11 → 12 → 13 → 14 → 15
+  - Usar situações do cotidiano (troco, reciclagem, transporte escolar)
+  - Exercícios autossuficientes, estilo Teste/Atividade do caderno
+  - Linguagem simples para 4º ano
+
+validation:
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [10, 11, 12, 13, 14, 15]

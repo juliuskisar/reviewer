@@ -1,0 +1,29 @@
+version: 1
+
+id: helena-student
+
+student:
+  name: Helena
+  age: 12
+  grade: "7º ano"
+  language: pt-BR
+  gender: female
+
+learning:
+  prior_knowledge: basic
+  preferred_explanation_style:
+    - clear
+    - progressive
+    - example_driven
+    - visual
+
+accessibility:
+  avoid_excessive_text_blocks: true
+  minimum_font_size_px: 16
+  do_not_rely_only_on_color: true
+
+notes: >
+  Aluna do 7º ano do Ensino Fundamental. Vai fazer a Prova Específica (PE)
+  de Ciências do 2º trimestre. Prefere explicações visuais, blocos curtos
+  de texto e exercícios no estilo Teste/Atividade do caderno — com gráficos
+  quando o material trabalha interpretação de dados.

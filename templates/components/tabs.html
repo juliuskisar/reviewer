@@ -1,0 +1,19 @@
+<div class="tabs" data-component="tabs">
+  <div class="tabs__list" role="tablist">
+    {% for tab in block.content.tabs %}
+    <button type="button" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}"
+            aria-controls="tab-panel-{{ block.topic_id }}-{{ loop.index0 }}"
+            id="tab-{{ block.topic_id }}-{{ loop.index0 }}"
+            class="tabs__tab{% if loop.first %} is-active{% endif %}">
+      {{ tab.label }}
+    </button>
+    {% endfor %}
+  </div>
+  {% for tab in block.content.tabs %}
+  <div role="tabpanel" id="tab-panel-{{ block.topic_id }}-{{ loop.index0 }}"
+       aria-labelledby="tab-{{ block.topic_id }}-{{ loop.index0 }}"
+       class="tabs__panel{% if loop.first %} is-active{% endif %}{% if not loop.first %} is-hidden{% endif %}">
+    {{ tab.content }}
+  </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,9 @@
+<div class="concept-grid" data-component="concept-grid">
+  {% for card in block.content.cards %}
+  <article class="concept-card">
+    {% if card.icon %}<span class="concept-card__icon" aria-hidden="true">{{ card.icon }}</span>{% endif %}
+    <h4>{{ card.title }}</h4>
+    <p>{{ card.text }}</p>
+  </article>
+  {% endfor %}
+</div>
