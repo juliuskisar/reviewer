@@ -16,6 +16,126 @@
     return (data.exercises || []).find(function (e) { return e.id === id; });
   }
 
+  function normalizeWrittenText(text) {
+    if (!text) return '';
+    var s = String(text).trim().toLowerCase();
+    s = s.replace(/[\u2018\u2019]/g, "'");
+    s = s.replace(/\s+/g, ' ');
+    s = s.replace(/[.!?;,]+$/, '');
+    return s;
+  }
+
+  function levenshtein(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    var row = [];
+    var i, j;
+    for (j = 0; j <= b.length; j++) row[j] = j;
+    for (i = 1; i <= a.length; i++) {
+      var prev = i;
+      for (j = 1; j <= b.length; j++) {
+        var val = a[i - 1] === b[j - 1] ? row[j - 1] : Math.min(row[j - 1], row[j], prev) + 1;
+        row[j - 1] = prev;
+        prev = val;
+      }
+      row[b.length] = prev;
+    }
+    return row[b.length];
+  }
+
+  function collectWrittenAccepted(exercise) {
+    var list = [exercise.correct_answer];
+    (exercise.accepted_answers || []).forEach(function (a) {
+      if (a && list.indexOf(a) === -1) list.push(a);
+    });
+    return list;
+  }
+
+  function findMistakeHint(exercise, rawAnswer) {
+    var lower = (rawAnswer || '').toLowerCase();
+    var hints = exercise.mistake_hints || [];
+    for (var i = 0; i < hints.length; i++) {
+      if (lower.indexOf(hints[i].contains.toLowerCase()) !== -1) {
+        return hints[i].message;
+      }
+    }
+    return '';
+  }
+
+  function bestWrittenMatch(normalizedUser, acceptedNormalized) {
+    var best = { index: -1, distance: 9999 };
+    for (var i = 0; i < acceptedNormalized.length; i++) {
+      var d = levenshtein(normalizedUser, acceptedNormalized[i]);
+      if (d < best.distance) {
+        best = { index: i, distance: d };
+      }
+    }
+    return best;
+  }
+
+  function checkWrittenLanguage(exercise, item, feedback) {
+    var field = $('#answer-' + exercise.id, item);
+    if (!field) return;
+    var raw = field.value || '';
+    if (!raw.trim()) {
+      feedback.textContent = 'Digite sua resposta antes de verificar.';
+      feedback.className = 'quiz-feedback is-neutral';
+      return;
+    }
+
+    var accepted = collectWrittenAccepted(exercise);
+    var acceptedNorm = accepted.map(normalizeWrittenText);
+    var userNorm = normalizeWrittenText(raw);
+    var exactIdx = acceptedNorm.indexOf(userNorm);
+
+    if (exactIdx !== -1) {
+      feedback.textContent = 'Correto! ' + (exercise.explanation || '');
+      feedback.className = 'quiz-feedback is-correct';
+      markPanelVisited(item.closest('.page-panel'));
+      return;
+    }
+
+    var mode = exercise.input_mode || 'sentence';
+    var match = bestWrittenMatch(userNorm, acceptedNorm);
+    var refLen = acceptedNorm[match.index] ? acceptedNorm[match.index].length : userNorm.length;
+    var maxTypos = mode === 'word'
+      ? (refLen <= 4 ? 1 : refLen <= 8 ? 2 : 3)
+      : Math.max(2, Math.floor(refLen * 0.08));
+
+    if (match.index >= 0 && match.distance > 0 && match.distance <= maxTypos) {
+      feedback.innerHTML =
+        'Quase lá — pequeno erro de digitação. ' +
+        '<span class="written-correction">Forma esperada: «' + escapeHtml(accepted[match.index]) + '».</span> ' +
+        (exercise.explanation || '');
+      feedback.className = 'quiz-feedback is-almost';
+      markPanelVisited(item.closest('.page-panel'));
+      return;
+    }
+
+    var hint = findMistakeHint(exercise, raw);
+    var msg = 'Ainda não está correto.';
+    if (hint) {
+      msg += ' ' + hint;
+    }
+    msg += ' <span class="written-correction">Resposta modelo: «' +
+      escapeHtml(exercise.correct_answer) + '».</span>';
+    if (exercise.explanation) {
+      msg += ' ' + exercise.explanation;
+    }
+    feedback.innerHTML = msg;
+    feedback.className = 'quiz-feedback is-incorrect';
+    markPanelVisited(item.closest('.page-panel'));
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   function getVisitedPanels() {
     try {
       var raw = sessionStorage.getItem(PANELS_KEY);
@@ -90,6 +210,11 @@
     var item = $('#exercise-' + exerciseId);
     var feedback = $('#feedback-' + exerciseId);
     if (!exercise || !item || !feedback) return;
+
+    if (exercise.type === 'written_language') {
+      checkWrittenLanguage(exercise, item, feedback);
+      return;
+    }
 
     if (exercise.type === 'open_response') {
       feedback.textContent = 'Use o checklist para autoavaliar sua resposta. Respostas discursivas não são corrigidas automaticamente.';
@@ -214,6 +339,7 @@
     $$('.quiz-answer').forEach(function (a) { a.classList.add('is-hidden'); });
     $$('input[type="radio"]').forEach(function (i) { i.checked = false; });
     $$('textarea').forEach(function (t) { t.value = ''; });
+    $$('.written-input').forEach(function (t) { t.value = ''; });
     updateProgressBar();
   }
 
