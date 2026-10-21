@@ -15,7 +15,10 @@ Guia de referência visual/pedagógico abaixo. Implementação de exemplo: `revi
 | Roteiro de estudo | `study_route` | Intro, concept-grid dos módulos, passos com links |
 | Explicações | `explanations` | Acordeões por tópico |
 | Resumo rápido | `quick_summary` | **Mesma estética** — acordeões + concept-grid + tabelas |
-| Mapas interativos | `interactive_maps` | **Geografia** — mapas SVG clicáveis (`brazil_map`) reunidos numa aba |
+| Mapas interativos | `interactive_maps` | **Geografia** — mapas SVG clicáveis (`brazil_map`, `thermal_globe`) reunidos numa aba, **um por tema da apostila** |
+| Jogo das capitais | `capital_game` | **Geografia** — 27 capitais no mapa |
+| Jogo temático | `map_theme_game` | **Geografia** — sorteia estado, aluno escolhe clima/vegetação; pinta o mapa |
+| Jogos de revisão | `study_game` | `sort_buckets` / `match_pairs` com títulos configuráveis |
 | Exercícios | (aba separada) | Quiz interativo — `section: exercises` ou `final_quiz` |
 | Prática escrita | (aba separada, **Inglês/Espanhol**) | 8–12 itens `written_language` — `section: escrita`; correção offline |
 | Desafios | (aba separada, opcional) | 10 questões avançadas — `section: desafios` |
@@ -32,7 +35,7 @@ Guia de referência visual/pedagógico abaixo. Implementação de exemplo: `revi
 
 **Não usar** blocos `image` no conteúdo — a página deve funcionar offline só com texto estruturado.
 
-**Exceção — visuais HTML:** blocos `bar_chart`, `fraction_visual` e `brazil_map` renderizam gráficos, frações e mapas em HTML/SVG (sem JPG, offline).
+**Exceção — visuais HTML:** blocos `bar_chart`, `fraction_visual`, `brazil_map` e `thermal_globe` renderizam gráficos, frações, mapas e globo em HTML/SVG (sem JPG, offline). Modos temáticos do mapa (`imaginary_lines`, `climates`, `vegetation`) devem corresponder ao mapa da apostila que o título cita.
 
 ### Roteiro com links
 

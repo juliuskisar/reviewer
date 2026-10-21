@@ -1,0 +1,78 @@
+{% set globe_mode = block.content.mode | default('explore') %}
+{% set globe_uid = 'globe-' ~ (block.content.globe_id | default('main')) %}
+<figure class="thermal-globe" data-component="thermal-globe"
+  data-mode="{{ globe_mode }}">
+  {% if block.content.title %}
+  <figcaption class="thermal-globe__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  {% if block.content.intro %}
+  <p class="thermal-globe__intro">{{ block.content.intro }}</p>
+  {% endif %}
+
+  {% if block.content.show_mode_toggle %}
+  <div class="thermal-globe__modes" role="group" aria-label="Modo do globo">
+    <button type="button" class="thermal-globe__mode-btn{% if globe_mode == 'explore' %} is-active{% endif %}" data-mode="explore">Explorar</button>
+    <button type="button" class="thermal-globe__mode-btn{% if globe_mode == 'paint' %} is-active{% endif %}" data-mode="paint">Pintar as zonas</button>
+  </div>
+  {% endif %}
+
+  <div class="thermal-globe__palette is-hidden" role="group" aria-label="Cores para pintar">
+    <span class="thermal-globe__palette-label">Escolha a cor e clique na faixa:</span>
+    {% for zone in globe_data.zones %}
+    <button type="button" class="thermal-globe__color-btn" data-zone="{{ zone.id }}"
+            style="--swatch: {{ zone.color }}">{{ zone.paint_label }}</button>
+    {% endfor %}
+    <button type="button" class="btn btn-primary thermal-globe__check">Verificar</button>
+    <button type="button" class="btn btn-secondary thermal-globe__reset">Limpar</button>
+  </div>
+
+  <div class="thermal-globe__layout">
+    <svg class="thermal-globe__svg" viewBox="{{ globe_data.viewBox }}" role="img"
+         aria-label="{{ block.content.aria_label | default('Globo terrestre com zonas térmicas') }}">
+      <defs>
+        <clipPath id="{{ globe_uid }}-clip">
+          <circle cx="{{ globe_data.cx }}" cy="{{ globe_data.cy }}" r="{{ globe_data.r }}"/>
+        </clipPath>
+      </defs>
+      <circle class="thermal-globe__ocean" cx="{{ globe_data.cx }}" cy="{{ globe_data.cy }}" r="{{ globe_data.r }}"/>
+      <g class="thermal-globe__bands" clip-path="url(#{{ globe_uid }}-clip)">
+        {% for band in globe_data.bands %}
+        <rect class="thermal-globe__band" data-band="{{ band.id }}" data-zone="{{ band.zone }}"
+              data-label="{{ band.label }}"
+              x="0" y="{{ band.y }}" width="{{ globe_data.cx * 2 }}" height="{{ band.height }}"
+              tabindex="0" role="button" aria-label="{{ band.label }}"
+              style="--zone-color: {{ (globe_data.zones | selectattr('id', 'equalto', band.zone) | first).color }}"/>
+        {% endfor %}
+      </g>
+      <g class="thermal-globe__parallels">
+        {% for line in globe_data.parallels %}
+        <line class="thermal-globe__parallel" data-parallel="{{ line.id }}" data-label="{{ line.label }}"
+              x1="{{ line.x1 }}" y1="{{ line.y }}" x2="{{ line.x2 }}" y2="{{ line.y }}"
+              style="stroke: {{ line.color }}" tabindex="0" role="button" aria-label="{{ line.label }}"/>
+        <line class="thermal-globe__parallel-guide" x1="{{ line.x2 }}" y1="{{ line.y }}" x2="{{ line.label_x - 6 }}" y2="{{ line.y }}"/>
+        <text class="thermal-globe__parallel-label" data-for="{{ line.id }}" x="{{ line.label_x }}" y="{{ line.y + 4 }}">{{ line.label }}</text>
+        {% endfor %}
+      </g>
+      <circle class="thermal-globe__outline" cx="{{ globe_data.cx }}" cy="{{ globe_data.cy }}" r="{{ globe_data.r }}"/>
+      <text class="thermal-globe__pole" x="{{ globe_data.cx }}" y="{{ globe_data.cy - globe_data.r - 6 }}" text-anchor="middle">Polo Norte</text>
+      <text class="thermal-globe__pole" x="{{ globe_data.cx }}" y="{{ globe_data.cy + globe_data.r + 16 }}" text-anchor="middle">Polo Sul</text>
+    </svg>
+    <aside class="thermal-globe__panel" aria-live="polite">
+      <p class="thermal-globe__hint">Clique em uma faixa ou em uma linha para ver a explicação.</p>
+      <div class="thermal-globe__detail is-hidden">
+        <h4 class="thermal-globe__detail-name"></h4>
+        <p class="thermal-globe__detail-rays"></p>
+        <p class="thermal-globe__detail-temp"></p>
+      </div>
+      <p class="thermal-globe__feedback" role="status"></p>
+    </aside>
+  </div>
+  <div class="thermal-globe__legend">
+    {% for zone in globe_data.zones %}
+    <span class="thermal-globe__legend-item"><span class="brazil-map__legend-swatch" style="background: {{ zone.color }}"></span>{{ zone.label }}</span>
+    {% endfor %}
+  </div>
+  {% if block.content.caption %}
+  <p class="thermal-globe__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

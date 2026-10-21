@@ -73,6 +73,8 @@
           {% include "components/explanations-section.html" %}
         {% elif section.type == 'capital_game' %}
           {% include "components/capital-game.html" %}
+        {% elif section.type == 'map_theme_game' %}
+          {% include "components/map-theme-game.html" %}
         {% elif section.type == 'study_game' %}
           {% include "components/study-game.html" %}
         {% else %}
@@ -150,6 +152,7 @@
   <script>
     window.REVIEW_DATA = {{ review_data_json | safe }};
     window.BRAZIL_MAP_DATA = {{ map_data_json | safe }};
+    window.THERMAL_GLOBE_DATA = {{ globe_data_json | safe }};
   </script>
   <script src="{{ asset_base }}review.js"></script>
 </body>

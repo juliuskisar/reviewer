@@ -1,5 +1,6 @@
 {% for block in section.blocks %}
   {% if block.type == 'study_game' %}
+  {% if block.content.title %}<h3 class="study-game__title">{{ block.content.title }}</h3>{% endif %}
   <div class="study-game" data-component="study-game"
        data-mode="{{ block.content.mode }}"
        data-game-id="{{ block.content.game_id | e }}">
@@ -27,8 +28,8 @@
       </div>
       {% endfor %}
     </div>
-    <div class="study-game__pool" aria-label="Trechos para classificar">
-      <h3 class="study-game__pool-title">Trechos</h3>
+    <div class="study-game__pool" aria-label="Itens para classificar">
+      <h3 class="study-game__pool-title">{{ block.content.pool_title | default('Trechos') }}</h3>
       <div class="study-game__items">
         {% for item in block.content.sort_items %}
         <button type="button" class="study-game__chip" data-item-id="{{ item.id }}" data-answer="{{ item.answer }}">{{ item.text }}</button>
@@ -38,7 +39,7 @@
     {% elif block.content.mode == 'match_pairs' %}
     <div class="study-game__match-grid">
       <div class="study-game__match-col">
-        <h3 class="study-game__col-title">Exemplos</h3>
+        <h3 class="study-game__col-title">{{ block.content.left_title | default('Exemplos') }}</h3>
         {% for item in block.content.left %}
         <button type="button" class="study-game__match-card study-game__match-card--left"
                 data-side="left" data-item-id="{{ item.id }}"
@@ -46,7 +47,7 @@
         {% endfor %}
       </div>
       <div class="study-game__match-col">
-        <h3 class="study-game__col-title">Recursos de humor</h3>
+        <h3 class="study-game__col-title">{{ block.content.right_title | default('Recursos de humor') }}</h3>
         {% for item in block.content.right %}
         <button type="button" class="study-game__match-card study-game__match-card--right"
                 data-side="right" data-item-id="{{ item.id }}">{{ item.text }}</button>

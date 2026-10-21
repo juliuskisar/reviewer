@@ -87,7 +87,9 @@ def build_blueprint() -> dict:
             {"id": "explain", "type": "explanations", "title": "Explicações", "order": 2},
             {"id": "summary", "type": "quick_summary", "title": "Resumo rápido", "order": 3},
             {"id": "maps", "type": "interactive_maps", "title": "Mapas interativos", "order": 4},
-            {"id": "capital_game", "type": "capital_game", "title": "Jogo das capitais", "order": 5},
+            {"id": "climate_game", "type": "map_theme_game", "title": "Jogo dos climas", "order": 5},
+            {"id": "study_games", "type": "study_game", "title": "Jogos de revisão", "order": 6},
+            {"id": "capital_game", "type": "capital_game", "title": "Jogo das capitais", "order": 7},
         ],
         "components": [
             "concept_grid",
@@ -95,6 +97,9 @@ def build_blueprint() -> dict:
             "quiz",
             "route_steps",
             "brazil_map",
+            "thermal_globe",
+            "map_theme_game",
+            "study_game",
             "capital_game",
         ],
         "exercise_plan": {

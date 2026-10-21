@@ -62,7 +62,7 @@
             "timeline", "guided_example", "quick_summary", "attention_point",
             "exam_tip", "accordion_item", "image", "concept_grid", "panel_intro", "route_steps",
             "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map",
-            "study_game"
+            "thermal_globe", "study_game"
           ]
         },
         "content": {},
@@ -83,11 +83,20 @@
           "type": "string",
           "enum": [
             "study_route", "explanations", "quick_summary", "interactive_maps",
-            "capital_game", "study_game", "attention_points",
+            "capital_game", "map_theme_game", "study_game", "attention_points",
             "guided_examples", "exercises", "final_quiz", "exam_tips", "parent_support"
           ]
         },
         "title": { "type": "string" },
+        "theme": {
+          "type": "string",
+          "enum": ["climates", "vegetation", "imaginary_lines"],
+          "description": "Camada temática do mapa usada em map_theme_game"
+        },
+        "question_prefix": {
+          "type": "string",
+          "description": "Prefixo da pergunta em map_theme_game (ex.: 'Qual clima predomina em')"
+        },
         "blocks": {
           "type": "array",
           "items": { "$ref": "#/$defs/content_block" }

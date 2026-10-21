@@ -10,6 +10,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from review_builder.brazil_map import get_map_data
+from review_builder.thermal_globe import get_globe_data
 from review_builder.utils import TEMPLATES_DIR, load_json
 
 
@@ -84,9 +85,11 @@ def compose_page(
         parent_answers=exercises_data.get("exercises", []),
         review_data_json=json.dumps(review_data, ensure_ascii=False),
         map_data_json=json.dumps(get_map_data(), ensure_ascii=False),
+        globe_data_json=json.dumps(get_globe_data(), ensure_ascii=False),
         assets_prefix=assets_href_prefix,
         asset_base=asset_base,
         map_data=get_map_data(),
+        globe_data=get_globe_data(),
     )
 
     output_dir.mkdir(parents=True, exist_ok=True)

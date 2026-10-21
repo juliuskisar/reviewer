@@ -1001,6 +1001,111 @@ html, body {
 .brazil-map--mode-regions .brazil-map__state-group.is-selected .brazil-map__state {
   filter: brightness(0.92);
 }
+/* Modos temáticos: linhas imaginárias, climas, vegetação (cor via --theme-fill) */
+.brazil-map--thematic .brazil-map__state-group .brazil-map__state {
+  fill: var(--theme-fill, #e2e8f0);
+  stroke: #475569;
+}
+.brazil-map--thematic .brazil-map__state-group .brazil-map__state:hover,
+.brazil-map--thematic .brazil-map__state-group .brazil-map__state:focus {
+  stroke: #1d4ed8;
+  stroke-width: 1.2;
+  filter: brightness(0.9);
+}
+.brazil-map--thematic .brazil-map__state-group.is-selected .brazil-map__state {
+  stroke: #1d4ed8;
+  stroke-width: 1.6;
+  filter: brightness(0.85);
+}
+.brazil-map--thematic .brazil-map__state-group.is-highlighted .brazil-map__state {
+  stroke: #b45309;
+  stroke-width: 1.8;
+  stroke-dasharray: 4 2;
+}
+.brazil-map__parallels.is-hidden {
+  display: none;
+}
+.brazil-map__parallel {
+  stroke-width: 2.2;
+  stroke-dasharray: 10 6;
+  pointer-events: none;
+}
+.brazil-map__parallel-label {
+  font-size: 15px;
+  font-weight: 700;
+  pointer-events: none;
+  paint-order: stroke fill;
+  stroke: #fff;
+  stroke-width: 3px;
+}
+.brazil-map__legend {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+}
+.brazil-map__legend.is-hidden {
+  display: none;
+}
+.brazil-map__legend-title {
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+.brazil-map__legend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.brazil-map__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.brazil-map__legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.brazil-map__legend-note {
+  margin: 8px 0 0;
+  color: var(--text-soft);
+  font-style: italic;
+}
+.brazil-map__detail-theme.is-hidden {
+  display: none;
+}
+.brazil-map__theme-title {
+  margin: 8px 0 4px;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+}
+.brazil-map__theme-main,
+.brazil-map__theme-other {
+  margin: 2px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.brazil-map__theme-main {
+  font-weight: 600;
+}
+.brazil-map__theme-other {
+  font-size: 0.8rem;
+}
+.brazil-map__theme-desc {
+  margin: 4px 0;
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
 .brazil-map__panel {
   padding: 12px;
   background: #fff;
@@ -1153,7 +1258,311 @@ html, body {
   cursor: default;
 }
 
+/* Jogo temático no mapa (climas / vegetação) */
+.map-theme-game .brazil-map__layout {
+  grid-template-columns: 1fr;
+}
+.map-theme-game .brazil-map__panel {
+  display: none;
+}
+.map-theme-game .brazil-map__state-group .brazil-map__state {
+  cursor: default;
+}
+.map-theme-game .brazil-map__state-group.is-selected .brazil-map__state {
+  fill: #3b82f6;
+  stroke: #1d4ed8;
+  stroke-width: 1.6;
+  filter: none;
+}
+.map-theme-game .brazil-map__state-group.is-completed-theme .brazil-map__state {
+  fill: var(--theme-fill, #e2e8f0);
+}
+.map-theme-game__prompt {
+  margin: 4px 0 16px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.map-theme-game__question {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.map-theme-game__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.map-theme-game__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #f8fafc;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.map-theme-game__option:hover,
+.map-theme-game__option:focus {
+  border-color: var(--primary);
+  background: #fff;
+  outline: none;
+}
+.map-theme-game__option.is-wrong {
+  border-color: #dc2626;
+  background: #fee2e2;
+  color: #991b1b;
+}
+.map-theme-game__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.map-theme-game__feedback {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-height: 1.2em;
+}
+.map-theme-game__errors {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Globo de zonas térmicas (SVG offline) */
+.thermal-globe {
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.thermal-globe__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.thermal-globe__intro {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  margin-bottom: 12px;
+}
+.thermal-globe__modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.thermal-globe__mode-btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+}
+.thermal-globe__mode-btn.is-active {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #fff;
+}
+.thermal-globe__palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.thermal-globe__palette.is-hidden {
+  display: none;
+}
+.thermal-globe__palette-label {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-right: 4px;
+}
+.thermal-globe__color-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: #f1f5f9;
+  cursor: pointer;
+}
+.thermal-globe__color-btn::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--swatch);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.thermal-globe__color-btn.is-active {
+  border-color: #0f766e;
+  background: #fff;
+}
+.thermal-globe__check,
+.thermal-globe__reset {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+.thermal-globe__layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(160px, 220px);
+  gap: 16px;
+  align-items: start;
+}
+.thermal-globe__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #0f172a;
+  border-radius: var(--radius-sm);
+}
+.thermal-globe__ocean {
+  fill: #dbeafe;
+}
+.thermal-globe__band {
+  fill: var(--zone-color);
+  fill-opacity: 0.85;
+  cursor: pointer;
+  transition: fill-opacity 0.15s;
+}
+.thermal-globe--paint .thermal-globe__band {
+  fill: var(--painted, #e2e8f0);
+  fill-opacity: 1;
+}
+.thermal-globe__band:hover,
+.thermal-globe__band:focus {
+  fill-opacity: 1;
+  outline: none;
+  stroke: #1d4ed8;
+  stroke-width: 2;
+}
+.thermal-globe__band.is-selected {
+  stroke: #1d4ed8;
+  stroke-width: 3;
+}
+.thermal-globe__band.is-right {
+  stroke: #16a34a;
+  stroke-width: 4;
+}
+.thermal-globe__band.is-wrong {
+  stroke: #dc2626;
+  stroke-width: 4;
+  stroke-dasharray: 8 4;
+}
+.thermal-globe__outline {
+  fill: none;
+  stroke: #1e293b;
+  stroke-width: 2;
+  pointer-events: none;
+}
+.thermal-globe__parallel {
+  stroke-width: 3;
+  stroke-dasharray: 8 5;
+  cursor: pointer;
+}
+.thermal-globe--paint .thermal-globe__parallel {
+  cursor: default;
+}
+.thermal-globe__parallel:hover,
+.thermal-globe__parallel:focus {
+  stroke-width: 5;
+  outline: none;
+}
+.thermal-globe__parallel-guide {
+  stroke: #94a3b8;
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  pointer-events: none;
+}
+.thermal-globe__parallel-label {
+  font-size: 13px;
+  font-weight: 600;
+  fill: #f8fafc;
+  pointer-events: none;
+}
+.thermal-globe--paint .thermal-globe__parallel-label {
+  opacity: 0.35;
+}
+.thermal-globe__pole {
+  font-size: 12px;
+  font-weight: 600;
+  fill: #f8fafc;
+  pointer-events: none;
+}
+.thermal-globe__panel {
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+}
+.thermal-globe__hint {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  margin: 0;
+}
+.thermal-globe__hint.is-hidden,
+.thermal-globe__detail.is-hidden {
+  display: none;
+}
+.thermal-globe__detail-name {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+.thermal-globe__detail-rays,
+.thermal-globe__detail-temp {
+  margin: 4px 0;
+  font-size: 0.85rem;
+}
+.thermal-globe__detail-temp {
+  font-weight: 600;
+  color: var(--primary);
+}
+.thermal-globe__feedback {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.thermal-globe__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 12px;
+  font-size: 0.82rem;
+}
+.thermal-globe__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.thermal-globe__caption {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  font-style: italic;
+}
+
 /* Study games (Português PE) */
+.study-game__title {
+  margin: 20px 0 8px;
+  font-size: 1.05rem;
+}
 .study-game {
   margin-top: 8px;
 }

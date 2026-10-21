@@ -50,6 +50,185 @@
     "capital_quiz": {
       "label": "Quiz de capitais",
       "description": "Clique no estado e digite a capital."
+    },
+    "capital_game": {
+      "label": "Jogo das capitais",
+      "description": "Complete todas as capitais no mapa."
+    },
+    "imaginary_lines": {
+      "label": "Linhas imaginárias",
+      "description": "Equador e Trópico de Capricórnio sobre o Brasil — hemisférios e zonas térmicas."
+    },
+    "climates": {
+      "label": "Climas",
+      "description": "Clima predominante em cada estado (aproximação do mapa Climas do Brasil)."
+    },
+    "vegetation": {
+      "label": "Vegetação original",
+      "description": "Formação vegetal predominante em cada estado (aproximação do mapa de vegetação)."
+    },
+    "theme_game": {
+      "label": "Jogo temático",
+      "description": "Responda o tema de cada estado."
+    }
+  },
+  "parallels": [
+    {
+      "id": "equator",
+      "label": "Linha do Equador",
+      "lat": 0.0,
+      "color": "#dc2626",
+      "y": 108.61,
+      "x1": 0,
+      "x2": 800
+    },
+    {
+      "id": "capricorn",
+      "label": "Trópico de Capricórnio",
+      "lat": -23.4366,
+      "color": "#ea580c",
+      "y": 547.04,
+      "x1": 0,
+      "x2": 800
+    }
+  ],
+  "thematic": {
+    "imaginary_lines": {
+      "title": "Linhas imaginárias",
+      "state_key": "lines",
+      "legend": [
+        {
+          "id": "equator_cut",
+          "label": "Cortado pela linha do Equador",
+          "color": "#f87171",
+          "description": "Parte do estado fica no hemisfério Norte; o restante, no hemisfério Sul."
+        },
+        {
+          "id": "intertropical",
+          "label": "Zona intertropical (hemisfério Sul)",
+          "color": "#fecaca",
+          "description": "Entre o Equador e o Trópico de Capricórnio — raios solares mais perpendiculares, calor o ano todo."
+        },
+        {
+          "id": "capricorn_cut",
+          "label": "Cortado pelo Trópico de Capricórnio",
+          "color": "#fde68a",
+          "description": "Parte na zona intertropical, parte na zona temperada Sul."
+        },
+        {
+          "id": "temperate_south",
+          "label": "Zona temperada Sul",
+          "color": "#facc15",
+          "description": "Ao sul do Trópico de Capricórnio — raios inclinados, inverno mais frio."
+        }
+      ],
+      "approximate": false
+    },
+    "climates": {
+      "title": "Clima predominante",
+      "state_key": "climates",
+      "legend": [
+        {
+          "id": "equatorial",
+          "label": "Equatorial",
+          "color": "#ef4444",
+          "description": "Quente e úmido o ano todo; chuvas abundantes."
+        },
+        {
+          "id": "tropical",
+          "label": "Tropical",
+          "color": "#facc15",
+          "description": "Quente o ano todo; chuvas concentradas no verão e inverno seco."
+        },
+        {
+          "id": "tropical_litoraneo",
+          "label": "Tropical litorâneo",
+          "color": "#f472b6",
+          "description": "Quente e mais úmido por causa dos ventos do oceano."
+        },
+        {
+          "id": "tropical_semiarido",
+          "label": "Tropical semiárido",
+          "color": "#fb923c",
+          "description": "Quente; chuvas escassas em poucos meses — pode haver seca."
+        },
+        {
+          "id": "tropical_altitude",
+          "label": "Tropical de altitude",
+          "color": "#86efac",
+          "description": "Inverno mais frio nas áreas altas do Sudeste e norte do PR."
+        },
+        {
+          "id": "subtropical",
+          "label": "Subtropical",
+          "color": "#a78bfa",
+          "description": "Quatro estações bem definidas; inverno mais frio do Brasil."
+        }
+      ],
+      "approximate": true,
+      "note": "Aproximação por estado: o mapa real segue limites naturais, e um estado pode ter mais de um clima."
+    },
+    "vegetation": {
+      "title": "Formação vegetal original",
+      "state_key": "vegetation",
+      "legend": [
+        {
+          "id": "amazonica",
+          "label": "Floresta Amazônica",
+          "color": "#4ade80",
+          "description": "Floresta densa e úmida do Norte; clima equatorial."
+        },
+        {
+          "id": "cocais",
+          "label": "Mata dos Cocais",
+          "color": "#a855f7",
+          "description": "Palmeiras (babaçu, carnaúba) na transição Norte–Nordeste."
+        },
+        {
+          "id": "atlantica",
+          "label": "Mata Atlântica",
+          "color": "#15803d",
+          "description": "Floresta tropical do litoral leste — muito desmatada."
+        },
+        {
+          "id": "araucarias",
+          "label": "Mata das Araucárias",
+          "color": "#b45309",
+          "description": "Pinheiros-do-paraná nos planaltos frios do Sul."
+        },
+        {
+          "id": "cerrado",
+          "label": "Cerrado",
+          "color": "#f9a8d4",
+          "description": "Savana brasileira: árvores retorcidas, estação seca."
+        },
+        {
+          "id": "caatinga",
+          "label": "Caatinga",
+          "color": "#fde047",
+          "description": "Vegetação seca do semiárido nordestino — cactos e arbustos."
+        },
+        {
+          "id": "campos",
+          "label": "Campos",
+          "color": "#fb923c",
+          "description": "Campos de gramíneas, sobretudo no Sul."
+        },
+        {
+          "id": "pantanal",
+          "label": "Vegetação do Pantanal",
+          "color": "#dc2626",
+          "description": "Planície alagável do Centro-Oeste."
+        },
+        {
+          "id": "litoranea",
+          "label": "Vegetação litorânea",
+          "color": "#0f766e",
+          "description": "Restingas e mangues junto ao mar."
+        }
+      ],
+      "approximate": true,
+      "note": "Aproximação por estado: as formações originais não seguem as divisas; o clique mostra as demais."
     }
   },
   "states": [
@@ -63,7 +242,18 @@
       ],
       "created": null,
       "label_x": 77.3,
-      "label_y": 282.7
+      "label_y": 282.7,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "equatorial"
+      ],
+      "vegetation": [
+        "amazonica"
+      ]
     },
     {
       "id": "AL",
@@ -75,7 +265,20 @@
       ],
       "created": null,
       "label_x": 709.9,
-      "label_y": 286.6
+      "label_y": 286.6,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_litoraneo",
+        "tropical_semiarido"
+      ],
+      "vegetation": [
+        "caatinga",
+        "atlantica"
+      ]
     },
     {
       "id": "AM",
@@ -87,7 +290,18 @@
       ],
       "created": null,
       "label_x": 184.7,
-      "label_y": 186.8
+      "label_y": 186.8,
+      "lines": {
+        "equator": true,
+        "capricorn": false,
+        "zone": "equator_cut"
+      },
+      "climates": [
+        "equatorial"
+      ],
+      "vegetation": [
+        "amazonica"
+      ]
     },
     {
       "id": "AP",
@@ -99,7 +313,19 @@
       ],
       "created": null,
       "label_x": 423.0,
-      "label_y": 81.6
+      "label_y": 81.6,
+      "lines": {
+        "equator": true,
+        "capricorn": false,
+        "zone": "equator_cut"
+      },
+      "climates": [
+        "equatorial"
+      ],
+      "vegetation": [
+        "amazonica",
+        "litoranea"
+      ]
     },
     {
       "id": "BA",
@@ -111,7 +337,22 @@
       ],
       "created": null,
       "label_x": 614.5,
-      "label_y": 342.0
+      "label_y": 342.0,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_semiarido",
+        "tropical",
+        "tropical_litoraneo"
+      ],
+      "vegetation": [
+        "caatinga",
+        "cerrado",
+        "atlantica"
+      ]
     },
     {
       "id": "CE",
@@ -124,7 +365,20 @@
       ],
       "created": null,
       "label_x": 653.9,
-      "label_y": 203.8
+      "label_y": 203.8,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_semiarido",
+        "tropical_litoraneo"
+      ],
+      "vegetation": [
+        "caatinga",
+        "litoranea"
+      ]
     },
     {
       "id": "ES",
@@ -138,7 +392,20 @@
       ],
       "created": null,
       "label_x": 634.2,
-      "label_y": 474.7
+      "label_y": 474.7,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_litoraneo",
+        "tropical_altitude"
+      ],
+      "vegetation": [
+        "atlantica",
+        "litoranea"
+      ]
     },
     {
       "id": "GO",
@@ -150,7 +417,18 @@
       ],
       "created": null,
       "label_x": 466.7,
-      "label_y": 408.7
+      "label_y": 408.7,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical"
+      ],
+      "vegetation": [
+        "cerrado"
+      ]
     },
     {
       "id": "MA",
@@ -214,7 +492,21 @@
       ],
       "created": null,
       "label_x": 548.0,
-      "label_y": 203.2
+      "label_y": 203.2,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical",
+        "equatorial"
+      ],
+      "vegetation": [
+        "cocais",
+        "amazonica",
+        "cerrado"
+      ]
     },
     {
       "id": "MG",
@@ -226,7 +518,22 @@
       ],
       "created": null,
       "label_x": 559.3,
-      "label_y": 453.9
+      "label_y": 453.9,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical",
+        "tropical_altitude",
+        "tropical_semiarido"
+      ],
+      "vegetation": [
+        "cerrado",
+        "atlantica",
+        "caatinga"
+      ]
     },
     {
       "id": "MS",
@@ -239,7 +546,21 @@
       ],
       "created": 1977,
       "label_x": 369.1,
-      "label_y": 488.8
+      "label_y": 488.8,
+      "lines": {
+        "equator": false,
+        "capricorn": true,
+        "zone": "capricorn_cut"
+      },
+      "climates": [
+        "tropical",
+        "subtropical"
+      ],
+      "vegetation": [
+        "cerrado",
+        "pantanal",
+        "atlantica"
+      ]
     },
     {
       "id": "MT",
@@ -252,7 +573,21 @@
       ],
       "created": null,
       "label_x": 349.1,
-      "label_y": 350.8
+      "label_y": 350.8,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical",
+        "equatorial"
+      ],
+      "vegetation": [
+        "cerrado",
+        "amazonica",
+        "pantanal"
+      ]
     },
     {
       "id": "PA",
@@ -279,7 +614,18 @@
       ],
       "created": null,
       "label_x": 402.3,
-      "label_y": 182.9
+      "label_y": 182.9,
+      "lines": {
+        "equator": true,
+        "capricorn": false,
+        "zone": "equator_cut"
+      },
+      "climates": [
+        "equatorial"
+      ],
+      "vegetation": [
+        "amazonica"
+      ]
     },
     {
       "id": "PB",
@@ -292,7 +638,20 @@
       ],
       "created": null,
       "label_x": 706.2,
-      "label_y": 241.9
+      "label_y": 241.9,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_semiarido",
+        "tropical_litoraneo"
+      ],
+      "vegetation": [
+        "caatinga",
+        "atlantica"
+      ]
     },
     {
       "id": "PE",
@@ -306,7 +665,20 @@
       ],
       "created": null,
       "label_x": 684.1,
-      "label_y": 264.4
+      "label_y": 264.4,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_semiarido",
+        "tropical_litoraneo"
+      ],
+      "vegetation": [
+        "caatinga",
+        "atlantica"
+      ]
     },
     {
       "id": "PI",
@@ -318,7 +690,21 @@
       ],
       "created": null,
       "label_x": 591.2,
-      "label_y": 246.9
+      "label_y": 246.9,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical",
+        "tropical_semiarido"
+      ],
+      "vegetation": [
+        "cocais",
+        "cerrado",
+        "caatinga"
+      ]
     },
     {
       "id": "PR",
@@ -330,7 +716,21 @@
       ],
       "created": null,
       "label_x": 429.5,
-      "label_y": 569.5
+      "label_y": 569.5,
+      "lines": {
+        "equator": false,
+        "capricorn": true,
+        "zone": "capricorn_cut"
+      },
+      "climates": [
+        "subtropical",
+        "tropical"
+      ],
+      "vegetation": [
+        "araucarias",
+        "atlantica",
+        "campos"
+      ]
     },
     {
       "id": "RJ",
@@ -377,7 +777,20 @@
       ],
       "created": null,
       "label_x": 597.1,
-      "label_y": 523.9
+      "label_y": 523.9,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_litoraneo",
+        "tropical_altitude"
+      ],
+      "vegetation": [
+        "atlantica",
+        "litoranea"
+      ]
     },
     {
       "id": "RN",
@@ -389,7 +802,20 @@
       ],
       "created": null,
       "label_x": 709.0,
-      "label_y": 217.9
+      "label_y": 217.9,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_semiarido",
+        "tropical_litoraneo"
+      ],
+      "vegetation": [
+        "caatinga",
+        "litoranea"
+      ]
     },
     {
       "id": "RO",
@@ -402,7 +828,20 @@
       ],
       "created": null,
       "label_x": 219.4,
-      "label_y": 312.7
+      "label_y": 312.7,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "equatorial",
+        "tropical"
+      ],
+      "vegetation": [
+        "amazonica",
+        "cerrado"
+      ]
     },
     {
       "id": "RR",
@@ -414,7 +853,19 @@
       ],
       "created": null,
       "label_x": 246.5,
-      "label_y": 69.5
+      "label_y": 69.5,
+      "lines": {
+        "equator": true,
+        "capricorn": false,
+        "zone": "equator_cut"
+      },
+      "climates": [
+        "equatorial"
+      ],
+      "vegetation": [
+        "amazonica",
+        "campos"
+      ]
     },
     {
       "id": "RS",
@@ -439,7 +890,20 @@
       ],
       "created": null,
       "label_x": 397.7,
-      "label_y": 664.3
+      "label_y": 664.3,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "temperate_south"
+      },
+      "climates": [
+        "subtropical"
+      ],
+      "vegetation": [
+        "campos",
+        "araucarias",
+        "atlantica"
+      ]
     },
     {
       "id": "SC",
@@ -453,7 +917,20 @@
       ],
       "created": null,
       "label_x": 450.9,
-      "label_y": 618.4
+      "label_y": 618.4,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "temperate_south"
+      },
+      "climates": [
+        "subtropical"
+      ],
+      "vegetation": [
+        "araucarias",
+        "atlantica",
+        "campos"
+      ]
     },
     {
       "id": "SE",
@@ -465,7 +942,20 @@
       ],
       "created": null,
       "label_x": 694.8,
-      "label_y": 306.7
+      "label_y": 306.7,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical_litoraneo",
+        "tropical_semiarido"
+      ],
+      "vegetation": [
+        "caatinga",
+        "atlantica"
+      ]
     },
     {
       "id": "SP",
@@ -501,7 +991,23 @@
       ],
       "created": null,
       "label_x": 483.6,
-      "label_y": 525.2
+      "label_y": 525.2,
+      "lines": {
+        "equator": false,
+        "capricorn": true,
+        "zone": "capricorn_cut"
+      },
+      "climates": [
+        "tropical",
+        "tropical_altitude",
+        "tropical_litoraneo",
+        "subtropical"
+      ],
+      "vegetation": [
+        "atlantica",
+        "cerrado",
+        "litoranea"
+      ]
     },
     {
       "id": "TO",
@@ -513,7 +1019,18 @@
       ],
       "created": 1988,
       "label_x": 490.9,
-      "label_y": 298.4
+      "label_y": 298.4,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical"
+      ],
+      "vegetation": [
+        "cerrado"
+      ]
     },
     {
       "id": "DF",
@@ -525,7 +1042,18 @@
       ],
       "created": null,
       "label_x": 500.9,
-      "label_y": 403.8
+      "label_y": 403.8,
+      "lines": {
+        "equator": false,
+        "capricorn": false,
+        "zone": "intertropical"
+      },
+      "climates": [
+        "tropical"
+      ],
+      "vegetation": [
+        "cerrado"
+      ]
     }
   ],
   "merged": [

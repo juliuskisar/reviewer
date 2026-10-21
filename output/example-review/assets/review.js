@@ -427,16 +427,83 @@
     });
   }
 
+  var THEMATIC_MODES = ['imaginary_lines', 'climates', 'vegetation'];
+
+  function themeFor(mode) {
+    return (MAP_DATA.thematic || {})[mode] || null;
+  }
+
+  function legendItem(theme, id) {
+    if (!theme) return null;
+    for (var i = 0; i < theme.legend.length; i++) {
+      if (theme.legend[i].id === id) return theme.legend[i];
+    }
+    return null;
+  }
+
+  function stateThemeIds(group, theme) {
+    if (!theme) return [];
+    var raw = group.dataset[theme.state_key === 'lines' ? 'zone' : theme.state_key] || '';
+    return raw.split(',').filter(Boolean);
+  }
+
+  function renderMapLegend(mapEl, mode) {
+    var legendEl = $('[data-legend]', mapEl);
+    if (!legendEl) return;
+    var theme = themeFor(mode);
+    if (!theme) {
+      legendEl.classList.add('is-hidden');
+      legendEl.innerHTML = '';
+      return;
+    }
+    var html = '<p class="brazil-map__legend-title">' + theme.title + '</p><ul class="brazil-map__legend-list">';
+    theme.legend.forEach(function (item) {
+      html += '<li class="brazil-map__legend-item">' +
+        '<span class="brazil-map__legend-swatch" style="background:' + item.color + '"></span>' +
+        '<span class="brazil-map__legend-label">' + item.label + '</span></li>';
+    });
+    html += '</ul>';
+    if (theme.note) html += '<p class="brazil-map__legend-note">' + theme.note + '</p>';
+    legendEl.innerHTML = html;
+    legendEl.classList.remove('is-hidden');
+  }
+
+  function applyThemeFills(mapEl, mode) {
+    var theme = themeFor(mode);
+    $$('.brazil-map__state-group', mapEl).forEach(function (group) {
+      if (!theme) {
+        group.style.removeProperty('--theme-fill');
+        return;
+      }
+      var ids = stateThemeIds(group, theme);
+      var item = legendItem(theme, ids[0]);
+      if (item) {
+        group.style.setProperty('--theme-fill', item.color);
+      } else {
+        group.style.removeProperty('--theme-fill');
+      }
+    });
+    var parallels = $('.brazil-map__parallels', mapEl);
+    if (parallels) {
+      var showLines = mode === 'imaginary_lines';
+      parallels.classList.toggle('is-hidden', !showLines);
+      parallels.setAttribute('aria-hidden', showLines ? 'false' : 'true');
+    }
+  }
+
   function applyMapMode(mapEl, mode) {
     var cfg = MAP_DATA.modes[mode] || {};
     var descEl = $('.brazil-map__mode-desc', mapEl);
     if (descEl) descEl.textContent = cfg.description || '';
 
     mapEl.dataset.mode = mode;
-    mapEl.classList.remove('brazil-map--mode-evolution', 'brazil-map--mode-regions',
-      'brazil-map--mode-capitals', 'brazil-map--mode-new_states', 'brazil-map--mode-capital_quiz',
-      'brazil-map--mode-capital_game');
+    Array.prototype.slice.call(mapEl.classList).forEach(function (cls) {
+      if (cls.indexOf('brazil-map--mode-') === 0) mapEl.classList.remove(cls);
+    });
     mapEl.classList.add('brazil-map--mode-' + mode);
+    mapEl.classList.toggle('brazil-map--thematic', THEMATIC_MODES.indexOf(mode) !== -1);
+    applyThemeFills(mapEl, mode);
+    renderMapLegend(mapEl, mode);
 
     var panel = $('.brazil-map__panel', mapEl);
     var capitalQuiz = $('.brazil-map__capital-quiz', mapEl);
@@ -506,6 +573,17 @@
     $('.brazil-map__detail-capital', detail).textContent = data.capital || '';
     $('.brazil-map__detail-region', detail).textContent = data.region || '';
 
+    var themeEl = $('.brazil-map__detail-theme', detail);
+    if (themeEl) {
+      if (data.themeHtml) {
+        themeEl.innerHTML = data.themeHtml;
+        themeEl.classList.remove('is-hidden');
+      } else {
+        themeEl.innerHTML = '';
+        themeEl.classList.add('is-hidden');
+      }
+    }
+
     var noteEl = $('.brazil-map__detail-note', detail);
     noteEl.textContent = data.note || '';
 
@@ -557,13 +635,53 @@
       note = group.dataset.note || '';
     }
 
+    var themeHtml = '';
+    var theme = themeFor(mapEl.dataset.mode);
+    if (theme && !isMerged) {
+      themeHtml = buildThemeDetail(group, theme, mapEl.dataset.mode);
+    }
+
     showMapDetail(mapEl, {
       name: group.dataset.name || group.dataset.state || group.dataset.merged,
       id: group.dataset.state || group.dataset.merged,
       capital: group.dataset.capital,
       region: group.dataset.region,
-      note: note
+      note: note,
+      themeHtml: themeHtml
     });
+  }
+
+  function buildThemeDetail(group, theme, mode) {
+    var ids = stateThemeIds(group, theme);
+    if (!ids.length) return '';
+    var html = '<p class="brazil-map__theme-title">' + theme.title + '</p>';
+    if (mode === 'imaginary_lines') {
+      var item = legendItem(theme, ids[0]);
+      var cuts = [];
+      if (group.dataset.cutEquator === 'true') cuts.push('linha do Equador');
+      if (group.dataset.cutCapricorn === 'true') cuts.push('Trópico de Capricórnio');
+      html += '<p class="brazil-map__theme-main"><span class="brazil-map__legend-swatch" style="background:' +
+        (item ? item.color : '#ccc') + '"></span>' + (item ? item.label : '') + '</p>';
+      html += '<p class="brazil-map__theme-desc">' + (item ? item.description : '') + '</p>';
+      html += '<p class="brazil-map__theme-desc">' + (cuts.length
+        ? 'Cortado por: ' + cuts.join(' e ') + '.'
+        : 'Nenhuma das duas linhas passa por este estado.') + '</p>';
+      return html;
+    }
+    ids.forEach(function (id, idx) {
+      var li = legendItem(theme, id);
+      if (!li) return;
+      html += '<p class="' + (idx === 0 ? 'brazil-map__theme-main' : 'brazil-map__theme-other') + '">' +
+        '<span class="brazil-map__legend-swatch" style="background:' + li.color + '"></span>' +
+        li.label + (idx === 0 ? ' <small>(predominante)</small>' : '') + '</p>';
+      if (idx === 0) html += '<p class="brazil-map__theme-desc">' + li.description + '</p>';
+    });
+    if (ids.length > 1) {
+      html += '<p class="brazil-map__theme-desc"><em>Também ocorre no estado: ' +
+        ids.slice(1).map(function (id) { var li = legendItem(theme, id); return li ? li.label : id; }).join(', ') +
+        '.</em></p>';
+    }
+    return html;
   }
 
   function selectMapGroup(mapEl, group) {
@@ -729,6 +847,7 @@
   function initBrazilMaps() {
     $$('[data-component="brazil-map"]').forEach(function (mapEl) {
       if (mapEl.closest('[data-component="capital-game"]')) return;
+      if (mapEl.closest('[data-component="map-theme-game"]')) return;
       var period = mapEl.dataset.period || 'post_1988';
       var mode = mapEl.dataset.mode || 'evolution';
       var highlight = (mapEl.dataset.highlight || '').split(',').filter(Boolean);
@@ -773,6 +892,300 @@
           }
         });
       });
+    });
+  }
+
+  var GLOBE_ZONES = (function () {
+    var out = {};
+    var zones = (window.THERMAL_GLOBE_DATA || {}).zones || [];
+    zones.forEach(function (z) { out[z.id] = z; });
+    return out;
+  })();
+
+  function initThermalGlobes() {
+    $$('[data-component="thermal-globe"]').forEach(function (root) {
+      var palette = $('.thermal-globe__palette', root);
+      var hint = $('.thermal-globe__hint', root);
+      var detail = $('.thermal-globe__detail', root);
+      var nameEl = $('.thermal-globe__detail-name', root);
+      var raysEl = $('.thermal-globe__detail-rays', root);
+      var tempEl = $('.thermal-globe__detail-temp', root);
+      var feedback = $('.thermal-globe__feedback', root);
+      var bands = $$('.thermal-globe__band', root);
+      var lines = $$('.thermal-globe__parallel', root);
+      var chosenZone = null;
+
+      function setMode(mode) {
+        root.dataset.mode = mode;
+        root.classList.toggle('thermal-globe--paint', mode === 'paint');
+        root.classList.toggle('thermal-globe--explore', mode !== 'paint');
+        if (palette) palette.classList.toggle('is-hidden', mode !== 'paint');
+        $$('.thermal-globe__mode-btn', root).forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.dataset.mode === mode);
+        });
+        if (detail) detail.classList.add('is-hidden');
+        if (feedback) feedback.textContent = '';
+        if (hint) {
+          hint.classList.remove('is-hidden');
+          hint.textContent = mode === 'paint'
+            ? 'Escolha uma cor, clique nas faixas do globo e depois em Verificar.'
+            : 'Clique em uma faixa ou em uma linha para ver a explicação.';
+        }
+        bands.forEach(function (band) {
+          band.classList.remove('is-right', 'is-wrong', 'is-selected');
+          band.style.removeProperty('--painted');
+          band.removeAttribute('data-painted');
+        });
+      }
+
+      function showBand(band) {
+        var zone = GLOBE_ZONES[band.dataset.zone] || {};
+        if (nameEl) nameEl.textContent = band.dataset.label || zone.label || '';
+        if (raysEl) raysEl.textContent = zone.rays || '';
+        if (tempEl) tempEl.textContent = zone.temperature || '';
+        if (hint) hint.classList.add('is-hidden');
+        if (detail) detail.classList.remove('is-hidden');
+        bands.forEach(function (b) { b.classList.toggle('is-selected', b === band); });
+      }
+
+      function showLine(line) {
+        var texts = {
+          equator: 'Paralelo 0°: divide a Terra em hemisfério Norte e hemisfério Sul. É onde o Sol incide mais perpendicularmente.',
+          cancer: 'Limite norte da zona intertropical — até aqui os raios solares chegam perpendiculares.',
+          capricorn: 'Limite sul da zona intertropical. Passa pelo Brasil (MS, SP e PR).',
+          arctic: 'Limite da zona polar Norte — raios muito inclinados; sol da meia-noite no verão.',
+          antarctic: 'Limite da zona polar Sul — raios muito inclinados; noite longa no inverno.'
+        };
+        if (nameEl) nameEl.textContent = line.dataset.label || '';
+        if (raysEl) raysEl.textContent = texts[line.dataset.parallel] || '';
+        if (tempEl) tempEl.textContent = '';
+        if (hint) hint.classList.add('is-hidden');
+        if (detail) detail.classList.remove('is-hidden');
+        bands.forEach(function (b) { b.classList.remove('is-selected'); });
+      }
+
+      function paintBand(band) {
+        if (!chosenZone) {
+          if (feedback) feedback.textContent = 'Primeiro escolha uma cor na paleta.';
+          return;
+        }
+        var zone = GLOBE_ZONES[chosenZone];
+        band.style.setProperty('--painted', zone ? zone.color : '#ccc');
+        band.setAttribute('data-painted', chosenZone);
+        band.classList.remove('is-right', 'is-wrong');
+        if (feedback) feedback.textContent = '';
+      }
+
+      function checkPaint() {
+        var right = 0;
+        var painted = 0;
+        bands.forEach(function (band) {
+          var chosen = band.getAttribute('data-painted');
+          if (!chosen) {
+            band.classList.remove('is-right', 'is-wrong');
+            return;
+          }
+          painted += 1;
+          var ok = chosen === band.dataset.zone;
+          band.classList.toggle('is-right', ok);
+          band.classList.toggle('is-wrong', !ok);
+          if (ok) right += 1;
+        });
+        if (!feedback) return;
+        if (painted < bands.length) {
+          feedback.textContent = 'Faltam ' + (bands.length - painted) + ' faixa(s) para pintar.';
+        } else if (right === bands.length) {
+          feedback.textContent = 'Perfeito! Vermelho entre os trópicos, amarelo nas zonas temperadas e cinza nas polares.';
+        } else {
+          feedback.textContent = right + ' de ' + bands.length + ' faixas certas. Lembre: quanto mais perto dos polos, mais frio.';
+        }
+      }
+
+      bands.forEach(function (band) {
+        function activate() {
+          if (root.dataset.mode === 'paint') paintBand(band); else showBand(band);
+        }
+        band.addEventListener('click', activate);
+        band.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+        });
+      });
+
+      lines.forEach(function (line) {
+        function activate() {
+          if (root.dataset.mode !== 'paint') showLine(line);
+        }
+        line.addEventListener('click', activate);
+        line.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+        });
+      });
+
+      $$('.thermal-globe__color-btn', root).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          chosenZone = btn.dataset.zone;
+          $$('.thermal-globe__color-btn', root).forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+          if (feedback) feedback.textContent = '';
+        });
+      });
+
+      var checkBtn = $('.thermal-globe__check', root);
+      if (checkBtn) checkBtn.addEventListener('click', checkPaint);
+      var resetBtn = $('.thermal-globe__reset', root);
+      if (resetBtn) resetBtn.addEventListener('click', function () { setMode('paint'); });
+
+      $$('.thermal-globe__mode-btn', root).forEach(function (btn) {
+        btn.addEventListener('click', function () { setMode(btn.dataset.mode); });
+      });
+
+      setMode(root.dataset.mode || 'explore');
+    });
+  }
+
+  function shuffleArray(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function initMapThemeGames() {
+    $$('[data-component="map-theme-game"]').forEach(function (gameRoot) {
+      var mapEl = $('[data-component="brazil-map"]', gameRoot);
+      var themeId = gameRoot.dataset.theme;
+      var theme = themeFor(themeId);
+      if (!mapEl || !theme) return;
+
+      var scoreEl = $('.capital-game__score', gameRoot);
+      var timerEl = $('.capital-game__timer', gameRoot);
+      var errorsEl = $('.map-theme-game__errors', gameRoot);
+      var questionEl = $('.map-theme-game__question', gameRoot);
+      var optionsEl = $('.map-theme-game__options', gameRoot);
+      var feedbackEl = $('.map-theme-game__feedback', gameRoot);
+      var victoryEl = $('.capital-game__victory', gameRoot);
+      var victoryText = $('.capital-game__victory-text', gameRoot);
+      var resetBtn = $('.capital-game__reset', gameRoot);
+      var groups = $$('.brazil-map__state-group', mapEl);
+      var total = groups.length;
+      var queue = [];
+      var current = null;
+      var correct = 0;
+      var errors = 0;
+      var startTime = null;
+      var timerInterval = null;
+
+      function formatTime(ms) {
+        var sec = Math.floor(ms / 1000);
+        var min = Math.floor(sec / 60);
+        sec = sec % 60;
+        return String(min).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+      }
+      function startTimer() {
+        if (startTime) return;
+        startTime = Date.now();
+        timerInterval = setInterval(function () {
+          if (timerEl) timerEl.textContent = formatTime(Date.now() - startTime);
+        }, 1000);
+      }
+      function stopTimer() {
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      }
+      function updateScore() {
+        if (scoreEl) scoreEl.textContent = correct + ' / ' + total;
+        if (errorsEl) errorsEl.textContent = String(errors);
+      }
+
+      function renderOptions() {
+        if (!optionsEl) return;
+        optionsEl.innerHTML = '';
+        theme.legend.forEach(function (item) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'map-theme-game__option';
+          btn.dataset.answer = item.id;
+          btn.innerHTML = '<span class="brazil-map__legend-swatch" style="background:' + item.color + '"></span>' + item.label;
+          btn.addEventListener('click', function () { answer(item.id, btn); });
+          optionsEl.appendChild(btn);
+        });
+      }
+
+      function nextQuestion() {
+        groups.forEach(function (g) { g.classList.remove('is-selected'); });
+        if (!queue.length) {
+          current = null;
+          finish();
+          return;
+        }
+        current = queue.shift();
+        current.classList.add('is-selected');
+        if (questionEl) {
+          questionEl.textContent = gameRoot.dataset.questionPrefix + ' ' +
+            current.dataset.name + ' (' + current.dataset.state + ')?';
+        }
+        if (feedbackEl) feedbackEl.textContent = '';
+        $$('.map-theme-game__option', gameRoot).forEach(function (b) { b.classList.remove('is-wrong'); b.disabled = false; });
+      }
+
+      function answer(id, btn) {
+        if (!current) return;
+        startTimer();
+        var ids = stateThemeIds(current, theme);
+        if (id === ids[0]) {
+          var item = legendItem(theme, id);
+          current.style.setProperty('--theme-fill', item ? item.color : '#ccc');
+          current.classList.add('is-completed-theme');
+          correct += 1;
+          if (feedbackEl) {
+            var extra = ids.length > 1
+              ? ' Também ocorre: ' + ids.slice(1).map(function (x) { var li = legendItem(theme, x); return li ? li.label : x; }).join(', ') + '.'
+              : '';
+            feedbackEl.textContent = 'Certo! ' + (item ? item.label : '') + ' predomina em ' + current.dataset.name + '.' + extra;
+          }
+          updateScore();
+          setTimeout(nextQuestion, 900);
+        } else {
+          errors += 1;
+          if (btn) { btn.classList.add('is-wrong'); btn.disabled = true; }
+          if (feedbackEl) feedbackEl.textContent = 'Ainda não. Pense na região e no clima dela — tente outra opção.';
+          updateScore();
+        }
+      }
+
+      function finish() {
+        stopTimer();
+        var elapsed = startTime ? Date.now() - startTime : 0;
+        if (questionEl) questionEl.textContent = 'Mapa completo!';
+        if (victoryText) {
+          victoryText.textContent = 'Você completou os ' + total + ' estados em ' + formatTime(elapsed) +
+            ' com ' + errors + ' erro(s).';
+        }
+        if (victoryEl) victoryEl.classList.remove('is-hidden');
+      }
+
+      function resetGame() {
+        stopTimer();
+        startTime = null;
+        correct = 0;
+        errors = 0;
+        if (timerEl) timerEl.textContent = '00:00';
+        if (victoryEl) victoryEl.classList.add('is-hidden');
+        groups.forEach(function (g) {
+          g.classList.remove('is-completed-theme', 'is-selected');
+          g.style.removeProperty('--theme-fill');
+        });
+        queue = shuffleArray(groups);
+        updateScore();
+        nextQuestion();
+      }
+
+      applyMapMode(mapEl, 'theme_game');
+      mapEl.classList.add('brazil-map--thematic');
+      renderMapLegend(mapEl, themeId);
+      renderOptions();
+      if (resetBtn) resetBtn.addEventListener('click', resetGame);
+      resetGame();
     });
   }
 
@@ -904,6 +1317,8 @@
     initReset();
     initBrazilMaps();
     initCapitalGame();
+    initMapThemeGames();
+    initThermalGlobes();
     initStudyGames();
     updateProgressBar();
   });

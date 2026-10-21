@@ -220,9 +220,50 @@ Centralizar blocos em `_interactive_map_blocks()` (referência: `benjamin_geogra
 | `regions` | Cores por região (Norte, Nordeste, etc.) |
 | `capitals` | Nomes das capitais no mapa |
 | `new_states` | Destaque estados criados após 1977 |
+| `imaginary_lines` | **Equador e Trópico de Capricórnio** desenhados sobre o Brasil; estados coloridos por zona (cortado pelo Equador / intertropical / cortado pelo Trópico / temperada Sul); clique mostra as linhas que cortam o estado |
+| `climates` | Clima **predominante** por estado (6 climas do mapa do caderno) — clique lista os demais climas do estado |
+| `vegetation` | Formação vegetal **original predominante** por estado (9 formações) — clique lista as demais |
 | `capital_quiz` | **Só em exercícios** — clique + digitar capital + verificar |
 
-Mapa principal: `show_mode_toggle: True` + `show_period_toggle: True`. Mapas focados (um tema): só o toggle necessário.
+Mapa principal: `show_mode_toggle: True` + `show_period_toggle: True`. Mapas focados (um tema): só o toggle necessário. Com `show_mode_toggle`, use `modes: [...]` para limitar os botões exibidos.
+
+**Regra de fidelidade:** o mapa deve refletir o **tema do título e da apostila**. Não usar `regions`/`capitals` como substitutos genéricos de clima, vegetação ou linhas imaginárias. Os modos `climates` e `vegetation` são **aproximações por estado** (a legenda já avisa) — os dados ficam em `CLIMATE_BY_STATE` / `VEGETATION_BY_STATE` em `build_brazil_states.py`. Relevo e desmatamento **não** têm mapa por estado: ficam em cards/tabelas nas explicações.
+
+#### Globo de zonas térmicas (`thermal_globe`)
+
+Bloco SVG para Módulo "incidência solar / zonas térmicas": globo com os 5 paralelos (círculos polares, trópicos, Equador) e 3 faixas clicáveis.
+
+| `mode` | Uso |
+|--------|-----|
+| `explore` | Clique na faixa → como os raios incidem e a temperatura; clique na linha → o que ela delimita |
+| `paint` | Atividade de colorir (vermelho = intertropical, amarelo = temperada, cinza = polar) + **Verificar** |
+
+```python
+{"type": "thermal_globe", "content": {"globe_id": "zonas", "title": "...", "mode": "explore", "show_mode_toggle": True, "caption": "..."}}
+```
+
+Geometria: `review_builder/thermal_globe.py`; template `templates/components/thermal-globe.html`; JS `initThermalGlobes`.
+
+#### Jogo temático no mapa (`map_theme_game`)
+
+Seção (aba) que sorteia estados e pede o tema predominante — o estado acertado ganha a cor da legenda, como "pintar o mapa da apostila". Cronômetro, acertos e erros.
+
+```python
+{
+    "id": "climate_game",
+    "type": "map_theme_game",
+    "title": "Jogo dos climas",
+    "theme": "climates",            # climates | vegetation | imaginary_lines
+    "question_prefix": "Qual clima predomina em",
+    "blocks": [{"type": "panel_intro", ...}, {"type": "callout", ...}],
+}
+```
+
+Incluir passo no `route_steps` com `"panel": "climate_game"`. Template `map-theme-game.html`; JS `initMapThemeGames`.
+
+#### Jogos de revisão (`study_game`) em Geografia
+
+Aba `study_game` com ≥ 2 blocos: `sort_buckets` (ex.: lugares → zona térmica) e `match_pairs` (ex.: forma de relevo → definição). Use `title`, `pool_title`, `left_title`, `right_title` para rotular as colunas conforme o conteúdo.
 
 #### Evolução histórica (fusões)
 
@@ -286,11 +327,14 @@ Incluir seção `capital_game` em revisões de Geografia quando o caderno trabal
 | Build geometria | `review_builder/map_data/build_brazil_states.py` |
 | Loader | `review_builder/brazil_map.py` |
 | Template mapa | `templates/components/brazil-map.html` |
-| Template jogo | `templates/components/capital-game.html` |
-| JS | `templates/static/review.js` (`initBrazilMaps`, `initCapitalGame`) |
-| Schema | `brazil_map` em `review-content.schema.json` e `exercises.schema.json` |
+| Template jogo capitais | `templates/components/capital-game.html` |
+| Template jogo temático | `templates/components/map-theme-game.html` |
+| Globo térmico | `review_builder/thermal_globe.py` + `templates/components/thermal-globe.html` |
+| JS | `templates/static/review.js` (`initBrazilMaps`, `initCapitalGame`, `initMapThemeGames`, `initThermalGlobes`) |
+| Schema | `brazil_map`, `thermal_globe`, `map_theme_game` em `review-content.schema.json` / `review-blueprint.schema.json`; `brazil_map` em `exercises.schema.json` |
+| Testes | `tests/test_geography_components.py` |
 
-Referência completa: `review_builder/benjamin_geografia_content.py`, `output/benjamin-pe-geografia-2tri/`.
+Referências: `review_builder/benjamin_geografia_content.py` (2º tri — bandeira/UFs, modos `evolution`/`capitals`) e `review_builder/benjamin_geografia_3tri_content.py` (3º tri — `imaginary_lines`, `climates`, `vegetation`, `thermal_globe`, `map_theme_game`, `study_game`).
 
 ### Textos transcritos da apostila — **Português PE**
 
@@ -398,6 +442,7 @@ Checklist por revisão:
 | Benjamin · Ciências 4º | `benjamin_ciencias_content.py` | `generate_benjamin_ciencias.py` |
 | Benjamin · Matemática 4º | `benjamin_matematica_content.py` | `generate_benjamin_matematica.py` |
 | Benjamin · Geografia 4º | `benjamin_geografia_content.py` | `generate_benjamin_geografia.py` |
+| Benjamin · Geografia 4º (3º tri) | `benjamin_geografia_3tri_content.py` | `generate_benjamin_geografia_3tri.py` |
 | Benjamin · Português 4º | `benjamin_portugues_content.py` | `generate_benjamin_portugues.py` |
 | Pedro · Matemática 6º | `pedro_matematica_content.py` | `generate_pedro_matematica.py` |
 | Pedro · Ciências 6º | `pedro_ciencias_content.py` | `generate_pedro_ciencias.py` |
@@ -414,7 +459,7 @@ Nova disciplina do **mesmo aluno** → duplicar o par mais recente do aluno e re
 - [ ] 6–8 tópicos nas explicações e no resumo
 - [ ] Roteiro com botões para abas (incl. Prática escrita / Mapas interativos / Desafios quando houver)
 - [ ] Inglês/Espanhol: 8–12 exercícios `written_language` com `section: "escrita"` e passo no roteiro
-- [ ] Geografia: aba `interactive_maps` com todos os `brazil_map`; aba `capital_game` com jogo das 27 capitais; ≥1 exercício MC com `visual` de mapa
+- [ ] Geografia: aba `interactive_maps` com todos os `brazil_map` — **um mapa por tema da apostila**, no modo que ilustra o título (`imaginary_lines`, `climates`, `vegetation`, `evolution`…), nunca `regions`/`capitals` genéricos; `thermal_globe` quando o módulo trata zonas térmicas; aba `capital_game`; aba `map_theme_game` quando houver camada temática; ≥1 exercício MC com `visual` de mapa
 - [ ] 15–18 exercícios autossuficientes (mín. 12) + 10 desafios avançados (Matemática)
 - [ ] Gráficos: exemplo renderizado nas explicações + ≥1 exercício com `visual` (contexto diferente); variar pizza/barras/linhas conforme o caderno
 - [ ] Questões I–IV sem padrão repetido de gabarito

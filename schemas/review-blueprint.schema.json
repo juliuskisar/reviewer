@@ -36,7 +36,8 @@
           "guided_example", "quick_summary", "attention_point", "exam_tip",
           "parent_support", "open_response", "progress",
           "concept_grid", "panel_intro", "route_steps",
-          "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map", "capital_game", "study_game"
+          "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map", "thermal_globe",
+          "capital_game", "map_theme_game", "study_game"
         ]
       }
     },
@@ -83,7 +84,7 @@
           "type": "string",
           "enum": [
             "study_route", "explanations", "quick_summary", "interactive_maps",
-            "capital_game", "study_game", "attention_points",
+            "capital_game", "map_theme_game", "study_game", "attention_points",
             "guided_examples", "exercises", "final_quiz", "exam_tips", "parent_support"
           ]
         },

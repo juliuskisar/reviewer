@@ -64,6 +64,9 @@
 {% elif block.type == 'brazil_map' %}
 {% include "components/brazil-map.html" %}
 
+{% elif block.type == 'thermal_globe' %}
+{% include "components/thermal-globe.html" %}
+
 {% elif block.type == 'image' %}
 <figure class="content-image">
   <img src="{{ asset_base }}{{ block.content.file }}" alt="{{ block.content.alt | default('') }}" loading="lazy">

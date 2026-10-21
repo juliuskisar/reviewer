@@ -11,8 +11,9 @@
   {% endif %}
 
   {% if block.content.show_mode_toggle %}
+  {% set allowed_modes = block.content.modes or ['evolution', 'regions', 'capitals', 'new_states', 'capital_quiz', 'capital_game'] %}
   <div class="brazil-map__modes" role="group" aria-label="Modo de exploração do mapa">
-    {% for key, mode in map_data.modes.items() %}
+    {% for key, mode in map_data.modes.items() if key in allowed_modes %}
     <button type="button"
             class="brazil-map__mode-btn{% if key == (block.content.mode | default('evolution')) %} is-active{% endif %}"
             data-mode="{{ key }}"
@@ -43,6 +44,11 @@
            data-name="{{ state.name }}"
            data-capital="{{ state.capital }}"
            data-region="{{ state.region }}"
+           data-zone="{{ state.lines.zone }}"
+           data-cut-equator="{{ 'true' if state.lines.equator else 'false' }}"
+           data-cut-capricorn="{{ 'true' if state.lines.capricorn else 'false' }}"
+           data-climates="{{ state.climates | join(',') }}"
+           data-vegetation="{{ state.vegetation | join(',') }}"
            {% if state.created %}data-created="{{ state.created }}"{% endif %}>
           {% for path in state.paths %}
           <path class="brazil-map__state" d="{{ path }}"
@@ -85,6 +91,15 @@
               text-anchor="middle">{{ merged.capital }}</text>
         {% endfor %}
       </g>
+      <g class="brazil-map__parallels is-hidden" aria-hidden="true">
+        {% for line in map_data.parallels %}
+        <line class="brazil-map__parallel" data-parallel="{{ line.id }}"
+              x1="{{ line.x1 }}" y1="{{ line.y }}" x2="{{ line.x2 }}" y2="{{ line.y }}"
+              style="stroke: {{ line.color }}"/>
+        <text class="brazil-map__parallel-label" x="{{ line.x2 - 8 }}" y="{{ line.y - 6 }}"
+              text-anchor="end" style="fill: {{ line.color }}">{{ line.label }}</text>
+        {% endfor %}
+      </g>
     </svg>
     <aside class="brazil-map__panel" aria-live="polite">
       <p class="brazil-map__hint">Clique em um estado para ver detalhes.</p>
@@ -115,10 +130,12 @@
           <dt>Região</dt>
           <dd class="brazil-map__detail-region"></dd>
         </dl>
+        <div class="brazil-map__detail-theme is-hidden"></div>
         <p class="brazil-map__detail-note"></p>
       </div>
     </aside>
   </div>
+  <div class="brazil-map__legend is-hidden" data-legend aria-label="Legenda do mapa"></div>
   {% if block.content.caption %}
   <p class="brazil-map__caption">{{ block.content.caption }}</p>
   {% endif %}
