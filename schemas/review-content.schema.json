@@ -61,7 +61,7 @@
             "paragraph", "list", "heading", "callout", "comparison_table",
             "timeline", "guided_example", "quick_summary", "attention_point",
             "exam_tip", "accordion_item", "image", "concept_grid", "panel_intro", "route_steps",
-            "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map",
+            "bar_chart", "pie_chart", "line_chart", "fraction_visual", "geometric_figure", "brazil_map",
             "thermal_globe", "study_game"
           ]
         },

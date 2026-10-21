@@ -107,7 +107,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": ["bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map"]
+              "enum": ["bar_chart", "pie_chart", "line_chart", "fraction_visual", "geometric_figure", "brazil_map"]
             },
             "content": { "type": "object" }
           },

@@ -1695,6 +1695,34 @@ html, body {
   display: none;
 }
 
+.geometric-figure {
+  margin: 16px 0;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+.geometric-figure__title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.geometric-figure__svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.geometric-figure__caption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+.geometric-figure__label {
+  font-family: system-ui, sans-serif;
+}
+
 @media (max-width: 640px) {
   .brazil-map__layout {
     grid-template-columns: 1fr;

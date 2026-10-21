@@ -10,6 +10,9 @@
 {% elif exercise.visual.type == 'fraction_visual' %}
 {% set block = exercise.visual %}
 {% include "components/fraction-visual.html" %}
+{% elif exercise.visual.type == 'geometric_figure' %}
+{% set block = exercise.visual %}
+{% include "components/geometric-figure.html" %}
 {% elif exercise.visual.type == 'brazil_map' %}
 {% set block = exercise.visual %}
 {% include "components/brazil-map.html" %}

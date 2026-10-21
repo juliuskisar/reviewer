@@ -1,0 +1,29 @@
+version: 1
+id: dg-pe-6
+name: Desenho Geométrico — PE 6º ano (3º trimestre)
+objectives:
+  - Classificar quadriláteros notáveis e usar o diagrama de inclusão
+  - Identificar diagonais em polígonos e propriedades no retângulo
+  - Calcular áreas de retângulo, quadrado, triângulo e figuras compostas
+  - Interpretar figuras em malha e problemas de aplicação (pintura, teto)
+preferred_components:
+  - concept_grid
+  - comparison_table
+  - route_steps
+  - geometric_figure
+exercise_types:
+  - multiple_choice
+common_errors:
+  - topic: quadrilateral_hierarchy
+    description: Achar que trapézio e paralelogramo são sempre disjuntos
+    prevention: No caderno, paralelogramo também é trapézio (definição inclusiva)
+  - topic: triangle_area
+    description: Esquecer de dividir por 2 na área do triângulo
+    prevention: Triângulo retângulo = metade do retângulo que o envolve
+  - topic: composite_area
+    description: Somar medidas em vez de áreas em figuras compostas
+    prevention: Decomponha em retângulos/triângulos, calcule cada área e some
+pedagogical_strategies:
+  - Usar malha de quadrados de 1 cm² antes da fórmula
+  - Relacionar diagonal de retângulo com maior distância dentro da figura
+  - Variar exercícios com figuras SVG autossuficientes na página

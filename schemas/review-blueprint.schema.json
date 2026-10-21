@@ -36,7 +36,7 @@
           "guided_example", "quick_summary", "attention_point", "exam_tip",
           "parent_support", "open_response", "progress",
           "concept_grid", "panel_intro", "route_steps",
-          "bar_chart", "pie_chart", "line_chart", "fraction_visual", "brazil_map", "thermal_globe",
+          "bar_chart", "pie_chart", "line_chart", "fraction_visual", "geometric_figure", "brazil_map", "thermal_globe",
           "capital_game", "map_theme_game", "study_game"
         ]
       }

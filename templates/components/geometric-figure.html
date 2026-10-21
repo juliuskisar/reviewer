@@ -1,0 +1,55 @@
+<figure class="geometric-figure" data-component="geometric-figure">
+  {% if block.content.title %}
+  <figcaption class="geometric-figure__title">{{ block.content.title }}</figcaption>
+  {% endif %}
+  <svg
+    class="geometric-figure__svg"
+    viewBox="{{ block.content.view_box | default('0 0 220 160') }}"
+    role="img"
+    aria-label="{{ block.content.aria_label | default('Figura geométrica') }}"
+  >
+    {% for el in block.content.elements %}
+      {% if el.t == 'rect' %}
+      <rect
+        x="{{ el.x }}" y="{{ el.y }}"
+        width="{{ el.width }}" height="{{ el.height }}"
+        fill="{{ el.fill | default('#c4b5fd') }}"
+        stroke="{{ el.stroke | default('#4338ca') }}"
+        stroke-width="1.5"
+      />
+      {% elif el.t == 'polygon' %}
+      <polygon
+        points="{{ el.points }}"
+        fill="{{ el.fill | default('#c4b5fd') }}"
+        stroke="{{ el.stroke | default('#4338ca') }}"
+        stroke-width="1.5"
+      />
+      {% elif el.t == 'line' %}
+      <line
+        x1="{{ el.x1 }}" y1="{{ el.y1 }}" x2="{{ el.x2 }}" y2="{{ el.y2 }}"
+        stroke="{{ el.stroke | default('#334155') }}"
+        stroke-width="{{ el.width | default(1.5) }}"
+        {% if el.dash %}stroke-dasharray="4 3"{% endif %}
+      />
+      {% elif el.t == 'path' %}
+      <path
+        d="{{ el.d }}"
+        fill="{{ el.fill | default('none') }}"
+        stroke="{{ el.stroke | default('#334155') }}"
+        stroke-width="{{ el.width | default(1.5) }}"
+      />
+      {% elif el.t == 'text' %}
+      <text
+        x="{{ el.x }}" y="{{ el.y }}"
+        text-anchor="{{ el.anchor | default('middle') }}"
+        class="geometric-figure__label"
+        font-size="11"
+        fill="#1e293b"
+      >{{ el.text }}</text>
+      {% endif %}
+    {% endfor %}
+  </svg>
+  {% if block.content.caption %}
+  <p class="geometric-figure__caption">{{ block.content.caption }}</p>
+  {% endif %}
+</figure>

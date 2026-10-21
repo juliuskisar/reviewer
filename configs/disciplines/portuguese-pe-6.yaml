@@ -1,7 +1,7 @@
 version: 1
 
 id: portuguese-pe-6
-name: Língua Portuguesa — PE 6º ano (2º trimestre)
+name: Língua Portuguesa — PE 6º ano
 
 objectives:
   - Reconhecer gêneros normativos e instrucionais
@@ -46,3 +46,4 @@ validation:
 
 pe_modules:
   primary: [19, 20, 22, 23]
+  third_trimester: [35, 38]
