@@ -1,0 +1,209 @@
+version: 1
+review:
+  id: benjamin-pe-geografia-3tri
+  title: Revisão de Geografia — PE 3º Trimestre (Benjamin, 4º ano)
+student:
+  config: configs/students/benjamin-student.yaml
+exam:
+  config: configs/exams/pe-exam.yaml
+disciplines:
+- config: configs/disciplines/geography-pe-4.yaml
+assets:
+- file: page-001.jpg
+  subject: geography
+  unit: environment_care
+  importance: medium
+  order: 1
+  notes: Preservação ambiental e observação da natureza
+- file: page-002.jpg
+  subject: geography
+  unit: brazil_climates
+  importance: high
+  order: 2
+  notes: Tabela dos climas do Brasil
+- file: page-003.jpg
+  subject: geography
+  unit: relief_forms
+  importance: medium
+  order: 3
+  notes: Relevo — definição e preparação Módulo 11
+- file: page-004.jpg
+  subject: geography
+  unit: deforestation
+  importance: high
+  order: 4
+  notes: Mapa vegetação nativa 2015 — desmatamento
+- file: page-005.jpg
+  subject: geography
+  unit: brazil_climates
+  importance: high
+  order: 5
+  notes: Atividades sobre climas tropicais e equatorial
+- file: page-006.jpg
+  subject: geography
+  unit: vegetation_biomes
+  importance: high
+  order: 6
+  notes: Mapa formações vegetais originais
+- file: page-007.jpg
+  subject: geography
+  unit: brazil_climates
+  importance: high
+  order: 7
+  notes: Mapa Climas do Brasil
+- file: page-008.jpg
+  subject: geography
+  unit: relief_forms
+  importance: high
+  order: 8
+  notes: Mapa unidades do relevo brasileiro
+- file: page-009.jpg
+  subject: geography
+  unit: relief_forms
+  importance: high
+  order: 9
+  notes: Diagrama planalto planície depressão serra escarpa
+- file: page-010.jpg
+  subject: geography
+  unit: relief_forms
+  importance: medium
+  order: 10
+  notes: Forças internas e externas do relevo
+- file: page-011.jpg
+  subject: geography
+  unit: relief_forms
+  importance: medium
+  order: 11
+  notes: O relevo do Brasil — definição
+- file: page-012.jpg
+  subject: geography
+  unit: relief_forms
+  importance: medium
+  order: 12
+  notes: Paisagens do Brasil — módulo 11
+- file: page-013.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 13
+  notes: Hemisférios e América do Sul
+- file: page-014.jpg
+  subject: geography
+  unit: vegetation_biomes
+  importance: high
+  order: 14
+  notes: Fotos dos nove tipos de vegetação
+- file: page-015.jpg
+  subject: geography
+  unit: brazil_tropical
+  importance: high
+  order: 15
+  notes: Zona intertropical e temperada no Brasil
+- file: page-016.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: high
+  order: 16
+  notes: Equador e Trópico de Capricórnio no mapa político
+- file: page-017.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: high
+  order: 17
+  notes: Planisfério e meridiano de Greenwich
+- file: page-018.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 18
+  notes: Hemisférios Austrália EUA Europa
+- file: page-019.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: high
+  order: 19
+  notes: Meridiano de Greenwich — primeiro meridiano
+- file: page-020.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 20
+  notes: Meridianos — semicírculos polo a polo
+- file: page-021.jpg
+  subject: geography
+  unit: thermal_zones
+  importance: high
+  order: 21
+  notes: Zonas térmicas — colorir globo
+- file: page-022.jpg
+  subject: geography
+  unit: brazil_tropical
+  importance: high
+  order: 22
+  notes: Brasil quase todo tropical — Trópico de Capricórnio
+- file: page-023.jpg
+  subject: geography
+  unit: brazil_tropical
+  importance: medium
+  order: 23
+  notes: Região Sul — temperaturas baixas no inverno
+- file: page-024.jpg
+  subject: geography
+  unit: thermal_zones
+  importance: medium
+  order: 24
+  notes: País tropical — zonas térmicas
+- file: page-025.jpg
+  subject: geography
+  unit: thermal_zones
+  importance: high
+  order: 25
+  notes: Trópicos e círculos polares
+- file: page-026.jpg
+  subject: geography
+  unit: thermal_zones
+  importance: high
+  order: 26
+  notes: Incidência solar perpendicular e inclinada
+- file: page-027.jpg
+  subject: geography
+  unit: thermal_zones
+  importance: medium
+  order: 27
+  notes: Zonas térmicas — esquema incidência solar
+- file: page-028.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 28
+  notes: Equador e Capricórnio — estados e capitais
+- file: page-029.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 29
+  notes: Marco Zero Macapá e Estádio Zerão
+- file: page-030.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: high
+  order: 30
+  notes: Planisfério — linhas imaginárias
+- file: page-031.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 31
+  notes: Paralelos — trópicos e círculos polares
+- file: page-032.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: medium
+  order: 32
+  notes: América do Sul político — quiz mapa
+- file: page-033.jpg
+  subject: geography
+  unit: imaginary_lines
+  importance: high
+  order: 33
+  notes: Linha do Equador e hemisférios
