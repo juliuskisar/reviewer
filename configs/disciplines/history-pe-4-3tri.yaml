@@ -1,0 +1,49 @@
+version: 1
+
+id: history-pe-4-3tri
+name: História — PE 4º ano (3º trimestre)
+
+objectives:
+  - Conhecer reinos africanos (bantus) e o comércio português na África
+  - Compreender o tráfico de pessoas escravizadas e a diáspora africana
+  - Relacionar engenhos de açúcar, trabalho escravizado e influências africanas na colônia
+  - Entender bandeirantes, descoberta do ouro e formação da sociedade mineradora
+  - Diferenciar aluvião e filões, tropeiros, abastecimento e vilas mineradoras
+
+preferred_components:
+  - timeline
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+
+common_errors:
+  - topic: slave_trade
+    description: Confundir diáspora com simples viagem voluntária
+    prevention: Diáspora = milhões forçados a deixar a África
+  - topic: gold_cycle
+    description: Achar que ouro era só em filões nas montanhas
+    prevention: Aluvião = partículas nos leitos dos rios; filões = veios na rocha
+  - topic: mining_society
+    description: Dizer que tudo era produzido localmente nas minas
+    prevention: Tropeiros traziam comida e mercadorias de outras regiões — preços altos
+  - topic: bandeirantes
+    description: Achar que bandeiras partiam do Nordeste
+    prevention: São Paulo de Piratininga era o principal ponto de partida
+
+pedagogical_strategies:
+  - Organizar na ordem Módulo 8 → 9 → 10
+  - Usar vocabulário do caderno: nzimbu, diáspora, engenho, aluvião, lavra, tropeiro
+  - Exercícios autossuficientes, estilo Teste do livro (afirmativas I–IV)
+  - Linguagem simples para 4º ano
+
+validation:
+  require_historical_context: true
+  flag_anachronisms: true
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [8, 9, 10]
