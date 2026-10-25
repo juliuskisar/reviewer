@@ -1,0 +1,49 @@
+version: 1
+
+id: spanish-pe-6-3tri
+name: Espanhol — PE 6º ano (3º trimestre)
+
+objectives:
+  - Nombrar alimentos y hábitos alimentarios (Módulo 7 — A la mesa)
+  - Usar el verbo gustar con me/te/le/nos/os/les
+  - Emplear adverbios de frecuencia y expresiones de medida
+  - Conjugar verbos regulares en presente de indicativo (Módulo 8)
+  - Reflexionar sobre lecturas del caderno (hambre, fábulas)
+  - Usar vocabulario de animales, muy/mucho y saber/conocer/poner (Módulo 9)
+  - Leer y decir números cardinales y la hora (Módulo 10)
+
+preferred_components:
+  - concept_grid
+  - route_steps
+  - comparison_table
+  - accordion
+
+exercise_types:
+  - multiple_choice
+  - written_language
+
+common_errors:
+  - topic: verbo_gustar
+    description: Conjugar gustar como «yo gusto las manzanas»
+    prevention: El verbo concuerda con la cosa gustada — Me gustan las manzanas
+  - topic: frecuencia_adverbios
+    description: Colocar el adverbio lejos del verbo
+    prevention: En español el adverbio suele ir junto al verbo (siempre tomo…)
+  - topic: animales_muy_mucho
+    description: Usar muy antes de sustantivo (muy libros)
+    prevention: Mucho/mucha/muchos/muchas + sustantivo · muy + adjetivo/adverbio
+  - topic: numeros_hora
+    description: Decir «son las una» o olvidar y entre horas y minutos
+    prevention: Es la una (1:00) · Son las dos y diez · treinta y tres
+
+pedagogical_strategies:
+  - Seguir Módulos 7–10 del caderno Língua Espanhola 6º ano
+  - Explicações em português com exemplos em espanhol
+  - Aba Prática escrita com correção offline
+  - Exercícios autossuficientes — variar combinações I–IV
+
+validation:
+  require_pe_module_alignment: true
+
+pe_modules:
+  primary: [7, 8, 9, 10]
