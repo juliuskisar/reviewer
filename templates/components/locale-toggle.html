@@ -1,0 +1,9 @@
+<div class="locale-toggle" data-locale-toggle role="group" aria-label="Idioma das explicações">
+  <span class="locale-toggle__label">Idioma:</span>
+  <button type="button" class="locale-toggle__btn is-active" data-locale="es" aria-pressed="true">
+    {{ section.locale_toggle.primary_label | default('Español') }}
+  </button>
+  <button type="button" class="locale-toggle__btn" data-locale="pt" aria-pressed="false">
+    {{ section.locale_toggle.secondary_label | default('Português') }}
+  </button>
+</div>

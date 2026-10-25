@@ -5,6 +5,14 @@ from __future__ import annotations
 REVIEW_ID = "pedro-pe-espanhol-3tri"
 ASSET_PREFIX = "assets/pedro_pe_espanhol_3_tri"
 
+_LOCALE_TOGGLE = {
+    "default": "es",
+    "primary": "es",
+    "secondary": "pt",
+    "primary_label": "Español",
+    "secondary_label": "Português",
+}
+
 
 def _src(page: str) -> dict:
     return {
@@ -130,6 +138,7 @@ def _section_explain() -> dict:
         "id": "explain",
         "type": "explanations",
         "title": "Explicações",
+        "locale_toggle": _LOCALE_TOGGLE,
         "blocks": [
             *_topic_alimentos(),
             *_topic_gustar(),
@@ -147,7 +156,11 @@ def _topic_alimentos() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "1. Alimentos y hábitos (Módulo 7)"},
+            "content": {
+                "level": 3,
+                "text": "1. Alimentos y hábitos (Módulo 7)",
+                "text_pt": "1. Alimentos e hábitos (Módulo 7)",
+            },
             "topic_id": "alimentos_habitos",
         },
         {
@@ -158,6 +171,11 @@ def _topic_alimentos() -> list:
                 "quesos y yogures. También lees los hábitos de Susana (desayuno con leche y pan), "
                 "Carlos (sopa de pescado en la cena), Pedro (fruta en la merienda) y Rita (verdura y postre). "
                 "Recuerda: **pez** = animal vivo; **pescado** = para comer.",
+                "text_pt": "O **Módulo 7 — A la mesa** trabalha vocabulário de **comidas** e **hábitos**. "
+                "No caderno aparecem grupos como verduras (vegetais), carnes, pescados, frutas, massas, "
+                "queijos e iogurtes. Você também lê os hábitos de Susana (café da manhã com leite e pão), "
+                "Carlos (sopa de peixe no jantar), Pedro (fruta no lanche da tarde) e Rita (verdura e sobremesa). "
+                "Lembre: **pez** = animal vivo; **pescado** = peixe para comer.",
             },
             "topic_id": "alimentos_habitos",
             "sources": [_src("page-001.jpg")],
@@ -166,10 +184,34 @@ def _topic_alimentos() -> list:
             "type": "concept_grid",
             "content": {
                 "cards": [
-                    {"icon": "🌅", "title": "Desayuno", "text": "leche · pan · cereales"},
-                    {"icon": "🍲", "title": "Comida/cena", "text": "sopa · tortilla · carne"},
-                    {"icon": "🍎", "title": "Merienda", "text": "papaya · plátano · yogur"},
-                    {"icon": "🍮", "title": "Postre", "text": "flan · helado · arroz con leche"},
+                    {
+                        "icon": "🌅",
+                        "title": "Desayuno",
+                        "title_pt": "Café da manhã",
+                        "text": "leche · pan · cereales",
+                        "text_pt": "leite · pão · cereais",
+                    },
+                    {
+                        "icon": "🍲",
+                        "title": "Comida/cena",
+                        "title_pt": "Almoço/jantar",
+                        "text": "sopa · tortilla · carne",
+                        "text_pt": "sopa · tortilla · carne",
+                    },
+                    {
+                        "icon": "🍎",
+                        "title": "Merienda",
+                        "title_pt": "Lanche",
+                        "text": "papaya · plátano · yogur",
+                        "text_pt": "mamão · banana · iogurte",
+                    },
+                    {
+                        "icon": "🍮",
+                        "title": "Postre",
+                        "title_pt": "Sobremesa",
+                        "text": "flan · helado · arroz con leche",
+                        "text_pt": "flan · sorvete · arroz doce",
+                    },
                 ],
             },
             "topic_id": "alimentos_habitos",
@@ -181,7 +223,11 @@ def _topic_gustar() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "2. El verbo gustar"},
+            "content": {
+                "level": 3,
+                "text": "2. El verbo gustar",
+                "text_pt": "2. O verbo gustar",
+            },
             "topic_id": "verbo_gustar",
         },
         {
@@ -191,6 +237,10 @@ def _topic_gustar() -> list:
                 "lo que gusta. **Me gusta** + singular o infinitivo (Me gusta la papaya · Me gusta cocinar). "
                 "**Me gustan** + plural (Me gustan las manzanas). "
                 "Usa pronombres átonos: **me, te, le, nos, os, les** (A mí me gusta…).",
+                "text_pt": "**Gustar** não funciona igual ao «gostar» em português: o verbo concorda com "
+                "a coisa de que se gosta. **Me gusta** + singular ou infinitivo (Me gusta la papaya · Me gusta cocinar). "
+                "**Me gustan** + plural (Me gustan las manzanas). "
+                "Use pronomes átonos: **me, te, le, nos, os, les** (A mí me gusta…).",
             },
             "topic_id": "verbo_gustar",
             "sources": [_src("page-002.jpg"), _src("page-005.jpg")],
@@ -199,11 +249,18 @@ def _topic_gustar() -> list:
             "type": "comparison_table",
             "content": {
                 "caption": "Gusta x gustan",
+                "caption_pt": "Gusta x gustan",
                 "headers": ["Forma", "Cuándo", "Ejemplo"],
+                "headers_pt": ["Forma", "Quando", "Exemplo"],
                 "rows": [
                     ["gusta", "1 cosa o infinitivo", "A María le gusta la tortilla"],
                     ["gustan", "2+ cosas (plural)", "A nosotros nos gustan los postres"],
                     ["no me gusta", "negación", "No me gusta nada cocinar"],
+                ],
+                "rows_pt": [
+                    ["gusta", "1 coisa ou infinitivo", "A María le gusta la tortilla"],
+                    ["gustan", "2+ coisas (plural)", "A nosotros nos gustan los postres"],
+                    ["no me gusta", "negação", "No me gusta nada cocinar"],
                 ],
             },
             "topic_id": "verbo_gustar",
@@ -215,7 +272,11 @@ def _topic_frecuencia() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "3. Adverbios de frecuencia"},
+            "content": {
+                "level": 3,
+                "text": "3. Adverbios de frecuencia",
+                "text_pt": "3. Advérbios de frequência",
+            },
             "topic_id": "frecuencia_adverbios",
         },
         {
@@ -225,6 +286,10 @@ def _topic_frecuencia() -> list:
                 "**siempre, a menudo, frecuentemente, a veces, raramente, pocas veces, nunca, jamás**. "
                 "Ejemplo del libro: «A la mañana **siempre** tomo leche con cereales. "
                 "A mí **me gustan** mucho los cereales.»",
+                "text_pt": "Para falar **com que frequência** você come algo, use advérbios da caixa do caderno: "
+                "**siempre, a menudo, frecuentemente, a veces, raramente, pocas veces, nunca, jamás**. "
+                "Exemplo do livro: «De manhã **siempre** tomo leche con cereales. "
+                "A mí **me gustan** mucho los cereales.»",
             },
             "topic_id": "frecuencia_adverbios",
             "sources": [_src("page-003.jpg")],
@@ -233,10 +298,34 @@ def _topic_frecuencia() -> list:
             "type": "concept_grid",
             "content": {
                 "cards": [
-                    {"icon": "🔁", "title": "Siempre", "text": "100 % del tiempo"},
-                    {"icon": "📅", "title": "A menudo", "text": "muchas veces"},
-                    {"icon": "🎲", "title": "A veces", "text": "de vez en cuando"},
-                    {"icon": "🚫", "title": "Nunca / jamás", "text": "0 % — negación fuerte"},
+                    {
+                        "icon": "🔁",
+                        "title": "Siempre",
+                        "title_pt": "Siempre (sempre)",
+                        "text": "100 % del tiempo",
+                        "text_pt": "100 % do tempo",
+                    },
+                    {
+                        "icon": "📅",
+                        "title": "A menudo",
+                        "title_pt": "A menudo (often)",
+                        "text": "muchas veces",
+                        "text_pt": "muitas vezes",
+                    },
+                    {
+                        "icon": "🎲",
+                        "title": "A veces",
+                        "title_pt": "A veces (às vezes)",
+                        "text": "de vez en cuando",
+                        "text_pt": "de vez em quando",
+                    },
+                    {
+                        "icon": "🚫",
+                        "title": "Nunca / jamás",
+                        "title_pt": "Nunca / jamás",
+                        "text": "0 % — negación fuerte",
+                        "text_pt": "0 % — negação forte",
+                    },
                 ],
             },
             "topic_id": "frecuencia_adverbios",
@@ -246,8 +335,11 @@ def _topic_frecuencia() -> list:
             "content": {
                 "variant": "remember",
                 "title": "Plural de alimentos:",
+                "title_pt": "Plural dos alimentos:",
                 "text": "Vocal → -s (manzana/manzanas). Consonante → -es (coliflor/coliflores). "
                 "-z → -ces (pez/peces). Piña = ananá; patata = papa (según región).",
+                "text_pt": "Vogal → -s (manzana/manzanas). Consoante → -es (coliflor/coliflores). "
+                "-z → -ces (pez/peces). Piña = ananá; patata = papa (conforme a região).",
             },
             "topic_id": "frecuencia_adverbios",
         },
@@ -258,7 +350,11 @@ def _topic_medidas() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "4. Pesos, medidas y restaurante"},
+            "content": {
+                "level": 3,
+                "text": "4. Pesos, medidas y restaurante",
+                "text_pt": "4. Pesos, medidas e restaurante",
+            },
             "topic_id": "medidas_restaurante",
         },
         {
@@ -269,6 +365,11 @@ def _topic_medidas() -> list:
                 "**doscientos gramos** de jamón, **un tarro** de aceitunas, **un paquete** de mantequilla. "
                 "En la **consumición** del restaurante aparecen platos como ensalada, filetes de ternera, "
                 "lenguado, gaseosa y tapa de boquerones.",
+                "text_pt": "O caderno ensina expressões de **quantidade**: "
+                "**una botella** de aceite, **una docena** de huevos, **una barra** de pan, "
+                "**doscientos gramos** de jamón, **un tarro** de aceitunas, **un paquete** de mantequilla. "
+                "Na **consumición** (conta) do restaurante aparecem pratos como salada, filés de vitela, "
+                "linguado, refrigerante e porção de boquerones.",
             },
             "topic_id": "medidas_restaurante",
             "sources": [_src("page-002.jpg"), _src("page-004.jpg")],
@@ -277,12 +378,20 @@ def _topic_medidas() -> list:
             "type": "comparison_table",
             "content": {
                 "caption": "Expresiones del recuadro",
+                "caption_pt": "Expressões da caixa",
                 "headers": ["Expresión", "Ejemplo"],
+                "headers_pt": ["Expressão", "Exemplo"],
                 "rows": [
                     ["una docena", "12 huevos"],
                     ["una barra", "pan tipo baguette"],
                     ["doscientos gramos", "jamón en bandeja"],
                     ["un tarro", "aceitunas en frasco"],
+                ],
+                "rows_pt": [
+                    ["una docena", "12 ovos"],
+                    ["una barra", "pão tipo baguete"],
+                    ["doscientos gramos", "presunto na bandeja"],
+                    ["un tarro", "azeitonas no pote"],
                 ],
             },
             "topic_id": "medidas_restaurante",
@@ -294,7 +403,11 @@ def _topic_regulares() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "5. Verbos regulares en presente"},
+            "content": {
+                "level": 3,
+                "text": "5. Verbos regulares en presente",
+                "text_pt": "5. Verbos regulares no presente",
+            },
             "topic_id": "verbos_regulares",
         },
         {
@@ -304,6 +417,10 @@ def _topic_regulares() -> list:
                 "quitas **-ar, -er, -ir** y añades las terminaciones de la persona. "
                 "Ejemplos del caderno: **cenar** (cen-o, cen-as…), **comer** (com-o, com-es…), "
                 "**partir** (part-o, part-es…). También practicas **desayunar, beber, lavar, cocinar, comprar**.",
+                "text_pt": "No **Módulo 8**, os verbos regulares formam o presente assim: "
+                "tira **-ar, -er, -ir** e acrescenta as terminações da pessoa. "
+                "Exemplos do caderno: **cenar** (cen-o, cen-as…), **comer** (com-o, com-es…), "
+                "**partir** (part-o, part-es…). Você também pratica **desayunar, beber, lavar, cocinar, comprar**.",
             },
             "topic_id": "verbos_regulares",
             "sources": [_src("page-007.jpg"), _src("page-009.jpg")],
@@ -312,12 +429,22 @@ def _topic_regulares() -> list:
             "type": "comparison_table",
             "content": {
                 "caption": "Terminaciones (presente de indicativo)",
+                "caption_pt": "Terminações (presente de indicativo)",
                 "headers": ["Persona", "-ar", "-er", "-ir"],
+                "headers_pt": ["Pessoa", "-ar", "-er", "-ir"],
                 "rows": [
                     ["yo", "-o", "-o", "-o"],
                     ["tú/vos", "-as", "-es", "-es"],
                     ["él/ella/usted", "-a", "-e", "-e"],
                     ["nosotros", "-amos", "-emos", "-imos"],
+                    ["vosotros", "-áis", "-éis", "-ís"],
+                    ["ellos/ustedes", "-an", "-en", "-en"],
+                ],
+                "rows_pt": [
+                    ["yo (eu)", "-o", "-o", "-o"],
+                    ["tú/vos (você)", "-as", "-es", "-es"],
+                    ["él/ella/usted", "-a", "-e", "-e"],
+                    ["nosotros (nós)", "-amos", "-emos", "-imos"],
                     ["vosotros", "-áis", "-éis", "-ís"],
                     ["ellos/ustedes", "-an", "-en", "-en"],
                 ],
@@ -329,8 +456,11 @@ def _topic_regulares() -> list:
             "content": {
                 "variant": "remember",
                 "title": "Pronunciación G y J:",
+                "title_pt": "Pronúncia de G e J:",
                 "text": "Ante **e** e **i**, las letras **g** y **j** suelen tener el **mismo sonido** "
                 "(ej.: generoso, llegar, grano en la leyenda del maíz).",
+                "text_pt": "Antes de **e** e **i**, as letras **g** e **j** costumam ter o **mesmo som** "
+                "(ex.: generoso, llegar, grano na lenda do milho).",
             },
             "topic_id": "verbos_regulares",
             "sources": [_src("page-008.jpg")],
@@ -342,7 +472,11 @@ def _topic_lectura() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "6. Lecturas: hambre, fábulas y poemas"},
+            "content": {
+                "level": 3,
+                "text": "6. Lecturas: hambre, fábulas y poemas",
+                "text_pt": "6. Leituras: fome, fábulas e poemas",
+            },
             "topic_id": "lectura_hambre",
         },
         {
@@ -353,6 +487,11 @@ def _topic_lectura() -> list:
                 "El poema «**Niños de Somalia**» (Gloria Fuertes) contrasta *yo como… ellos no*. "
                 "La fábula «**La lechera y el cántaro**» enseña no contar con lo que aún no tienes. "
                 "Una **fábula** es narración breve, muchas veces con animales, con **moraleja**.",
+                "text_pt": "O caderno mistura **leitura** com reflexão social. "
+                "«**A pesar de todo**» (Oche Califa) mostra uma família com pouca comida, mas com carinho. "
+                "O poema «**Niños de Somalia**» (Gloria Fuertes) contrasta *yo como… ellos no*. "
+                "A fábula «**La lechera y el cántaro**» ensina a não contar com o que ainda não se tem. "
+                "Uma **fábula** é narrativa curta, muitas vezes com animais, com **moraleja** (lição).",
             },
             "topic_id": "lectura_hambre",
             "sources": [_src("page-004.jpg"), _src("page-006.jpg"), _src("page-012.jpg")],
@@ -361,9 +500,27 @@ def _topic_lectura() -> list:
             "type": "concept_grid",
             "content": {
                 "cards": [
-                    {"icon": "📜", "title": "Fábula", "text": "Historia corta + moraleja"},
-                    {"icon": "🌍", "title": "Hambre", "text": "Derecho a la alimentación"},
-                    {"icon": "✍️", "title": "Poema", "text": "Estructura repetida de verbos"},
+                    {
+                        "icon": "📜",
+                        "title": "Fábula",
+                        "title_pt": "Fábula",
+                        "text": "Historia corta + moraleja",
+                        "text_pt": "História curta + lição",
+                    },
+                    {
+                        "icon": "🌍",
+                        "title": "Hambre",
+                        "title_pt": "Fome",
+                        "text": "Derecho a la alimentación",
+                        "text_pt": "Direito à alimentação",
+                    },
+                    {
+                        "icon": "✍️",
+                        "title": "Poema",
+                        "title_pt": "Poema",
+                        "text": "Estructura repetida de verbos",
+                        "text_pt": "Estrutura repetida de verbos",
+                    },
                 ],
             },
             "topic_id": "lectura_hambre",
@@ -375,7 +532,11 @@ def _topic_animales() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "7. Animales, muy/mucho y saber · conocer · poner"},
+            "content": {
+                "level": 3,
+                "text": "7. Animales, muy/mucho y saber · conocer · poner",
+                "text_pt": "7. Animais, muy/mucho e saber · conocer · poner",
+            },
             "topic_id": "animales_muy_mucho",
         },
         {
@@ -386,6 +547,11 @@ def _topic_animales() -> list:
                 "**Muy** antes de adjetivo o adverbio (muy calladito · muy bien) — **invariable**. "
                 "Verbos irregulares en **yo**: **sé, conozco, pongo**. "
                 "Con **tener/estar** describes estados: tener sed/hambre/miedo · estar cansado/contento.",
+                "text_pt": "**Módulo 9 — Los animales**: cachorro (perro), gato, baleia, girafa, koala, morcego… "
+                "**Mucho/a/os/as** antes do substantivo (muchos libros) ou depois do verbo (trabaja mucho). "
+                "**Muy** antes de adjetivo ou advérbio (muy calladito · muy bien) — **invariável**. "
+                "Verbos irregulares em **yo**: **sé, conozco, pongo**. "
+                "Com **tener/estar** você descreve estados: sede/fome/medo · cansado/contento.",
             },
             "topic_id": "animales_muy_mucho",
             "sources": [_src("page-010.jpg"), _src("page-011.jpg"), _src("page-012.jpg")],
@@ -394,7 +560,9 @@ def _topic_animales() -> list:
             "type": "comparison_table",
             "content": {
                 "caption": "Muy x mucho · saber x conocer",
+                "caption_pt": "Muy x mucho · saber x conocer",
                 "headers": ["Palabra", "Uso", "Ejemplo"],
+                "headers_pt": ["Palavra", "Uso", "Exemplo"],
                 "rows": [
                     ["mucho/a/os/as", "cantidad + sustantivo", "muchos perros"],
                     ["mucho", "después de verbo", "duermen mucho"],
@@ -402,6 +570,14 @@ def _topic_animales() -> list:
                     ["saber", "saber datos (sé la respuesta)", "¿Sabes qué hora es?"],
                     ["conocer", "conocer personas/lugares", "Conozco a Elena"],
                     ["poner", "poner libros en estantería", "Pongo los libros aquí"],
+                ],
+                "rows_pt": [
+                    ["mucho/a/os/as", "quantidade + substantivo", "muchos perros"],
+                    ["mucho", "depois do verbo", "duermen mucho"],
+                    ["muy", "intensidade + adj./adv.", "muy nervioso"],
+                    ["saber", "saber fatos (sé la respuesta)", "¿Sabes qué hora es?"],
+                    ["conocer", "conhecer pessoas/lugares", "Conozco a Elena"],
+                    ["poner", "colocar livros na estante", "Pongo los libros aquí"],
                 ],
             },
             "topic_id": "animales_muy_mucho",
@@ -413,7 +589,11 @@ def _topic_numeros_hora() -> list:
     return [
         {
             "type": "heading",
-            "content": {"level": 3, "text": "8. Números cardinales y la hora"},
+            "content": {
+                "level": 3,
+                "text": "8. Números cardinales y la hora",
+                "text_pt": "8. Números cardinais e a hora",
+            },
             "topic_id": "numeros_hora",
         },
         {
@@ -424,6 +604,11 @@ def _topic_numeros_hora() -> list:
                 "Para la hora preguntas **¿Qué hora es?** (singular). "
                 "**Es la una** (1:00). **Son las dos y diez**, **son las tres y cuarto**, **son las seis y media**. "
                 "Después de la media: **son las siete menos veinte**, **menos cuarto**, **menos cinco**.",
+                "text_pt": "**Módulo 10**: números de **zero a mil** (treinta y tres, ciento seis, mil doscientos trece). "
+                "Do **21 ao 29** escreve-se em uma palavra: veintiuno… veintinueve. "
+                "Para a hora pergunta-se **¿Qué hora es?** "
+                "**Es la una** (1:00). **Son las dos y diez**, **son las tres y cuarto**, **son las seis y media**. "
+                "Depois da meia hora: **son las siete menos veinte**, **menos cuarto**, **menos cinco**.",
             },
             "topic_id": "numeros_hora",
             "sources": [_src("page-013.jpg"), _src("page-015.jpg"), _src("page-016.jpg")],
@@ -432,13 +617,22 @@ def _topic_numeros_hora() -> list:
             "type": "comparison_table",
             "content": {
                 "caption": "Decir la hora",
+                "caption_pt": "Dizer a hora",
                 "headers": ["Reloj", "En español"],
+                "headers_pt": ["Relógio", "Em espanhol"],
                 "rows": [
                     ["1:05", "Es la una y cinco"],
                     ["3:15", "Son las tres y cuarto / y quince"],
                     ["6:30", "Son las seis y media / y treinta"],
                     ["5:45", "Son las seis menos cuarto"],
                     ["12:00", "Son las doce en punto"],
+                ],
+                "rows_pt": [
+                    ["1:05", "Es la una y cinco (uma e cinco)"],
+                    ["3:15", "Son las tres y cuarto (três e quinze)"],
+                    ["6:30", "Son las seis y media (seis e meia)"],
+                    ["5:45", "Son las seis menos cuarto (seis menos quarto)"],
+                    ["12:00", "Son las doce en punto (doze em ponto)"],
                 ],
             },
             "topic_id": "numeros_hora",
@@ -451,67 +645,155 @@ def _section_summary() -> dict:
         "id": "summary",
         "type": "quick_summary",
         "title": "Resumo rápido",
+        "locale_toggle": _LOCALE_TOGGLE,
         "blocks": [
             {
                 "type": "panel_intro",
                 "content": {
-                    "title": "Mapa mental da PE",
-                    "text": "Revise cada bloco abaixo. Se algo ficou confuso, volte à aba Explicações.",
+                    "title": "Mapa mental de la PE",
+                    "title_pt": "Mapa mental da PE",
+                    "text": "Repasa cada bloque. Si algo no quedó claro, vuelve a Explicaciones.",
+                    "text_pt": "Revise cada bloco abaixo. Se algo ficou confuso, volte à aba Explicações.",
                 },
             },
-            {"type": "heading", "content": {"level": 3, "text": "1. Alimentos y gustar"}},
+            {
+                "type": "heading",
+                "content": {
+                    "level": 3,
+                    "text": "1. Alimentos y gustar",
+                    "text_pt": "1. Alimentos e gustar",
+                },
+            },
             {
                 "type": "concept_grid",
                 "content": {
                     "cards": [
-                        {"icon": "🥗", "title": "Vocabulario", "text": "verduras · pescado · postre"},
-                        {"icon": "❤️", "title": "Gustar", "text": "me gusta / me gustan + cosa"},
+                        {
+                            "icon": "🥗",
+                            "title": "Vocabulario",
+                            "title_pt": "Vocabulário",
+                            "text": "verduras · pescado · postre",
+                            "text_pt": "verduras · pescado · postre",
+                        },
+                        {
+                            "icon": "❤️",
+                            "title": "Gustar",
+                            "title_pt": "Gustar",
+                            "text": "me gusta / me gustan + cosa",
+                            "text_pt": "me gusta / me gustan + coisa",
+                        },
                     ],
                 },
             },
-            {"type": "heading", "content": {"level": 3, "text": "2. Frecuencia y medidas"}},
+            {
+                "type": "heading",
+                "content": {
+                    "level": 3,
+                    "text": "2. Frecuencia y medidas",
+                    "text_pt": "2. Frequência e medidas",
+                },
+            },
             {
                 "type": "concept_grid",
                 "content": {
                     "cards": [
-                        {"icon": "⏱️", "title": "Adverbios", "text": "siempre · a veces · nunca"},
-                        {"icon": "📦", "title": "Medidas", "text": "docena · barra · gramos"},
+                        {
+                            "icon": "⏱️",
+                            "title": "Adverbios",
+                            "title_pt": "Advérbios",
+                            "text": "siempre · a veces · nunca",
+                            "text_pt": "siempre · a veces · nunca",
+                        },
+                        {
+                            "icon": "📦",
+                            "title": "Medidas",
+                            "title_pt": "Medidas",
+                            "text": "docena · barra · gramos",
+                            "text_pt": "docena · barra · gramos",
+                        },
                     ],
                 },
             },
-            {"type": "heading", "content": {"level": 3, "text": "3. Verbos regulares"}},
+            {
+                "type": "heading",
+                "content": {
+                    "level": 3,
+                    "text": "3. Verbos regulares",
+                    "text_pt": "3. Verbos regulares",
+                },
+            },
             {
                 "type": "comparison_table",
                 "content": {
                     "caption": "Raíz + terminación",
+                    "caption_pt": "Raiz + terminação",
                     "headers": ["Grupo", "Ejemplo"],
+                    "headers_pt": ["Grupo", "Exemplo"],
                     "rows": [
+                        ["-ar", "desayuno · desayunas · desayunan"],
+                        ["-er", "como · comes · comen"],
+                        ["-ir", "vivo · vives · viven"],
+                    ],
+                    "rows_pt": [
                         ["-ar", "desayuno · desayunas · desayunan"],
                         ["-er", "como · comes · comen"],
                         ["-ir", "vivo · vives · viven"],
                     ],
                 },
             },
-            {"type": "heading", "content": {"level": 3, "text": "4. Animales y cuantificadores"}},
+            {
+                "type": "heading",
+                "content": {
+                    "level": 3,
+                    "text": "4. Animales y cuantificadores",
+                    "text_pt": "4. Animais e quantificadores",
+                },
+            },
             {
                 "type": "comparison_table",
                 "content": {
                     "caption": "Muy / mucho",
+                    "caption_pt": "Muy / mucho",
                     "headers": ["", "Regla"],
+                    "headers_pt": ["", "Regra"],
                     "rows": [
                         ["mucho/a/os/as", "antes de sustantivo"],
                         ["muy", "antes de adjetivo/adverbio"],
                         ["sé / conozco / pongo", "yo irregular"],
                     ],
+                    "rows_pt": [
+                        ["mucho/a/os/as", "antes do substantivo"],
+                        ["muy", "antes de adjetivo/advérbio"],
+                        ["sé / conozco / pongo", "yo irregular"],
+                    ],
                 },
             },
-            {"type": "heading", "content": {"level": 3, "text": "5. Números y hora"}},
+            {
+                "type": "heading",
+                "content": {
+                    "level": 3,
+                    "text": "5. Números y hora",
+                    "text_pt": "5. Números e hora",
+                },
+            },
             {
                 "type": "concept_grid",
                 "content": {
                     "cards": [
-                        {"icon": "🔢", "title": "Números", "text": "veintidós · ciento cinco · mil"},
-                        {"icon": "🕐", "title": "Hora", "text": "y cuarto · y media · menos diez"},
+                        {
+                            "icon": "🔢",
+                            "title": "Números",
+                            "title_pt": "Números",
+                            "text": "veintidós · ciento cinco · mil",
+                            "text_pt": "veintidós · ciento cinco · mil",
+                        },
+                        {
+                            "icon": "🕐",
+                            "title": "Hora",
+                            "title_pt": "Hora",
+                            "text": "y cuarto · y media · menos diez",
+                            "text_pt": "y cuarto · y media · menos diez",
+                        },
                     ],
                 },
             },
@@ -519,10 +801,14 @@ def _section_summary() -> dict:
                 "type": "callout",
                 "content": {
                     "variant": "remember",
-                    "title": "Pegadinha da PE:",
+                    "title": "Pegadinha de la PE:",
+                    "title_pt": "Pegadinha da PE:",
                     "text": "Gustar concuerda con la cosa (no con «yo»). "
                     "Es la una (1 h). Mucho + sustantivo; muy + adjetivo. "
                     "Pez (vivo) ≠ pescado (comida). G/J ante e/i: mismo sonido.",
+                    "text_pt": "Gustar concorda com a coisa (não com «yo»). "
+                    "Es la una (1 h). Mucho + substantivo; muy + adjetivo. "
+                    "Pez (vivo) ≠ pescado (comida). G/J antes de e/i: mesmo som.",
                 },
             },
         ],

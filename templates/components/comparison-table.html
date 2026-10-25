@@ -1,4 +1,8 @@
+{% from "macros/locale.html" import locale_text %}
 <div class="comparison-table-wrapper" data-component="comparison-table">
+  {% if block.content.caption_pt %}
+  <div class="lang-variant is-active" data-lang="es">
+  {% endif %}
   <table class="comparison-table">
     <caption>{{ block.content.caption | default('Comparação') }}</caption>
     <thead>
@@ -18,4 +22,28 @@
       {% endfor %}
     </tbody>
   </table>
+  {% if block.content.caption_pt %}
+  </div>
+  <div class="lang-variant" data-lang="pt" hidden>
+  <table class="comparison-table">
+    <caption>{{ block.content.caption_pt | default(block.content.caption) }}</caption>
+    <thead>
+      <tr>
+        {% for header in block.content.headers_pt %}
+        <th scope="col">{{ header }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in block.content.rows_pt %}
+      <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
 </div>

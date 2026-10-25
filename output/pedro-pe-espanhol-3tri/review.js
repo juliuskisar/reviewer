@@ -1309,12 +1309,43 @@
     });
   }
 
+  var LOCALE_STORAGE_KEY = 'review-content-locale';
+
+  function initLocaleToggles() {
+    var saved = sessionStorage.getItem(LOCALE_STORAGE_KEY) || 'es';
+
+    function applyLocale(locale) {
+      sessionStorage.setItem(LOCALE_STORAGE_KEY, locale);
+      $$('.lang-variant[data-lang]').forEach(function (el) {
+        var show = el.dataset.lang === locale;
+        el.hidden = !show;
+        el.classList.toggle('is-active', show);
+      });
+      $$('[data-locale-toggle] .locale-toggle__btn').forEach(function (btn) {
+        var on = btn.dataset.locale === locale;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    $$('[data-locale-toggle]').forEach(function (bar) {
+      $$('.locale-toggle__btn', bar).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyLocale(btn.dataset.locale);
+        });
+      });
+    });
+
+    applyLocale(saved);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initPageTabs();
     initRouteLinks();
     initTabs();
     initQuiz();
     initReset();
+    initLocaleToggles();
     initBrazilMaps();
     initCapitalGame();
     initMapThemeGames();

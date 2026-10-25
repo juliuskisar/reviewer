@@ -1,9 +1,13 @@
+{% from "macros/locale.html" import locale_text %}
 <div class="explanation-accordions">
+  {% if section.locale_toggle %}
+    {% include "components/locale-toggle.html" %}
+  {% endif %}
   {% for block in section.blocks %}
     {% if block.type == 'heading' %}
       {% if not loop.first %}</div></details>{% endif %}
       <details class="accordion-item explanation-accordion"{% if loop.first %} open{% endif %}>
-        <summary>{{ block.content.text }}</summary>
+        <summary>{{ locale_text(block.content, 'text', 'span') }}</summary>
         <div class="accordion-item__body">
     {% else %}
       {% include "components/block.html" %}

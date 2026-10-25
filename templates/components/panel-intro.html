@@ -1,4 +1,5 @@
+{% from "macros/locale.html" import locale_text %}
 <div class="panel-intro" role="note">
-  {% if block.content.title %}<strong>{{ block.content.title }}</strong>{% endif %}
-  <p>{{ block.content.text }}</p>
+  {% if block.content.title %}<strong>{{ locale_text(block.content, 'title', 'span') }}</strong>{% endif %}
+  <p>{{ locale_text(block.content, 'text', 'span') }}</p>
 </div>

@@ -1,0 +1,25 @@
+{# Variantes de idioma: content.text (ES) + content.text_pt (PT) #}
+{% macro locale_text(content, field='text', tag='span', class_name='') -%}
+  {%- set primary = content[field] -%}
+  {%- set pt_key = field ~ '_pt' -%}
+  {%- set secondary = content[pt_key] -%}
+  {%- if secondary -%}
+    <{{ tag }} class="lang-variant is-active{% if class_name %} {{ class_name }}{% endif %}" data-lang="es">{{ primary }}</{{ tag }}>
+    <{{ tag }} class="lang-variant{% if class_name %} {{ class_name }}{% endif %}" data-lang="pt" hidden>{{ secondary }}</{{ tag }}>
+  {%- else -%}
+    <{{ tag }}{% if class_name %} class="{{ class_name }}"{% endif %}>{{ primary }}</{{ tag }}>
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro locale_block_open(content) -%}
+  {%- if content.text_pt or content.caption_pt or content.title_pt -%}
+    <div class="lang-variant is-active" data-lang="es">
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro locale_block_close(content) -%}
+  {%- if content.text_pt or content.caption_pt or content.title_pt -%}
+    </div>
+    <div class="lang-variant" data-lang="pt" hidden>
+  {%- endif -%}
+{%- endmacro %}

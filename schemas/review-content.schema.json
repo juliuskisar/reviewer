@@ -100,6 +100,18 @@
         "blocks": {
           "type": "array",
           "items": { "$ref": "#/$defs/content_block" }
+        },
+        "locale_toggle": {
+          "type": "object",
+          "description": "Alternância de idioma nas explicações (ex.: ES/PT)",
+          "properties": {
+            "default": { "type": "string" },
+            "primary": { "type": "string" },
+            "secondary": { "type": "string" },
+            "primary_label": { "type": "string" },
+            "secondary_label": { "type": "string" }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false

@@ -1,8 +1,9 @@
+{% from "macros/locale.html" import locale_text %}
 {% if block.type == 'paragraph' %}
-<p>{{ block.content.text }}</p>
+<p>{{ locale_text(block.content, 'text', 'span') }}</p>
 
 {% elif block.type == 'heading' %}
-<h{{ block.content.level | default(3) }}>{{ block.content.text }}</h{{ block.content.level | default(3) }}>
+<h{{ block.content.level | default(3) }}>{{ locale_text(block.content, 'text', 'span') }}</h{{ block.content.level | default(3) }}>
 
 {% elif block.type == 'list' %}
 {% if block.content.ordered %}
@@ -37,7 +38,7 @@
 {# acordeões são agrupados externamente #}
 {% elif block.type == 'callout' %}
 <div class="callout callout--{{ block.content.variant | default('info') }}" role="note">
-  {% if block.content.title %}<strong>{{ block.content.title }}</strong> {% endif %}{{ block.content.text }}
+  {% if block.content.title %}<strong>{{ locale_text(block.content, 'title', 'span') }}</strong> {% endif %}{{ locale_text(block.content, 'text', 'span') }}
 </div>
 
 {% elif block.type == 'concept_grid' %}
