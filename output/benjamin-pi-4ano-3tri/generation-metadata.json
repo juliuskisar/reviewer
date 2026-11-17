@@ -1,0 +1,29 @@
+{
+  "review_id": "benjamin-pi-4ano-3tri",
+  "student": "Benjamin",
+  "grade": "4º ano",
+  "age": 10,
+  "exam": "PI — Prova Integrada (3º trimestre)",
+  "format": "monolith_html",
+  "template": "PI_review.html",
+  "disciplines": [
+    "portugues",
+    "historia",
+    "geografia",
+    "ciencias",
+    "matematica"
+  ],
+  "exercises_per_discipline": {
+    "portugues": 11,
+    "historia": 11,
+    "geografia": 11,
+    "ciencias": 11,
+    "matematica": 12
+  },
+  "total_discipline_exercises": 56,
+  "simulado_questions": 20,
+  "assets_source": "assets/benjamin_pi_4_ano_3tri/",
+  "images_source": "input_images/imagens_pi_benjamin_3o_tri_sorted/",
+  "output_path": "output/benjamin-pi-4ano-3tri/",
+  "generated_at": "2026-11-17T15:28:43.792225+00:00"
+}

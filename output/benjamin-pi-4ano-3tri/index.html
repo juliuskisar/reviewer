@@ -1,0 +1,2744 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisão Multidisciplinar PI 3º Trimestre — Benjamin (4º ano)</title>
+
+  <!-- =========================================================
+       ESTILO
+       Organizado em blocos:
+       1. Variáveis e reset
+       2. Layout geral (header, nav, main)
+       3. Cards e seções retráteis (accordion)
+       4. Exercícios (múltipla escolha e resposta curta)
+       5. Feedback visual (acerto, erro, modelo)
+       6. Barra de progresso
+       7. Responsividade
+       ========================================================= -->
+  <style>
+    /* ---------- 1. Variáveis e reset ---------- */
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1f2937;
+      --text-soft: #4b5563;
+      --muted: #94a3b8;
+
+      --primary: #4f46e5;
+      --primary-soft: #eef2ff;
+      --primary-strong: #3730a3;
+
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --error: #ea580c;
+      --error-soft: #ffedd5;
+      --info: #0ea5e9;
+      --info-soft: #e0f2fe;
+
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 .4em; line-height: 1.25; color: var(--text); }
+    p { margin: 0 0 .8em; color: var(--text-soft); }
+    ul { margin: 0 0 .8em 1.2em; color: var(--text-soft); }
+    li { margin-bottom: .25em; }
+
+    button { font: inherit; cursor: pointer; }
+
+    /* ---------- 2. Layout geral ---------- */
+    .page-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 28px 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .page-header__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      color: white;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      margin-bottom: 6px;
+    }
+    .page-header .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+    .page-header .notice {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: white;
+      font-size: .9rem;
+    }
+
+    .nav-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-tabs__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 8px;
+      row-gap: 8px;
+    }
+    .nav-tabs button {
+      flex: 0 0 auto;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 500;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+      white-space: nowrap;
+    }
+    .nav-tabs button:hover {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      border-color: var(--primary-soft);
+    }
+    .nav-tabs button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+    }
+    .nav-tabs button .tab-icon {
+      margin-right: 6px;
+      opacity: .9;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* ---------- 3. Cards e seções retráteis ---------- */
+    .subject-panel { display: none; }
+    .subject-panel.active { display: block; animation: fadeIn .25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .subject-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .subject-header h2 {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subject-header .subject-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 700;
+    }
+
+    .accordion {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .accordion__header {
+      width: 100%;
+      background: var(--surface);
+      border: none;
+      text-align: left;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: background .15s ease;
+    }
+    .accordion__header:hover { background: var(--surface-soft); }
+    .accordion__header .chevron {
+      transition: transform .2s ease;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .accordion.open .accordion__header .chevron { transform: rotate(90deg); color: var(--primary); }
+
+    .accordion__body {
+      display: none;
+      padding: 4px 18px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .accordion.open .accordion__body { display: block; }
+
+    /* Switch Resumo / Conteúdo geral */
+    .content-switch {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 14px 0 8px;
+    }
+    .content-switch__btn {
+      border: none;
+      background: transparent;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease;
+    }
+    .content-switch__btn:hover { color: var(--primary-strong); }
+    .content-switch__btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
+    }
+    .content-view { display: none; }
+    .content-view.active { display: block; }
+
+    .section-intro {
+      background: var(--info-soft);
+      border-left: 4px solid var(--info);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin: 12px 0 16px;
+      color: #075985;
+    }
+
+    /* Tabelas dentro das seções (quadros de conjugação etc.) */
+    .accordion__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: .95rem;
+      background: var(--surface);
+    }
+    .accordion__body th,
+    .accordion__body td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .accordion__body th {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 600;
+    }
+    .accordion__body h3 {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      color: var(--primary-strong);
+    }
+    .accordion__body h3:first-child { margin-top: 6px; }
+
+    /* Caixas "Lembre-se" e "Atenção" */
+    .callout {
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin: 12px 0;
+      border-left: 4px solid;
+      font-size: .95rem;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout--remember {
+      background: var(--info-soft);
+      border-color: var(--info);
+      color: #075985;
+    }
+    .callout--attention {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+
+    /* Palavras destacadas (ex.: was, were, there was) */
+    .hl {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .95em;
+    }
+    .hl--ok  { background: var(--success-soft); color: #166534; }
+    .hl--no  { background: var(--error-soft);   color: #9a3412; }
+
+    /* ---------- 4. Exercícios ---------- */
+    .exercise {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 16px 14px;
+      margin-bottom: 14px;
+    }
+    .exercise__label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .exercise__question {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      white-space: pre-line;
+    }
+
+    /* Múltipla escolha */
+    .options { display: grid; gap: 8px; margin-bottom: 12px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .option:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .option input { margin-top: 4px; accent-color: var(--primary); }
+    .option.selected { border-color: var(--primary); background: var(--primary-soft); }
+    .option.correct { border-color: var(--success); background: var(--success-soft); }
+    .option.incorrect { border-color: var(--error); background: var(--error-soft); }
+
+    /* Resposta curta */
+    .short-answer textarea {
+      width: 100%;
+      min-height: 90px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font: inherit;
+      resize: vertical;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .short-answer textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    /* Botões dos exercícios */
+    .exercise__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-weight: 600;
+      font-size: .92rem;
+      transition: transform .1s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn--primary { background: var(--primary); color: white; }
+    .btn--primary:hover { background: var(--primary-strong); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--primary-strong);
+      border: 1px solid var(--primary-soft);
+    }
+    .btn--ghost:hover { background: var(--primary-soft); }
+
+    /* ---------- 5. Feedback ---------- */
+    .feedback {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback--success {
+      background: var(--success-soft);
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .feedback--error {
+      background: var(--error-soft);
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+    }
+    .feedback--info {
+      background: var(--info-soft);
+      color: #075985;
+      border: 1px solid #bae6fd;
+    }
+
+    .model-answer {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      background: #fef9c3;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      color: #78350f;
+    }
+    .model-answer.show { display: block; }
+    .model-answer h4 {
+      margin: 0 0 6px;
+      color: #78350f;
+      font-size: .95rem;
+    }
+
+    /* ---------- 6. Barra de progresso ---------- */
+    .progress {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+      min-width: 240px;
+    }
+    .progress__label {
+      font-size: .85rem;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress__bar {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-soft);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress__fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), #7c3aed);
+      transition: width .3s ease;
+    }
+
+    /* ---------- 7. Simulado da PI ---------- */
+    .nav-tabs button.tab--simulado {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .nav-tabs button.tab--simulado:hover { color: white; opacity: .92; }
+    .nav-tabs button.tab--simulado.active {
+      background: linear-gradient(135deg, #ea580c, #b45309);
+      box-shadow: 0 2px 6px rgba(234, 88, 12, .35);
+    }
+
+    .sim-text {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sim-text h3 {
+      color: var(--primary-strong);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .sim-text p { margin-bottom: .8em; }
+
+    .sim-block { margin-bottom: 22px; }
+    .sim-block__title {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+
+    .sim-question {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .sim-question__head {
+      font-size: .78rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+    .sim-question__text {
+      font-weight: 600;
+      color: var(--text);
+      margin: 4px 0 10px;
+    }
+
+    .sim-options { display: grid; gap: 6px; }
+    .sim-option {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .sim-option:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .sim-option input { margin-top: 4px; accent-color: var(--primary); }
+    .sim-option.selected   { border-color: var(--primary); background: var(--primary-soft); }
+    .sim-option.correct    { border-color: var(--success); background: var(--success-soft); }
+    .sim-option.incorrect  { border-color: var(--error);   background: var(--error-soft); }
+
+    .sim-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 20px;
+    }
+
+    .sim-result {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .sim-result.show { display: block; animation: fadeIn .25s ease; }
+    .sim-result h3 { color: var(--primary-strong); margin-bottom: 6px; }
+    .sim-result h4 { margin: 14px 0 8px; }
+    .sim-result__total {
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+    .sim-result__total strong { color: var(--primary-strong); }
+    .sim-result__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+    }
+    .sim-score {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      font-size: .92rem;
+    }
+    .sim-score strong { font-size: 1.05rem; }
+    .sim-score--ok  { border-color: #bbf7d0; background: var(--success-soft); }
+    .sim-score--ok  strong { color: var(--success); }
+    .sim-score--med { border-color: #fde68a; background: #fef9c3; }
+    .sim-score--med strong { color: #ca8a04; }
+    .sim-score--low { border-color: #fed7aa; background: var(--error-soft); }
+    .sim-score--low strong { color: var(--error); }
+
+    /* ---------- 8. Responsividade ---------- */
+    @media (max-width: 600px) {
+      .page-header { padding: 20px 16px; }
+      main { padding: 16px 14px 60px; }
+      .accordion__header { padding: 14px; font-size: .98rem; }
+      .exercise { padding: 14px; }
+      .subject-header h2 { font-size: 1.25rem; }
+      .sim-text { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. CABEÇALHO
+       ========================================================= -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <h1>Revisão Multidisciplinar PI 3º Trimestre — Benjamin (4º ano)</h1>
+      <p class="subtitle">
+        Um percurso de estudo para revisar os principais conteúdos da prova,
+        organizado por disciplina, com explicações, resumos e exercícios interativos.
+      </p>
+      <span class="notice">
+        Você pode seguir o percurso completo ou abrir apenas as partes que quiser revisar.
+      </span>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       2. NAVEGAÇÃO POR DISCIPLINAS
+       Os botões são gerados dinamicamente pelo JavaScript.
+       ========================================================= -->
+  <nav class="nav-tabs" aria-label="Disciplinas">
+    <div class="nav-tabs__inner" id="nav-tabs"></div>
+  </nav>
+
+  <!-- =========================================================
+       3. CONTEÚDO PRINCIPAL
+       Cada disciplina é renderizada como um <section> dentro de #content.
+       ========================================================= -->
+  <main id="content"></main>
+
+  <!-- =========================================================
+       SCRIPT
+       Organizado em blocos:
+       1. Dados das disciplinas (subjects)
+       2. Renderização de abas e painéis
+       3. Renderização de seções (accordion)
+       4. Renderização de exercícios (múltipla escolha + resposta curta)
+       5. Lógica de verificação de respostas
+       6. Cálculo de progresso
+       7. Inicialização
+       ========================================================= -->
+  <script>
+    /* =========================================================
+       1. DADOS DAS DISCIPLINAS
+       Para inserir conteúdo real depois, basta editar este objeto.
+       Cada disciplina tem:
+         - title: nome exibido
+         - icon: símbolo curto exibido na aba
+         - sections: { percurso, explicacao, resumo, dicas }
+         - exercises: [ { type, question, ... } ]
+
+       Tipos de exercício suportados:
+         - "multiple-choice":
+             { type, question, options: [...], correctAnswer: indice,
+               explanation, modelAnswer }
+         - "short-answer":
+             { type, question, keywords: [...], explanation, modelAnswer }
+       ========================================================= */
+    const subjects = {
+    portugues: {
+        title: "Língua Portuguesa",
+        icon: "PT",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 9, 10, 11 e 13</strong>: peça «Viravez, o cortês», discurso direto e indireto,
+            telejornal sobre Tarsila do Amaral, pronomes, texto instrucional e histórias fantásticas (mitos e lendas).</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Texto teatral — «Viravez, o cortês»</h3>
+            <p>A peça é feita de <strong>falas</strong> (com o nome do personagem antes) e <strong>rubricas</strong>
+            (indicações de cena). <span class="hl">Viravez</span> é o protagonista: ele solta o Saci, que o recompensa
+            com muita comida — desde que guarde segredo. Inácia, a esposa, desconfia da fartura, e Viravez inventa
+            a «herança do tio Hipólito».</p>
+            <ul>
+              <li><strong>Rubrica de cena</strong> — movimento ou gesto: <em>Vivaldino se inclina e beija a mão de Inácia.</em></li>
+              <li><strong>Rubrica de fala</strong> — tom de voz: <em>(descrente)</em>, <em>(em tom brincalhão)</em>.</li>
+            </ul>
+
+            <h3>2. Discurso direto e indireto</h3>
+            <ul>
+              <li><span class="hl">Direto</span> — fala exata, com dois-pontos e travessão: <em>Viravez disse: — É uma herança.</em></li>
+              <li><span class="hl">Indireto</span> — o narrador conta o que foi dito: <em>Viravez disse que era uma herança.</em></li>
+            </ul>
+
+            <h3>3. Telejornal e Tarsila do Amaral</h3>
+            <p>O telejornal usa <strong>imagem, som, entonação e gestos</strong> — recursos que o jornal impresso não tem.
+            A reportagem «Tarsila para Crianças» mostrou obras da pintora, como o <strong>Abaporu</strong> (1928).
+            Tarsila usou nas telas as cores «caipiras» de que gostava desde a infância.</p>
+
+            <h3>4. Pronomes</h3>
+            <p>Pronomes <strong>evitam repetição</strong> de palavras:</p>
+            <ul>
+              <li><span class="hl">Pessoais</span> — eu, tu, ele, ela, nós, eles: <em>Os mosquitos? Eles vão embora.</em></li>
+              <li><span class="hl">Possessivos</span> — indicam dono: <em>meu quarto</em>, <em>seu pai</em>, <em>suas telas</em>.</li>
+              <li><span class="hl">Oblíquos o, a, os, as</span> — substituem o complemento: <em>Maria viu a rosa e <u>a</u> colocou no vaso.</em></li>
+            </ul>
+            <p>Ortografia: verbos em <strong>-car</strong> no pretérito trocam c por qu antes de e — <em>brinco → brinquei</em>.</p>
+
+            <h3>5. Texto instrucional</h3>
+            <p>Ensina <strong>como fazer</strong> algo: título, objetivo, <strong>materiais</strong> e <strong>passo a passo em ordem</strong>.
+            No vídeo tutorial, também se planejam a apresentação, a fala, a postura e a despedida.</p>
+
+            <h3>6. Mitos e lendas (Módulo 13)</h3>
+            <ul>
+              <li><span class="hl">Mito</span> — explica origens do mundo e da natureza com deuses e heróis: Narciso vira flor; Aracne, tecelã, desafia a deusa Atena.</li>
+              <li><span class="hl">Lenda</span> — história popular que <strong>mistura fantasia e realidade</strong>: em «A origem da lavoura», a moça desce do céu com a chuva (fantasia), mas a chuva realmente ajuda as plantações (realidade).</li>
+            </ul>
+            <p>Para não repetir o nome, a narrativa troca «Narciso» por <em>o menino</em>, <em>o jovem</em>, <em>seu filho</em>.</p>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Mitos e lendas foram contados <strong>oralmente</strong>, de geração em geração, antes de serem escritos.
+            </div>`,
+            resumo: `
+            <h3>Gêneros estudados</h3>
+            <table>
+              <thead><tr><th>Gênero</th><th>Marca principal</th></tr></thead>
+              <tbody>
+                <tr><td>Peça teatral</td><td>Falas com nome do personagem · rubricas</td></tr>
+                <tr><td>Telejornal</td><td>Imagem · som · voz · ao vivo</td></tr>
+                <tr><td>Entrevista</td><td>Roteiro · perguntas abertas · agradecimento</td></tr>
+                <tr><td>Texto instrucional</td><td>Objetivo · materiais · passos em ordem</td></tr>
+                <tr><td>Mito / lenda</td><td>Seres fantásticos · explica algo da natureza</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Discurso</h3>
+            <table>
+              <thead><tr><th>Tipo</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Direto</td><td>Inácia perguntou: — Onde está o dinheiro?</td></tr>
+                <tr><td>Indireto</td><td>Inácia perguntou onde estava o dinheiro.</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Pronomes</h3>
+            <table>
+              <thead><tr><th>Tipo</th><th>Exemplos</th></tr></thead>
+              <tbody>
+                <tr><td>Pessoal</td><td>eu · ele · ela · nós · eles</td></tr>
+                <tr><td>Possessivo</td><td>meu · seu · sua · suas</td></tr>
+                <tr><td>Oblíquo (objeto)</td><td>o · a · os · as</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Lenda = fantasia + realidade. Mito grego = deuses e heróis explicando origens.
+            </div>`,
+            dicas: `
+            <ul>
+              <li>Travessão depois de dois-pontos = discurso direto.</li>
+              <li>Para achar a quem o pronome se refere, volte à frase anterior e procure o nome.</li>
+              <li>Rubrica fica entre parênteses e não é falada pelo ator.</li>
+              <li>Em texto instrucional, a ordem dos passos não pode ser trocada.</li>
+              <li>Em lendas, separe o que é fantasioso do que pode acontecer de verdade.</li>
+              <li>-car no pretérito: <em>toquei, brinquei, fiquei</em>.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Na peça «Viravez, o cortês», Viravez solta o Saci e recebe muita comida em troca de segredo. Quem é o protagonista da peça?",
+                options: [
+                    "Inácia",
+                    "Viravez",
+                    "O Saci",
+                    "O tio Hipólito"
+                ],
+                correctAnswer: 1,
+                explanation: "Protagonista é o personagem principal — Viravez, que move a história.",
+                modelAnswer: "Resposta correta: Viravez."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual frase está em discurso direto?",
+                options: [
+                    "Viravez contou que era uma herança.",
+                    "Inácia perguntou onde estava o dinheiro.",
+                    "Viravez disse: — Já falei que é uma herança.",
+                    "Inácia desconfiou da fartura."
+                ],
+                correctAnswer: 2,
+                explanation: "Discurso direto reproduz a fala exata, com dois-pontos e travessão.",
+                modelAnswer: "Resposta correta: Viravez disse: — Já falei que é uma herança."
+            },
+            {
+                type: "multiple-choice",
+                question: "Na peça, aparece a rubrica «INÁCIA (descrente) — Coisa mais esquisita!». A palavra «descrente» indica:",
+                options: [
+                    "O tom da fala da personagem",
+                    "O nome do cenário",
+                    "O título da peça",
+                    "A fala do narrador"
+                ],
+                correctAnswer: 0,
+                explanation: "Rubrica de fala mostra como a fala deve ser dita — aqui, com desconfiança.",
+                modelAnswer: "Resposta correta: o tom da fala da personagem."
+            },
+            {
+                type: "multiple-choice",
+                question: "Que recursos a reportagem de telejornal «Tarsila para Crianças» pode usar que o jornal impresso não tem?",
+                options: [
+                    "Apenas títulos em letras grandes",
+                    "Imagens ao vivo, sons e entonação da voz",
+                    "Somente fotos em preto e branco",
+                    "Texto escrito sem autor"
+                ],
+                correctAnswer: 1,
+                explanation: "A TV combina imagem, som e voz — recursos audiovisuais.",
+                modelAnswer: "Resposta correta: imagens ao vivo, sons e entonação da voz."
+            },
+            {
+                type: "multiple-choice",
+                question: "«Maria viu a rosa e a colocou no vaso.» A palavra destacada «a» (em «a colocou») substitui:",
+                options: [
+                    "Maria",
+                    "o vaso",
+                    "a rosa",
+                    "a mãe"
+                ],
+                correctAnswer: 2,
+                explanation: "O pronome oblíquo «a» retoma «a rosa», evitando repetir a palavra.",
+                modelAnswer: "Resposta correta: a rosa."
+            },
+            {
+                type: "multiple-choice",
+                question: "«Tarsila passou a infância nas fazendas de seu pai.» A palavra «seu» é um pronome:",
+                options: [
+                    "Pessoal",
+                    "Demonstrativo",
+                    "Artigo",
+                    "Possessivo"
+                ],
+                correctAnswer: 3,
+                explanation: "«Seu» indica de quem é o pai (de Tarsila) — pronome possessivo.",
+                modelAnswer: "Resposta correta: possessivo."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual é a forma correta do verbo «brincar» no pretérito, com «eu»?",
+                options: [
+                    "Eu brincei",
+                    "Eu brinquei",
+                    "Eu brinqueu",
+                    "Eu brincou"
+                ],
+                correctAnswer: 1,
+                explanation: "Verbos em -car trocam c por qu antes de e: brinquei.",
+                modelAnswer: "Resposta correta: Eu brinquei."
+            },
+            {
+                type: "multiple-choice",
+                question: "Em um texto instrucional (por exemplo, como montar um jogo), a parte «Materiais» serve para:",
+                options: [
+                    "Contar o final da história",
+                    "Apresentar os personagens",
+                    "Dar a opinião do autor",
+                    "Listar o que é preciso para fazer a atividade"
+                ],
+                correctAnswer: 3,
+                explanation: "Materiais = lista do que vamos usar; depois vêm os passos em ordem.",
+                modelAnswer: "Resposta correta: listar o que é preciso para fazer a atividade."
+            },
+            {
+                type: "multiple-choice",
+                question: "No mito grego de Narciso, o jovem se encanta com a própria imagem refletida no lago. No fim da história, ele se transforma em:",
+                options: [
+                    "Uma flor",
+                    "Um vaga-lume",
+                    "Uma serpente",
+                    "Uma estrela"
+                ],
+                correctAnswer: 0,
+                explanation: "O mito explica a origem da flor narciso.",
+                modelAnswer: "Resposta correta: uma flor."
+            },
+            {
+                type: "multiple-choice",
+                question: "Na lenda «A origem da lavoura», uma moça desce do céu com a chuva e ensina a plantar. Qual fato da lenda é fantasioso?",
+                options: [
+                    "A chuva ajuda as plantações a crescer",
+                    "A moça desce do céu com a chuva",
+                    "A terra preparada pode ser plantada",
+                    "O beiju é feito com mandioca"
+                ],
+                correctAnswer: 1,
+                explanation: "Lendas misturam fantasia (a moça vinda do céu) e realidade (chuva ajuda a lavoura).",
+                modelAnswer: "Resposta correta: a moça desce do céu com a chuva."
+            },
+            {
+                type: "short-answer",
+                question: "Leia a anedota: «— Pai, tem muitos mosquitos no meu quarto! — Apague a luz que eles vão embora!» A quem se refere o pronome «eles»? E que tipo de pronome é «meu»?",
+                keywords: [
+                    "mosquitos",
+                    "possessivo"
+                ],
+                explanation: "«Eles» retoma «mosquitos» (pronome pessoal); «meu» indica posse (possessivo).",
+                modelAnswer: "Resposta esperada: «eles» = os mosquitos; «meu» é pronome possessivo."
+            }
+        ]
+    },
+    historia: {
+        title: "História",
+        icon: "HI",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 8, 9 e 10</strong> e da leitura sobre o <strong>povo Suiá</strong>:
+            reinos africanos, tráfico e resistência, engenhos de açúcar, bandeirantes, ouro em Minas
+            e técnicas indígenas de conservação de alimentos (polvilho).</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Reinos africanos</h3>
+            <p>Os <span class="hl">bantus</span> formaram reinos organizados, com agricultura, comércio e metalurgia.</p>
+            <ul>
+              <li><strong>Congo</strong> — capital Mbanza Congo; usava conchas chamadas <span class="hl">nzimbu</span> como moeda.</li>
+              <li><strong>Ndongo</strong> (atual Angola) — a rainha <span class="hl">Njinga a Mbande</span> resistiu aos portugueses.</li>
+            </ul>
+
+            <h3>2. Tráfico e resistência</h3>
+            <p>Portugueses construíram fortes no litoral africano para comerciar e, depois, traficar pessoas escravizadas.
+            Milhões de africanos foram levados à força em <strong>navios negreiros</strong> — essa dispersão forçada se chama
+            <span class="hl">diáspora</span>. Muitos resistiram, fugindo e formando <span class="hl">quilombos</span>.</p>
+
+            <h3>3. Engenhos de açúcar</h3>
+            <p>Em <strong>1532</strong>, Martim Afonso de Sousa fundou <strong>São Vicente</strong> (SP); logo surgiram engenhos.
+            A cana era moída e o caldo virava açúcar para exportar. Primeiro trabalharam indígenas escravizados; depois,
+            cada vez mais africanos escravizados, que trouxeram conhecimentos de <strong>metalurgia</strong>.</p>
+
+            <h3>4. Bandeirantes e ouro</h3>
+            <p>As <span class="hl">bandeiras</span> partiam de <strong>São Paulo de Piratininga</strong> rumo ao sertão em busca de
+            indígenas, riquezas e ouro. Em Minas Gerais encontrou-se ouro de dois tipos:</p>
+            <ul>
+              <li><strong>Aluvião</strong> — partículas na areia dos rios (lavadas com bateia).</li>
+              <li><strong>Filão</strong> — veio de ouro dentro da rocha.</li>
+            </ul>
+            <p><strong>Tropeiros</strong> levavam alimentos em mulas até as minas; surgiram vilas como Mariana, Ouro Preto e Sabará.</p>
+
+            <h3>5. O polvilho do povo Suiá</h3>
+            <p>Os Suiá, do Xingu, observaram a natureza e criaram uma técnica de <strong>conservação de alimentos</strong>:</p>
+            <ul>
+              <li>As <strong>mulheres</strong> colhem e ralam a mandioca na <strong>época da seca</strong>, para o polvilho secar ao sol.</li>
+              <li>Os <strong>homens</strong> fazem <strong>cestos</strong> para guardar o polvilho seco.</li>
+              <li>Guardado assim, o polvilho <strong>dura até um ano</strong> — serve para beiju, mingau e bolos.</li>
+            </ul>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              A divisão do trabalho entre homens e mulheres e o calendário da seca e da chuva fazem parte do conhecimento tradicional Suiá.
+            </div>`,
+            resumo: `
+            <h3>Linha do tempo</h3>
+            <table>
+              <thead><tr><th>Quando</th><th>O quê</th></tr></thead>
+              <tbody>
+                <tr><td>Século XV</td><td>Portugueses comerciam no litoral africano</td></tr>
+                <tr><td>1532</td><td>Fundação de São Vicente · primeiros engenhos</td></tr>
+                <tr><td>Século XVII</td><td>Bandeiras saem de São Paulo</td></tr>
+                <tr><td>Séculos XVII–XVIII</td><td>Ouro em Minas · vilas mineradoras</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Palavras-chave</h3>
+            <table>
+              <thead><tr><th>Palavra</th><th>Significado</th></tr></thead>
+              <tbody>
+                <tr><td>Nzimbu</td><td>Conchas usadas como moeda no Congo</td></tr>
+                <tr><td>Diáspora</td><td>Dispersão forçada de africanos</td></tr>
+                <tr><td>Quilombo</td><td>Refúgio de quem fugia da escravização</td></tr>
+                <tr><td>Aluvião / filão</td><td>Ouro no rio / ouro na rocha</td></tr>
+                <tr><td>Tropeiro</td><td>Comerciante que levava mercadorias em mulas</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Polvilho Suiá</h3>
+            <table>
+              <thead><tr><th>Quem</th><th>Faz o quê</th></tr></thead>
+              <tbody>
+                <tr><td>Mulheres</td><td>Colhem e ralam a mandioca na seca</td></tr>
+                <tr><td>Homens</td><td>Fazem cestos para guardar</td></tr>
+                <tr><td>Resultado</td><td>Polvilho seco dura até 1 ano</td></tr>
+              </tbody>
+            </table>`,
+            dicas: `
+            <ul>
+              <li>Não confunda aluvião (rio) com filão (rocha).</li>
+              <li>Bandeiras = São Paulo; açúcar no início = São Vicente.</li>
+              <li>Quilombo é resistência, não engenho.</li>
+              <li>Na pergunta sobre os Suiá, lembre: seca = ralar e secar; cestos = homens.</li>
+              <li>Conservar alimento = fazê-lo durar mais tempo sem estragar.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "No reino do Congo, os comerciantes usavam como moeda conchas chamadas:",
+                options: [
+                    "Nzimbu",
+                    "Bateia",
+                    "Filão",
+                    "Beiju"
+                ],
+                correctAnswer: 0,
+                explanation: "Nzimbu eram conchas usadas nas trocas do reino do Congo.",
+                modelAnswer: "Resposta correta: nzimbu."
+            },
+            {
+                type: "multiple-choice",
+                question: "Njinga a Mbande ficou conhecida por ser:",
+                options: [
+                    "Uma bandeirante paulista",
+                    "Uma rainha do Ndongo que resistiu aos portugueses",
+                    "Uma navegadora portuguesa",
+                    "Uma tropeira de Minas Gerais"
+                ],
+                correctAnswer: 1,
+                explanation: "Njinga liderou o Ndongo e resistiu à ocupação portuguesa.",
+                modelAnswer: "Resposta correta: uma rainha do Ndongo que resistiu aos portugueses."
+            },
+            {
+                type: "multiple-choice",
+                question: "Historiadores chamam de diáspora africana:",
+                options: [
+                    "Uma festa tradicional do Congo",
+                    "Um tipo de engenho de açúcar",
+                    "A dispersão forçada de africanos para outros continentes",
+                    "Uma moeda usada no Brasil colonial"
+                ],
+                correctAnswer: 2,
+                explanation: "Diáspora = espalhamento forçado de povos africanos pelo tráfico.",
+                modelAnswer: "Resposta correta: a dispersão forçada de africanos para outros continentes."
+            },
+            {
+                type: "multiple-choice",
+                question: "Os quilombos eram:",
+                options: [
+                    "Engenhos de açúcar no litoral",
+                    "Fortes portugueses na África",
+                    "Vilas criadas por Portugal em Minas",
+                    "Refúgios de pessoas que fugiam da escravização"
+                ],
+                correctAnswer: 3,
+                explanation: "Quilombos foram espaços de resistência e liberdade.",
+                modelAnswer: "Resposta correta: refúgios de pessoas que fugiam da escravização."
+            },
+            {
+                type: "multiple-choice",
+                question: "Em 1532, Martim Afonso de Sousa fundou, no litoral paulista, a vila de:",
+                options: [
+                    "São Vicente",
+                    "Ouro Preto",
+                    "Recife",
+                    "Belém"
+                ],
+                correctAnswer: 0,
+                explanation: "São Vicente foi uma das primeiras vilas e teve um dos primeiros engenhos.",
+                modelAnswer: "Resposta correta: São Vicente."
+            },
+            {
+                type: "multiple-choice",
+                question: "De onde partiam as bandeiras rumo ao sertão no século XVII?",
+                options: [
+                    "Salvador",
+                    "São Paulo de Piratininga",
+                    "Recife",
+                    "Belém"
+                ],
+                correctAnswer: 1,
+                explanation: "A vila paulista no planalto era o ponto de partida das bandeiras.",
+                modelAnswer: "Resposta correta: São Paulo de Piratininga."
+            },
+            {
+                type: "multiple-choice",
+                question: "O ouro que fica preso em um veio dentro da rocha é chamado de:",
+                options: [
+                    "Aluvião",
+                    "Nzimbu",
+                    "Filão",
+                    "Bateia"
+                ],
+                correctAnswer: 2,
+                explanation: "Filão = veio na rocha; aluvião = partículas na areia dos rios.",
+                modelAnswer: "Resposta correta: filão."
+            },
+            {
+                type: "multiple-choice",
+                question: "Os tropeiros eram importantes para a região das minas porque:",
+                options: [
+                    "Governavam as vilas mineradoras",
+                    "Fundaram São Vicente",
+                    "Comandavam navios negreiros",
+                    "Levavam alimentos e mercadorias em mulas até as minas"
+                ],
+                correctAnswer: 3,
+                explanation: "Mineradores não tinham tempo de plantar; tropeiros traziam comida de outras regiões.",
+                modelAnswer: "Resposta correta: levavam alimentos e mercadorias em mulas até as minas."
+            },
+            {
+                type: "multiple-choice",
+                question: "Por que as mulheres Suiá ralam a mandioca na época da seca?",
+                options: [
+                    "Para o polvilho secar bem ao sol e poder ser guardado",
+                    "Porque a mandioca só nasce na seca",
+                    "Para vender aos tropeiros",
+                    "Porque na seca os homens não trabalham"
+                ],
+                correctAnswer: 0,
+                explanation: "Sem chuva, o polvilho seca ao sol e pode ser armazenado por muito tempo.",
+                modelAnswer: "Resposta correta: para o polvilho secar bem ao sol e poder ser guardado."
+            },
+            {
+                type: "multiple-choice",
+                question: "No povo Suiá, quem faz os cestos usados para guardar o polvilho?",
+                options: [
+                    "As mulheres",
+                    "As crianças",
+                    "Os homens",
+                    "Os visitantes"
+                ],
+                correctAnswer: 2,
+                explanation: "O texto informa que os homens fazem os cestos; as mulheres ralam a mandioca.",
+                modelAnswer: "Resposta correta: os homens."
+            },
+            {
+                type: "short-answer",
+                question: "Explique uma técnica que o povo Suiá desenvolveu para conservar alimentos.",
+                keywords: [
+                    "polvilho",
+                    "secar",
+                    "seca",
+                    "cesto",
+                    "guardar",
+                    "um ano"
+                ],
+                explanation: "Os Suiá secam o polvilho na época da seca e o guardam em cestos, fazendo-o durar até um ano.",
+                modelAnswer: "Resposta esperada: secar o polvilho da mandioca ao sol na época da seca e guardá-lo em cestos — assim ele dura até um ano."
+            }
+        ]
+    },
+    geografia: {
+        title: "Geografia",
+        icon: "GE",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 10, 11 e 12</strong>: linhas imaginárias, zonas térmicas, climas do Brasil,
+            paisagens urbanas e rurais, consumo responsável e leitura da conta de luz.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Linhas imaginárias</h3>
+            <ul>
+              <li><span class="hl">Equador</span> — paralelo 0°; divide o planeta em hemisférios <strong>Norte e Sul</strong>. No Brasil, passa por <strong>Macapá</strong> (AP).</li>
+              <li><span class="hl">Meridiano de Greenwich</span> — meridiano 0°; divide <strong>Leste (Oriental) e Oeste (Ocidental)</strong>.</li>
+              <li><span class="hl">Trópicos</span> — Câncer (Norte) e Capricórnio (Sul); o de Capricórnio corta MS, SP e PR.</li>
+            </ul>
+
+            <h3>2. Zonas térmicas</h3>
+            <p>Perto do Equador os raios do Sol chegam mais <strong>perpendiculares</strong> e esquentam mais.
+            A maior parte do Brasil fica na <strong>zona intertropical</strong> (quente). SC e RS ficam na zona temperada Sul, com inverno mais frio.</p>
+
+            <h3>3. Climas do Brasil</h3>
+            <ul>
+              <li><strong>Equatorial</strong> — quente e úmido o ano todo (Norte).</li>
+              <li><strong>Tropical semiárido</strong> — pouca chuva, secas longas (interior do Nordeste).</li>
+              <li><strong>Subtropical</strong> — quatro estações, inverno frio (Sul).</li>
+            </ul>
+
+            <h3>4. Zona rural e zona urbana</h3>
+            <p>O município tem <strong>campo</strong> (zona rural) e <strong>cidade</strong> (zona urbana).</p>
+            <ul>
+              <li><span class="hl">Rural</span> — agricultura, pecuária e extrativismo = <strong>setor primário</strong> (matérias-primas e alimentos).</li>
+              <li><span class="hl">Indústria</span> — transforma matérias-primas = <strong>setor secundário</strong>.</li>
+              <li><span class="hl">Urbana</span> — comércio, serviços e indústria.</li>
+            </ul>
+            <p>Campo e cidade são <strong>interdependentes</strong>: o campo fornece alimentos; a cidade fornece máquinas, remédios, vacinas e celulares.</p>
+
+            <h3>5. Consumo responsável e conta de luz</h3>
+            <p>Consumir com responsabilidade é <strong>evitar desperdício</strong> de água, energia e produtos.</p>
+            <ul>
+              <li>A energia elétrica é medida em <span class="hl">quilowatt-hora (kWh)</span>.</li>
+              <li><strong>Consumo do mês = leitura atual − leitura anterior</strong> do medidor.</li>
+              <li>A conta traz dados do cliente, dados de medição, vencimento e histórico de consumo (gráfico de barras).</li>
+            </ul>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Apagar luzes ao sair, tomar banhos rápidos e reaproveitar brinquedos e roupas são atitudes de consumo responsável.
+            </div>`,
+            resumo: `
+            <h3>Linhas imaginárias</h3>
+            <table>
+              <thead><tr><th>Linha</th><th>Divide</th></tr></thead>
+              <tbody>
+                <tr><td>Equador (0°)</td><td>Norte · Sul</td></tr>
+                <tr><td>Greenwich (0°)</td><td>Leste (Oriental) · Oeste (Ocidental)</td></tr>
+                <tr><td>Trópico de Capricórnio</td><td>Zona intertropical · temperada Sul</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Climas</h3>
+            <table>
+              <thead><tr><th>Clima</th><th>Marca</th></tr></thead>
+              <tbody>
+                <tr><td>Equatorial</td><td>Quente e úmido o ano todo</td></tr>
+                <tr><td>Tropical semiárido</td><td>Pouca chuva — seca</td></tr>
+                <tr><td>Subtropical</td><td>Inverno frio — Sul</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Campo e cidade</h3>
+            <table>
+              <thead><tr><th>Zona</th><th>Atividades</th><th>Setor</th></tr></thead>
+              <tbody>
+                <tr><td>Rural</td><td>Agricultura · pecuária · extrativismo</td><td>Primário</td></tr>
+                <tr><td>Urbana</td><td>Indústria</td><td>Secundário</td></tr>
+                <tr><td>Urbana</td><td>Comércio · serviços</td><td>Terciário</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Conta de luz: consumo = leitura atual − leitura anterior (em kWh).
+            </div>`,
+            dicas: `
+            <ul>
+              <li>Equador = Norte/Sul; Greenwich = Leste/Oeste. Não troque!</li>
+              <li>Macapá é a capital cortada pela linha do Equador.</li>
+              <li>Na conta de luz, faça a subtração das leituras com calma.</li>
+              <li>Setor primário = produz no campo; secundário = transforma na indústria.</li>
+              <li>Consumo responsável = economizar e evitar desperdício, não «nunca comprar».</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "A linha do Equador divide o planeta em hemisférios:",
+                options: [
+                    "Leste e Oeste",
+                    "Norte e Sul",
+                    "Rural e urbano",
+                    "Oriental e Polar"
+                ],
+                correctAnswer: 1,
+                explanation: "O Equador (paralelo 0°) separa o hemisfério Norte do hemisfério Sul.",
+                modelAnswer: "Resposta correta: Norte e Sul."
+            },
+            {
+                type: "multiple-choice",
+                question: "O meridiano de Greenwich (0°) divide a Terra em hemisférios:",
+                options: [
+                    "Oriental (Leste) e Ocidental (Oeste)",
+                    "Norte e Sul",
+                    "Polar e temperado",
+                    "Campo e cidade"
+                ],
+                correctAnswer: 0,
+                explanation: "Greenwich separa Leste e Oeste.",
+                modelAnswer: "Resposta correta: Oriental (Leste) e Ocidental (Oeste)."
+            },
+            {
+                type: "multiple-choice",
+                question: "A maior parte do território brasileiro está em qual zona térmica?",
+                options: [
+                    "Polar",
+                    "Temperada Norte",
+                    "Intertropical",
+                    "Temperada Sul"
+                ],
+                correctAnswer: 2,
+                explanation: "Quase todo o Brasil fica entre os trópicos — zona intertropical, mais quente.",
+                modelAnswer: "Resposta correta: intertropical."
+            },
+            {
+                type: "multiple-choice",
+                question: "O clima tropical semiárido, do interior do Nordeste, tem como característica:",
+                options: [
+                    "Neve frequente no inverno",
+                    "Pouca chuva e secas longas",
+                    "Chuva forte o ano todo",
+                    "Quatro estações bem definidas"
+                ],
+                correctAnswer: 1,
+                explanation: "Semiárido = pouca chuva; a vegetação típica é a Caatinga.",
+                modelAnswer: "Resposta correta: pouca chuva e secas longas."
+            },
+            {
+                type: "multiple-choice",
+                question: "Quais atividades econômicas predominam na zona rural?",
+                options: [
+                    "Comércio e bancos",
+                    "Indústria de automóveis",
+                    "Shoppings e escritórios",
+                    "Agricultura, pecuária e extrativismo"
+                ],
+                correctAnswer: 3,
+                explanation: "O campo produz alimentos e matérias-primas — setor primário.",
+                modelAnswer: "Resposta correta: agricultura, pecuária e extrativismo."
+            },
+            {
+                type: "multiple-choice",
+                question: "A indústria, que transforma matérias-primas em produtos, faz parte do setor:",
+                options: [
+                    "Primário",
+                    "Secundário",
+                    "Rural",
+                    "Polar"
+                ],
+                correctAnswer: 1,
+                explanation: "Setor secundário = indústria; primário = campo; terciário = comércio e serviços.",
+                modelAnswer: "Resposta correta: secundário."
+            },
+            {
+                type: "multiple-choice",
+                question: "Campo e cidade são interdependentes. Um exemplo do que a cidade fornece ao campo é:",
+                options: [
+                    "Leite e feijão",
+                    "Trigo e arroz",
+                    "Máquinas, vacinas e celulares",
+                    "Frutas colhidas no pé"
+                ],
+                correctAnswer: 2,
+                explanation: "O campo fornece alimentos; a cidade fornece produtos industriais e serviços.",
+                modelAnswer: "Resposta correta: máquinas, vacinas e celulares."
+            },
+            {
+                type: "multiple-choice",
+                question: "Na conta de luz de uma casa, a leitura anterior do medidor foi 3.740 kWh e a leitura atual foi 3.900 kWh. Qual foi o consumo do mês?",
+                options: [
+                    "160 kWh",
+                    "7.640 kWh",
+                    "260 kWh",
+                    "140 kWh"
+                ],
+                correctAnswer: 0,
+                explanation: "Consumo = leitura atual − leitura anterior = 3.900 − 3.740 = 160 kWh.",
+                modelAnswer: "Resposta correta: 160 kWh."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual atitude é um exemplo de consumo responsável de energia elétrica?",
+                options: [
+                    "Deixar a TV ligada sem ninguém assistindo",
+                    "Abrir a geladeira muitas vezes sem necessidade",
+                    "Apagar as luzes ao sair de um cômodo",
+                    "Tomar banhos bem demorados"
+                ],
+                correctAnswer: 2,
+                explanation: "Apagar luzes evita desperdício e diminui a conta.",
+                modelAnswer: "Resposta correta: apagar as luzes ao sair de um cômodo."
+            },
+            {
+                type: "multiple-choice",
+                question: "Na conta de luz, a sigla kWh é a abreviatura de:",
+                options: [
+                    "Quilograma por hora",
+                    "Quilômetro por hora",
+                    "Quilowatt por mês",
+                    "Quilowatt-hora"
+                ],
+                correctAnswer: 3,
+                explanation: "A unidade de consumo de energia elétrica é o quilowatt-hora (kWh).",
+                modelAnswer: "Resposta correta: quilowatt-hora."
+            },
+            {
+                type: "short-answer",
+                question: "Cite uma medida para economizar energia elétrica e uma para economizar água em casa.",
+                keywords: [
+                    "apagar",
+                    "luz",
+                    "desligar",
+                    "banho",
+                    "torneira",
+                    "fechar"
+                ],
+                explanation: "Exemplos: apagar luzes e desligar aparelhos; tomar banho rápido e fechar a torneira ao escovar os dentes.",
+                modelAnswer: "Resposta esperada: energia — apagar a luz ao sair do cômodo; água — fechar a torneira ao escovar os dentes ou tomar banho rápido."
+            }
+        ]
+    },
+    ciencias: {
+        title: "Ciências",
+        icon: "CI",
+        sections: {
+            percurso: `
+            <p>Conteúdo dos <strong>Módulos 10 a 14</strong>: microrganismos, higiene, leveduras e fermentação,
+            antibióticos e vacinas, misturas homogêneas e heterogêneas e soluções.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Microrganismos</h3>
+            <p>São seres vivos tão pequenos que só vemos com <strong>microscópio</strong>: bactérias, fungos e vírus.</p>
+            <ul>
+              <li>Alguns causam doenças (<span class="hl">patogênicos</span>): mofo no pão, cárie, gripe.</li>
+              <li>Outros são úteis: <strong>lactobacilos</strong> ajudam na digestão; fungos e bactérias decompõem restos na compostagem.</li>
+            </ul>
+            <p>No laboratório, cultivam-se microrganismos na <strong>placa de Petri</strong> com <strong>meio de cultura</strong> (nutrientes).
+            Lavar as mãos com água e sabão por 20 segundos reduz muito os microrganismos.</p>
+
+            <h3>2. Leveduras e fermentação</h3>
+            <p>O <span class="hl">fermento biológico</span> tem leveduras — fungos microscópicos. Elas se alimentam do açúcar
+            e liberam <strong>gás carbônico</strong>, que forma bolhas e faz a massa do pão crescer (os «furinhos»).
+            Leveduras também fermentam a cana-de-açúcar para produzir <strong>etanol</strong> (álcool combustível).</p>
+
+            <h3>3. Antibióticos e vacinas</h3>
+            <ul>
+              <li><span class="hl">Antibiótico</span> — trata infecções causadas por <strong>bactérias</strong>. Não funciona contra vírus (como o da gripe). Só com receita médica.</li>
+              <li><span class="hl">Vacina</span> — <strong>previne</strong> doenças: prepara as defesas do corpo antes do contato com o microrganismo.</li>
+            </ul>
+            <p>A penicilina foi descoberta por Alexander Fleming a partir de um fungo.</p>
+
+            <h3>4. Misturas</h3>
+            <p>Quando juntamos dois ou mais componentes, formamos uma <strong>mistura</strong>.</p>
+            <ul>
+              <li><span class="hl">Homogênea</span> — aspecto uniforme, não dá para ver os componentes: água com açúcar, café, chá, ar.</li>
+              <li><span class="hl">Heterogênea</span> — dá para ver os componentes separados: água e óleo, água e areia, rochas (minerais diferentes).</li>
+            </ul>
+
+            <h3>5. Soluções</h3>
+            <p>Solução é uma mistura homogênea. O que <strong>dissolve</strong> é o <span class="hl">solvente</span>;
+            o que <strong>é dissolvido</strong> é o <span class="hl">soluto</span>. Na água com corante, a água é o solvente e o corante é o soluto.
+            A água é chamada de <strong>solvente universal</strong> porque dissolve muitas substâncias.</p>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Areia e óleo <strong>não se dissolvem</strong> na água — por isso formam misturas heterogêneas, não soluções.
+            </div>`,
+            resumo: `
+            <h3>Microrganismos</h3>
+            <table>
+              <thead><tr><th>Tipo</th><th>Exemplo ruim</th><th>Exemplo útil</th></tr></thead>
+              <tbody>
+                <tr><td>Bactéria</td><td>Cárie</td><td>Lactobacilos (digestão)</td></tr>
+                <tr><td>Fungo</td><td>Mofo no pão</td><td>Levedura (pão, etanol) · penicilina</td></tr>
+                <tr><td>Vírus</td><td>Gripe, resfriado</td><td>—</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Vacina × antibiótico</h3>
+            <table>
+              <thead><tr><th></th><th>Vacina</th><th>Antibiótico</th></tr></thead>
+              <tbody>
+                <tr><td>Para quê</td><td>Prevenir</td><td>Tratar infecção</td></tr>
+                <tr><td>Contra</td><td>Vírus e bactérias</td><td>Só bactérias</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Misturas</h3>
+            <table>
+              <thead><tr><th>Tipo</th><th>Aspecto</th><th>Exemplos</th></tr></thead>
+              <tbody>
+                <tr><td>Homogênea (solução)</td><td>Uniforme</td><td>Água com açúcar · café · ar</td></tr>
+                <tr><td>Heterogênea</td><td>Partes visíveis</td><td>Água e óleo · água e areia · rocha</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Soluto = é dissolvido (açúcar). Solvente = dissolve (água).
+            </div>`,
+            dicas: `
+            <ul>
+              <li>Gripe é vírus → antibiótico não resolve.</li>
+              <li>Vacina previne; antibiótico trata.</li>
+              <li>Furinhos no pão = gás carbônico das leveduras.</li>
+              <li>Se dá para ver as partes separadas, a mistura é heterogênea.</li>
+              <li>Na solução, o solvente geralmente está em maior quantidade (muitas vezes, a água).</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Microrganismos são:",
+                options: [
+                    "Todos prejudiciais à saúde",
+                    "Seres vivos tão pequenos que só vemos com microscópio",
+                    "Pedrinhas minúsculas sem vida",
+                    "Animais que vivem só no mar"
+                ],
+                correctAnswer: 1,
+                explanation: "Bactérias, fungos e vírus são microscópicos; muitos são úteis.",
+                modelAnswer: "Resposta correta: seres vivos tão pequenos que só vemos com microscópio."
+            },
+            {
+                type: "multiple-choice",
+                question: "Os lactobacilos que vivem no nosso intestino:",
+                options: [
+                    "Ajudam na digestão",
+                    "Causam cárie",
+                    "Provocam gripe",
+                    "Estragam o pão"
+                ],
+                correctAnswer: 0,
+                explanation: "Lactobacilos são exemplos de microrganismos benéficos.",
+                modelAnswer: "Resposta correta: ajudam na digestão."
+            },
+            {
+                type: "multiple-choice",
+                question: "No laboratório, o meio de cultura colocado na placa de Petri serve para:",
+                options: [
+                    "Matar todas as bactérias",
+                    "Medir a temperatura da sala",
+                    "Oferecer nutrientes para os microrganismos crescerem",
+                    "Guardar vacinas"
+                ],
+                correctAnswer: 2,
+                explanation: "O meio de cultura tem nutrientes que favorecem a multiplicação de fungos e bactérias.",
+                modelAnswer: "Resposta correta: oferecer nutrientes para os microrganismos crescerem."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual destas misturas é heterogênea?",
+                options: [
+                    "Água com açúcar dissolvido",
+                    "Café coado",
+                    "Chá de camomila",
+                    "Água e óleo"
+                ],
+                correctAnswer: 3,
+                explanation: "O óleo não se dissolve e fica separado da água — dá para ver os componentes.",
+                modelAnswer: "Resposta correta: água e óleo."
+            },
+            {
+                type: "multiple-choice",
+                question: "Um corante foi colocado na água e se dissolveu totalmente, formando uma solução. Nessa solução, o solvente é:",
+                options: [
+                    "O corante",
+                    "A água",
+                    "O copo",
+                    "A colher"
+                ],
+                correctAnswer: 1,
+                explanation: "Solvente é o que dissolve (água); soluto é o que é dissolvido (corante).",
+                modelAnswer: "Resposta correta: a água."
+            },
+            {
+                type: "multiple-choice",
+                question: "Misturando areia e água, depois de alguns segundos a areia vai para o fundo. Essa mistura é:",
+                options: [
+                    "Uma solução, porque a areia se dissolveu",
+                    "Heterogênea, porque a areia não se dissolve na água",
+                    "Homogênea, porque tem aspecto uniforme",
+                    "Uma substância pura"
+                ],
+                correctAnswer: 1,
+                explanation: "A areia não se dissolve e fica visível no fundo — mistura heterogênea.",
+                modelAnswer: "Resposta correta: heterogênea, porque a areia não se dissolve na água."
+            },
+            {
+                type: "multiple-choice",
+                question: "O ar que respiramos, formado por gás nitrogênio, gás oxigênio, gás carbônico e vapor de água, é:",
+                options: [
+                    "Uma mistura de gases",
+                    "Uma única substância",
+                    "Uma mistura de óleo e água",
+                    "Apenas gás oxigênio"
+                ],
+                correctAnswer: 0,
+                explanation: "O ar é uma mistura gasosa: os gases se misturam totalmente.",
+                modelAnswer: "Resposta correta: uma mistura de gases."
+            },
+            {
+                type: "multiple-choice",
+                question: "Os furinhos dentro de uma fatia de pão feito com fermento biológico aparecem porque:",
+                options: [
+                    "A farinha tem buracos naturais",
+                    "O sal derrete no forno",
+                    "As leveduras liberam gás carbônico na fermentação",
+                    "O óleo evapora da massa"
+                ],
+                correctAnswer: 2,
+                explanation: "Leveduras consomem açúcar e liberam gás carbônico, que forma bolhas na massa.",
+                modelAnswer: "Resposta correta: as leveduras liberam gás carbônico na fermentação."
+            },
+            {
+                type: "multiple-choice",
+                question: "No Brasil, o etanol (álcool combustível) é produzido principalmente pela fermentação da:",
+                options: [
+                    "Cana-de-açúcar",
+                    "Areia",
+                    "Água mineral",
+                    "Mandioca seca"
+                ],
+                correctAnswer: 0,
+                explanation: "Leveduras fermentam o caldo da cana e produzem etanol nas usinas.",
+                modelAnswer: "Resposta correta: cana-de-açúcar."
+            },
+            {
+                type: "multiple-choice",
+                question: "Por que o antibiótico não cura a gripe?",
+                options: [
+                    "Porque a gripe é causada por bactérias resistentes",
+                    "Porque o antibiótico só funciona em crianças",
+                    "Porque a gripe não é uma doença",
+                    "Porque a gripe é causada por vírus, e o antibiótico age contra bactérias"
+                ],
+                correctAnswer: 3,
+                explanation: "Antibióticos combatem bactérias; vírus não são afetados por eles.",
+                modelAnswer: "Resposta correta: porque a gripe é causada por vírus, e o antibiótico age contra bactérias."
+            },
+            {
+                type: "short-answer",
+                question: "Explique a diferença entre vacina e antibiótico.",
+                keywords: [
+                    "prevenir",
+                    "previne",
+                    "tratar",
+                    "trata",
+                    "bactéria",
+                    "defesa"
+                ],
+                explanation: "Vacina prepara as defesas do corpo antes da doença; antibiótico trata infecções por bactérias.",
+                modelAnswer: "Resposta esperada: a vacina previne doenças, preparando as defesas do corpo; o antibiótico trata infecções já causadas por bactérias."
+            }
+        ]
+    },
+    matematica: {
+        title: "Matemática",
+        icon: "MA",
+        sections: {
+            percurso: `
+            <p>Conteúdo do 3º trimestre: <strong>números decimais</strong> (décimos e centésimos), comparação e ordenação,
+            reta numérica, <strong>sistema monetário</strong> e <strong>medidas de massa</strong> (mg, g, kg, t).</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Explicação geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Números decimais</h3>
+            <p>Aparecem na balança (66,6 kg), no termômetro (36,3 °C) e nos preços (R$ 4,50).</p>
+            <ul>
+              <li><span class="hl">Décimo</span> — a unidade dividida em 10 partes: 1 ÷ 10 = 0,1. <strong>10 décimos = 1 inteiro.</strong></li>
+              <li><span class="hl">Centésimo</span> — a unidade dividida em 100 partes: 1 ÷ 100 = 0,01.</li>
+              <li>Metade de 1 inteiro = 0,5.</li>
+            </ul>
+
+            <h3>2. Comparar e ordenar</h3>
+            <p>Compare primeiro a <strong>parte inteira</strong>; se for igual, compare os décimos, depois os centésimos.</p>
+            <ul>
+              <li>3,5 &gt; 3,05 (5 décimos é mais que 0 décimo).</li>
+              <li>2,7 e 2,70 são o <strong>mesmo número</strong>.</li>
+            </ul>
+
+            <h3>3. Reta numérica</h3>
+            <p>De 0 a 1 dividido em 10 partes iguais, cada tracinho vale <strong>0,1</strong>: 0 · 0,1 · 0,2 · … · 0,9 · 1.</p>
+
+            <h3>4. Sistema monetário</h3>
+            <p>R$ 42,75 lê-se «quarenta e dois reais e setenta e cinco centavos». <strong>100 centavos = R$ 1,00.</strong></p>
+            <p><span class="hl">Troco</span> = valor pago − preço. Alinhe as vírgulas antes de somar ou subtrair.</p>
+
+            <h3>5. Medidas de massa</h3>
+            <p>Usamos a <strong>balança</strong> para medir massa. Unidades:</p>
+            <ul>
+              <li><strong>1 t = 1.000 kg</strong> (tonelada — caminhões)</li>
+              <li><strong>1 kg = 1.000 g</strong> (quilograma — pessoas, farinha)</li>
+              <li><strong>1 g = 1.000 mg</strong> (miligrama — remédios, vitaminas)</li>
+            </ul>
+            <p>No rótulo: <strong>peso bruto</strong> = produto + embalagem; <strong>peso líquido</strong> = só o produto.
+            A antiga <strong>arroba</strong> vale cerca de 15 kg.</p>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Para passar de kg para g, multiplique por 1.000. Para passar de g para kg, divida por 1.000 (500 g = 0,5 kg).
+            </div>`,
+            resumo: `
+            <h3>Decimais</h3>
+            <table>
+              <thead><tr><th>Nome</th><th>Fração da unidade</th><th>Escrita</th></tr></thead>
+              <tbody>
+                <tr><td>Décimo</td><td>1 de 10 partes</td><td>0,1</td></tr>
+                <tr><td>Centésimo</td><td>1 de 100 partes</td><td>0,01</td></tr>
+                <tr><td>Metade</td><td>5 de 10 partes</td><td>0,5</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Dinheiro</h3>
+            <table>
+              <thead><tr><th>Escrita</th><th>Leitura</th></tr></thead>
+              <tbody>
+                <tr><td>R$ 0,50</td><td>cinquenta centavos</td></tr>
+                <tr><td>R$ 3,75</td><td>três reais e setenta e cinco centavos</td></tr>
+                <tr><td>R$ 1,00</td><td>um real = 100 centavos</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Massa</h3>
+            <table>
+              <thead><tr><th>Relação</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>1 t = 1.000 kg</td><td>16 t = 16.000 kg</td></tr>
+                <tr><td>1 kg = 1.000 g</td><td>2,5 kg = 2.500 g</td></tr>
+                <tr><td>1 g = 1.000 mg</td><td>2.500 mg = 2,5 g</td></tr>
+              </tbody>
+            </table>`,
+            dicas: `
+            <ul>
+              <li>Mais algarismos depois da vírgula não quer dizer número maior: 3,05 &lt; 3,5.</li>
+              <li>Na reta de 0 a 1 com 10 partes, conte os tracinhos: cada um vale 0,1.</li>
+              <li>Em troco, monte a conta com vírgula embaixo de vírgula.</li>
+              <li>Peso líquido = peso bruto − embalagem.</li>
+              <li>Antes de comparar massas, deixe todas na mesma unidade.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Quantos décimos formam uma unidade inteira?",
+                options: [
+                    "2",
+                    "5",
+                    "10",
+                    "100"
+                ],
+                correctAnswer: 2,
+                explanation: "0,1 dez vezes = 1. Dez décimos formam um inteiro.",
+                modelAnswer: "Resposta correta: 10."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual comparação está correta?",
+                options: [
+                    "3,05 > 3,5",
+                    "3,5 > 3,05",
+                    "3,5 = 3,05",
+                    "3,05 = 3,50"
+                ],
+                correctAnswer: 1,
+                explanation: "Mesma parte inteira (3); nos décimos, 5 > 0. Então 3,5 > 3,05.",
+                modelAnswer: "Resposta correta: 3,5 > 3,05."
+            },
+            {
+                type: "multiple-choice",
+                question: "Qual opção mostra os números 2,7 · 2,07 · 2,5 em ordem crescente (do menor para o maior)?",
+                options: [
+                    "2,7 · 2,5 · 2,07",
+                    "2,5 · 2,07 · 2,7",
+                    "2,07 · 2,5 · 2,7",
+                    "2,07 · 2,7 · 2,5"
+                ],
+                correctAnswer: 2,
+                explanation: "Décimos: 2,07 tem 0, 2,5 tem 5, 2,7 tem 7 → 2,07 < 2,5 < 2,7.",
+                modelAnswer: "Resposta correta: 2,07 · 2,5 · 2,7."
+            },
+            {
+                type: "multiple-choice",
+                question: "Uma reta numérica vai de 0 a 1 e está dividida em 10 partes iguais. Que número fica no 4º tracinho depois do 0?",
+                options: [
+                    "0,4",
+                    "4",
+                    "0,04",
+                    "40"
+                ],
+                correctAnswer: 0,
+                explanation: "Cada parte vale 0,1; quatro partes = 0,4.",
+                modelAnswer: "Resposta correta: 0,4."
+            },
+            {
+                type: "multiple-choice",
+                question: "Como se lê o valor R$ 42,75?",
+                options: [
+                    "Quatrocentos e vinte e sete reais e cinco centavos",
+                    "Quarenta e dois reais e sete centavos",
+                    "Quatro reais e duzentos e setenta e cinco centavos",
+                    "Quarenta e dois reais e setenta e cinco centavos"
+                ],
+                correctAnswer: 3,
+                explanation: "Antes da vírgula, reais (42); depois da vírgula, centavos (75).",
+                modelAnswer: "Resposta correta: quarenta e dois reais e setenta e cinco centavos."
+            },
+            {
+                type: "multiple-choice",
+                question: "Benjamin comprou um livro de R$ 13,40 e pagou com uma nota de R$ 20,00. Quanto recebeu de troco?",
+                options: [
+                    "R$ 7,60",
+                    "R$ 6,60",
+                    "R$ 6,40",
+                    "R$ 33,40"
+                ],
+                correctAnswer: 1,
+                explanation: "20,00 − 13,40 = 6,60.",
+                modelAnswer: "Resposta correta: R$ 6,60."
+            },
+            {
+                type: "multiple-choice",
+                question: "Um saco de farinha tem 2,5 kg. Quantos gramas são?",
+                options: [
+                    "250 g",
+                    "25 g",
+                    "2.500 g",
+                    "25.000 g"
+                ],
+                correctAnswer: 2,
+                explanation: "1 kg = 1.000 g → 2,5 × 1.000 = 2.500 g.",
+                modelAnswer: "Resposta correta: 2.500 g."
+            },
+            {
+                type: "multiple-choice",
+                question: "No rótulo de um produto: peso bruto (produto + embalagem) = 0,160 kg; peso da embalagem = 0,005 kg. Qual é o peso líquido, em gramas?",
+                options: [
+                    "165 g",
+                    "160 g",
+                    "150 g",
+                    "155 g"
+                ],
+                correctAnswer: 3,
+                explanation: "0,160 kg = 160 g; 0,005 kg = 5 g. Líquido = 160 − 5 = 155 g.",
+                modelAnswer: "Resposta correta: 155 g."
+            },
+            {
+                type: "multiple-choice",
+                question: "Uma águia tem massa de 5.500 g e consegue levantar uma presa de até 4 vezes a sua massa. Qual é a massa máxima dessa presa, em quilogramas?",
+                options: [
+                    "22 kg",
+                    "9,5 kg",
+                    "2,2 kg",
+                    "220 kg"
+                ],
+                correctAnswer: 0,
+                explanation: "5.500 × 4 = 22.000 g; 22.000 ÷ 1.000 = 22 kg.",
+                modelAnswer: "Resposta correta: 22 kg."
+            },
+            {
+                type: "multiple-choice",
+                question: "Um caminhão tem massa de 16 toneladas. Quanto é isso em quilogramas?",
+                options: [
+                    "1.600 kg",
+                    "160 kg",
+                    "16.000 kg",
+                    "160.000 kg"
+                ],
+                correctAnswer: 2,
+                explanation: "1 t = 1.000 kg → 16 × 1.000 = 16.000 kg.",
+                modelAnswer: "Resposta correta: 16.000 kg."
+            },
+            {
+                type: "short-answer",
+                question: "Escreva 500 g em quilogramas.",
+                keywords: [
+                    "0,5",
+                    "0,500",
+                    "meio"
+                ],
+                explanation: "500 ÷ 1.000 = 0,5 kg — meio quilo.",
+                modelAnswer: "Resposta esperada: 0,5 kg (meio quilograma)."
+            },
+            {
+                type: "short-answer",
+                question: "Uma arroba equivale a aproximadamente 15 kg. Quantos quilogramas são, aproximadamente, 3 arrobas?",
+                keywords: [
+                    "45"
+                ],
+                explanation: "3 × 15 = 45 kg.",
+                modelAnswer: "Resposta esperada: aproximadamente 45 kg."
+            }
+        ]
+    }
+};
+
+
+    /* Modelo padrão de seções (na ordem em que devem aparecer).
+       Para mudar nomes ou ordem, basta editar este array.
+       A seção "conteudo" agrupa Resumo + Explicação geral, com switch
+       (Resumo aparece por padrão). */
+    const SECTION_TEMPLATE = [
+
+
+      { key: "percurso",   title: "1. Percurso de estudo",     openByDefault: true  },
+      { key: "conteudo",   title: "2. Conteúdo",               openByDefault: false },
+      { key: "exercicios", title: "3. Exercícios interativos", openByDefault: false },
+      { key: "dicas",      title: "4. Dicas finais de prova",  openByDefault: false }
+    ];
+
+
+    /* =========================================================
+       SIMULADO DA PI — Feira de Ciências da Escola Verde (3º tri)
+       ========================================================= */
+    const simulado = {
+    title: "Simulado da PI",
+    icon: "★",
+    intro: `Um teste com <strong>20 questões</strong> (4 por disciplina), todas de múltipla escolha,
+              ligadas ao texto abaixo sobre a «Feira de Ciências da Escola Verde» e ao conteúdo das abas.`,
+    textTitle: "Texto-base — Feira de Ciências da Escola Verde",
+    text: `
+            <p>Na <strong>Feira de Ciências da Escola Verde</strong>, a turma do 4º ano montou estandes sobre a horta da escola.
+            No palco, um grupo encenou um trecho de <strong>«Viravez, o cortês»</strong>: Viravez soltou o Saci e ganhou muita comida,
+            mas disse à esposa Inácia, que estava <em>descrente</em>, que era «herança do tio Hipólito». Um painel lembrava que
+            <strong>Tarsila do Amaral</strong> pintou o Abaporu em 1928: «Ela usou as cores caipiras de que gostava desde a infância».
+            Outro cartaz recontava a lenda <strong>«A origem da lavoura»</strong>, em que uma moça desce do céu com a chuva e ensina a plantar.</p>
+
+            <p>No estande de Ciências, a turma fez pão caseiro seguindo um <strong>cartaz instrucional</strong>:
+            «Materiais: 1 kg de farinha, fermento biológico, água, açúcar e sal. Passos: 1) misture; 2) sove; 3) deixe descansar
+            1 hora; 4) asse.» O fermento biológico tem <strong>leveduras</strong>, fungos microscópicos que liberam gás carbônico e
+            fazem a massa crescer. Na mesa das misturas havia um copo de <strong>água com açúcar</strong> dissolvido e outro de
+            <strong>água com óleo</strong>, com o óleo boiando por cima. Um cartaz de saúde dizia: «Vacinas preparam as defesas do corpo
+            antes da doença; antibióticos tratam infecções causadas por bactérias.»</p>
+
+            <p>Em História, a turma apresentou o <strong>polvilho do povo Suiá</strong>, do Xingu: na época da seca, as
+            <strong>mulheres</strong> ralam a mandioca para o polvilho secar ao sol, e os <strong>homens</strong> fazem cestos para
+            guardá-lo; assim, o polvilho dura até um ano. Uma linha do tempo mostrava <strong>1532</strong>, quando Martim Afonso de Sousa
+            fundou São Vicente e logo surgiram engenhos de açúcar, e o ouro de <strong>aluvião</strong>, encontrado em partículas na areia
+            dos rios de Minas Gerais. No <strong>mapa do Brasil</strong>, a linha do Equador passava por <strong>Macapá</strong>, e uma
+            legenda explicava que a mandioca vem da <strong>zona rural</strong>, onde há agricultura, pecuária e extrativismo
+            (setor primário).</p>
+
+            <p>Na barraca de Matemática, o pão custava <strong>R$ 3,50</strong> e o suco, <strong>R$ 2,75</strong>; cada pacote de
+            polvilho tinha <strong>500 g</strong>. A turma também mediu três mudas da horta: 0,8 m, 0,45 m e 0,6 m. Por fim, conferiu a
+            <strong>conta de luz</strong> da escola: leitura anterior de 2.340 kWh e leitura atual de 2.520 kWh. O consumo do mês é a
+            diferença entre as duas leituras, medido em quilowatt-hora (kWh).</p>`,
+    questions: [
+        {
+            discipline: "Língua Portuguesa",
+            question: "Por que Viravez diz a Inácia que a comida é «herança do tio Hipólito»?",
+            options: [
+                "Para esconder que a comida veio do Saci",
+                "Porque o tio realmente deixou a comida",
+                "Para vender a comida na feira",
+                "Porque Inácia pediu uma herança"
+            ],
+            correctAnswer: 0,
+            explanation: "Viravez ganhou a comida do Saci e precisa guardar segredo — por isso inventa a herança."
+        },
+        {
+            discipline: "Língua Portuguesa",
+            question: "No painel, «Ela usou as cores caipiras de que gostava desde a infância». O pronome «Ela» se refere a:",
+            options: [
+                "Inácia",
+                "Tarsila do Amaral",
+                "A moça da lenda",
+                "A turma do 4º ano"
+            ],
+            correctAnswer: 1,
+            explanation: "A frase anterior fala de Tarsila do Amaral; o pronome pessoal «Ela» retoma esse nome."
+        },
+        {
+            discipline: "Língua Portuguesa",
+            question: "O que mostra que o cartaz do pão é um texto instrucional?",
+            options: [
+                "Tem rimas no final de cada linha",
+                "Tem diálogos com travessão",
+                "Apresenta materiais e passos numerados em ordem",
+                "Dá a opinião do autor sobre o pão"
+            ],
+            correctAnswer: 2,
+            explanation: "Texto instrucional ensina a fazer algo: lista materiais e passos em sequência."
+        },
+        {
+            discipline: "Língua Portuguesa",
+            question: "A lenda «A origem da lavoura», recontada no cartaz, é um texto que:",
+            options: [
+                "Conta só fatos reais, com datas exatas",
+                "É uma notícia de jornal",
+                "Não tem personagens",
+                "Mistura fantasia e realidade para explicar algo da natureza"
+            ],
+            correctAnswer: 3,
+            explanation: "A moça vinda do céu é fantasia; a chuva ajudar a lavoura é real — marca das lendas."
+        },
+        {
+            discipline: "História",
+            question: "Segundo o texto, no povo Suiá quem rala a mandioca para fazer o polvilho?",
+            options: [
+                "Os homens",
+                "As crianças",
+                "As mulheres",
+                "Os tropeiros"
+            ],
+            correctAnswer: 2,
+            explanation: "O texto diz que as mulheres ralam a mandioca na época da seca."
+        },
+        {
+            discipline: "História",
+            question: "Guardado nos cestos feitos pelos homens, o polvilho Suiá dura até:",
+            options: [
+                "Uma semana",
+                "Um ano",
+                "Um mês",
+                "Dez anos"
+            ],
+            correctAnswer: 1,
+            explanation: "O texto informa que o polvilho seco dura até um ano."
+        },
+        {
+            discipline: "História",
+            question: "De acordo com a linha do tempo, em 1532 Martim Afonso de Sousa fundou:",
+            options: [
+                "Ouro Preto",
+                "Salvador",
+                "Mariana",
+                "São Vicente"
+            ],
+            correctAnswer: 3,
+            explanation: "1532 = fundação de São Vicente, seguida pelos primeiros engenhos de açúcar."
+        },
+        {
+            discipline: "História",
+            question: "O ouro de aluvião, citado na linha do tempo, é aquele encontrado:",
+            options: [
+                "Em partículas na areia dos rios",
+                "Em veios dentro das rochas",
+                "Nas plantações de cana",
+                "No fundo do mar"
+            ],
+            correctAnswer: 0,
+            explanation: "O texto explica: aluvião = partículas de ouro na areia dos rios de Minas Gerais."
+        },
+        {
+            discipline: "Geografia",
+            question: "Qual capital brasileira aparece no mapa da feira cortada pela linha do Equador?",
+            options: [
+                "Belém",
+                "Manaus",
+                "Macapá",
+                "Boa Vista"
+            ],
+            correctAnswer: 2,
+            explanation: "O texto cita que a linha do Equador passa por Macapá (AP)."
+        },
+        {
+            discipline: "Geografia",
+            question: "A produção de mandioca, segundo a legenda do mapa, pertence a qual zona e setor?",
+            options: [
+                "Zona rural — setor primário",
+                "Zona urbana — setor secundário",
+                "Zona urbana — comércio",
+                "Zona polar — indústria"
+            ],
+            correctAnswer: 0,
+            explanation: "Agricultura é atividade da zona rural e faz parte do setor primário."
+        },
+        {
+            discipline: "Geografia",
+            question: "Qual foi o consumo de energia elétrica da escola no mês?",
+            options: [
+                "220 kWh",
+                "180 kWh",
+                "4.860 kWh",
+                "18 kWh"
+            ],
+            correctAnswer: 1,
+            explanation: "Consumo = leitura atual − leitura anterior = 2.520 − 2.340 = 180 kWh."
+        },
+        {
+            discipline: "Geografia",
+            question: "Qual atitude ajudaria a escola a diminuir a próxima conta de luz (consumo responsável)?",
+            options: [
+                "Deixar ventiladores ligados em salas vazias",
+                "Deixar computadores ligados a noite toda",
+                "Abrir a geladeira da cantina sem necessidade",
+                "Apagar as luzes ao sair das salas"
+            ],
+            correctAnswer: 3,
+            explanation: "Apagar luzes evita desperdício de energia elétrica."
+        },
+        {
+            discipline: "Ciências",
+            question: "Por que a massa do pão da feira cresceu?",
+            options: [
+                "As leveduras do fermento liberaram gás carbônico",
+                "O sal fez a massa inchar",
+                "A farinha absorveu ar sozinha",
+                "O óleo evaporou da massa"
+            ],
+            correctAnswer: 0,
+            explanation: "O texto explica que as leveduras liberam gás carbônico e fazem a massa crescer."
+        },
+        {
+            discipline: "Ciências",
+            question: "O copo de água com óleo, com o óleo boiando por cima, é um exemplo de:",
+            options: [
+                "Mistura homogênea",
+                "Solução",
+                "Mistura heterogênea",
+                "Substância pura"
+            ],
+            correctAnswer: 2,
+            explanation: "O óleo não se dissolve na água e as partes ficam visíveis — mistura heterogênea."
+        },
+        {
+            discipline: "Ciências",
+            question: "No copo de água com açúcar dissolvido, o soluto é:",
+            options: [
+                "A água",
+                "O açúcar",
+                "O copo",
+                "O óleo"
+            ],
+            correctAnswer: 1,
+            explanation: "Soluto é o que se dissolve (açúcar); solvente é o que dissolve (água)."
+        },
+        {
+            discipline: "Ciências",
+            question: "Segundo o cartaz de saúde, as vacinas servem para:",
+            options: [
+                "Tratar infecções por bactérias já instaladas",
+                "Fazer a massa do pão crescer",
+                "Substituir a lavagem das mãos",
+                "Preparar as defesas do corpo antes da doença"
+            ],
+            correctAnswer: 3,
+            explanation: "Vacinas previnem; tratar infecções por bactérias é papel dos antibióticos."
+        },
+        {
+            discipline: "Matemática",
+            question: "A receita usa 1 kg de farinha. Quantos gramas são?",
+            options: [
+                "10 g",
+                "100 g",
+                "1.000 g",
+                "10.000 g"
+            ],
+            correctAnswer: 2,
+            explanation: "1 kg = 1.000 g."
+        },
+        {
+            discipline: "Matemática",
+            question: "Um visitante comprou um pão e um suco e pagou com uma nota de R$ 10,00. Quanto recebeu de troco?",
+            options: [
+                "R$ 3,75",
+                "R$ 4,25",
+                "R$ 6,25",
+                "R$ 3,25"
+            ],
+            correctAnswer: 0,
+            explanation: "3,50 + 2,75 = 6,25; 10,00 − 6,25 = 3,75."
+        },
+        {
+            discipline: "Matemática",
+            question: "Cada pacote de polvilho tem 500 g. Quanto é isso em quilogramas?",
+            options: [
+                "5 kg",
+                "0,5 kg",
+                "50 kg",
+                "0,05 kg"
+            ],
+            correctAnswer: 1,
+            explanation: "500 ÷ 1.000 = 0,5 kg (meio quilo)."
+        },
+        {
+            discipline: "Matemática",
+            question: "Qual opção mostra as alturas das mudas (0,8 m · 0,45 m · 0,6 m) em ordem crescente?",
+            options: [
+                "0,8 m · 0,6 m · 0,45 m",
+                "0,6 m · 0,45 m · 0,8 m",
+                "0,45 m · 0,8 m · 0,6 m",
+                "0,45 m · 0,6 m · 0,8 m"
+            ],
+            correctAnswer: 3,
+            explanation: "Compare os décimos: 4 < 6 < 8 → 0,45 < 0,6 < 0,8."
+        }
+    ]
+};
+
+
+    /* Estado em memória para acompanhar o progresso por disciplina. */
+    const progressState = {};
+
+
+
+    /* =========================================================
+       2. RENDERIZAÇÃO DE ABAS E PAINÉIS
+       ====================================================a===== */
+    function renderTabs() {
+      const nav = document.getElementById("nav-tabs");
+      const content = document.getElementById("content");
+      nav.innerHTML = "";
+      content.innerHTML = "";
+
+      Object.entries(subjects).forEach(([key, subject], index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.target = key;
+        btn.innerHTML = `<span class="tab-icon">${subject.icon}</span>${subject.title}`;
+        btn.addEventListener("click", () => activateSubject(key));
+        nav.appendChild(btn);
+
+        const panel = document.createElement("section");
+        panel.className = "subject-panel";
+        panel.id = `panel-${key}`;
+        panel.innerHTML = renderSubjectPanel(key, subject);
+        content.appendChild(panel);
+
+        progressState[key] = { answered: new Set(), correct: new Set() };
+
+        if (index === 0) activateSubject(key);
+      });
+
+      // Aba especial do simulado, ao lado das disciplinas.
+      const simBtn = document.createElement("button");
+      simBtn.type = "button";
+      simBtn.dataset.target = "simulado";
+      simBtn.classList.add("tab--simulado");
+      simBtn.innerHTML = `<span class="tab-icon">${simulado.icon}</span>${simulado.title}`;
+      simBtn.addEventListener("click", () => activateSubject("simulado"));
+      nav.appendChild(simBtn);
+
+      const simPanel = document.createElement("section");
+      simPanel.className = "subject-panel";
+      simPanel.id = "panel-simulado";
+      simPanel.innerHTML = renderSimuladoPanel(simulado);
+      content.appendChild(simPanel);
+
+      bindAccordions();
+      bindContentSwitch();
+      bindExerciseEvents();
+      bindSimuladoEvents();
+    }
+
+    function activateSubject(key) {
+      document.querySelectorAll(".nav-tabs button").forEach(b => {
+        b.classList.toggle("active", b.dataset.target === key);
+      });
+      document.querySelectorAll(".subject-panel").forEach(p => {
+        p.classList.toggle("active", p.id === `panel-${key}`);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================
+       3. RENDERIZAÇÃO DE PAINEL DE DISCIPLINA
+       ========================================================= */
+    function renderSubjectPanel(key, subject) {
+      const exercisesHtml = subject.exercises
+        .map((ex, i) => renderExercise(key, ex, i))
+        .join("");
+
+      const sectionsHtml = SECTION_TEMPLATE.map(sec => {
+        let body;
+        if (sec.key === "exercicios") {
+          body = exercisesHtml || `<p>Nenhum exercício cadastrado ainda.</p>`;
+        } else if (sec.key === "conteudo") {
+          const resumoHtml = subject.sections.resumo || `<p>Resumo em preparação.</p>`;
+          const explicacaoHtml = subject.sections.explicacao || `<p>Conteúdo em preparação.</p>`;
+          body = `
+            <div class="content-switch" role="tablist" aria-label="Modo de visualização do conteúdo">
+              <button type="button" class="content-switch__btn active"
+                      role="tab" aria-selected="true" data-view="resumo">Resumo</button>
+              <button type="button" class="content-switch__btn"
+                      role="tab" aria-selected="false" data-view="explicacao">Conteúdo geral</button>
+            </div>
+            <div class="content-view active" data-view="resumo">${resumoHtml}</div>
+            <div class="content-view" data-view="explicacao">${explicacaoHtml}</div>
+          `;
+        } else {
+          body = subject.sections[sec.key] || `<p>Conteúdo em preparação.</p>`;
+        }
+
+        return `
+          <div class="accordion ${sec.openByDefault ? "open" : ""}">
+            <button class="accordion__header" type="button">
+              <span>${sec.title}</span>
+              <span class="chevron">▶</span>
+            </button>
+            <div class="accordion__body">
+              ${body}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="subject-header">
+          <h2>
+            <span class="subject-icon">${subject.icon}</span>
+            ${subject.title}
+          </h2>
+          <div class="progress" id="progress-${key}">
+            <div class="progress__label">
+              <span>Progresso da disciplina</span>
+              <span class="progress__text">0 / ${subject.exercises.length}</span>
+            </div>
+            <div class="progress__bar">
+              <div class="progress__fill"></div>
+            </div>
+          </div>
+        </div>
+        ${sectionsHtml}
+      `;
+    }
+
+    /* =========================================================
+       4. RENDERIZAÇÃO DE EXERCÍCIOS
+       ========================================================= */
+    function renderExercise(subjectKey, ex, index) {
+      const exId = `${subjectKey}-ex-${index}`;
+      if (ex.type === "multiple-choice") {
+        const optionsHtml = ex.options.map((opt, i) => `
+          <label class="option" data-index="${i}">
+            <input type="radio" name="${exId}" value="${i}" />
+            <span>${opt}</span>
+          </label>
+        `).join("");
+
+        return `
+          <div class="exercise" data-id="${exId}" data-type="multiple-choice"
+               data-correct="${ex.correctAnswer}">
+            <div class="exercise__label">Exercício ${index + 1} — Múltipla escolha</div>
+            <div class="exercise__question">${ex.question}</div>
+            <div class="options">${optionsHtml}</div>
+            <div class="exercise__actions">
+              <button class="btn btn--primary" data-action="check">Verificar resposta</button>
+              <button class="btn btn--ghost" data-action="show-model">Mostrar resposta/modelo</button>
+            </div>
+            <div class="feedback"></div>
+            <div class="model-answer">
+              <h4>Resposta modelo</h4>
+              <p>${ex.modelAnswer}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      if (ex.type === "short-answer") {
+        return `
+          <div class="exercise short-answer" data-id="${exId}" data-type="short-answer"
+               data-keywords="${(ex.keywords || []).join("|")}">
+            <div class="exercise__label">Exercício ${index + 1} — Resposta curta</div>
+            <div class="exercise__question">${ex.question}</div>
+            <textarea placeholder="Escreva sua resposta aqui..."></textarea>
+            <div class="exercise__actions">
+              <button class="btn btn--primary" data-action="check">Verificar resposta</button>
+              <button class="btn btn--ghost" data-action="show-model">Mostrar resposta/modelo</button>
+            </div>
+            <div class="feedback"></div>
+            <div class="model-answer">
+              <h4>Resposta modelo</h4>
+              <p>${ex.modelAnswer}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      return "";
+    }
+
+    /* =========================================================
+       5. EVENTOS: ACCORDIONS, EXERCÍCIOS E VERIFICAÇÃO
+       ========================================================= */
+    function bindAccordions() {
+      document.querySelectorAll(".accordion__header").forEach(header => {
+        header.addEventListener("click", () => {
+          header.parentElement.classList.toggle("open");
+        });
+      });
+    }
+
+    /* Alterna entre as visualizações "Resumo" e "Conteúdo geral"
+       dentro da seção de Conteúdo. */
+    function bindContentSwitch() {
+      document.querySelectorAll(".content-switch").forEach(group => {
+        const buttons = group.querySelectorAll(".content-switch__btn");
+        const container = group.parentElement;
+        buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const target = btn.dataset.view;
+            buttons.forEach(b => {
+              const isActive = b === btn;
+              b.classList.toggle("active", isActive);
+              b.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+            container.querySelectorAll(".content-view").forEach(v => {
+              v.classList.toggle("active", v.dataset.view === target);
+            });
+          });
+        });
+      });
+    }
+
+    function bindExerciseEvents() {
+      document.querySelectorAll(".exercise").forEach(exEl => {
+        const type = exEl.dataset.type;
+
+        if (type === "multiple-choice") {
+          exEl.querySelectorAll(".option").forEach(opt => {
+            opt.addEventListener("click", () => {
+              exEl.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+              opt.classList.add("selected");
+              const radio = opt.querySelector("input");
+              if (radio) radio.checked = true;
+            });
+          });
+        }
+
+        exEl.querySelectorAll("[data-action]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const action = btn.dataset.action;
+            if (action === "check") checkAnswer(exEl);
+            if (action === "show-model") toggleModel(exEl);
+          });
+        });
+      });
+    }
+
+    function checkAnswer(exEl) {
+      const type = exEl.dataset.type;
+      const feedback = exEl.querySelector(".feedback");
+      const subjectKey = exEl.dataset.id.split("-ex-")[0];
+      const exerciseId = exEl.dataset.id;
+
+      // Recupera a explicação a partir do modelo de dados, sem depender do DOM.
+      const indexMatch = exerciseId.match(/-ex-(\d+)$/);
+      const exerciseIndex = indexMatch ? parseInt(indexMatch[1], 10) : null;
+      const exerciseData = exerciseIndex !== null
+        ? subjects[subjectKey].exercises[exerciseIndex]
+        : null;
+
+      // ---- Múltipla escolha ----
+      if (type === "multiple-choice") {
+        const selected = exEl.querySelector("input[type='radio']:checked");
+        if (!selected) {
+          showFeedback(feedback, "info", "Selecione uma alternativa antes de verificar.");
+          return;
+        }
+
+        const correctIndex = parseInt(exEl.dataset.correct, 10);
+        const chosen = parseInt(selected.value, 10);
+        const isCorrect = chosen === correctIndex;
+
+        exEl.querySelectorAll(".option").forEach(o => {
+          o.classList.remove("correct", "incorrect");
+        });
+        const chosenOption = exEl.querySelector(`.option[data-index="${chosen}"]`);
+        if (chosenOption) chosenOption.classList.add(isCorrect ? "correct" : "incorrect");
+
+        if (isCorrect) {
+          showFeedback(
+            feedback, "success",
+            `Você acertou! ${exerciseData ? exerciseData.explanation : ""}`
+          );
+        } else {
+          showFeedback(
+            feedback, "error",
+            `Resposta incorreta. ${exerciseData ? exerciseData.explanation : ""}`
+          );
+        }
+
+        registerAnswer(subjectKey, exerciseId, isCorrect);
+        return;
+      }
+
+      // ---- Resposta curta ----
+      if (type === "short-answer") {
+        const textarea = exEl.querySelector("textarea");
+        const answer = (textarea.value || "").toLowerCase().trim();
+
+        if (!answer) {
+          showFeedback(feedback, "info", "Escreva uma resposta antes de verificar.");
+          return;
+        }
+
+        const keywords = (exEl.dataset.keywords || "")
+          .split("|")
+          .map(k => k.toLowerCase().trim())
+          .filter(Boolean);
+
+        const matched = keywords.filter(k => answer.includes(k));
+        const ratio = keywords.length ? matched.length / keywords.length : 0;
+        const isGood = ratio >= 0.5;
+
+        if (isGood) {
+          showFeedback(
+            feedback, "success",
+            `Boa resposta! Você mencionou ideias importantes${
+              matched.length ? " (" + matched.join(", ") + ")" : ""
+            }.`
+          );
+        } else {
+          showFeedback(
+            feedback, "error",
+            "Sua resposta pode melhorar. Veja a resposta modelo para comparar."
+          );
+        }
+
+        registerAnswer(subjectKey, exerciseId, isGood);
+      }
+    }
+
+    function showFeedback(el, kind, message) {
+      el.className = `feedback show feedback--${kind}`;
+      el.textContent = message;
+    }
+
+    function toggleModel(exEl) {
+      const model = exEl.querySelector(".model-answer");
+      model.classList.toggle("show");
+    }
+
+    /* =========================================================
+       6. PROGRESSO POR DISCIPLINA
+       ========================================================= */
+    function registerAnswer(subjectKey, exerciseId, isCorrect) {
+      const state = progressState[subjectKey];
+      state.answered.add(exerciseId);
+      if (isCorrect) state.correct.add(exerciseId);
+      else state.correct.delete(exerciseId);
+      updateProgress(subjectKey);
+    }
+
+    function updateProgress(subjectKey) {
+      const total = subjects[subjectKey].exercises.length;
+      const correct = progressState[subjectKey].correct.size;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      const wrap = document.getElementById(`progress-${subjectKey}`);
+      if (!wrap) return;
+      wrap.querySelector(".progress__text").textContent = `${correct} / ${total}`;
+      wrap.querySelector(".progress__fill").style.width = `${percent}%`;
+    }
+
+    /* =========================================================
+       7. SIMULADO DA PI
+       Renderiza o painel completo com texto-base, blocos por
+       disciplina e botões de finalizar/refazer.
+       ========================================================= */
+    function renderSimuladoPanel(sim) {
+      // Agrupa as questões mantendo a ordem em que aparecem.
+      const blocks = [];
+      const blockIndex = new Map();
+      sim.questions.forEach((q, i) => {
+        if (!blockIndex.has(q.discipline)) {
+          blockIndex.set(q.discipline, blocks.length);
+          blocks.push({ discipline: q.discipline, items: [] });
+        }
+        blocks[blockIndex.get(q.discipline)].items.push({ ...q, _index: i });
+      });
+
+      const blocksHtml = blocks.map(b => `
+        <div class="sim-block">
+          <div class="sim-block__title">${b.discipline}</div>
+          ${b.items.map(q => renderSimQuestion(q)).join("")}
+        </div>
+      `).join("");
+
+      return `
+        <div class="subject-header">
+          <h2>
+            <span class="subject-icon">${sim.icon}</span>
+            ${sim.title}
+          </h2>
+        </div>
+
+        <p style="color: var(--text-soft); margin-top: -6px;">${sim.intro}</p>
+
+        <article class="sim-text">
+          <h3>${sim.textTitle}</h3>
+          ${sim.text}
+        </article>
+
+        <div class="sim-result" id="sim-result"></div>
+
+        ${blocksHtml}
+
+        <div class="sim-footer">
+          <button class="btn btn--primary" id="sim-finalize">Finalizar simulado</button>
+          <button class="btn btn--ghost"   id="sim-reset">Tentar novamente</button>
+        </div>
+      `;
+    }
+
+    function renderSimQuestion(q) {
+      const optionsHtml = q.options.map((opt, i) => `
+        <label class="sim-option" data-index="${i}">
+          <input type="radio" name="sim-q-${q._index}" value="${i}" />
+          <span>${opt}</span>
+        </label>
+      `).join("");
+
+      return `
+        <div class="sim-question"
+             data-id="sim-q-${q._index}"
+             data-correct="${q.correctAnswer}"
+             data-discipline="${q.discipline}"
+             data-explanation="${(q.explanation || '').replace(/"/g, '&quot;')}">
+          <div class="sim-question__head">Questão ${q._index + 1} — ${q.discipline}</div>
+          <div class="sim-question__text">${q.question}</div>
+          <div class="sim-options">${optionsHtml}</div>
+        </div>
+      `;
+    }
+
+    function bindSimuladoEvents() {
+      // Selecionar alternativa.
+      document.querySelectorAll(".sim-question .sim-option").forEach(opt => {
+        opt.addEventListener("click", () => {
+          const q = opt.closest(".sim-question");
+          q.querySelectorAll(".sim-option").forEach(o => o.classList.remove("selected"));
+          opt.classList.add("selected");
+          const radio = opt.querySelector("input");
+          if (radio) radio.checked = true;
+        });
+      });
+
+      const finalize = document.getElementById("sim-finalize");
+      if (finalize) finalize.addEventListener("click", finalizeSimulado);
+
+      const reset = document.getElementById("sim-reset");
+      if (reset) reset.addEventListener("click", resetSimulado);
+    }
+
+    function finalizeSimulado() {
+      const questions = document.querySelectorAll(".sim-question");
+      const byDiscipline = {};
+      let totalCorrect = 0;
+      const total = questions.length;
+
+      questions.forEach(q => {
+        const d = q.dataset.discipline;
+        if (!byDiscipline[d]) byDiscipline[d] = { correct: 0, total: 0 };
+        byDiscipline[d].total += 1;
+
+        const correctIdx = parseInt(q.dataset.correct, 10);
+        const selected = q.querySelector("input[type='radio']:checked");
+
+        // Limpa marcações anteriores antes de pintar de novo.
+        q.querySelectorAll(".sim-option").forEach(o => {
+          o.classList.remove("correct", "incorrect");
+        });
+
+        // Sempre destaca a alternativa correta em verde.
+        const correctOpt = q.querySelector(`.sim-option[data-index="${correctIdx}"]`);
+        if (correctOpt) correctOpt.classList.add("correct");
+
+        if (selected) {
+          const chosen = parseInt(selected.value, 10);
+          const isCorrect = chosen === correctIdx;
+          if (!isCorrect) {
+            const chosenOpt = q.querySelector(`.sim-option[data-index="${chosen}"]`);
+            if (chosenOpt) chosenOpt.classList.add("incorrect");
+          } else {
+            totalCorrect++;
+            byDiscipline[d].correct++;
+          }
+        }
+      });
+
+      showSimuladoResult(totalCorrect, total, byDiscipline);
+    }
+
+    function showSimuladoResult(correct, total, byDiscipline) {
+      const result = document.getElementById("sim-result");
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      let message;
+      if (percent >= 80)      message = "Excelente! Você está muito bem preparado para a prova.";
+      else if (percent >= 60) message = "Bom trabalho! Revise os pontos em que ficou em dúvida.";
+      else if (percent >= 40) message = "Você já sabe boa parte. Volte aos resumos das disciplinas mais difíceis.";
+      else                    message = "Vamos reforçar mais! Reabra as abas das disciplinas e tente de novo.";
+
+      const breakdownHtml = Object.entries(byDiscipline).map(([d, s]) => {
+        let cls = "sim-score--low";
+        if (s.correct === s.total) cls = "sim-score--ok";
+        else if (s.correct >= Math.ceil(s.total / 2)) cls = "sim-score--med";
+        return `
+          <div class="sim-score ${cls}">
+            <span>${d}</span>
+            <strong>${s.correct} / ${s.total}</strong>
+          </div>
+        `;
+      }).join("");
+
+      result.innerHTML = `
+        <h3>Resultado do simulado</h3>
+        <div class="sim-result__total">
+          Você acertou <strong>${correct} de ${total}</strong> questões (${percent}%).
+        </div>
+        <p style="color: var(--text-soft); margin: 6px 0 0;">${message}</p>
+
+        <h4>Pontuação por disciplina (0 a 3)</h4>
+        <div class="sim-result__grid">${breakdownHtml}</div>
+      `;
+      result.classList.add("show");
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetSimulado() {
+      document.querySelectorAll(".sim-question .sim-option").forEach(o => {
+        o.classList.remove("selected", "correct", "incorrect");
+        const r = o.querySelector("input");
+        if (r) r.checked = false;
+      });
+      const result = document.getElementById("sim-result");
+      if (result) {
+        result.innerHTML = "";
+        result.classList.remove("show");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================
+       8. INICIALIZAÇÃO
+       ========================================================= */
+    document.addEventListener("DOMContentLoaded", renderTabs);
+  </script>
+</body>
+</html>
