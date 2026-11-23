@@ -1,0 +1,22 @@
+{
+  "review_id": "pedro-pi-6ano-3tri",
+  "student": "Pedro",
+  "student_age": 12,
+  "grade": "6º ano",
+  "exam": "PI — Prova Integrada (3º trimestre)",
+  "format": "monolith_html",
+  "template": "PI_review.html",
+  "disciplines": [
+    "ciencias",
+    "historia"
+  ],
+  "exercises_per_discipline": {
+    "ciencias": 11,
+    "historia": 11
+  },
+  "total_discipline_exercises": 22,
+  "simulado_questions": 20,
+  "assets_path": "assets/pedro_pi_6ano_3tri/",
+  "output_path": "output/pedro-pi-6ano-3tri/",
+  "generated_at": "2026-11-23T22:00:56.229895+00:00"
+}

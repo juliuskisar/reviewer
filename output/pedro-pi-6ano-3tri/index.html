@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisão Multidisciplinar — Pedro (6º ano) · 3º trimestre</title>
+
+  <!-- =========================================================
+       ESTILO
+       Organizado em blocos:
+       1. Variáveis e reset
+       2. Layout geral (header, nav, main)
+       3. Cards e seções retráteis (accordion)
+       4. Exercícios (múltipla escolha e resposta curta)
+       5. Feedback visual (acerto, erro, modelo)
+       6. Barra de progresso
+       7. Responsividade
+       ========================================================= -->
+  <style>
+    /* ---------- 1. Variáveis e reset ---------- */
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1f2937;
+      --text-soft: #4b5563;
+      --muted: #94a3b8;
+
+      --primary: #4f46e5;
+      --primary-soft: #eef2ff;
+      --primary-strong: #3730a3;
+
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --error: #ea580c;
+      --error-soft: #ffedd5;
+      --info: #0ea5e9;
+      --info-soft: #e0f2fe;
+
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 { margin: 0 0 .4em; line-height: 1.25; color: var(--text); }
+    p { margin: 0 0 .8em; color: var(--text-soft); }
+    ul { margin: 0 0 .8em 1.2em; color: var(--text-soft); }
+    li { margin-bottom: .25em; }
+
+    button { font: inherit; cursor: pointer; }
+
+    /* ---------- 2. Layout geral ---------- */
+    .page-header {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      padding: 28px 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .page-header__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .page-header h1 {
+      color: white;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      margin-bottom: 6px;
+    }
+    .page-header .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+    .page-header .notice {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: white;
+      font-size: .9rem;
+    }
+
+    .nav-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-tabs__inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 8px;
+      row-gap: 8px;
+    }
+    .nav-tabs button {
+      flex: 0 0 auto;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 500;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+      white-space: nowrap;
+    }
+    .nav-tabs button:hover {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      border-color: var(--primary-soft);
+    }
+    .nav-tabs button.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+    }
+    .nav-tabs button .tab-icon {
+      margin-right: 6px;
+      opacity: .9;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* ---------- 3. Cards e seções retráteis ---------- */
+    .subject-panel { display: none; }
+    .subject-panel.active { display: block; animation: fadeIn .25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .subject-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .subject-header h2 {
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subject-header .subject-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 700;
+    }
+
+    .accordion {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .accordion__header {
+      width: 100%;
+      background: var(--surface);
+      border: none;
+      text-align: left;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: background .15s ease;
+    }
+    .accordion__header:hover { background: var(--surface-soft); }
+    .accordion__header .chevron {
+      transition: transform .2s ease;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .accordion.open .accordion__header .chevron { transform: rotate(90deg); color: var(--primary); }
+
+    .accordion__body {
+      display: none;
+      padding: 4px 18px 18px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .accordion.open .accordion__body { display: block; }
+
+    /* Switch Resumo / Conteúdo geral */
+    .content-switch {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 14px 0 8px;
+    }
+    .content-switch__btn {
+      border: none;
+      background: transparent;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease;
+    }
+    .content-switch__btn:hover { color: var(--primary-strong); }
+    .content-switch__btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
+    }
+    .content-view { display: none; }
+    .content-view.active { display: block; }
+
+    .section-intro {
+      background: var(--info-soft);
+      border-left: 4px solid var(--info);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin: 12px 0 16px;
+      color: #075985;
+    }
+
+    /* Tabelas dentro das seções (quadros de conjugação etc.) */
+    .accordion__body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: .95rem;
+      background: var(--surface);
+    }
+    .accordion__body th,
+    .accordion__body td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .accordion__body th {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      font-weight: 600;
+    }
+    .accordion__body h3 {
+      margin-top: 18px;
+      font-size: 1.05rem;
+      color: var(--primary-strong);
+    }
+    .accordion__body h3:first-child { margin-top: 6px; }
+
+    /* Caixas "Lembre-se" e "Atenção" */
+    .callout {
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin: 12px 0;
+      border-left: 4px solid;
+      font-size: .95rem;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout--remember {
+      background: var(--info-soft);
+      border-color: var(--info);
+      color: #075985;
+    }
+    .callout--attention {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+
+    /* Palavras destacadas (ex.: was, were, there was) */
+    .hl {
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .95em;
+    }
+    .hl--ok  { background: var(--success-soft); color: #166534; }
+    .hl--no  { background: var(--error-soft);   color: #9a3412; }
+
+    /* ---------- 4. Exercícios ---------- */
+    .exercise {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 16px 14px;
+      margin-bottom: 14px;
+    }
+    .exercise__label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .exercise__question {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      white-space: pre-line;
+    }
+
+    /* Múltipla escolha */
+    .options { display: grid; gap: 8px; margin-bottom: 12px; }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .option:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .option input { margin-top: 4px; accent-color: var(--primary); }
+    .option.selected { border-color: var(--primary); background: var(--primary-soft); }
+    .option.correct { border-color: var(--success); background: var(--success-soft); }
+    .option.incorrect { border-color: var(--error); background: var(--error-soft); }
+
+    /* Resposta curta */
+    .short-answer textarea {
+      width: 100%;
+      min-height: 90px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font: inherit;
+      resize: vertical;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .short-answer textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    /* Botões dos exercícios */
+    .exercise__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-weight: 600;
+      font-size: .92rem;
+      transition: transform .1s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn--primary { background: var(--primary); color: white; }
+    .btn--primary:hover { background: var(--primary-strong); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--primary-strong);
+      border: 1px solid var(--primary-soft);
+    }
+    .btn--ghost:hover { background: var(--primary-soft); }
+
+    /* ---------- 5. Feedback ---------- */
+    .feedback {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback--success {
+      background: var(--success-soft);
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .feedback--error {
+      background: var(--error-soft);
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+    }
+    .feedback--info {
+      background: var(--info-soft);
+      color: #075985;
+      border: 1px solid #bae6fd;
+    }
+
+    .model-answer {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      background: #fef9c3;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-sm);
+      color: #78350f;
+    }
+    .model-answer.show { display: block; }
+    .model-answer h4 {
+      margin: 0 0 6px;
+      color: #78350f;
+      font-size: .95rem;
+    }
+
+    /* ---------- 6. Barra de progresso ---------- */
+    .progress {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+      min-width: 240px;
+    }
+    .progress__label {
+      font-size: .85rem;
+      color: var(--text-soft);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress__bar {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-soft);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress__fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), #7c3aed);
+      transition: width .3s ease;
+    }
+
+    /* ---------- 7. Simulado da PI ---------- */
+    .nav-tabs button.tab--simulado {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      color: white;
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .nav-tabs button.tab--simulado:hover { color: white; opacity: .92; }
+    .nav-tabs button.tab--simulado.active {
+      background: linear-gradient(135deg, #ea580c, #b45309);
+      box-shadow: 0 2px 6px rgba(234, 88, 12, .35);
+    }
+
+    .sim-text {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+    .sim-text h3 {
+      color: var(--primary-strong);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .sim-text p { margin-bottom: .8em; }
+
+    .sim-block { margin-bottom: 22px; }
+    .sim-block__title {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary-strong);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+
+    .sim-question {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .sim-question__head {
+      font-size: .78rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+    .sim-question__text {
+      font-weight: 600;
+      color: var(--text);
+      margin: 4px 0 10px;
+    }
+
+    .sim-options { display: grid; gap: 6px; }
+    .sim-option {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .sim-option:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .sim-option input { margin-top: 4px; accent-color: var(--primary); }
+    .sim-option.selected   { border-color: var(--primary); background: var(--primary-soft); }
+    .sim-option.correct    { border-color: var(--success); background: var(--success-soft); }
+    .sim-option.incorrect  { border-color: var(--error);   background: var(--error-soft); }
+
+    .sim-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 20px;
+    }
+
+    .sim-result {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+    }
+    .sim-result.show { display: block; animation: fadeIn .25s ease; }
+    .sim-result h3 { color: var(--primary-strong); margin-bottom: 6px; }
+    .sim-result h4 { margin: 14px 0 8px; }
+    .sim-result__total {
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+    .sim-result__total strong { color: var(--primary-strong); }
+    .sim-result__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 8px;
+    }
+    .sim-score {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      font-size: .92rem;
+    }
+    .sim-score strong { font-size: 1.05rem; }
+    .sim-score--ok  { border-color: #bbf7d0; background: var(--success-soft); }
+    .sim-score--ok  strong { color: var(--success); }
+    .sim-score--med { border-color: #fde68a; background: #fef9c3; }
+    .sim-score--med strong { color: #ca8a04; }
+    .sim-score--low { border-color: #fed7aa; background: var(--error-soft); }
+    .sim-score--low strong { color: var(--error); }
+
+    /* ---------- 8. Responsividade ---------- */
+    @media (max-width: 600px) {
+      .page-header { padding: 20px 16px; }
+      main { padding: 16px 14px 60px; }
+      .accordion__header { padding: 14px; font-size: .98rem; }
+      .exercise { padding: 14px; }
+      .subject-header h2 { font-size: 1.25rem; }
+      .sim-text { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. CABEÇALHO
+       ========================================================= -->
+  <header class="page-header">
+    <div class="page-header__inner">
+      <h1>Revisão Multidisciplinar — Pedro (6º ano) · 3º trimestre</h1>
+      <p class="subtitle">
+        Um percurso de estudo para revisar os principais conteúdos da prova,
+        organizado por disciplina, com explicações, resumos e exercícios interativos.
+      </p>
+      <span class="notice">
+        Você pode seguir o percurso completo ou abrir apenas as partes que quiser revisar.
+      </span>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       2. NAVEGAÇÃO POR DISCIPLINAS
+       Os botões são gerados dinamicamente pelo JavaScript.
+       ========================================================= -->
+  <nav class="nav-tabs" aria-label="Disciplinas">
+    <div class="nav-tabs__inner" id="nav-tabs"></div>
+  </nav>
+
+  <!-- =========================================================
+       3. CONTEÚDO PRINCIPAL
+       Cada disciplina é renderizada como um <section> dentro de #content.
+       ========================================================= -->
+  <main id="content"></main>
+
+  <!-- =========================================================
+       SCRIPT
+       Organizado em blocos:
+       1. Dados das disciplinas (subjects)
+       2. Renderização de abas e painéis
+       3. Renderização de seções (accordion)
+       4. Renderização de exercícios (múltipla escolha + resposta curta)
+       5. Lógica de verificação de respostas
+       6. Cálculo de progresso
+       7. Inicialização
+       ========================================================= -->
+  <script>
+    /* =========================================================
+       1. DADOS DAS DISCIPLINAS
+       Para inserir conteúdo real depois, basta editar este objeto.
+       Cada disciplina tem:
+         - title: nome exibido
+         - icon: símbolo curto exibido na aba
+         - sections: { percurso, explicacao, resumo, dicas }
+         - exercises: [ { type, question, ... } ]
+
+       Tipos de exercício suportados:
+         - "multiple-choice":
+             { type, question, options: [...], correctAnswer: indice,
+               explanation, modelAnswer }
+         - "short-answer":
+             { type, question, keywords: [...], explanation, modelAnswer }
+       ========================================================= */
+    const subjects = {
+    ciencias: {
+        title: "Ciências",
+        icon: "CI",
+        sections: {
+            percurso: `
+            <p><strong>Módulo 25 — Óptica:</strong> fontes de luz, propagação, fenômenos ópticos.
+            <strong>Módulo 26 — Lentes e visão:</strong> lentes convergentes e divergentes, foco,
+            miopia e hipermetropia, astigmatismo.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Conteúdo geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Noções iniciais de óptica</h3>
+            <p>Óptica estuda a <strong>luz</strong> — energia que permite ver o mundo. Analisamos
+            emissão, <span class="hl">propagação</span> no meio (ar, água, vidro) e interação com espelhos,
+            lentes, olho, câmeras.</p>
+            <ul>
+              <li><strong>Fontes primárias</strong> — emitem luz própria (Sol, vela acesa).</li>
+              <li><strong>Fontes secundárias</strong> — refletem luz incidente (Lua, livro iluminado).</li>
+              <li><strong>Pontuais</strong> — vistas como um ponto (estrela distante).</li>
+              <li><strong>Extensas</strong> — tamanho apreciável (lâmpada fluorescente).</li>
+            </ul>
+
+            <h3>2. Fenômenos ópticos</h3>
+            <ul>
+              <li><strong>Reflexão difusa</strong> — superfície rugosa espalha a luz (folha verde vista como verde).</li>
+              <li><strong>Absorção</strong> — corpo absorve algumas cores e reflete o pigmento.</li>
+              <li><strong>Reflexão especular</strong> — superfície lisa forma imagem nítida (brilho na gota d'água).</li>
+              <li><strong>Dispersão</strong> — luz branca separa-se em cores (arco-íris na asa do inseto).</li>
+              <li><strong>Refração</strong> — luz muda de meio e pode desviar (gota funciona como lente).</li>
+            </ul>
+
+            <h3>3. Lentes esféricas</h3>
+            <p><strong>Bordas finas</strong> → lente <span class="hl">convergente</span> — raios paralelos
+            ao eixo principal encontram-se no <strong>foco real</strong>.</p>
+            <p><strong>Bordas grossas</strong> → lente <span class="hl">divergente</span> — raios
+            parecem «sair» de um <strong>foco virtual</strong>.</p>
+            <p>Experimento: lente convergente pode projetar imagem da janela no papel
+            (geralmente <strong>invertida</strong>); divergente não forma imagem nítida projetada.</p>
+
+            <h3>4. Visão e ametropias</h3>
+            <p><strong>Miopia</strong> — enxerga mal de longe; corrige com lente <strong>divergente</strong>
+            (texto visto pela lente fica menor). <strong>Hipermetropia</strong> — dificuldade de perto;
+            lente <strong>convergente</strong> (texto ampliado pela lente).</p>
+            <p><strong>Astigmatismo</strong> — curvaturas diferentes na córnea; visão borrada perto e longe;
+            exige lentes especiais. Não esfregar os olhos — deforma temporariamente a córnea.</p>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Vidro de painel solar: parte da luz reflete e parte refrata — não é só um fenômeno.
+            </div>`,
+            resumo: `
+            <h3>Fontes de luz</h3>
+            <table>
+              <thead><tr><th>Tipo</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Primária</td><td>Sol, vela</td></tr>
+                <tr><td>Secundária</td><td>Lua, página do livro</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Fenômenos</h3>
+            <p>Reflexão difusa · especular · absorção · dispersão · refração.</p>
+
+            <h3>Lentes</h3>
+            <p>Convergente (bordas finas, foco real) · divergente (bordas grossas, foco virtual).</p>
+
+            <h3>Óculos</h3>
+            <p>Miopia → divergente · hipermetropia → convergente.</p>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Confundir convergente com miopia é pegadinha — miopia usa lente divergente!
+            </div>`,
+            dicas: `
+            <ul>
+              <li>Convergente = bordas finas; divergente = bordas grossas (desenho do caderno).</li>
+              <li>Na prova do painel solar: reflexão <em>e</em> refração podem ocorrer juntas no vidro.</li>
+              <li>Imagem pela lente convergente no papel costuma ser invertida em relação ao objeto.</li>
+              <li>Texto maior pelo óculos = lente convergente (hipermetropia, no exemplo Helena/Pedro inverta conforme figura).</li>
+              <li>Astigmatismo afeta foco em várias direções — não é só «de perto» ou «de longe».</li>
+              <li>Propagação = movimento da luz no meio; sem meio transparente adequado, a imagem muda.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Corpos que emitem luz própria são chamados no caderno de fontes:",
+                options: [
+                    "Secundárias apenas",
+                    "Primárias",
+                    "Extensas obrigatoriamente",
+                    "Virtuais"
+                ],
+                correctAnswer: 1,
+                explanation: "Primárias emitem luz; secundárias só refletem.",
+                modelAnswer: "Resposta correta: primárias."
+            },
+            {
+                type: "multiple-choice",
+                question: `Leia as afirmativas sobre fenômenos ópticos:
+I. Reflexão difusa espalha a luz sem imagem nítida.
+II. Refração ocorre ao mudar de meio.
+III. Dispersão separa cores da luz branca.
+IV. Absorção faz a folha verde refletir principalmente verde.
+
+Estão corretas apenas:`,
+                options: [
+                    "I e II",
+                    "I, II e III",
+                    "I, II, III e IV",
+                    "III e IV"
+                ],
+                correctAnswer: 2,
+                explanation: "Todas corretas segundo o Módulo 25.",
+                modelAnswer: "Resposta correta: I, II, III e IV."
+            },
+            {
+                type: "multiple-choice",
+                question: "Lentes de bordas finas são classificadas como:",
+                options: [
+                    "Divergentes",
+                    "Convergentes",
+                    "Apenas espelhos",
+                    "Sem foco"
+                ],
+                correctAnswer: 1,
+                explanation: "Bordas finas → convergentes com foco real.",
+                modelAnswer: "Resposta correta: convergentes."
+            },
+            {
+                type: "multiple-choice",
+                question: "Em lente divergente, raios paralelos ao eixo principal:",
+                options: [
+                    "Convergem a um foco real à direita",
+                    "Divergem como se saíssem de um foco virtual",
+                    "Não sofrem refração",
+                    "Formam sempre imagem invertida no papel"
+                ],
+                correctAnswer: 1,
+                explanation: "Divergente espalha os raios — foco virtual.",
+                modelAnswer: "Resposta correta: divergem a partir de foco virtual."
+            },
+            {
+                type: "multiple-choice",
+                question: "No experimento com papel na parede, a lente convergente em geral projeta imagem:",
+                options: [
+                    "Maior e sempre invertida",
+                    "Invertida (pode variar o tamanho conforme distância)",
+                    "Impossível de formar",
+                    "Idêntica sem inversão"
+                ],
+                correctAnswer: 1,
+                explanation: "Caderno pede descrever tamanho e orientação — convergente forma imagem real, em geral invertida.",
+                modelAnswer: "Resposta correta: invertida (tamanho depende da distância)."
+            },
+            {
+                type: "multiple-choice",
+                question: "Lente divergente, no mesmo experimento:",
+                options: [
+                    "Projeta imagem nítida invertida",
+                    "Não projeta imagens níticas como a convergente",
+                    "Só funciona à noite",
+                    "Concentra raios no foco real"
+                ],
+                correctAnswer: 1,
+                explanation: "Conclusão do caderno: divergente não projeta imagens.",
+                modelAnswer: "Resposta correta: não projeta imagens níticas."
+            },
+            {
+                type: "multiple-choice",
+                question: "Em painel solar, luz no vidro semitransparente:",
+                options: [
+                    "Só reflete totalmente",
+                    "Pode refletir parcialmente e refratar parcialmente",
+                    "Só dispersa, sem refração",
+                    "Desaparece sem efeito"
+                ],
+                correctAnswer: 1,
+                explanation: "Questão Uece do caderno — alternativa b.",
+                modelAnswer: "Resposta correta: parcialmente refletida e parcialmente refratada."
+            },
+            {
+                type: "multiple-choice",
+                question: "Astigmatismo está relacionado principalmente a:",
+                options: [
+                    "Curvaturas diferentes da córnea em direções distintas",
+                    "Excesso de luz solar apenas",
+                    "Uso de lente divergente em ambos os olhos de hipermetros",
+                    "Ausência total de retina"
+                ],
+                correctAnswer: 0,
+                explanation: "Raios não convergem a um único ponto — visão borrada.",
+                modelAnswer: "Resposta correta: curvaturas diferentes da córnea."
+            },
+            {
+                type: "multiple-choice",
+                question: "Se o texto visto pelas lentes do óculos fica menor que o texto ao redor, as lentes são:",
+                options: [
+                    "Convergentes",
+                    "Divergentes",
+                    "Espelhos planos",
+                    "Primárias"
+                ],
+                correctAnswer: 1,
+                explanation: "Lente divergente diminui a imagem — típica de correção de miopia.",
+                modelAnswer: "Resposta correta: divergentes."
+            },
+            {
+                type: "multiple-choice",
+                question: `Leia as afirmativas sobre óptica:
+I. Propagação é o deslocamento da luz no meio.
+II. Espelho plano forma imagem pelo fenômeno de reflexão.
+III. Toda refração gera dispersão visível em qualquer superfície.
+IV. Lente convergente pode associar-se à hipermetropia.
+
+Estão corretas apenas:`,
+                options: [
+                    "I e II",
+                    "I, II e IV",
+                    "II, III e IV",
+                    "I, II, III e IV"
+                ],
+                correctAnswer: 1,
+                explanation: "I, II e IV corretas. Dispersão não aparece sempre de forma visível (III exagerada).",
+                modelAnswer: "Resposta correta: I, II e IV."
+            },
+            {
+                type: "short-answer",
+                question: "Cite um fenômeno óptico e um exemplo do cotidiano citado no caderno.",
+                keywords: [
+                    "refração",
+                    "reflexão",
+                    "dispersão",
+                    "absorção",
+                    "gota",
+                    "folha"
+                ],
+                explanation: "Qualquer par fenômeno + exemplo coerente do módulo.",
+                modelAnswer: "Exemplo: refração na gota d'água que funciona como lente."
+            }
+        ]
+    },
+    historia: {
+        title: "História",
+        icon: "HI",
+        sections: {
+            percurso: `
+            <p><strong>Módulo 19 — Uma cultura de fé:</strong> arte religiosa medieval, poder da Igreja,
+            mulheres na Idade Média. <strong>Módulo 20 — Cruzadas:</strong> motivações, Jerusalém,
+            violência da conquista de 1099, consequências.</p>
+            
+            <ol>
+              <li>Comece pelo <strong>Resumo</strong> para ver tabelas e ideias-chave.</li>
+              <li>Depois leia a <strong>Conteúdo geral</strong> com calma.</li>
+              <li>Faça os <strong>exercícios</strong> sem olhar a resposta.</li>
+              <li>Use <em>Mostrar resposta/modelo</em> só depois de tentar.</li>
+              <li>Leia as <strong>Dicas finais de prova</strong> antes da PI.</li>
+            </ol>`,
+            explicacao: `
+            <h3>1. Cultura de fé (Módulo 19)</h3>
+            <p>Pinturas medievais mostram o <strong>julgamento das almas</strong> (balança entre anjo e demônio).
+            Esse tipo de imagem reforçava o medo do pecado e o <strong>poder de convencimento</strong> da
+            Igreja Católica.</p>
+
+            <h3>2. Igreja no cotidiano</h3>
+            <p>Textos como o de <strong>São Elói</strong> (séc. VII) condenavam adivinhações, danças e cantos
+            em festas — rotulados como «obras diabólicas». Chamar uma prática de diabólica significava
+            forte repressão social e religiosa.</p>
+
+            <h3>3. Mulheres na Europa antiga e medieval</h3>
+            <p>Infográfico do caderno compara Atenas (mulheres no lar, sem cidadania plena), Esparta
+            (exceção com treinamento e propriedade) e Roma (tutela masculina; mais espaço no Império, mas
+            sem Senado). Na Idade Média, o cristianismo associou mulher a <strong>Maria</strong>
+            (obediência) ou a <strong>Eva</strong> (tentação) — «não era fácil ser mulher».</p>
+
+            <h3>4. Cruzadas — motivações (Módulo 20)</h3>
+            <p>Além da fé: pressão turca em Bizâncio, falta de terra na Europa, interesse de nobres sem
+            feudos, comerciantes italianos no Mediterrâneo, prestígio dos reis. <strong>Roberto, o Monge</strong>
+            descreve Jerusalém como «umbigo do mundo» e pede libertação da cidade.</p>
+
+            <h3>5. Conquista de Jerusalém (1099) e fontes</h3>
+            <p>Relatos árabes (Amin Maalouf) e cristãos (Raimundo de Aguilers) descrevem violência extrema.
+            Historiadores debatem responsabilidades. Consequências: reforço da ideia de «cristandade» na Europa,
+            ressentimento no mundo árabe, <strong>comerciantes italianos</strong> entre os grandes beneficiados.</p>
+
+            <div class="callout callout--remember">
+              <strong>Lembre-se</strong>
+              Jerusalém é sagrada para cristianismo, islamismo e judaísmo — não é exclusiva de uma fé.
+            </div>`,
+            resumo: `
+            <h3>Módulo 19</h3>
+            <p>Arte do julgamento · Igreja no cotidiano · mulheres (Atenas/Esparta/Roma/Idade Média).</p>
+
+            <h3>Módulo 20</h3>
+            <p>Cruzadas = fé + política + comércio · 1099 · fontes em perspectivas diferentes.</p>
+
+            <table>
+              <thead><tr><th>Motivação</th><th>Exemplo</th></tr></thead>
+              <tbody>
+                <tr><td>Religiosa</td><td>Retomar Jerusalém</td></tr>
+                <tr><td>Política/econômica</td><td>Terras, rotas, prestígio</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout--attention">
+              <strong>Atenção</strong>
+              Afirmativa III do Enem: tolerância religiosa na idade das Cruzadas — falsa.
+            </div>`,
+            dicas: `
+            <ul>
+              <li>Pinturas de julgamento ligam arte à autoridade da Igreja — leia o enunciado com calma.</li>
+              <li>«Diabólica» no texto de São Elói = condenação forte, não piada.</li>
+              <li>Esparta é a exceção grega para mulheres — contraste com Atenas cai na prova.</li>
+              <li>Cruzadas: alternativa correta costuma unir fé + comércio, não «só política» ou «só comércio».</li>
+              <li>Compare fontes cristãs e árabes — mesma guerra, narrativas diferentes.</li>
+              <li>Beneficiários práticos: mercadores italianos, mesmo com Jerusalém mudando de mãos depois.</li>
+            </ul>`
+        },
+        exercises: [
+            {
+                type: "multiple-choice",
+                question: "Pinturas medievais da «psicostasia» (balança das almas) serviam sobretudo para:",
+                options: [
+                    "Ensinar astronomia heliocêntrica",
+                    "Reforçar crenças sobre julgamento e poder da Igreja",
+                    "Substituir o latim nos mosteiros",
+                    "Celebrar vitórias das Cruzadas apenas"
+                ],
+                correctAnswer: 1,
+                explanation: "Arte religiosa convencia sobre destino da alma.",
+                modelAnswer: "Resposta correta: reforçar crenças e poder da Igreja."
+            },
+            {
+                type: "multiple-choice",
+                question: "No discurso atribuído a São Elói, danças em festas de santos são condenadas como:",
+                options: [
+                    "Obras científicas",
+                    "Obras diabólicas",
+                    "Obras políticas neutras",
+                    "Obras comerciais"
+                ],
+                correctAnswer: 1,
+                explanation: "Fragmento do caderno — controle moral da Igreja.",
+                modelAnswer: "Resposta correta: obras diabólicas."
+            },
+            {
+                type: "multiple-choice",
+                question: `Leia as afirmativas sobre mulheres:
+I. Em Atenas, mulheres eram associadas principalmente ao lar.
+II. Em Esparta, algumas elite exercitavam-se e geriam propriedades.
+III. Em Roma republicana, não havia tutela masculina.
+IV. Na Idade Média, Maria e Eva serviam de modelos opostos.
+
+Estão corretas apenas:`,
+                options: [
+                    "I e III",
+                    "I, II e IV",
+                    "II, III e IV",
+                    "I, II, III e IV"
+                ],
+                correctAnswer: 1,
+                explanation: "I, II e IV corretas. Tutela masculina existia em Roma (III falsa).",
+                modelAnswer: "Resposta correta: I, II e IV."
+            },
+            {
+                type: "multiple-choice",
+                question: "O infográfico do caderno sugere que, na Idade Média, ser mulher era:",
+                options: [
+                    "Mais fácil que em Atenas em todos os aspectos",
+                    "Difícil — cristianismo influenciou mentalidades",
+                    "Idêntico à condição de senadoras romanas",
+                    "Irrelevante para a Igreja"
+                ],
+                correctAnswer: 1,
+                explanation: "Título: «não era fácil ser mulher».",
+                modelAnswer: "Resposta correta: difícil, com forte influência cristã."
+            },
+            {
+                type: "multiple-choice",
+                question: "Sobre motivações das Cruzadas, o caderno destaca que:",
+                options: [
+                    "Foram exclusivamente comerciais",
+                    "Uniram convicções religiosas e interesses (terras, comércio, poder)",
+                    "Visavam apenas criar uma religião única sob o Papa",
+                    "Não envolveram Jerusalém"
+                ],
+                correctAnswer: 1,
+                explanation: "Alternativa c do teste p. 156.",
+                modelAnswer: "Resposta correta: fé + interesses materiais."
+            },
+            {
+                type: "multiple-choice",
+                question: "Cristãos chamavam Jerusalém de «umbigo do mundo» porque:",
+                options: [
+                    "Era cidade sem importância religiosa",
+                    "Era considerada centro simbólico sagrado",
+                    "Ficava na América",
+                    "Era capital do Império Romano do Oriente apenas"
+                ],
+                correctAnswer: 1,
+                explanation: "Texto de Roberto, o Monge — cidade central na fé.",
+                modelAnswer: "Resposta correta: centro simbólico sagrado."
+            },
+            {
+                type: "multiple-choice",
+                question: "Além da fé, nobres sem terras viam nas Cruzadas chance de:",
+                options: [
+                    "Estudar latim em mosteiros",
+                    "Obter riqueza e terras",
+                    "Abolir o feudalismo imediatamente",
+                    "Fechar o Mediterrâneo"
+                ],
+                correctAnswer: 1,
+                explanation: "«Outros interesses além da fé» — pillagem e feudos.",
+                modelAnswer: "Resposta correta: obter riqueza e terras."
+            },
+            {
+                type: "multiple-choice",
+                question: "Segundo o caderno, consequência importante das Cruzadas foi:",
+                options: [
+                    "Decadência total do comércio italiano",
+                    "Reabertura de rotas e contato entre Ocidente e Oriente",
+                    "Fim imediato da violência religiosa",
+                    "Centralização da justiça só nos camponeses"
+                ],
+                correctAnswer: 1,
+                explanation: "Teste p. 156 — alternativa d.",
+                modelAnswer: "Resposta correta: rotas comerciais e contatos."
+            },
+            {
+                type: "multiple-choice",
+                question: `Leia as afirmativas com base nas fontes sobre 1099:
+I. Textos cristãos e árabes descrevem grande violência.
+II. As narrativas são idênticas em todos os detalhes.
+III. Historiadores comparam perspectivas diferentes.
+IV. Mulheres e crianças aparecem como vítimas nos relatos.
+
+Estão corretas apenas:`,
+                options: [
+                    "I e II",
+                    "I, III e IV",
+                    "II e III",
+                    "I, II, III e IV"
+                ],
+                correctAnswer: 1,
+                explanation: "I, III e IV corretas. Perspectivas diferem (II falsa).",
+                modelAnswer: "Resposta correta: I, III e IV."
+            },
+            {
+                type: "multiple-choice",
+                question: "Na questão Enem do caderno, a afirmativa sobre «respeito e tolerância religiosa» nas Cruzadas é:",
+                options: [
+                    "Correta",
+                    "Incorreta",
+                    "Neutra",
+                    "Não abordada"
+                ],
+                correctAnswer: 1,
+                explanation: "III do Enem é falsa — conflitos foram violentos.",
+                modelAnswer: "Resposta correta: incorreta."
+            },
+            {
+                type: "short-answer",
+                question: "Cite uma motivação religiosa e uma não religiosa das Cruzadas, conforme o Módulo 20.",
+                keywords: [
+                    "jerusalém",
+                    "fé",
+                    "comércio",
+                    "terras",
+                    "bizâncio",
+                    "italianos"
+                ],
+                explanation: "Fé retomar Terra Santa + política/comércio/terras.",
+                modelAnswer: "Exemplo: religiosa — libertar Jerusalém; não religiosa — rotas comerciais no Mediterrâneo."
+            }
+        ]
+    }
+};
+
+
+    /* Modelo padrão de seções (na ordem em que devem aparecer).
+       Para mudar nomes ou ordem, basta editar este array.
+       A seção "conteudo" agrupa Resumo + Explicação geral, com switch
+       (Resumo aparece por padrão). */
+    const SECTION_TEMPLATE = [
+
+
+      { key: "percurso",   title: "1. Percurso de estudo",     openByDefault: true  },
+      { key: "conteudo",   title: "2. Conteúdo",               openByDefault: false },
+      { key: "exercicios", title: "3. Exercícios interativos", openByDefault: false },
+      { key: "dicas",      title: "4. Dicas finais de prova",  openByDefault: false }
+    ];
+
+
+    /* =========================================================
+       SIMULADO DA PI — Projeto Luz e Fé (20 questões)
+       ========================================================= */
+    const simulado = {
+    title: "Simulado da PI",
+    icon: "★",
+    intro: `Um teste com <strong>20 questões</strong> (10 por disciplina), todas de múltipla escolha,
+              ligadas ao texto abaixo sobre o projeto <strong>«Luz e Fé»</strong> e ao conteúdo das abas.`,
+    textTitle: "Texto-base — Projeto escolar «Luz e Fé»",
+    text: `
+            <p>No 3º trimestre, a turma do <strong>6º ano</strong> montou o projeto
+            <strong>«Luz e Fé»</strong>. Em Ciências, um grupo explicou que a luz das velas na maquete
+            de uma igreja medieval era fonte <strong>primária</strong>, enquanto as paredes iluminadas eram
+            <strong>secundárias</strong>. Outro cartão mostrava <strong>vitrais</strong>: a luz branca
+            sofria <strong>dispersão</strong> e <strong>refração</strong> no vidro colorido.</p>
+
+            <p>Um painel sobre <strong>fenômenos ópticos</strong> comparava o brilho de uma gota (reflexão
+            <strong>especular</strong>) com a cor verde de uma folha (reflexão <strong>difusa</strong> e
+            <strong>absorção</strong> das outras cores). O professor lembrou que <strong>lentes convergentes</strong>
+            (bordas finas) podem projetar no papel imagens <strong>invertidas</strong> da janela, ao passo que
+            lentes <strong>divergentes</strong> não formam projeção nítida.</p>
+
+            <p>Para falar de visão, Pedro colocou óculos sobre o caderno: pelas lentes o texto ficava
+            <strong>menor</strong> — típico de lentes <strong>divergentes</strong> usadas na
+            <strong>miopia</strong>. Helena usou lentes que <strong>ampliavam</strong> as letras, associadas
+            à <strong>hipermetropia</strong>. Um vídeo citou o <strong>astigmatismo</strong>, quando a córnea
+            tem curvaturas diferentes e a imagem não foca em um só ponto.</p>
+
+            <p>No corredor de História, cartazes do <strong>Módulo 19</strong> reproduziam pinturas do
+            <strong>julgamento das almas</strong> — anjo e demônio na balança — para discutir como a
+            <strong>Igreja Católica</strong> orientava a mentalidade medieval. Um trecho de
+            <strong>São Elói</strong> condenava danças «diabólicas» em festas religiosas.</p>
+
+            <p>O infográfico <strong>«Na Europa antiga e medieval, não era fácil ser mulher»</strong>
+            contrastava Atenas, Esparta e Roma. Na sequência, painéis do <strong>Módulo 20</strong> explicavam
+            que as <strong>Cruzadas</strong> uniram fé (retomar <strong>Jerusalém</strong>, «umbigo do mundo»
+            para cristãos) a interesses de <strong>comerciantes italianos</strong> e nobres em busca de
+            <strong>terras</strong>. Fontes sobre <strong>1099</strong> mostravam violência descrita tanto
+            por cronistas cristãos quanto por autores árabes.</p>`,
+    questions: [
+        {
+            discipline: "Ciências",
+            question: "Na maquete, a chama da vela é exemplo de fonte:",
+            options: [
+                "Secundária",
+                "Primária",
+                "Virtual",
+                "Extensa obrigatoriamente"
+            ],
+            correctAnswer: 1,
+            explanation: "Emite luz própria — fonte primária."
+        },
+        {
+            discipline: "Ciências",
+            question: "Vitrais coloridos ilustram principalmente:",
+            options: [
+                "Só reflexão difusa",
+                "Dispersão e refração da luz branca",
+                "Ausência de propagação",
+                "Foco virtual de espelhos"
+            ],
+            correctAnswer: 1,
+            explanation: "Luz branca separa-se e muda de meio no vidro."
+        },
+        {
+            discipline: "Ciências",
+            question: "Brilho na gota d'água é reflexão:",
+            options: [
+                "Difusa",
+                "Especular",
+                "Inexistente",
+                "Térmica"
+            ],
+            correctAnswer: 1,
+            explanation: "Superfície lisa forma brilho nítido."
+        },
+        {
+            discipline: "Ciências",
+            question: "Folha verde vista como verde envolve sobretudo:",
+            options: [
+                "Absorção de outras cores e reflexão do verde",
+                "Emissão própria de luz azul",
+                "Foco virtual em divergentes",
+                "Tetraplegia na retina"
+            ],
+            correctAnswer: 0,
+            explanation: "Pigmento reflete verde, absorve demais cores."
+        },
+        {
+            discipline: "Ciências",
+            question: "Lente convergente no experimento da janela tende a formar imagem:",
+            options: [
+                "Sempre direita",
+                "Invertida no papel",
+                "Impossível",
+                "Sem refração"
+            ],
+            correctAnswer: 1,
+            explanation: "Projeto descreve imagens invertidas."
+        },
+        {
+            discipline: "Ciências",
+            question: "Lentes divergentes, no mesmo experimento:",
+            options: [
+                "Não projetam imagem nítida",
+                "Sempre ampliam o objeto",
+                "Só funcionam com Sol",
+                "Têm foco real à direita"
+            ],
+            correctAnswer: 0,
+            explanation: "Conclusão do módulo 26."
+        },
+        {
+            discipline: "Ciências",
+            question: "Óculos de Pedro deixam o texto menor — são lentes:",
+            options: [
+                "Convergentes de hipermetropia",
+                "Divergentes de miopia",
+                "Primárias",
+                "De astigmatismo apenas"
+            ],
+            correctAnswer: 1,
+            explanation: "Texto menor = divergente; associado à miopia no texto."
+        },
+        {
+            discipline: "Ciências",
+            question: "Helena amplia letras — associa-se a:",
+            options: [
+                "Miopia e lente divergente",
+                "Hipermetropia e lente convergente",
+                "Astigmatismo sem correção",
+                "Fonte secundária"
+            ],
+            correctAnswer: 1,
+            explanation: "Ampliação indica convergente — hipermetropia."
+        },
+        {
+            discipline: "Ciências",
+            question: "Astigmatismo ocorre quando:",
+            options: [
+                "Córnea tem curvaturas diferentes",
+                "Não há propagação da luz",
+                "Jerusalém é conquistada",
+                "Só há reflexão especular"
+            ],
+            correctAnswer: 0,
+            explanation: "Raios não convergem a um ponto único."
+        },
+        {
+            discipline: "Ciências",
+            question: `Leia com base no texto do projeto:
+I. Fonte secundária reflete luz incidente.
+II. Propagação é o deslocamento da luz no meio.
+III. Toda lente divergente projeta imagem invertida nítida.
+IV. Fenômenos ópticos podem ocorrer juntos.
+
+Estão corretas apenas:`,
+            options: [
+                "I e III",
+                "I, II e IV",
+                "II e III",
+                "I, II, III e IV"
+            ],
+            correctAnswer: 1,
+            explanation: "I, II e IV corretas. Divergente não projeta nítida (III falsa)."
+        },
+        {
+            discipline: "História",
+            question: "Pinturas do julgamento das almas reforçavam:",
+            options: [
+                "Teoria das lentes divergentes",
+                "Autoridade religiosa e medo do pecado",
+                "Rotas comerciais italianas",
+                "Astigmatismo"
+            ],
+            correctAnswer: 1,
+            explanation: "Arte medieval convence sobre destino espiritual."
+        },
+        {
+            discipline: "História",
+            question: "São Elói, no trecho do projeto, critica práticas consideradas:",
+            options: [
+                "Científicas",
+                "Diabólicas",
+                "Republicanas",
+                "Ópticas"
+            ],
+            correctAnswer: 1,
+            explanation: "Danças e cantos condenados como diabólicos."
+        },
+        {
+            discipline: "História",
+            question: "No infográfico, Esparta se destaca porque algumas mulheres:",
+            options: [
+                "Eram senadoras",
+                "Treinavam e administravam propriedades",
+                "Não existiam na cidade",
+                "Proibiam o cristianismo"
+            ],
+            correctAnswer: 1,
+            explanation: "Exceção em relação a Atenas."
+        },
+        {
+            discipline: "História",
+            question: "«Não era fácil ser mulher» resume sobretudo:",
+            options: [
+                "Igualdade plena na Idade Média",
+                "Restrições sociais e influência da Igreja",
+                "Ausência de religião",
+                "Vitórias exclusivas de gladiadoras"
+            ],
+            correctAnswer: 1,
+            explanation: "Comparativo Antiguidade + medieval."
+        },
+        {
+            discipline: "História",
+            question: "Cruzadas, no Módulo 20, combinavam:",
+            options: [
+                "Só interesse comercial",
+                "Fé em Jerusalém e interesses políticos/econômicos",
+                "Apenas estudo de óptica",
+                "Paz religiosa garantida"
+            ],
+            correctAnswer: 1,
+            explanation: "Texto do projeto cita fé + italianos + terras."
+        },
+        {
+            discipline: "História",
+            question: "Jerusalém como «umbigo do mundo» expressa:",
+            options: [
+                "Irrelevância religiosa",
+                "Centralidade simbólica para cristãos",
+                "Localização na América",
+                "Teoria do foco real"
+            ],
+            correctAnswer: 1,
+            explanation: "Motivação religiosa nas pregações."
+        },
+        {
+            discipline: "História",
+            question: "Comerciantes italianos, segundo o caderno, foram:",
+            options: [
+                "Prejudicados para sempre",
+                "Entre os grandes beneficiados práticos",
+                "Ausentes do Mediterrâneo",
+                "Responsáveis pelo astigmatismo"
+            ],
+            correctAnswer: 1,
+            explanation: "Rotas e comércio se intensificaram."
+        },
+        {
+            discipline: "História",
+            question: "Relatos de 1099 mostram que:",
+            options: [
+                "Não houve violência",
+                "Fontes cristãs e árabes descrevem massacre",
+                "Só musulmanos escreveram crônicas",
+                "Jerusalém ficou sob bizantinos para sempre"
+            ],
+            correctAnswer: 1,
+            explanation: "Perspectivas diferentes, mas violência presente."
+        },
+        {
+            discipline: "História",
+            question: "Motivação de nobres sem terras incluía:",
+            options: [
+                "Buscar novas terras e riqueza",
+                "Estudar dispersão da luz",
+                "Abolir vitrais",
+                "Proibir comércio"
+            ],
+            correctAnswer: 0,
+            explanation: "«Outros interesses além da fé»."
+        },
+        {
+            discipline: "História",
+            question: `Leia com base no texto:
+I. Cristandade na Europa se reforçou após as expedições.
+II. Ressentimento árabe aumentou.
+III. Conflitos foram resolvidos só por tolerância mútua.
+IV. Jerusalém permaneceu simbólica para várias religiões.
+
+Estão corretas apenas:`,
+            options: [
+                "I e II",
+                "I, II e IV",
+                "II, III e IV",
+                "I, II, III e IV"
+            ],
+            correctAnswer: 1,
+            explanation: "I, II e IV corretas. III falsa (Enem do caderno)."
+        }
+    ]
+};
+
+
+    /* Estado em memória para acompanhar o progresso por disciplina. */
+    const progressState = {};
+
+
+
+    /* =========================================================
+       2. RENDERIZAÇÃO DE ABAS E PAINÉIS
+       ====================================================a===== */
+    function renderTabs() {
+      const nav = document.getElementById("nav-tabs");
+      const content = document.getElementById("content");
+      nav.innerHTML = "";
+      content.innerHTML = "";
+
+      Object.entries(subjects).forEach(([key, subject], index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.target = key;
+        btn.innerHTML = `<span class="tab-icon">${subject.icon}</span>${subject.title}`;
+        btn.addEventListener("click", () => activateSubject(key));
+        nav.appendChild(btn);
+
+        const panel = document.createElement("section");
+        panel.className = "subject-panel";
+        panel.id = `panel-${key}`;
+        panel.innerHTML = renderSubjectPanel(key, subject);
+        content.appendChild(panel);
+
+        progressState[key] = { answered: new Set(), correct: new Set() };
+
+        if (index === 0) activateSubject(key);
+      });
+
+      // Aba especial do simulado, ao lado das disciplinas.
+      const simBtn = document.createElement("button");
+      simBtn.type = "button";
+      simBtn.dataset.target = "simulado";
+      simBtn.classList.add("tab--simulado");
+      simBtn.innerHTML = `<span class="tab-icon">${simulado.icon}</span>${simulado.title}`;
+      simBtn.addEventListener("click", () => activateSubject("simulado"));
+      nav.appendChild(simBtn);
+
+      const simPanel = document.createElement("section");
+      simPanel.className = "subject-panel";
+      simPanel.id = "panel-simulado";
+      simPanel.innerHTML = renderSimuladoPanel(simulado);
+      content.appendChild(simPanel);
+
+      bindAccordions();
+      bindContentSwitch();
+      bindExerciseEvents();
+      bindSimuladoEvents();
+    }
+
+    function activateSubject(key) {
+      document.querySelectorAll(".nav-tabs button").forEach(b => {
+        b.classList.toggle("active", b.dataset.target === key);
+      });
+      document.querySelectorAll(".subject-panel").forEach(p => {
+        p.classList.toggle("active", p.id === `panel-${key}`);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================
+       3. RENDERIZAÇÃO DE PAINEL DE DISCIPLINA
+       ========================================================= */
+    function renderSubjectPanel(key, subject) {
+      const exercisesHtml = subject.exercises
+        .map((ex, i) => renderExercise(key, ex, i))
+        .join("");
+
+      const sectionsHtml = SECTION_TEMPLATE.map(sec => {
+        let body;
+        if (sec.key === "exercicios") {
+          body = exercisesHtml || `<p>Nenhum exercício cadastrado ainda.</p>`;
+        } else if (sec.key === "conteudo") {
+          const resumoHtml = subject.sections.resumo || `<p>Resumo em preparação.</p>`;
+          const explicacaoHtml = subject.sections.explicacao || `<p>Conteúdo em preparação.</p>`;
+          body = `
+            <div class="content-switch" role="tablist" aria-label="Modo de visualização do conteúdo">
+              <button type="button" class="content-switch__btn active"
+                      role="tab" aria-selected="true" data-view="resumo">Resumo</button>
+              <button type="button" class="content-switch__btn"
+                      role="tab" aria-selected="false" data-view="explicacao">Conteúdo geral</button>
+            </div>
+            <div class="content-view active" data-view="resumo">${resumoHtml}</div>
+            <div class="content-view" data-view="explicacao">${explicacaoHtml}</div>
+          `;
+        } else {
+          body = subject.sections[sec.key] || `<p>Conteúdo em preparação.</p>`;
+        }
+
+        return `
+          <div class="accordion ${sec.openByDefault ? "open" : ""}">
+            <button class="accordion__header" type="button">
+              <span>${sec.title}</span>
+              <span class="chevron">▶</span>
+            </button>
+            <div class="accordion__body">
+              ${body}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="subject-header">
+          <h2>
+            <span class="subject-icon">${subject.icon}</span>
+            ${subject.title}
+          </h2>
+          <div class="progress" id="progress-${key}">
+            <div class="progress__label">
+              <span>Progresso da disciplina</span>
+              <span class="progress__text">0 / ${subject.exercises.length}</span>
+            </div>
+            <div class="progress__bar">
+              <div class="progress__fill"></div>
+            </div>
+          </div>
+        </div>
+        ${sectionsHtml}
+      `;
+    }
+
+    /* =========================================================
+       4. RENDERIZAÇÃO DE EXERCÍCIOS
+       ========================================================= */
+    function renderExercise(subjectKey, ex, index) {
+      const exId = `${subjectKey}-ex-${index}`;
+      if (ex.type === "multiple-choice") {
+        const optionsHtml = ex.options.map((opt, i) => `
+          <label class="option" data-index="${i}">
+            <input type="radio" name="${exId}" value="${i}" />
+            <span>${opt}</span>
+          </label>
+        `).join("");
+
+        return `
+          <div class="exercise" data-id="${exId}" data-type="multiple-choice"
+               data-correct="${ex.correctAnswer}">
+            <div class="exercise__label">Exercício ${index + 1} — Múltipla escolha</div>
+            <div class="exercise__question">${ex.question}</div>
+            <div class="options">${optionsHtml}</div>
+            <div class="exercise__actions">
+              <button class="btn btn--primary" data-action="check">Verificar resposta</button>
+              <button class="btn btn--ghost" data-action="show-model">Mostrar resposta/modelo</button>
+            </div>
+            <div class="feedback"></div>
+            <div class="model-answer">
+              <h4>Resposta modelo</h4>
+              <p>${ex.modelAnswer}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      if (ex.type === "short-answer") {
+        return `
+          <div class="exercise short-answer" data-id="${exId}" data-type="short-answer"
+               data-keywords="${(ex.keywords || []).join("|")}">
+            <div class="exercise__label">Exercício ${index + 1} — Resposta curta</div>
+            <div class="exercise__question">${ex.question}</div>
+            <textarea placeholder="Escreva sua resposta aqui..."></textarea>
+            <div class="exercise__actions">
+              <button class="btn btn--primary" data-action="check">Verificar resposta</button>
+              <button class="btn btn--ghost" data-action="show-model">Mostrar resposta/modelo</button>
+            </div>
+            <div class="feedback"></div>
+            <div class="model-answer">
+              <h4>Resposta modelo</h4>
+              <p>${ex.modelAnswer}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      return "";
+    }
+
+    /* =========================================================
+       5. EVENTOS: ACCORDIONS, EXERCÍCIOS E VERIFICAÇÃO
+       ========================================================= */
+    function bindAccordions() {
+      document.querySelectorAll(".accordion__header").forEach(header => {
+        header.addEventListener("click", () => {
+          header.parentElement.classList.toggle("open");
+        });
+      });
+    }
+
+    /* Alterna entre as visualizações "Resumo" e "Conteúdo geral"
+       dentro da seção de Conteúdo. */
+    function bindContentSwitch() {
+      document.querySelectorAll(".content-switch").forEach(group => {
+        const buttons = group.querySelectorAll(".content-switch__btn");
+        const container = group.parentElement;
+        buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const target = btn.dataset.view;
+            buttons.forEach(b => {
+              const isActive = b === btn;
+              b.classList.toggle("active", isActive);
+              b.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+            container.querySelectorAll(".content-view").forEach(v => {
+              v.classList.toggle("active", v.dataset.view === target);
+            });
+          });
+        });
+      });
+    }
+
+    function bindExerciseEvents() {
+      document.querySelectorAll(".exercise").forEach(exEl => {
+        const type = exEl.dataset.type;
+
+        if (type === "multiple-choice") {
+          exEl.querySelectorAll(".option").forEach(opt => {
+            opt.addEventListener("click", () => {
+              exEl.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+              opt.classList.add("selected");
+              const radio = opt.querySelector("input");
+              if (radio) radio.checked = true;
+            });
+          });
+        }
+
+        exEl.querySelectorAll("[data-action]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const action = btn.dataset.action;
+            if (action === "check") checkAnswer(exEl);
+            if (action === "show-model") toggleModel(exEl);
+          });
+        });
+      });
+    }
+
+    function checkAnswer(exEl) {
+      const type = exEl.dataset.type;
+      const feedback = exEl.querySelector(".feedback");
+      const subjectKey = exEl.dataset.id.split("-ex-")[0];
+      const exerciseId = exEl.dataset.id;
+
+      // Recupera a explicação a partir do modelo de dados, sem depender do DOM.
+      const indexMatch = exerciseId.match(/-ex-(\d+)$/);
+      const exerciseIndex = indexMatch ? parseInt(indexMatch[1], 10) : null;
+      const exerciseData = exerciseIndex !== null
+        ? subjects[subjectKey].exercises[exerciseIndex]
+        : null;
+
+      // ---- Múltipla escolha ----
+      if (type === "multiple-choice") {
+        const selected = exEl.querySelector("input[type='radio']:checked");
+        if (!selected) {
+          showFeedback(feedback, "info", "Selecione uma alternativa antes de verificar.");
+          return;
+        }
+
+        const correctIndex = parseInt(exEl.dataset.correct, 10);
+        const chosen = parseInt(selected.value, 10);
+        const isCorrect = chosen === correctIndex;
+
+        exEl.querySelectorAll(".option").forEach(o => {
+          o.classList.remove("correct", "incorrect");
+        });
+        const chosenOption = exEl.querySelector(`.option[data-index="${chosen}"]`);
+        if (chosenOption) chosenOption.classList.add(isCorrect ? "correct" : "incorrect");
+
+        if (isCorrect) {
+          showFeedback(
+            feedback, "success",
+            `Você acertou! ${exerciseData ? exerciseData.explanation : ""}`
+          );
+        } else {
+          showFeedback(
+            feedback, "error",
+            `Resposta incorreta. ${exerciseData ? exerciseData.explanation : ""}`
+          );
+        }
+
+        registerAnswer(subjectKey, exerciseId, isCorrect);
+        return;
+      }
+
+      // ---- Resposta curta ----
+      if (type === "short-answer") {
+        const textarea = exEl.querySelector("textarea");
+        const answer = (textarea.value || "").toLowerCase().trim();
+
+        if (!answer) {
+          showFeedback(feedback, "info", "Escreva uma resposta antes de verificar.");
+          return;
+        }
+
+        const keywords = (exEl.dataset.keywords || "")
+          .split("|")
+          .map(k => k.toLowerCase().trim())
+          .filter(Boolean);
+
+        const matched = keywords.filter(k => answer.includes(k));
+        const ratio = keywords.length ? matched.length / keywords.length : 0;
+        const isGood = ratio >= 0.5;
+
+        if (isGood) {
+          showFeedback(
+            feedback, "success",
+            `Boa resposta! Você mencionou ideias importantes${
+              matched.length ? " (" + matched.join(", ") + ")" : ""
+            }.`
+          );
+        } else {
+          showFeedback(
+            feedback, "error",
+            "Sua resposta pode melhorar. Veja a resposta modelo para comparar."
+          );
+        }
+
+        registerAnswer(subjectKey, exerciseId, isGood);
+      }
+    }
+
+    function showFeedback(el, kind, message) {
+      el.className = `feedback show feedback--${kind}`;
+      el.textContent = message;
+    }
+
+    function toggleModel(exEl) {
+      const model = exEl.querySelector(".model-answer");
+      model.classList.toggle("show");
+    }
+
+    /* =========================================================
+       6. PROGRESSO POR DISCIPLINA
+       ========================================================= */
+    function registerAnswer(subjectKey, exerciseId, isCorrect) {
+      const state = progressState[subjectKey];
+      state.answered.add(exerciseId);
+      if (isCorrect) state.correct.add(exerciseId);
+      else state.correct.delete(exerciseId);
+      updateProgress(subjectKey);
+    }
+
+    function updateProgress(subjectKey) {
+      const total = subjects[subjectKey].exercises.length;
+      const correct = progressState[subjectKey].correct.size;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      const wrap = document.getElementById(`progress-${subjectKey}`);
+      if (!wrap) return;
+      wrap.querySelector(".progress__text").textContent = `${correct} / ${total}`;
+      wrap.querySelector(".progress__fill").style.width = `${percent}%`;
+    }
+
+    /* =========================================================
+       7. SIMULADO DA PI
+       Renderiza o painel completo com texto-base, blocos por
+       disciplina e botões de finalizar/refazer.
+       ========================================================= */
+    function renderSimuladoPanel(sim) {
+      // Agrupa as questões mantendo a ordem em que aparecem.
+      const blocks = [];
+      const blockIndex = new Map();
+      sim.questions.forEach((q, i) => {
+        if (!blockIndex.has(q.discipline)) {
+          blockIndex.set(q.discipline, blocks.length);
+          blocks.push({ discipline: q.discipline, items: [] });
+        }
+        blocks[blockIndex.get(q.discipline)].items.push({ ...q, _index: i });
+      });
+
+      const blocksHtml = blocks.map(b => `
+        <div class="sim-block">
+          <div class="sim-block__title">${b.discipline}</div>
+          ${b.items.map(q => renderSimQuestion(q)).join("")}
+        </div>
+      `).join("");
+
+      return `
+        <div class="subject-header">
+          <h2>
+            <span class="subject-icon">${sim.icon}</span>
+            ${sim.title}
+          </h2>
+        </div>
+
+        <p style="color: var(--text-soft); margin-top: -6px;">${sim.intro}</p>
+
+        <article class="sim-text">
+          <h3>${sim.textTitle}</h3>
+          ${sim.text}
+        </article>
+
+        <div class="sim-result" id="sim-result"></div>
+
+        ${blocksHtml}
+
+        <div class="sim-footer">
+          <button class="btn btn--primary" id="sim-finalize">Finalizar simulado</button>
+          <button class="btn btn--ghost"   id="sim-reset">Tentar novamente</button>
+        </div>
+      `;
+    }
+
+    function renderSimQuestion(q) {
+      const optionsHtml = q.options.map((opt, i) => `
+        <label class="sim-option" data-index="${i}">
+          <input type="radio" name="sim-q-${q._index}" value="${i}" />
+          <span>${opt}</span>
+        </label>
+      `).join("");
+
+      return `
+        <div class="sim-question"
+             data-id="sim-q-${q._index}"
+             data-correct="${q.correctAnswer}"
+             data-discipline="${q.discipline}"
+             data-explanation="${(q.explanation || '').replace(/"/g, '&quot;')}">
+          <div class="sim-question__head">Questão ${q._index + 1} — ${q.discipline}</div>
+          <div class="sim-question__text">${q.question}</div>
+          <div class="sim-options">${optionsHtml}</div>
+        </div>
+      `;
+    }
+
+    function bindSimuladoEvents() {
+      // Selecionar alternativa.
+      document.querySelectorAll(".sim-question .sim-option").forEach(opt => {
+        opt.addEventListener("click", () => {
+          const q = opt.closest(".sim-question");
+          q.querySelectorAll(".sim-option").forEach(o => o.classList.remove("selected"));
+          opt.classList.add("selected");
+          const radio = opt.querySelector("input");
+          if (radio) radio.checked = true;
+        });
+      });
+
+      const finalize = document.getElementById("sim-finalize");
+      if (finalize) finalize.addEventListener("click", finalizeSimulado);
+
+      const reset = document.getElementById("sim-reset");
+      if (reset) reset.addEventListener("click", resetSimulado);
+    }
+
+    function finalizeSimulado() {
+      const questions = document.querySelectorAll(".sim-question");
+      const byDiscipline = {};
+      let totalCorrect = 0;
+      const total = questions.length;
+
+      questions.forEach(q => {
+        const d = q.dataset.discipline;
+        if (!byDiscipline[d]) byDiscipline[d] = { correct: 0, total: 0 };
+        byDiscipline[d].total += 1;
+
+        const correctIdx = parseInt(q.dataset.correct, 10);
+        const selected = q.querySelector("input[type='radio']:checked");
+
+        // Limpa marcações anteriores antes de pintar de novo.
+        q.querySelectorAll(".sim-option").forEach(o => {
+          o.classList.remove("correct", "incorrect");
+        });
+
+        // Sempre destaca a alternativa correta em verde.
+        const correctOpt = q.querySelector(`.sim-option[data-index="${correctIdx}"]`);
+        if (correctOpt) correctOpt.classList.add("correct");
+
+        if (selected) {
+          const chosen = parseInt(selected.value, 10);
+          const isCorrect = chosen === correctIdx;
+          if (!isCorrect) {
+            const chosenOpt = q.querySelector(`.sim-option[data-index="${chosen}"]`);
+            if (chosenOpt) chosenOpt.classList.add("incorrect");
+          } else {
+            totalCorrect++;
+            byDiscipline[d].correct++;
+          }
+        }
+      });
+
+      showSimuladoResult(totalCorrect, total, byDiscipline);
+    }
+
+    function showSimuladoResult(correct, total, byDiscipline) {
+      const result = document.getElementById("sim-result");
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      let message;
+      if (percent >= 80)      message = "Excelente! Você está muito bem preparado para a prova.";
+      else if (percent >= 60) message = "Bom trabalho! Revise os pontos em que ficou em dúvida.";
+      else if (percent >= 40) message = "Você já sabe boa parte. Volte aos resumos das disciplinas mais difíceis.";
+      else                    message = "Vamos reforçar mais! Reabra as abas das disciplinas e tente de novo.";
+
+      const breakdownHtml = Object.entries(byDiscipline).map(([d, s]) => {
+        let cls = "sim-score--low";
+        if (s.correct === s.total) cls = "sim-score--ok";
+        else if (s.correct >= Math.ceil(s.total / 2)) cls = "sim-score--med";
+        return `
+          <div class="sim-score ${cls}">
+            <span>${d}</span>
+            <strong>${s.correct} / ${s.total}</strong>
+          </div>
+        `;
+      }).join("");
+
+      result.innerHTML = `
+        <h3>Resultado do simulado</h3>
+        <div class="sim-result__total">
+          Você acertou <strong>${correct} de ${total}</strong> questões (${percent}%).
+        </div>
+        <p style="color: var(--text-soft); margin: 6px 0 0;">${message}</p>
+
+        <h4>Pontuação por disciplina (0 a 3)</h4>
+        <div class="sim-result__grid">${breakdownHtml}</div>
+      `;
+      result.classList.add("show");
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetSimulado() {
+      document.querySelectorAll(".sim-question .sim-option").forEach(o => {
+        o.classList.remove("selected", "correct", "incorrect");
+        const r = o.querySelector("input");
+        if (r) r.checked = false;
+      });
+      const result = document.getElementById("sim-result");
+      if (result) {
+        result.innerHTML = "";
+        result.classList.remove("show");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================
+       8. INICIALIZAÇÃO
+       ========================================================= */
+    document.addEventListener("DOMContentLoaded", renderTabs);
+  </script>
+</body>
+</html>
